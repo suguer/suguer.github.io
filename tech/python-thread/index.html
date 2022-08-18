@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Python-多线程 | Ken Blog</title>
+<meta name="keywords" content="python, thread">
+<meta name="description" content="import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/python-thread/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Python-多线程" />
+<meta property="og:description" content="import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tech/python-thread/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-12T15:10:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T15:10:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Python-多线程"/>
+<meta name="twitter:description" content="import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Python-多线程",
+      "item": "/tech/python-thread/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Python-多线程",
+  "name": "Python-多线程",
+  "description": "import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): \u0026#34;\u0026#34;\u0026#34;All works requests have been processed\u0026#34;\u0026#34;\u0026#34; pass class NoWorkersAvailable(Exception): \u0026#34;\u0026#34;\u0026#34;No worket threads available to process remaining requests.\u0026#34;\u0026#34;\u0026#34; pass def _handle_thread_exception(request, exc_info): \u0026#34;\u0026#34;\u0026#34;默认的异常处理函数，只是简单的打印\u0026#34;\u0026#34;\u0026#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): \u0026#34;\u0026#34;\u0026#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)\u0026#34;\u0026#34;\u0026#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) \u0026#39;\u0026#39;\u0026#39;设置为守护进行\u0026#39;\u0026#39;\u0026#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout \u0026#39;\u0026#39;\u0026#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false\u0026#39;\u0026#39;\u0026#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): \u0026#39;\u0026#39;\u0026#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop\u0026#39;\u0026#39;\u0026#39; while True: if self._dismissed.is_set(): break try: \u0026#39;\u0026#39;\u0026#39; Queue.",
+  "keywords": [
+    "python", "thread"
+  ],
+  "articleBody": "import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): \"\"\"All works requests have been processed\"\"\" pass class NoWorkersAvailable(Exception): \"\"\"No worket threads available to process remaining requests.\"\"\" pass def _handle_thread_exception(request, exc_info): \"\"\"默认的异常处理函数，只是简单的打印\"\"\" traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): \"\"\"后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)\"\"\" def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) '''设置为守护进行''' self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout '''设置一个flag信号，用来表示该线程是否还被dismiss,默认为false''' self._dismissed = threading.Event() self.start() # self.join() def run(self): '''每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop''' while True: if self._dismissed.is_set(): break try: ''' Queue.Queue队列设置了线程同步策略，并且可以设置timeout。 一直block，直到requestQueue有值，或者超时 ''' request = self._requestQueue.get(True, self._poll_timeout) except queue.Empty: continue else: '''之所以在这里再次判断dimissed，是因为之前的timeout时间里，很有可能，该线程被dismiss掉了''' if self._dismissed.is_set(): self._requestQueue.put(request) break try: '''执行callable，讲请求和结果以tuple的方式放入requestQueue''' result = request.callable(*request.args, **request.kwds) # statistics.g_logger.debug self.getName() self._resultQueue.put((request, result)) except: '''异常处理''' request.exception = True self._resultQueue.put((request, sys.exc_info())) def dismiss(self): ''' 设置一个标志，表示完成当前work之后，退出 ''' self._dismissed.set() class WorkRequest: ''' @param callable_:，可定制的，执行work的函数 @param args: 列表参数 @param kwds: 字典参数 @param requestID: id @param callback: 可定制的，处理resultQueue队列元素的函数 @param exc_callback:可定制的，处理异常的函数 ''' def __init__(self, callable_, args=None, kwds=None, requestID=None, callback=None, exc_callback=_handle_thread_exception): if requestID == None: self.requestID = id(self) else: try: self.requestID = hash(requestID) except TypeError: raise TypeError(\"requestId must be hashable\") self.exception = False self.callback = callback self.exc_callback = exc_callback self.callable = callable_ self.args = args or [] self.kwds = kwds or {} def __str__(self): return \"WorkRequest id=%s args=%r kwargs=%r exception=%s\" % \\ (self.requestID, self.args, self.kwds, self.exception) class ThreadPool: ''' @param num_workers:初始化的线程数量 @param q_size,resq_size: requestQueue和result队列的初始大小 @param poll_timeout: 设置工作线程WorkerThread的timeout，也就是等待requestQueue的timeout ''' def __init__(self, num_workers, q_size=0, resq_size=0, poll_timeout=5): self._requestQueue = queue.Queue(q_size) self._resultQueue = queue.Queue(resq_size) self.workers = [] self.dismissedWorkers = [] self.workRequests = {} #设置个字典，方便使用 self.createWorkers(num_workers,poll_timeout) def createWorkers(self,num_workers,poll_timeout=5): '''创建num_workers个WorkThread,默认timeout为5''' for i in range(num_workers): self.workers.append(WorkerThread(self._requestQueue, self._resultQueue, poll_timeout=poll_timeout)) def dismissWorkers(self, num_workers, do_join=False): '''停用num_workers数量的线程，并加入dismiss_list''' dismiss_list = [] for i in range(min(num_workers, len(self.workers))): worker = self.workers.pop() worker.dismiss() dismiss_list.append(worker) if do_join: for worker in dismiss_list: worker.join() else: self.dismissedWorkers.extend(dismiss_list) def joinAllDismissedWorkers(self): '''join 所有停用的thread''' #statistics.g_logger.info len(self.dismissedWorkers) for worker in self.dismissedWorkers: worker.join() self.dismissedWorkers = [] def putRequest(self, request, block=True, timeout=None): assert isinstance(request, WorkRequest) assert not getattr(request, 'exception', None) '''当queue满了，也就是容量达到了前面设定的q_size,它将一直阻塞，直到有空余位置，或是timeout''' self._requestQueue.put(request, block, timeout) self.workRequests[request.requestID] = request def poll(self, block=False): while True: if not self.workRequests: raise NoResultsPending elif block and not self.workers: raise NoWorkersAvailable try: '''默认只要resultQueue有值，则取出，否则一直block''' request, result = self._resultQueue.get(block=block) if request.exception and request.exc_callback: request.exc_callback(request, result) if request.callback and not (request.exception and request.exc_callback): request.callback(request, result) del self.workRequests[request.requestID] except queue.Empty: break except Exception as e: # statistics.g_logger.error(traceback.print_exc()) # statistics.g_logger.info(e) pass def wait(self): while True: try: self.poll(True) except NoResultsPending: break def workersize(self): return len(self.workers) def stop(self): '''join 所有的thread,确保所有的线程都执行完毕''' self.dismissWorkers(self.workersize(), True) self.joinAllDismissedWorkers() #Test a demo if __name__=='__main__': import random import time import datetime def do_work(data): time.sleep(random.randint(1, 3)) res = str(datetime.datetime.now()) + \" \" + str(data) return res def print_result(request,result): print(\"---Result from request %s : %r\" % (request.requestID, result)) # statistics.g_logger.info(\"---Result from request %s : %r\" % (request.requestID, result)) main = ThreadPool(3) for i in range(40): req = WorkRequest(do_work, args=[i], kwds={}, callback=print_result) main.putRequest(req) print(\"work request #%s added.\" % req.requestID) # statistics.g_logger.info(\"work request #%s added.\" % req.requestID) print(\"work request #%s added.\" % req.requestID) statistics.g_logger.info('-'*20 + main.workersize() + '-'*20) counter = 0 while True: try: time.sleep(0.5) main.poll() if(counter==5): statistics.g_logger.info(\"Add 3 more workers threads\") main.createWorkers(3) statistics.g_logger.info('-'*20 + main.workersize()+'-'*20) if(counter==10): statistics.g_logger.info(\"dismiss 2 workers threads\") main.dismissWorkers(2) statistics.g_logger.info('-'*20 + main.workersize() + '-'*20) counter+=1 except NoResultsPending: statistics.g_logger.info(\"no pending results\") break main.stop() statistics.g_logger.info(\"Stop\") ",
+  "wordCount" : "495",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T15:10:00+08:00",
+  "dateModified": "2022-08-12T15:10:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/tech/python-thread/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+    <h1 class="post-title">
+      Python-多线程
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/python-thread.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> 
+
+  <div class="post-content"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">import sys
+</span></span><span class="line"><span class="cl">import threading
+</span></span><span class="line"><span class="cl">import queue
+</span></span><span class="line"><span class="cl">import traceback
+</span></span><span class="line"><span class="cl">import statistics
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class NoResultsPending<span class="o">(</span>Exception<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class NoWorkersAvailable<span class="o">(</span>Exception<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def _handle_thread_exception<span class="o">(</span>request, exc_info<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    traceback.print_exception<span class="o">(</span>*exc_info<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#classes</span>
+</span></span><span class="line"><span class="cl">class WorkerThread<span class="o">(</span>threading.Thread<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work，
+</span></span></span><span class="line"><span class="cl"><span class="s2">    并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    def __init__<span class="o">(</span>self,requestQueue,resultQueue,poll_timeout<span class="o">=</span>5,**kwds<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        threading.Thread.__init__<span class="o">(</span>self,**kwds<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;设置为守护进行&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        self.setDaemon<span class="o">(</span>True<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        self._requestQueue <span class="o">=</span> requestQueue
+</span></span><span class="line"><span class="cl">        self._resultQueue <span class="o">=</span> resultQueue
+</span></span><span class="line"><span class="cl">        self._poll_timeout <span class="o">=</span> poll_timeout
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        self._dismissed <span class="o">=</span> threading.Event<span class="o">()</span>
+</span></span><span class="line"><span class="cl">        self.start<span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># self.join()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def run<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop，
+</span></span></span><span class="line"><span class="cl"><span class="s1">        只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> True:
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> self._dismissed.is_set<span class="o">()</span>:
+</span></span><span class="line"><span class="cl">                <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">            try:
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                Queue.Queue队列设置了线程同步策略，并且可以设置timeout。
+</span></span></span><span class="line"><span class="cl"><span class="s1">                一直block，直到requestQueue有值，或者超时
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">request</span> <span class="o">=</span> self._requestQueue.get<span class="o">(</span>True, self._poll_timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            except queue.Empty:
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>:
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;&#39;&#39;之所以在这里再次判断dimissed，是因为之前的timeout时间里，很有可能，该线程被dismiss掉了&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> self._dismissed.is_set<span class="o">()</span>:
+</span></span><span class="line"><span class="cl">                    self._requestQueue.put<span class="o">(</span>request<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">                try:
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;&#39;&#39;执行callable，讲请求和结果以tuple的方式放入requestQueue&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">result</span> <span class="o">=</span> request.callable<span class="o">(</span>*request.args, **request.kwds<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># statistics.g_logger.debug self.getName()</span>
+</span></span><span class="line"><span class="cl">                    self._resultQueue.put<span class="o">((</span>request, result<span class="o">))</span>
+</span></span><span class="line"><span class="cl">                except:
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;&#39;&#39;异常处理&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                    request.exception <span class="o">=</span> True
+</span></span><span class="line"><span class="cl">                    self._resultQueue.put<span class="o">((</span>request, sys.exc_info<span class="o">()))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def dismiss<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39; 设置一个标志，表示完成当前work之后，退出 &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        self._dismissed.set<span class="o">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class WorkRequest:
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param callable_:，可定制的，执行work的函数
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param args: 列表参数
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param kwds: 字典参数
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param requestID: id
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param callback: 可定制的，处理resultQueue队列元素的函数
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param exc_callback:可定制的，处理异常的函数
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    def __init__<span class="o">(</span>self, callable_, <span class="nv">args</span><span class="o">=</span>None, <span class="nv">kwds</span><span class="o">=</span>None, <span class="nv">requestID</span><span class="o">=</span>None,
+</span></span><span class="line"><span class="cl">                 <span class="nv">callback</span><span class="o">=</span>None, <span class="nv">exc_callback</span><span class="o">=</span>_handle_thread_exception<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nv">requestID</span> <span class="o">==</span> None:
+</span></span><span class="line"><span class="cl">            self.requestID <span class="o">=</span> id<span class="o">(</span>self<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>:
+</span></span><span class="line"><span class="cl">            try:
+</span></span><span class="line"><span class="cl">                self.requestID <span class="o">=</span> hash<span class="o">(</span>requestID<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            except TypeError:
+</span></span><span class="line"><span class="cl">                raise TypeError<span class="o">(</span><span class="s2">&#34;requestId must be hashable&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        self.exception <span class="o">=</span> False
+</span></span><span class="line"><span class="cl">        self.callback <span class="o">=</span> callback
+</span></span><span class="line"><span class="cl">        self.exc_callback <span class="o">=</span> exc_callback
+</span></span><span class="line"><span class="cl">        self.callable <span class="o">=</span> callable_
+</span></span><span class="line"><span class="cl">        self.args <span class="o">=</span> args or <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">        self.kwds <span class="o">=</span> kwds or <span class="o">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def __str__<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;WorkRequest id=%s args=%r kwargs=%r exception=%s&#34;</span> % <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>            <span class="o">(</span>self.requestID, self.args, self.kwds, self.exception<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">class ThreadPool:
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param num_workers:初始化的线程数量
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param q_size,resq_size: requestQueue和result队列的初始大小
+</span></span></span><span class="line"><span class="cl"><span class="s1">    @param poll_timeout: 设置工作线程WorkerThread的timeout，也就是等待requestQueue的timeout
+</span></span></span><span class="line"><span class="cl"><span class="s1">    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    def __init__<span class="o">(</span>self, num_workers, <span class="nv">q_size</span><span class="o">=</span>0, <span class="nv">resq_size</span><span class="o">=</span>0, <span class="nv">poll_timeout</span><span class="o">=</span>5<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        self._requestQueue <span class="o">=</span> queue.Queue<span class="o">(</span>q_size<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        self._resultQueue <span class="o">=</span> queue.Queue<span class="o">(</span>resq_size<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        self.workers <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">        self.dismissedWorkers <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">        self.workRequests <span class="o">=</span> <span class="o">{}</span> <span class="c1">#设置个字典，方便使用</span>
+</span></span><span class="line"><span class="cl">        self.createWorkers<span class="o">(</span>num_workers,poll_timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def createWorkers<span class="o">(</span>self,num_workers,poll_timeout<span class="o">=</span>5<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;创建num_workers个WorkThread,默认timeout为5&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> i in range<span class="o">(</span>num_workers<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">            self.workers.append<span class="o">(</span>WorkerThread<span class="o">(</span>self._requestQueue, self._resultQueue, <span class="nv">poll_timeout</span><span class="o">=</span>poll_timeout<span class="o">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def dismissWorkers<span class="o">(</span>self, num_workers, <span class="nv">do_join</span><span class="o">=</span>False<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;停用num_workers数量的线程，并加入dismiss_list&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">dismiss_list</span> <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> i in range<span class="o">(</span>min<span class="o">(</span>num_workers, len<span class="o">(</span>self.workers<span class="o">)))</span>:
+</span></span><span class="line"><span class="cl">            <span class="nv">worker</span> <span class="o">=</span> self.workers.pop<span class="o">()</span>
+</span></span><span class="line"><span class="cl">            worker.dismiss<span class="o">()</span>
+</span></span><span class="line"><span class="cl">            dismiss_list.append<span class="o">(</span>worker<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> do_join:
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> worker in dismiss_list:
+</span></span><span class="line"><span class="cl">                worker.join<span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>:
+</span></span><span class="line"><span class="cl">            self.dismissedWorkers.extend<span class="o">(</span>dismiss_list<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def joinAllDismissedWorkers<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;join 所有停用的thread&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#statistics.g_logger.info len(self.dismissedWorkers)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> worker in self.dismissedWorkers:
+</span></span><span class="line"><span class="cl">            worker.join<span class="o">()</span>
+</span></span><span class="line"><span class="cl">        self.dismissedWorkers <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def putRequest<span class="o">(</span>self, request, <span class="nv">block</span><span class="o">=</span>True, <span class="nv">timeout</span><span class="o">=</span>None<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        assert isinstance<span class="o">(</span>request, WorkRequest<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        assert not getattr<span class="o">(</span>request, <span class="s1">&#39;exception&#39;</span>, None<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;当queue满了，也就是容量达到了前面设定的q_size,它将一直阻塞，直到有空余位置，或是timeout&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        self._requestQueue.put<span class="o">(</span>request, block, timeout<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        self.workRequests<span class="o">[</span>request.requestID<span class="o">]</span> <span class="o">=</span> request
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def poll<span class="o">(</span>self, <span class="nv">block</span><span class="o">=</span>False<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> True:
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> not self.workRequests:
+</span></span><span class="line"><span class="cl">                raise NoResultsPending
+</span></span><span class="line"><span class="cl">            <span class="k">elif</span> block and not self.workers:
+</span></span><span class="line"><span class="cl">                raise NoWorkersAvailable
+</span></span><span class="line"><span class="cl">            try:
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;&#39;&#39;默认只要resultQueue有值，则取出，否则一直block&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                request, <span class="nv">result</span> <span class="o">=</span> self._resultQueue.get<span class="o">(</span><span class="nv">block</span><span class="o">=</span>block<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> request.exception and request.exc_callback:
+</span></span><span class="line"><span class="cl">                    request.exc_callback<span class="o">(</span>request, result<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> request.callback and not <span class="o">(</span>request.exception and request.exc_callback<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">                    request.callback<span class="o">(</span>request, result<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                del self.workRequests<span class="o">[</span>request.requestID<span class="o">]</span>
+</span></span><span class="line"><span class="cl">            except queue.Empty:
+</span></span><span class="line"><span class="cl">                <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">            except Exception as e:
+</span></span><span class="line"><span class="cl">                <span class="c1"># statistics.g_logger.error(traceback.print_exc())</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># statistics.g_logger.info(e)</span>
+</span></span><span class="line"><span class="cl">                pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def wait<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> True:
+</span></span><span class="line"><span class="cl">            try:
+</span></span><span class="line"><span class="cl">                self.poll<span class="o">(</span>True<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            except NoResultsPending:
+</span></span><span class="line"><span class="cl">                <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def workersize<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> len<span class="o">(</span>self.workers<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def stop<span class="o">(</span>self<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;&#39;&#39;join 所有的thread,确保所有的线程都执行完毕&#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        self.dismissWorkers<span class="o">(</span>self.workersize<span class="o">()</span>, True<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        self.joinAllDismissedWorkers<span class="o">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Test a demo</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nv">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span>:
+</span></span><span class="line"><span class="cl">    import random
+</span></span><span class="line"><span class="cl">    import <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">    import datetime
+</span></span><span class="line"><span class="cl">    def do_work<span class="o">(</span>data<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        time.sleep<span class="o">(</span>random.randint<span class="o">(</span>1, 3<span class="o">))</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">res</span> <span class="o">=</span> str<span class="o">(</span>datetime.datetime.now<span class="o">())</span> + <span class="s2">&#34;   &#34;</span> + str<span class="o">(</span>data<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> res
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    def print_result<span class="o">(</span>request,result<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        print<span class="o">(</span><span class="s2">&#34;---Result from request %s : %r&#34;</span> % <span class="o">(</span>request.requestID, result<span class="o">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># statistics.g_logger.info(&#34;---Result from request %s : %r&#34; % (request.requestID, result))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nv">main</span> <span class="o">=</span> ThreadPool<span class="o">(</span>3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> i in range<span class="o">(</span>40<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">        <span class="nv">req</span> <span class="o">=</span> WorkRequest<span class="o">(</span>do_work, <span class="nv">args</span><span class="o">=[</span>i<span class="o">]</span>, <span class="nv">kwds</span><span class="o">={}</span>, <span class="nv">callback</span><span class="o">=</span>print_result<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        main.putRequest<span class="o">(</span>req<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        print<span class="o">(</span><span class="s2">&#34;work request #%s added.&#34;</span> % req.requestID<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># statistics.g_logger.info(&#34;work request #%s added.&#34; % req.requestID)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    print<span class="o">(</span><span class="s2">&#34;work request #%s added.&#34;</span> % req.requestID<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    statistics.g_logger.info<span class="o">(</span><span class="s1">&#39;-&#39;</span>*20 + main.workersize<span class="o">()</span> + <span class="s1">&#39;-&#39;</span>*20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nv">counter</span> <span class="o">=</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> True:
+</span></span><span class="line"><span class="cl">        try:
+</span></span><span class="line"><span class="cl">            time.sleep<span class="o">(</span>0.5<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            main.poll<span class="o">()</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="o">(</span><span class="nv">counter</span><span class="o">==</span>5<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">                statistics.g_logger.info<span class="o">(</span><span class="s2">&#34;Add 3 more workers threads&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                main.createWorkers<span class="o">(</span>3<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                statistics.g_logger.info<span class="o">(</span><span class="s1">&#39;-&#39;</span>*20 + main.workersize<span class="o">()</span>+<span class="s1">&#39;-&#39;</span>*20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="o">(</span><span class="nv">counter</span><span class="o">==</span>10<span class="o">)</span>:
+</span></span><span class="line"><span class="cl">                statistics.g_logger.info<span class="o">(</span><span class="s2">&#34;dismiss 2 workers threads&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                main.dismissWorkers<span class="o">(</span>2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">                statistics.g_logger.info<span class="o">(</span><span class="s1">&#39;-&#39;</span>*20 + main.workersize<span class="o">()</span> + <span class="s1">&#39;-&#39;</span>*20<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">counter</span><span class="o">+=</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">        except NoResultsPending:
+</span></span><span class="line"><span class="cl">            statistics.g_logger.info<span class="o">(</span><span class="s2">&#34;no pending results&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    main.stop<span class="o">()</span>
+</span></span><span class="line"><span class="cl">    statistics.g_logger.info<span class="o">(</span><span class="s2">&#34;Stop&#34;</span><span class="o">)</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/python/">python</a></li>
+      <li><a href="/tags/thread/">thread</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

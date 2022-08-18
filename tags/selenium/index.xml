@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>selenium on Ken Blog</title>
+    <link>/tags/selenium/</link>
+    <description>Recent content in selenium on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 12 Aug 2022 15:10:00 +0800</lastBuildDate><atom:link href="/tags/selenium/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>初始Python-自动化操作</title>
+      <link>/study/python-selenium/</link>
+      <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
+      
+      <guid>/study/python-selenium/</guid>
+      <description>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
+以下是我在实际使用中对于selenium的一些心得和用法
+implicitly_wait
+等待浏览器的相应时间,与sleep的区别在于implicitly_wait是设置的值或页面超时优先,而sleep则是固定睡眠时间,我在用的时候则是2个都同时使用.确保页面能顺利加载到需要的数据
+xpath 如果需要用selenium进行简单的爬虫和模拟浏览,那么xpath的语法是必须要了解明白的,html语言中比起正则,xpath的代码更加清晰和直观
+click 对于按钮的点击事件,推荐用
+driver.execute_script(&amp;#34;arguments[0].click();&amp;#34;, nextButton) 据说.click()会导致报错,虽然我还没遇到过</description>
+    </item>
+    
+  </channel>
+</rss>

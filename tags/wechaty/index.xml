@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>wechaty on Ken Blog</title>
+    <link>/tags/wechaty/</link>
+    <description>Recent content in wechaty on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 11:31:00 +0800</lastBuildDate><atom:link href="/tags/wechaty/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>wechaty-描述各方法的类型</title>
+      <link>/study/wechaty-002/</link>
+      <pubDate>Mon, 15 Aug 2022 11:31:00 +0800</pubDate>
+      
+      <guid>/study/wechaty-002/</guid>
+      <description>Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网
+# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:
+type 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片
+from wechaty import (FileBox) file_box = FileBox.</description>
+    </item>
+    
+    <item>
+      <title>wechaty-初识wechaty用途</title>
+      <link>/study/wechaty-001/</link>
+      <pubDate>Mon, 15 Aug 2022 11:30:00 +0800</pubDate>
+      
+      <guid>/study/wechaty-001/</guid>
+      <description>wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
+其他教程 wechaty.readthedocs.io
+有关视频教程资源:
+live-coding
+AI情话
+准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主</description>
+    </item>
+    
+  </channel>
+</rss>

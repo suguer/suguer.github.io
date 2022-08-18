@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Netdata-监控apache | Ken Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf &lt;Location &#34;/server-status&#34;&gt; SetHandler server-status #Require host localhost #uncomment to only allow requests from localhost &lt;/Location&gt; 通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。 yum install lynx
+lynx http://localhost/server-status
+5.创建netdata读取apache属性的配置文件
+vi /etc/netdata/python.d/apache.conf
+# # if the URL is password protected, the following are supported: # # user:&#39;username&#39; # pass:&#39;password&#39; # ------------------------------------------------------------------- # AUTO-DETECTION JOBS # only one of them will run (they have the same name) localhost: name : &#39;local&#39; url : &#39;http://localhost/server-status?">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/netdata-002/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Netdata-监控apache" />
+<meta property="og:description" content="安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf &lt;Location &#34;/server-status&#34;&gt; SetHandler server-status #Require host localhost #uncomment to only allow requests from localhost &lt;/Location&gt; 通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。 yum install lynx
+lynx http://localhost/server-status
+5.创建netdata读取apache属性的配置文件
+vi /etc/netdata/python.d/apache.conf
+# # if the URL is password protected, the following are supported: # # user:&#39;username&#39; # pass:&#39;password&#39; # ------------------------------------------------------------------- # AUTO-DETECTION JOBS # only one of them will run (they have the same name) localhost: name : &#39;local&#39; url : &#39;http://localhost/server-status?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tech/netdata-002/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-12T12:23:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T12:23:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Netdata-监控apache"/>
+<meta name="twitter:description" content="安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf &lt;Location &#34;/server-status&#34;&gt; SetHandler server-status #Require host localhost #uncomment to only allow requests from localhost &lt;/Location&gt; 通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。 yum install lynx
+lynx http://localhost/server-status
+5.创建netdata读取apache属性的配置文件
+vi /etc/netdata/python.d/apache.conf
+# # if the URL is password protected, the following are supported: # # user:&#39;username&#39; # pass:&#39;password&#39; # ------------------------------------------------------------------- # AUTO-DETECTION JOBS # only one of them will run (they have the same name) localhost: name : &#39;local&#39; url : &#39;http://localhost/server-status?"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Netdata-监控apache",
+      "item": "/tech/netdata-002/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Netdata-监控apache",
+  "name": "Netdata-监控apache",
+  "description": "安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf \u0026lt;Location \u0026#34;/server-status\u0026#34;\u0026gt; SetHandler server-status #Require host localhost #uncomment to only allow requests from localhost \u0026lt;/Location\u0026gt; 通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。 yum install lynx\nlynx http://localhost/server-status\n5.创建netdata读取apache属性的配置文件\nvi /etc/netdata/python.d/apache.conf\n# # if the URL is password protected, the following are supported: # # user:\u0026#39;username\u0026#39; # pass:\u0026#39;password\u0026#39; # ------------------------------------------------------------------- # AUTO-DETECTION JOBS # only one of them will run (they have the same name) localhost: name : \u0026#39;local\u0026#39; url : \u0026#39;http://localhost/server-status?",
+  "keywords": [
+    
+  ],
+  "articleBody": " 安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf ",
+  "wordCount" : "93",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T12:23:00+08:00",
+  "dateModified": "2022-08-12T12:23:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/tech/netdata-002/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+    <h1 class="post-title">
+      Netdata-监控apache
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 12:23:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/netdata-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> 
+
+  <div class="post-content"><ol>
+<li>安装好apache</li>
+<li>确保监控模块开启</li>
+</ol>
+<pre tabindex="0"><code>/etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启
+LoadModule status_module modules/mod_status.so 没有被注释
+</code></pre><ol start="3">
+<li>一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># vim /etc/httpd/conf.d/server-status.conf</span>
+</span></span><span class="line"><span class="cl">&lt;Location <span class="s2">&#34;/server-status&#34;</span>&gt;
+</span></span><span class="line"><span class="cl">SetHandler server-status
+</span></span><span class="line"><span class="cl"><span class="c1">#Require host localhost           #uncomment to only allow requests from localhost </span>
+</span></span><span class="line"><span class="cl">&lt;/Location&gt;
+</span></span></code></pre></div><ol start="4">
+<li>通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。</li>
+</ol>
+<blockquote>
+<p>yum install lynx<br>
+lynx http://localhost/server-status</p>
+</blockquote>
+<p>5.创建netdata读取apache属性的配置文件</p>
+<blockquote>
+<p>vi /etc/netdata/python.d/apache.conf</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># if the URL is password protected, the following are supported:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#     user:&#39;username&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#     pass:&#39;password&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># -------------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># AUTO-DETECTION JOBS</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># only one of them will run (they have the same name)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">localhost:
+</span></span><span class="line"><span class="cl">  name : <span class="s1">&#39;local&#39;</span>
+</span></span><span class="line"><span class="cl">  url  : <span class="s1">&#39;http://localhost/server-status?auto&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">localipv4:
+</span></span><span class="line"><span class="cl">  name : <span class="s1">&#39;local&#39;</span>
+</span></span><span class="line"><span class="cl">  url  : <span class="s1">&#39;http://127.0.0.1/server-status?auto&#39;</span> 
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">localipv6:
+</span></span><span class="line"><span class="cl">  name : <span class="s1">&#39;local&#39;</span>
+</span></span><span class="line"><span class="cl">  url  : <span class="s1">&#39;http://::1/server-status?auto&#39;</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Mysql数据库-常见问题 | Ken Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="能说下myisam 和 innodb的区别吗
+myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
+innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
+说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
+create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
+事务的基本特性
+原子性指的是一个事务中的操作要么全部成功，要么全部失败。
+一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
+隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
+持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
+主从同步
+首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
+slave连接到master，获取binlog
+master创建dump线程，推送binglog到slave
+slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
+slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
+slave记录自己的binglog">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/mysql-question/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Mysql数据库-常见问题" />
+<meta property="og:description" content="能说下myisam 和 innodb的区别吗
+myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
+innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
+说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
+create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
+事务的基本特性
+原子性指的是一个事务中的操作要么全部成功，要么全部失败。
+一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
+隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
+持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
+主从同步
+首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
+slave连接到master，获取binlog
+master创建dump线程，推送binglog到slave
+slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
+slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
+slave记录自己的binglog" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/mysql-question/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-12T11:10:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T11:10:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Mysql数据库-常见问题"/>
+<meta name="twitter:description" content="能说下myisam 和 innodb的区别吗
+myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
+innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
+说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
+create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
+事务的基本特性
+原子性指的是一个事务中的操作要么全部成功，要么全部失败。
+一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
+隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
+持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
+主从同步
+首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
+slave连接到master，获取binlog
+master创建dump线程，推送binglog到slave
+slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
+slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
+slave记录自己的binglog"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Mysql数据库-常见问题",
+      "item": "/study/mysql-question/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Mysql数据库-常见问题",
+  "name": "Mysql数据库-常见问题",
+  "description": "能说下myisam 和 innodb的区别吗\nmyisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。\ninnodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。\n说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？\ncreate table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B+树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。\n事务的基本特性\n原子性指的是一个事务中的操作要么全部成功，要么全部失败。\n一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。\n隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。\n持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。\n主从同步\n首先先了解mysql主从同步的原理 master提交完事务后，写入binlog\nslave连接到master，获取binlog\nmaster创建dump线程，推送binglog到slave\nslave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中\nslave再开启一个sql线程读取relay log事件并在slave执行，完成同步\nslave记录自己的binglog",
+  "keywords": [
+    
+  ],
+  "articleBody": " 能说下myisam 和 innodb的区别吗\nmyisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。\ninnodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。\n说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？\ncreate table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B+树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。\n事务的基本特性\n原子性指的是一个事务中的操作要么全部成功，要么全部失败。\n一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。\n隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。\n持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。\n主从同步\n首先先了解mysql主从同步的原理 master提交完事务后，写入binlog\nslave连接到master，获取binlog\nmaster创建dump线程，推送binglog到slave\nslave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中\nslave再开启一个sql线程读取relay log事件并在slave执行，完成同步\nslave记录自己的binglog\n",
+  "wordCount" : "37",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T11:10:00+08:00",
+  "dateModified": "2022-08-12T11:10:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/mysql-question/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+    <h1 class="post-title">
+      Mysql数据库-常见问题
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/mysql-question.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> 
+
+  <div class="post-content"><ul>
+<li>
+<p>能说下myisam 和 innodb的区别吗<br>
+myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。<br>
+innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。</p>
+</li>
+<li>
+<p>说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？</p>
+</li>
+</ul>
+<pre tabindex="0"><code>create table user(
+ id int(11) not null,
+  age int(11) not null,
+  primary key(id),
+  key(age)
+);
+</code></pre><p>B+树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。</p>
+<ul>
+<li>
+<p>事务的基本特性<br>
+原子性指的是一个事务中的操作要么全部成功，要么全部失败。<br>
+一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。<br>
+隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。<br>
+持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。</p>
+</li>
+<li>
+<p>主从同步<br>
+首先先了解mysql主从同步的原理
+master提交完事务后，写入binlog<br>
+slave连接到master，获取binlog<br>
+master创建dump线程，推送binglog到slave<br>
+slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中<br>
+slave再开启一个sql线程读取relay log事件并在slave执行，完成同步<br>
+slave记录自己的binglog</p>
+</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="/study/mysql-001/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Mysql数据库-日期函数</span>
+  </a>
+  <a class="next" href="/study/mongodb-003/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Mongodb数据库-增删查改</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

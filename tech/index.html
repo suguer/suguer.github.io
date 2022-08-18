@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Teches | Ken Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="Teches - Ken Blog">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="/tech/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Teches" />
+<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/tech/" /><meta property="og:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Teches"/>
+<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="/">主页</a></div>
+  <h1>
+    Teches
+    <a href="index.xml" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    </a>
+  </h1>
+</header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Gitblit-如何实现自动编译发布
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 在外网正式环境中如果配置不足,编译前端项目可能导致服务器的卡死甚至死机,因此可采取内网服务器上编译再自动发布
+目标 内网编译前端项目,分发到另一个git项目并自动提交发布
+前置条件 gitblit
+正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&#34;) def rootFolder = &#39;/home/git/&#39; def bare = false def cloneAllBranches = true def cloneBranch = &#39;refs/heads/master&#39; def includeSubmodules = true def repoName = repository....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-16 15:50:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Gitblit-如何实现自动编译发布" href="/tech/gitblit/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Github-
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 目前github已经不允许使用账号密码上传代码,因此记录如何通过设置ssh来上传
+目标 前置条件 能运行ssh-keygen
+正式内容 ssh-keygen -t rsa -C “email”
+在 C:\Users\用户.ssh下
+|- id_rsa (上传的时候携带该数据)
+|- id_rsa.pub (可在项目或者个人中心设置中添加该数据)
+如果想要免密码上传代码
+可输入 http://账号:密码@url.gt</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-16 15:35:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Github-" href="/tech/github-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>tronlink-从0到1搭建自己的归集系统
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
+目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
+前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
+1个总钱包,其中会扩展的功能有,分发冻结能量,收款,激活钱包,也可以看业务需要拆开成3个钱包
+开发环境: python mysql
+正式内容 所有的接口以及交互均来自 波场链官网文档 ,如果对于文档不太熟的同学请先阅读了解下波场链的交易流程
+主要数据结构 节点数据 block_chain_block
+数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet
+数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to tronlink-从0到1搭建自己的归集系统" href="/tech/tronlink-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>php-分享自有系统接入OCR图片识别
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to php-分享自有系统接入OCR图片识别" href="/tech/php-ocr/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php邮件收取imap
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 招商银行的收款通知可以添加邮件推送,因此利用php-imap收取邮件,可达到自动化确款的目的
+目标 前置条件 composer require php-imap/php-imap
+正式内容 php-imap 的使用 $mailbox = new Mailbox( &#39;{SMTP服务器:SMTP端口号/imap}INBOX&#39;, // IMAP server and mailbox folder &#39;邮箱账号&#39;, // Username for the before configured mailbox &#39;邮箱密码&#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &#39;UTF-8&#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&gt;searchMailbox(&#39;ALL&#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &#34;IMAP connection failed: &#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&gt; $item) { //循环遍历 $mail = $mailbox-&gt;getMail($item); $fromAddress = $mail-&gt;fromAddress; $content = $mail-&gt;textHtml; if(!...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 17:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php邮件收取imap" href="/tech/php-imap/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>从0到1 用宝塔集成虚拟主机提供商
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 对比一般市场上的虚拟主机,宝塔都能兼容支持绝大多数的功能,并且宝塔有个比较大的特点为,页面上的接口均可以通过api请求,因此产生了这个想法定制出宝塔基础的虚拟主机
+目标 前置条件 window server的主机
+宝塔需安装在数据盘D盘上
+正式内容 定义的配置文件 /data/vhost/baota.conf.json
+[ { &#34;fchrServer&#34;:&#34;flage&#34;, &#34;host&#34;:&#34;127.0.0.1&#34;, &#34;key&#34;:&#34;bt_api_key&#34;, &#34;port&#34;:&#34;8888&#34;, &#34;mysql&#34;:&#34;mysql_password&#34;, &#34;sqlserver&#34;:&#34;mssql_password&#34;, &#34;region_id&#34;:&#34;hk&#34;, &#34;zone_id&#34;:&#34;hk-02&#34;, &#34;network&#34;:&#34;bgp&#34; } ] 封装好的交互php函数方法
+class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use ApiLoggerTrait; private $client; private $key = &#34;&#34;; public $host = &#34;&#34;; private $port = &#34;8888&#34;; private $mssql_password = &#34;&#34;; /** * @var array 远端主机的状态转换 */ public $RemoteStatus = [ &#39;1&#39; =&gt; &#39;Running&#39;, &#39;0&#39; =&gt; &#39;Stopped&#39;, ]; public $IISRemoteStatus = [ &#39;Started&#39; =&gt; &#39;Running&#39;, &#39;Stopped&#39; =&gt; &#39;Stopped&#39;, ]; public static function getConfig() { return json_decode(file_get_contents(&#39;/data/vhost/baota....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:55:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;15 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to 从0到1 用宝塔集成虚拟主机提供商" href="/tech/baota/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-编码解码punycode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn–fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &#39;-&#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php-编码解码punycode" href="/tech/php-punycode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-Swagger代码了解
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
+目标 前置条件 zircote/swagger-php document
+正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=“Fapi”, version=“0.1”,description=“antdv5的接口前缀为/api/v2
+当前版本为/api/返回列表的格式有区别外其他一致”),
+文档中的api路径 @OA\Server(url=“http://www.github.com/&#34;,description=&#34;github&#34;,),
+预先定义好返回数据的格式 @OA\Schema(
+schema=“Pagination”,
+@OA\Property(property=“current”, type=“integer”),
+@OA\Property(property=“total”, type=“integer”),
+@OA\Property(property=“pageSize”, type=“integer”),
+)
+分组每种接口的类别,如/user, /order /record 等, @OA\Tag(name=“api-tag”, description=“Tag”)
+编写接口的声明 @OA\Post( path=&#34;/api/index&#34;, summary=&#34;api name&#34;, operationId=&#34;UniqueOperationId&#34;, tags={&#34;api-tag&#34;}, @OA\Parameter(in=&#34;query&#34;, name=&#34;fIDDomainFolder&#34;, required=false,schema={&#34;type&#34;:&#34;string&#34;},description=&#34;&#34;), @OA\Parameter(in=&#34;query&#34;, name=&#34;intActive&#34;, required=false,schema={&#34;type&#34;:&#34;integer&#34;},description=&#34;&#34;), @OA\Parameter(in=&#34;query&#34;, name=&#34;timetype&#34;, required=false,schema={&#34;type&#34;:&#34;string&#34;,&#34;enum&#34;:{&#34;created_at&#34;,&#34;expired_at&#34;,&#34;update_at&#34;}},description=&#34;时间类型&#34;), @OA\Response( response=&#34;200&#34;, description=&#34;An example resource&#34;, @OA\JsonContent( @OA\Property(property=&#34;Pagination&#34;,type=&#34;object&#34;, ref=&#34;#/components/schemas/Pagination&#34;), ) ), ) 2. 将定义好的注释声明生成openapi.json $openapi = \OpenApi\Generator::scan([ path . &#39;api&#39;, path . &#39;model&#39;, ]); $openapi-&gt;toJson() 3....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:06:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php-Swagger代码了解" href="/tech/php-swagger/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php支付接口
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;8 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php支付接口" href="/tech/php-pay/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Python-多线程
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Python-多线程" href="/tech/python-thread/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="/tech/page/2/">下一页 »</a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

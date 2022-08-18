@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>wechaty-描述各方法的类型 | Ken Blog</title>
+<meta name="keywords" content="wechaty">
+<meta name="description" content="Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网
+# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:
+type 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片
+from wechaty import (FileBox) file_box = FileBox.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/wechaty-002/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="wechaty-描述各方法的类型" />
+<meta property="og:description" content="Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网
+# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:
+type 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片
+from wechaty import (FileBox) file_box = FileBox." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/wechaty-002/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-15T11:31:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-15T11:31:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="wechaty-描述各方法的类型"/>
+<meta name="twitter:description" content="Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网
+# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:
+type 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片
+from wechaty import (FileBox) file_box = FileBox."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "wechaty-描述各方法的类型",
+      "item": "/study/wechaty-002/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "wechaty-描述各方法的类型",
+  "name": "wechaty-描述各方法的类型",
+  "description": "Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网\n# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:\ntype 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片\nfrom wechaty import (FileBox) file_box = FileBox.",
+  "keywords": [
+    "wechaty"
+  ],
+  "articleBody": "Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网\n# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:\ntype 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片\nfrom wechaty import (FileBox) file_box = FileBox.from_url('https://wechaty.js.org/img/icon.png', name='ding-dong.jpg') await msg.say(file_box) talker 发送者 print(msg.talker()) is_self -\u003e bool 判断是否自己发出的消息 if msg.is_self() is False: room -\u003e [Room,None] 获取当前消息所在的微信群,如果不存在返回None msg.room() ###Room 微信群,可实现自动邀请进群,踢群等动作 官网\n常用说明:\nfind 根据条件搜索特定的微信群 topic = '微信群名' await self.Room.find(query=RoomQueryFilter(topic=topic)) add 邀请好友进群 await room.add(msg.talker()) delete 踢人出群 await room.delete(msg.talker()) Contact指微信中的好友 常用说明:\nfind from wechaty import (ContactQueryFilter) await self.Contact.find(query=ContactQueryFilter(name=\"微信昵称\")) 其中 ContactQueryFilter 表示搜索的条件,可根据特定的条件搜索出指定的微信用户\n@dataclass class ContactQueryFilter: \"\"\" alias can be regular expression \"\"\" alias: Optional[str] = None 备注名 id: Optional[str] = None name: Optional[str] = None 微信昵称 weixin: Optional[str] = None ",
+  "wordCount" : "151",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-15T11:31:00+08:00",
+  "dateModified": "2022-08-15T11:31:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/wechaty-002/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+    <h1 class="post-title">
+      wechaty-描述各方法的类型
+    </h1>
+    <div class="post-meta"><span title='2022-08-15 11:31:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/wechaty-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#message--%e7%ae%80%e5%8d%95%e6%9d%a5%e8%af%b4%e5%b0%b1%e6%98%af%e6%b6%88%e6%81%af%e5%9c%a8%e5%be%ae%e4%bf%a1%e4%b8%ad%e8%81%8a%e5%a4%a9%e7%9a%84%e6%96%87%e5%ad%97%e8%bd%ac%e8%b4%a6%e8%af%ad%e9%9f%b3%e7%ad%89%e7%ad%89%e9%83%bd%e6%98%af%e6%b6%88%e6%81%af%e7%9a%84%e4%b8%80%e7%a7%8d%e5%9b%a0%e6%ad%a4%e6%98%af%e6%9c%80%e9%87%8d%e8%a6%81%e7%9a%84%e4%b8%80%e9%a1%b9" aria-label="Message  简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项">Message  简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项</a></li>
+                <li>
+                    <a href="#contact%e6%8c%87%e5%be%ae%e4%bf%a1%e4%b8%ad%e7%9a%84%e5%a5%bd%e5%8f%8b" aria-label="Contact指微信中的好友">Contact指微信中的好友</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h3 id="message--简单来说就是消息在微信中聊天的文字转账语音等等都是消息的一种因此是最重要的一项">Message  简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项<a hidden class="anchor" aria-hidden="true" href="#message--简单来说就是消息在微信中聊天的文字转账语音等等都是消息的一种因此是最重要的一项">#</a></h3>
+<p><a href="https://wechaty.js.org/docs/api/message">官网</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 消息类型</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MessageType</span><span class="p">(</span><span class="n">betterproto</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_ATTACHMENT</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_AUDIO</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_CONTACT</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_EMOTICON</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_IMAGE</span> <span class="o">=</span> <span class="mi">5</span>  <span class="n">图像</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_TEXT</span> <span class="o">=</span> <span class="mi">6</span>  <span class="n">文字</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_VIDEO</span> <span class="o">=</span> <span class="mi">7</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_CHAT_HISTORY</span> <span class="o">=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_LOCATION</span> <span class="o">=</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_MINI_PROGRAM</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_TRANSFER</span> <span class="o">=</span> <span class="mi">11</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_RED_ENVELOPE</span> <span class="o">=</span> <span class="mi">12</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_RECALLED</span> <span class="o">=</span> <span class="mi">13</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MESSAGE_TYPE_URL</span> <span class="o">=</span> <span class="mi">14</span>
+</span></span></code></pre></div><p>常用说明:</p>
+<ul>
+<li>type 消息类型,具体类型参考上述</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">type</span><span class="p">())</span>
+</span></span></code></pre></div><ul>
+<li>text 接受的文本信息</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span></span></code></pre></div><ul>
+<li>say 回复信息,不仅文本消息,图片等都可以发送</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">say</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+</span></span></code></pre></div><p>发送图片</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">wechaty</span> <span class="kn">import</span> <span class="p">(</span><span class="n">FileBox</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">file_box</span> <span class="o">=</span> <span class="n">FileBox</span><span class="o">.</span><span class="n">from_url</span><span class="p">(</span><span class="s1">&#39;https://wechaty.js.org/img/icon.png&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ding-dong.jpg&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">await</span> <span class="n">msg</span><span class="o">.</span><span class="n">say</span><span class="p">(</span><span class="n">file_box</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>talker 发送者</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">talker</span><span class="p">())</span>
+</span></span></code></pre></div><ul>
+<li>is_self -&gt; bool 判断是否自己发出的消息</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">  <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">is_self</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+</span></span></code></pre></div><ul>
+<li>room -&gt; [Room,None] 获取当前消息所在的微信群,如果不存在返回None</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">   <span class="n">msg</span><span class="o">.</span><span class="n">room</span><span class="p">()</span>
+</span></span></code></pre></div><hr>
+<p>###Room 微信群,可实现自动邀请进群,踢群等动作
+<a href="https://wechaty.js.org/docs/api/room">官网</a></p>
+<p>常用说明:</p>
+<ul>
+<li>find 根据条件搜索特定的微信群</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="n">topic</span> <span class="o">=</span> <span class="s1">&#39;微信群名&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">Room</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">RoomQueryFilter</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">topic</span><span class="p">))</span>
+</span></span></code></pre></div><ul>
+<li>add 邀请好友进群</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">   <span class="k">await</span> <span class="n">room</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">talker</span><span class="p">())</span>
+</span></span></code></pre></div><ul>
+<li>delete 踢人出群</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">   <span class="k">await</span> <span class="n">room</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">talker</span><span class="p">())</span>
+</span></span></code></pre></div><h3 id="contact指微信中的好友">Contact指微信中的好友<a hidden class="anchor" aria-hidden="true" href="#contact指微信中的好友">#</a></h3>
+<p>常用说明:</p>
+<ul>
+<li>find</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">wechaty</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ContactQueryFilter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">Contact</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">ContactQueryFilter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;微信昵称&#34;</span><span class="p">))</span>
+</span></span></code></pre></div><p>其中 ContactQueryFilter 表示搜索的条件,可根据特定的条件搜索出指定的微信用户</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@dataclass</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ContactQueryFilter</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    alias can be regular expression
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">alias</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="n">备注名</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>   
+</span></span><span class="line"><span class="cl">    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="n">微信昵称</span>
+</span></span><span class="line"><span class="cl">    <span class="n">weixin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/wechaty/">wechaty</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="/study/powerdns/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>powerdns-学习如何搭建个人专属DNS服务器</span>
+  </a>
+  <a class="next" href="/study/wechaty-001/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>wechaty-初识wechaty用途</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

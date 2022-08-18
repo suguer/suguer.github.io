@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>gitblit on Ken Blog</title>
+    <link>/tags/gitblit/</link>
+    <description>Recent content in gitblit on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 16 Aug 2022 15:50:00 +0800</lastBuildDate><atom:link href="/tags/gitblit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gitblit-如何实现自动编译发布</title>
+      <link>/tech/gitblit/</link>
+      <pubDate>Tue, 16 Aug 2022 15:50:00 +0800</pubDate>
+      
+      <guid>/tech/gitblit/</guid>
+      <description>前言 在外网正式环境中如果配置不足,编译前端项目可能导致服务器的卡死甚至死机,因此可采取内网服务器上编译再自动发布
+目标 内网编译前端项目,分发到另一个git项目并自动提交发布
+前置条件 gitblit
+正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&amp;#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&amp;#34;) def rootFolder = &amp;#39;/home/git/&amp;#39; def bare = false def cloneAllBranches = true def cloneBranch = &amp;#39;refs/heads/master&amp;#39; def includeSubmodules = true def repoName = repository.</description>
+    </item>
+    
+  </channel>
+</rss>

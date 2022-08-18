@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>python on Ken Blog</title>
+    <link>/tags/python/</link>
+    <description>Recent content in python on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 16 Aug 2022 15:07:00 +0800</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>python-自定义线程池</title>
+      <link>/code/python-threadpool/</link>
+      <pubDate>Tue, 16 Aug 2022 15:07:00 +0800</pubDate>
+      
+      <guid>/code/python-threadpool/</guid>
+      <description>自定义的一个小功能,线程池处理,用法很简单
+def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread, args=[1, 2], kwds={}) main.putRequest(req) #-*-encoding:utf-8-*- &amp;#39;&amp;#39;&amp;#39; Created on 2012-3-9 @summary: 线程池 &amp;#39;&amp;#39;&amp;#39; import sys import threading import queue import traceback import statistics # 定义一些Exception，用于自定义异常处理 class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self.</description>
+    </item>
+    
+    <item>
+      <title>python-波场区块链的扫块系统</title>
+      <link>/life/python-tronlink-scan/</link>
+      <pubDate>Mon, 15 Aug 2022 11:26:00 +0800</pubDate>
+      
+      <guid>/life/python-tronlink-scan/</guid>
+      <description>[github]路径(https://github.com/suguer/python-tronlink-scan)
+python-tronlink-scan 波场链的扫块功能,如果对于需要获取波场链上的交易情况,又没有条件部署一台自己的节点,那么采用本文的方式是一个不错的选择,通过调用接口也能及时获取到交易信息
+安装需要的用到的插件
+pip install -r requirements.txt 运行即可,有需要的可调整为数据库的结构来存
+python main.py example: 需要记录的合约 config/contract.csv
+地址|名称|精度
+address,name,decimals TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,USDT,6 TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8,USDC,6 TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4,BitTorrent,18 需要记录的钱包 config/wallet.csv
+地址|密钥
+address,private_key TSRg164MqUKMxDn2eQYvAg9iFNhQYXAFa8, TNV2h4c2ibuQKes5XTgwuuP9mdfQiAHxpL, TGn37A4yEjVBCXojhFNpZvovWvfNdzwC3x, 激活的要以 config/transaction.csv
+hash|区块|发出地址|接收地址|区块时间|数额|合约地址|状态
+hash,block,from,to,block_at,amount,contract_address,status f474e2ceb883637aae1f666adc7714309bf933cfd956173c68bd0512e2190f34,40967609,TPJA5T1QaJEZnCgujC36GpX2wGLYsYnqAh,TNV2h4c2ibuQKes5XTgwuuP9mdfQiAHxpL,2022-05-25 13:32:27,28.29,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,success fbd03d69af7ba8e1f7c56dd11738c8d6269497193daf0efa23eff3ed477e6f12,40969058,TJDFLrCiKneK2rXjCudn4gGMcYhVeqB8ru,TGn37A4yEjVBCXojhFNpZvovWvfNdzwC3x,2022-05-25 14:45:06,7229.02,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,success </description>
+    </item>
+    
+    <item>
+      <title>Python-初学tensorflow第二天-学习例子</title>
+      <link>/study/python-tensorflow-002/</link>
+      <pubDate>Fri, 12 Aug 2022 15:18:00 +0800</pubDate>
+      
+      <guid>/study/python-tensorflow-002/</guid>
+      <description>学习来源Bilibili 根据例子编写出线性回归方程
+import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.csv&amp;#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&amp;#39;adam&amp;#39;,loss=&amp;#39;mse&amp;#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
+1,10.000000 ,26.658839
+2,10.401338 ,27.306435
+3,10.842809 ,22.132410
+4,11.244147 ,21.169841
+5,11.645449 ,15.192634
+6,12.086957 ,26.398951
+7,12.048829 ,17.435307
+8,12.889632 ,25.507885
+9,13.290970 ,36.884595
+10,13.732441 ,39.666109
+11,14.133779 ,34.396281
+12,14.635117 ,41.497994
+13,14.978589 ,44.981575
+14,15.377926 ,47.039595
+15,15.779264 ,48.252578
+16,16.220736 ,57.034251
+17,16.622074 ,51.490919
+18,17.023411 ,51.336621
+19,17.464883 ,57.681998
+20,17.866221 ,68.553714
+21,18.267559 ,64.310925
+22,18.709030 ,68.959009
+23,19.110368 ,74.614639
+24,19.511706 ,71.867195
+25,19.913043 ,76.098135</description>
+    </item>
+    
+    <item>
+      <title>Python-初学tensorflow第一天-搭建环境</title>
+      <link>/study/python-tensorflow-001/</link>
+      <pubDate>Fri, 12 Aug 2022 15:12:00 +0800</pubDate>
+      
+      <guid>/study/python-tensorflow-001/</guid>
+      <description>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
+打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library &amp;lsquo;cudart64_110.dll&amp;rsquo;; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
+Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
+A: 找到C:\Program Files\NVIDIA Corporation\FrameViewSDK文件夹进行卸载
+Q: 安装cuda一直安装不成功,nsight visual studio edition提示安装失败 A: 尝试卸载电脑的Visual Studio Community
+Q: Downgrade the protobuf package to 3.</description>
+    </item>
+    
+    <item>
+      <title>Python-多线程</title>
+      <link>/tech/python-thread/</link>
+      <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
+      
+      <guid>/tech/python-thread/</guid>
+      <description>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &amp;#39;&amp;#39;&amp;#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&amp;#39;&amp;#39;&amp;#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &amp;#39;&amp;#39;&amp;#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&amp;#39;&amp;#39;&amp;#39; while True: if self._dismissed.is_set(): break try: &amp;#39;&amp;#39;&amp;#39; Queue.</description>
+    </item>
+    
+    <item>
+      <title>初始Python-自动化操作</title>
+      <link>/study/python-selenium/</link>
+      <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
+      
+      <guid>/study/python-selenium/</guid>
+      <description>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
+以下是我在实际使用中对于selenium的一些心得和用法
+implicitly_wait
+等待浏览器的相应时间,与sleep的区别在于implicitly_wait是设置的值或页面超时优先,而sleep则是固定睡眠时间,我在用的时候则是2个都同时使用.确保页面能顺利加载到需要的数据
+xpath 如果需要用selenium进行简单的爬虫和模拟浏览,那么xpath的语法是必须要了解明白的,html语言中比起正则,xpath的代码更加清晰和直观
+click 对于按钮的点击事件,推荐用
+driver.execute_script(&amp;#34;arguments[0].click();&amp;#34;, nextButton) 据说.click()会导致报错,虽然我还没遇到过</description>
+    </item>
+    
+    <item>
+      <title>初始Python-文件操作</title>
+      <link>/study/python-001/</link>
+      <pubDate>Fri, 12 Aug 2022 15:05:00 +0800</pubDate>
+      
+      <guid>/study/python-001/</guid>
+      <description>列出指定目录下的全部文件
+import os file_array=[] dir_array=[ os.getcwd() + &amp;#34;/directory1/&amp;#34;, os.getcwd() + &amp;#34;/directory2/&amp;#34;, ] for dir in dir_array: for root, dirs, files in os.walk(dir): for filename in files: file_array.append(dir+filename) Excel操作读写
+wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&amp;#39;数据明细&amp;#39;) # print(sh.nrows) # 有效数据行数 # print(sh.ncols) # 有效数据列数 for index in range(len(sh.row_values(0))): title = sh.row_values(0)[index] </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>powerdns on Ken Blog</title>
+    <link>/tags/powerdns/</link>
+    <description>Recent content in powerdns on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 17 Aug 2022 17:46:00 +0800</lastBuildDate><atom:link href="/tags/powerdns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>powerdns-学习如何搭建个人专属DNS服务器</title>
+      <link>/study/powerdns/</link>
+      <pubDate>Wed, 17 Aug 2022 17:46:00 +0800</pubDate>
+      
+      <guid>/study/powerdns/</guid>
+      <description>powerdns | powerdns_http_api | download link
+1、 环境 environment 系统 centos 7.9
+2、 安装 install powerdns yum install epel-release yum-plugin-priorities curl -o /etc/yum.repos.d/powerdns-auth-45.repo https://repo.powerdns.com/repo-files/centos-auth-45.repo
+yum install pdns
+3、 安装 install pdns-recursor yum -y install epel-release yum-plugin-priorities curl -o /etc/yum.repos.d/powerdns-rec-45.repo https://repo.powerdns.com/repo-files/centos-rec-45.repo yum -y install pdns-recursor
+4、 配置 configure 修改mysql配置文件
+[mysqld] /etc/my.cnf
+innodb_file_per_table = 1 innodb_flush_log_at_trx_commit = 0 character-set-server=utf8 collation-server=utf8_general_ci create database poweradmin; grant all on poweradmin.* to puser1@localhost identified by &amp;#34;wisdom123@&amp;#34;; flush privileges; mysql -u root poweradmin &amp;lt; /usr/share/doc/pdns-backend-mysql-4.</description>
+    </item>
+    
+  </channel>
+</rss>

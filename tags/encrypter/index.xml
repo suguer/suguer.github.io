@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>encrypter on Ken Blog</title>
+    <link>/tags/encrypter/</link>
+    <description>Recent content in encrypter on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 10:34:00 +0800</lastBuildDate><atom:link href="/tags/encrypter/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Php-自定义封装加密方法</title>
+      <link>/study/php-encrypter/</link>
+      <pubDate>Mon, 15 Aug 2022 10:34:00 +0800</pubDate>
+      
+      <guid>/study/php-encrypter/</guid>
+      <description>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &amp;#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&amp;#34;; private static $cipher = &amp;#34;AES-256-CBC&amp;#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &amp;#39;iv&amp;#39; =&amp;gt; $iv, &amp;#39;value&amp;#39; =&amp;gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&amp;#39;iv&amp;#39;]); $decrypted = openssl_decrypt($payload[&amp;#39;value&amp;#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </description>
+    </item>
+    
+  </channel>
+</rss>

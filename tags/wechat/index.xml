@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>wechat on Ken Blog</title>
+    <link>/tags/wechat/</link>
+    <description>Recent content in wechat on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 11:28:00 +0800</lastBuildDate><atom:link href="/tags/wechat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>微信小程序-云收租</title>
+      <link>/life/wechat-rent/</link>
+      <pubDate>Mon, 15 Aug 2022 11:28:00 +0800</pubDate>
+      
+      <guid>/life/wechat-rent/</guid>
+      <description>实现功能模块
+房屋模块
+|-创建房子
+|-创建合同
+|-定时确认账单 统计模块
+|-查阅最近1年每月的收支情况 |-获取到最新房屋合同的动态 推送模块 |-自定义订阅需要推送的日期 </description>
+    </item>
+    
+  </channel>
+</rss>

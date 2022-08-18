@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>gitfun | Ken Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
+#!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/gitfun/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="gitfun" />
+<meta property="og:description" content="用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
+#!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/gitfun/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-12T12:29:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T12:29:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="gitfun"/>
+<meta name="twitter:description" content="用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
+#!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "gitfun",
+      "item": "/study/gitfun/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "gitfun",
+  "name": "gitfun",
+  "description": "用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh\n#!/bin/sh /bin/stty intr \u0026#39;\u0026#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/.",
+  "keywords": [
+    
+  ],
+  "articleBody": "用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh\n#!/bin/sh /bin/stty intr '' function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/.git ];then cd $checkout_path #git pull $git_url git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url $checkout_path chmod 700 $checkout_path/.git cd $checkout_path git checkout $branch #switch to branch if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } /home/git/.bashrc\n/bin/stty intr '' . /home/git/gitfun.inc.sh echo passwd echo project while read -p \"input the repository name[input 'end' to exit] ?\" repos do #########start if [ \"$repos\" = \"passwd\" ];then /usr/bin/passwd continue elif [ \"$repos\" = \"project\" ];then branch=released git_url=\"url.git\" checkout_path=/home/git/$repos git_checkout_branch cd /home/git/$repos echo \"build ok\" rsync -avu --delete --exclude \".git\" /home/git/$repos/ /targetpath continue elif [ \"$repos\" = \"end\" ];then break else echo \"no such repository\" fi done exit 使用git角色登录服务器 或者 su git\npasswd project input the repository name[input 'end' to exit] ? ",
+  "wordCount" : "225",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T12:29:00+08:00",
+  "dateModified": "2022-08-12T12:29:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/gitfun/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+    <h1 class="post-title">
+      gitfun
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 12:29:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/gitfun.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> 
+
+  <div class="post-content"><p>用于git角色登录服务器,触发版本pull和同步
+/home/git/gitfun.inc.sh</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="cp">#!/bin/sh
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>/bin/stty intr <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> git_checkout<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="nv">$checkout_path</span>/.git <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">cd</span> <span class="nv">$checkout_path</span>
+</span></span><span class="line"><span class="cl">        git pull <span class="nv">$git_url</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#git pull $git_url $branch    #checkout a branch</span>
+</span></span><span class="line"><span class="cl">	chmod <span class="m">700</span> <span class="nv">$checkout_path</span>/.git
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="nv">$git_url</span> update finish!
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">        mkdir -p <span class="nv">$checkout_path</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$checkout_path</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">cd</span> <span class="nv">$checkout_path</span>/../
+</span></span><span class="line"><span class="cl">        git clone <span class="nv">$git_url</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#git checkout $branch   #switch to branch</span>
+</span></span><span class="line"><span class="cl">	chmod <span class="m">700</span> <span class="nv">$checkout_path</span>/.git
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -d <span class="nv">$checkout_path</span>/.git <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="nv">$git_url</span> has checkout successfully!
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">function</span> git_checkout_branch<span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="nv">$checkout_path</span>/.git <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">cd</span> <span class="nv">$checkout_path</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#git pull $git_url</span>
+</span></span><span class="line"><span class="cl">        git pull <span class="nv">$git_url</span> <span class="nv">$branch</span>    <span class="c1">#checkout a branch</span>
+</span></span><span class="line"><span class="cl">	chmod <span class="m">700</span> <span class="nv">$checkout_path</span>/.git
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="nv">$git_url</span> update finish!
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">        mkdir -p <span class="nv">$checkout_path</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$checkout_path</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">cd</span> <span class="nv">$checkout_path</span>/../
+</span></span><span class="line"><span class="cl">        git clone <span class="nv">$git_url</span> <span class="nv">$checkout_path</span>
+</span></span><span class="line"><span class="cl">	chmod <span class="m">700</span> <span class="nv">$checkout_path</span>/.git
+</span></span><span class="line"><span class="cl">        <span class="nb">cd</span> <span class="nv">$checkout_path</span>
+</span></span><span class="line"><span class="cl">        git checkout <span class="nv">$branch</span>   <span class="c1">#switch to branch</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">[</span> -d <span class="nv">$checkout_path</span>/.git <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">echo</span> <span class="nv">$git_url</span> has checkout successfully!
+</span></span><span class="line"><span class="cl">        <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>/home/git/.bashrc</p>
+<pre tabindex="0"><code class="language-base" data-lang="base">/bin/stty intr &#39;&#39;
+. /home/git/gitfun.inc.sh
+echo passwd
+echo project
+
+while read -p &#34;input the repository name[input &#39;end&#39; to exit] ?&#34; repos
+do
+#########start
+if [ &#34;$repos&#34; = &#34;passwd&#34; ];then
+/usr/bin/passwd
+continue
+
+
+elif [ &#34;$repos&#34; = &#34;project&#34; ];then
+branch=released
+git_url=&#34;url.git&#34;
+checkout_path=/home/git/$repos
+git_checkout_branch
+cd /home/git/$repos
+echo &#34;build ok&#34;
+rsync -avu --delete --exclude &#34;.git&#34;  /home/git/$repos/  /targetpath
+continue
+
+elif [ &#34;$repos&#34; = &#34;end&#34; ];then
+break
+else
+echo &#34;no such repository&#34;
+fi
+done
+exit
+</code></pre><p>使用git角色登录服务器 或者 su git</p>
+<pre tabindex="0"><code class="language-base" data-lang="base">passwd
+project
+input the repository name[input &#39;end&#39; to exit] ?
+</code></pre>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="/study/centos/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Centos-工作中随手的记录</span>
+  </a>
+  <a class="next" href="/study/mysql-note/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Mysql数据库-使用记录</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

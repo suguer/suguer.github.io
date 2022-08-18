@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>php-分享自有系统接入OCR图片识别 | Ken Blog</title>
+<meta name="keywords" content="php, ocr">
+<meta name="description" content="前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/php-ocr/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="php-分享自有系统接入OCR图片识别" />
+<meta property="og:description" content="前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tech/php-ocr/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-15T10:35:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-15T10:35:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="php-分享自有系统接入OCR图片识别"/>
+<meta name="twitter:description" content="前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "php-分享自有系统接入OCR图片识别",
+      "item": "/tech/php-ocr/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "php-分享自有系统接入OCR图片识别",
+  "name": "php-分享自有系统接入OCR图片识别",
+  "description": "前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api\n目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包\n前置条件 开发环境 PHP 百度云能企业认证\n正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了\nfunction getToken 封装下获取Token的方式,避免重复请求次数过于频繁\npublic function getToken() { $filename = \u0026#34;/data/baidu_access_token.{$this-\u0026gt;access_key}.json\u0026#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[\u0026#39;expires_in\u0026#39;]) \u0026gt; time()) { return $json[\u0026#39;access_token\u0026#39;]; } } } $resp = json_decode($this-\u0026gt;client-\u0026gt;request(\u0026#34;POST\u0026#34;, \u0026#34;https://aip.baidubce.com/oauth/2.0/token\u0026#34;, [ \u0026#39;form_params\u0026#39; =\u0026gt; [ \u0026#39;grant_type\u0026#39; =\u0026gt; \u0026#39;client_credentials\u0026#39;, \u0026#39;client_id\u0026#39; =\u0026gt; $this-\u0026gt;access_key, \u0026#39;client_secret\u0026#39; =\u0026gt; $this-\u0026gt;secret_key, ] ])-\u0026gt;getBody()-\u0026gt;getContents(), 1); $data = [ \u0026#39;access_token\u0026#39; =\u0026gt; $resp[\u0026#39;access_token\u0026#39;], \u0026#39;expires_in\u0026#39; =\u0026gt; date(\u0026#34;Y-m-d H:i:s\u0026#34;, strtotime(\u0026#34;+29 day\u0026#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[\u0026#39;access_token\u0026#39;]; } private function request($action, $p) { $option = [ \u0026#39;query\u0026#39; =\u0026gt; [ \u0026#39;access_token\u0026#39; =\u0026gt; $this-\u0026gt;getToken(), ], ]; if ($this-\u0026gt;target == \u0026#39;face\u0026#39;) { $option[\u0026#39;json\u0026#39;] = $p; } else { $option[\u0026#39;form_params\u0026#39;] = $p; } $resp = $this-\u0026gt;client-\u0026gt;request(\u0026#34;POST\u0026#34;, \u0026#34;{$api_url}/{$action}\u0026#34;, $option) -\u0026gt;getBody() -\u0026gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下",
+  "keywords": [
+    "php", "ocr"
+  ],
+  "articleBody": "前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api\n目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包\n前置条件 开发环境 PHP 百度云能企业认证\n正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了\nfunction getToken 封装下获取Token的方式,避免重复请求次数过于频繁\npublic function getToken() { $filename = \"/data/baidu_access_token.{$this-\u003eaccess_key}.json\"; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json['expires_in']) \u003e time()) { return $json['access_token']; } } } $resp = json_decode($this-\u003eclient-\u003erequest(\"POST\", \"https://aip.baidubce.com/oauth/2.0/token\", [ 'form_params' =\u003e [ 'grant_type' =\u003e 'client_credentials', 'client_id' =\u003e $this-\u003eaccess_key, 'client_secret' =\u003e $this-\u003esecret_key, ] ])-\u003egetBody()-\u003egetContents(), 1); $data = [ 'access_token' =\u003e $resp['access_token'], 'expires_in' =\u003e date(\"Y-m-d H:i:s\", strtotime(\"+29 day\")), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp['access_token']; } private function request($action, $p) { $option = [ 'query' =\u003e [ 'access_token' =\u003e $this-\u003egetToken(), ], ]; if ($this-\u003etarget == 'face') { $option['json'] = $p; } else { $option['form_params'] = $p; } $resp = $this-\u003eclient-\u003erequest(\"POST\", \"{$api_url}/{$action}\", $option) -\u003egetBody() -\u003egetContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下\n/** * 身份证识别 * @param $id_card_side string 正反面 -front：身份证含照片的一面 -back：身份证带国徽的一面 * @param string $image string 图像数据 * @param string $url string 图片完整URL * @param array $param * @return mixed */ public function OcrIdcard($id_card_side, $image = \"\", $url = \"\", $param = []) { $p = ['id_card_side' =\u003e $id_card_side]; if ($image) { $p['image'] = $image; } elseif ($url) { $p['url'] = $url; } $redisValue = $this-\u003eredis-\u003eget(\"Ocr:Baidu:Idcard\"); $redisDate = $this-\u003eredis-\u003eget(\"Ocr:Baidu:IdcardDate\"); if (!$redisDate || $redisDate != date(\"Y-m-d\")) { $this-\u003eredis-\u003eset(\"Ocr:Baidu:IdcardDate\", date(\"Y-m-d\")); $redisValue = 0; } if ($redisValue \u0026\u0026 $redisValue \u003e 480) { return \"api.count.limit\"; } $this-\u003eredis-\u003eset(\"Ocr:Baidu:Idcard\", $redisValue ? $redisValue + 1 : 1); $resp = $this-\u003erequest(\"/rest/2.0/ocr/v1/idcard\", $p); if (isset($resp[\"error_msg\"])) { return $resp[\"error_msg\"]; } $data = [ 'name' =\u003e isset($resp[\"words_result\"][\"姓名\"])\u0026\u0026$resp[\"words_result\"][\"姓名\"] ? $resp[\"words_result\"][\"姓名\"]['words'] : \"\", 'nation' =\u003e isset($resp[\"words_result\"][\"民族\"])\u0026\u0026$resp[\"words_result\"][\"民族\"] ? $resp[\"words_result\"][\"民族\"]['words'] : \"\", 'address' =\u003e isset($resp[\"words_result\"][\"住址\"])\u0026\u0026$resp[\"words_result\"][\"住址\"] ? $resp[\"words_result\"][\"住址\"]['words'] : \"\", 'idnumber' =\u003e isset($resp[\"words_result\"][\"公民身份号码\"])\u0026\u0026$resp[\"words_result\"][\"公民身份号码\"] ? $resp[\"words_result\"][\"公民身份号码\"]['words'] : \"\", 'birthday' =\u003e isset($resp[\"words_result\"][\"出生\"])\u0026\u0026$resp[\"words_result\"][\"出生\"] ? $resp[\"words_result\"][\"出生\"]['words'] : \"\", 'sex' =\u003e isset($resp[\"words_result\"][\"性别\"])\u0026\u0026$resp[\"words_result\"][\"性别\"] ? $resp[\"words_result\"][\"性别\"]['words'] : \"\", 'expired_at' =\u003e isset($resp[\"words_result\"][\"失效日期\"])\u0026\u0026$resp[\"words_result\"][\"失效日期\"] ? date(\"Y-m-d\",strtotime($resp[\"words_result\"][\"失效日期\"]['words'])) : \"\", 'created_at' =\u003e isset($resp[\"words_result\"][\"签发日期\"])\u0026\u0026$resp[\"words_result\"][\"签发日期\"] ? date(\"Y-m-d\",strtotime($resp[\"words_result\"][\"签发日期\"]['words'])) : \"\", ]; if (!$data['idnumber']\u0026\u0026!$data['expired_at']) return \"idnumber.empty\"; return $data; } 可以看到这里使用了一段redis进行数量限制,百度每日可免费使用的额度是500次,避免测试中引起的差异,这里限制正式环境中每天可调用490次接口\n营业执照识别 function OcrBusinessLicense public function OcrBusinessLicense($image = \"\", $url = \"\", $param = []) { $p = [ ]; if ($image) { $p['image'] = $image; } elseif ($url) { $p['url'] = $url; } $redisValue = $this-\u003eredis-\u003eget(\"Ocr:Baidu:BusinessLicense\"); $redisDate = $this-\u003eredis-\u003eget(\"Ocr:Baidu:BusinessLicenseDate\"); if (!$redisDate || $redisDate != date(\"Y-m-d\")) { $this-\u003eredis-\u003eset(\"Ocr:Baidu:BusinessLicenseDate\", date(\"Y-m-d\")); $redisValue = 0; } if ($redisValue \u0026\u0026 $redisValue \u003e 190) { return \"api.count.limit\"; } $this-\u003eredis-\u003eset(\"Ocr:Baidu:BusinessLicense\", $redisValue ? $redisValue + 1 : 1); $resp = $this-\u003erequest(\"/rest/2.0/ocr/v1/business_license\", $p); if (isset($resp[\"error_msg\"])) { return $resp[\"error_msg\"]; } $data = [ 'reg_num' =\u003e $resp[\"words_result\"][\"社会信用代码\"] ? $resp[\"words_result\"][\"社会信用代码\"]['words'] : \"\", //注册号 'name' =\u003e $resp[\"words_result\"][\"单位名称\"] ? $resp[\"words_result\"][\"单位名称\"]['words'] : \"\", //公司名称 'type' =\u003e $resp[\"words_result\"][\"类型\"] ? $resp[\"words_result\"][\"类型\"]['words'] : \"\", //公司类型 'person' =\u003e $resp[\"words_result\"][\"法人\"] ? $resp[\"words_result\"][\"法人\"]['words'] : \"\", //公司法人 'establish_date' =\u003e $resp[\"words_result\"][\"成立日期\"] ? $resp[\"words_result\"][\"成立日期\"]['words'] : \"\", //公司注册日期 'valid_period' =\u003e $resp[\"words_result\"][\"有效期\"] ? $resp[\"words_result\"][\"有效期\"]['words'] : \"\", //公司营业期限终止日期 'address' =\u003e $resp[\"words_result\"][\"地址\"] ? $resp[\"words_result\"][\"地址\"]['words'] : \"\", //公司地址 'capital' =\u003e $resp[\"words_result\"][\"注册资本\"] ? $resp[\"words_result\"][\"注册资本\"]['words'] : \"\", //注册资本 'business' =\u003e $resp[\"words_result\"][\"经营范围\"] ? $resp[\"words_result\"][\"经营范围\"]['words'] : \"\", //经营范围 ]; if (!$data['reg_num']) { return \"reg_num.empty\"; } $data['establish_date'] = str_replace([\"年\", \"月\"], \"-\", $data['establish_date']); $data['establish_date'] = str_replace([\"日\"], \"\", $data['establish_date']); $data['valid_period'] = str_replace([\"年\", \"月\"], \"-\", $data['valid_period']); $data['valid_period'] = str_replace([\"日\"], \"\", $data['valid_period']); return $data; } ",
+  "wordCount" : "493",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-15T10:35:00+08:00",
+  "dateModified": "2022-08-15T10:35:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/tech/php-ocr/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+    <h1 class="post-title">
+      php-分享自有系统接入OCR图片识别
+    </h1>
+    <div class="post-meta"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/php-ocr.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%89%8d%e8%a8%80" aria-label="前言">前言</a></li>
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87" aria-label="目标">目标</a></li>
+                <li>
+                    <a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" aria-label="前置条件">前置条件</a></li>
+                <li>
+                    <a href="#%e6%ad%a3%e5%bc%8f%e5%86%85%e5%ae%b9" aria-label="正式内容">正式内容</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#%e7%99%be%e5%ba%a6%e6%8e%a5%e5%8f%a3%e7%9a%84%e8%ae%a4%e8%af%81%e6%96%b9%e5%bc%8f" aria-label="百度接口的认证方式">百度接口的认证方式</a></li>
+                <li>
+                    <a href="#function-gettoken" aria-label="function getToken">function getToken</a></li>
+                <li>
+                    <a href="#%e8%ba%ab%e4%bb%bd%e8%af%81%e8%af%86%e5%88%ab-function-ocridcard" aria-label="身份证识别 function OcrIdcard">身份证识别 function OcrIdcard</a></li>
+                <li>
+                    <a href="#%e8%90%a5%e4%b8%9a%e6%89%a7%e7%85%a7%e8%af%86%e5%88%ab--function-ocrbusinesslicense" aria-label="营业执照识别  function OcrBusinessLicense">营业执照识别  function OcrBusinessLicense</a>
+                </li>
+            </ul>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h2>
+<p>最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api</p>
+<h2 id="目标">目标<a hidden class="anchor" aria-hidden="true" href="#目标">#</a></h2>
+<p>可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包</p>
+<h2 id="前置条件">前置条件<a hidden class="anchor" aria-hidden="true" href="#前置条件">#</a></h2>
+<p>开发环境 PHP 百度云能企业认证</p>
+<h2 id="正式内容">正式内容<a hidden class="anchor" aria-hidden="true" href="#正式内容">#</a></h2>
+<h4 id="百度接口的认证方式">百度接口的认证方式<a hidden class="anchor" aria-hidden="true" href="#百度接口的认证方式">#</a></h4>
+<p>百度的鉴权方式是以Token的方式,具体教程可查看<a href="https://cloud.baidu.com/apiexplorer/index.html?Product=GWSE-DJAQ8YwekkQ&amp;Api=GWAI-Q5xGTKoot4h">官网API</a>,这里不重复说明了</p>
+<h4 id="function-gettoken">function getToken<a hidden class="anchor" aria-hidden="true" href="#function-gettoken">#</a></h4>
+<p>封装下获取Token的方式,避免重复请求次数过于频繁</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">public <span class="k">function</span> getToken<span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$filename</span> <span class="o">=</span> <span class="s2">&#34;/data/baidu_access_token.{</span><span class="nv">$this</span><span class="s2">-&gt;access_key}.json&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>file_exists<span class="o">(</span><span class="nv">$filename</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$content</span> <span class="o">=</span> file_get_contents<span class="o">(</span><span class="nv">$filename</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span><span class="nv">$content</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$json</span> <span class="o">=</span> json_decode<span class="o">(</span><span class="nv">$content</span>, 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span>strtotime<span class="o">(</span><span class="nv">$json</span><span class="o">[</span><span class="s1">&#39;expires_in&#39;</span><span class="o">])</span> &gt; time<span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="nv">$json</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span> <span class="o">=</span> json_decode<span class="o">(</span><span class="nv">$this</span>-&gt;client-&gt;request<span class="o">(</span><span class="s2">&#34;POST&#34;</span>, <span class="s2">&#34;https://aip.baidubce.com/oauth/2.0/token&#34;</span>, <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;form_params&#39;</span> <span class="o">=</span>&gt; <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;grant_type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;client_credentials&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;client_id&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;access_key,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;client_secret&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;secret_key,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>
+</span></span><span class="line"><span class="cl">            <span class="o">])</span>-&gt;getBody<span class="o">()</span>-&gt;getContents<span class="o">()</span>, 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;access_token&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;expires_in&#39;</span> <span class="o">=</span>&gt; date<span class="o">(</span><span class="s2">&#34;Y-m-d H:i:s&#34;</span>, strtotime<span class="o">(</span><span class="s2">&#34;+29 day&#34;</span><span class="o">))</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            file_put_contents<span class="o">(</span><span class="nv">$filename</span>, json_encode<span class="o">(</span><span class="nv">$data</span>, JSON_UNESCAPED_UNICODE<span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">private <span class="k">function</span> request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$p</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$option</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;query&#39;</span> <span class="o">=</span>&gt; <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;access_token&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;getToken<span class="o">()</span>,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="nv">$this</span>-&gt;target <span class="o">==</span> <span class="s1">&#39;face&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$option</span><span class="o">[</span><span class="s1">&#39;json&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$option</span><span class="o">[</span><span class="s1">&#39;form_params&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;client-&gt;request<span class="o">(</span><span class="s2">&#34;POST&#34;</span>, <span class="s2">&#34;{</span><span class="nv">$api_url</span><span class="s2">}/{</span><span class="nv">$action</span><span class="s2">}&#34;</span>, <span class="nv">$option</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                -&gt;getBody<span class="o">()</span>
+</span></span><span class="line"><span class="cl">                -&gt;getContents<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> json_decode<span class="o">(</span><span class="nv">$resp</span>, <span class="nb">true</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></div><h4 id="身份证识别-function-ocridcard">身份证识别 function OcrIdcard<a hidden class="anchor" aria-hidden="true" href="#身份证识别-function-ocridcard">#</a></h4>
+<p>先展示<a href="https://cloud.baidu.com/apiexplorer/index.html?Product=GWSE-DJAQ8YwekkQ&amp;Api=GWAI-8CTzNbqhMeL">官方文档</a>,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">/**
+</span></span><span class="line"><span class="cl">         * 身份证识别
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$id_card_side</span> string 正反面 -front：身份证含照片的一面 -back：身份证带国徽的一面
+</span></span><span class="line"><span class="cl">         * @param string <span class="nv">$image</span> string 图像数据
+</span></span><span class="line"><span class="cl">         * @param string <span class="nv">$url</span> string 图片完整URL
+</span></span><span class="line"><span class="cl">         * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">         * @return mixed
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        public <span class="k">function</span> OcrIdcard<span class="o">(</span><span class="nv">$id_card_side</span>, <span class="nv">$image</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>, <span class="nv">$url</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;id_card_side&#39;</span> <span class="o">=</span>&gt; <span class="nv">$id_card_side</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="nv">$image</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;image&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$image</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> elseif <span class="o">(</span><span class="nv">$url</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;url&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$url</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$redisValue</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;redis-&gt;get<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:Idcard&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$redisDate</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;redis-&gt;get<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:IdcardDate&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>!<span class="nv">$redisDate</span> <span class="o">||</span> <span class="nv">$redisDate</span> !<span class="o">=</span> date<span class="o">(</span><span class="s2">&#34;Y-m-d&#34;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$this</span>-&gt;redis-&gt;set<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:IdcardDate&#34;</span>, date<span class="o">(</span><span class="s2">&#34;Y-m-d&#34;</span><span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$redisValue</span> <span class="o">=</span> 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="nv">$redisValue</span> <span class="o">&amp;&amp;</span> <span class="nv">$redisValue</span> &gt; 480<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="s2">&#34;api.count.limit&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span>-&gt;redis-&gt;set<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:Idcard&#34;</span>, <span class="nv">$redisValue</span> ? <span class="nv">$redisValue</span> + <span class="m">1</span> : 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="s2">&#34;/rest/2.0/ocr/v1/idcard&#34;</span>, <span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;error_msg&#34;</span><span class="o">]))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;error_msg&#34;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;name&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;姓名&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;姓名&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;姓名&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;nation&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;民族&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;民族&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;民族&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;address&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;住址&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;住址&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;住址&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;idnumber&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;公民身份号码&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;公民身份号码&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;公民身份号码&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;birthday&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;出生&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;出生&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;出生&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;sex&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;性别&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;性别&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;性别&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;expired_at&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;失效日期&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;失效日期&#34;</span><span class="o">]</span> ? date<span class="o">(</span><span class="s2">&#34;Y-m-d&#34;</span>,strtotime<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;失效日期&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]))</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;created_at&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;签发日期&#34;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;签发日期&#34;</span><span class="o">]</span> ? date<span class="o">(</span><span class="s2">&#34;Y-m-d&#34;</span>,strtotime<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;签发日期&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]))</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>!<span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;idnumber&#39;</span><span class="o">]&amp;&amp;</span>!<span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;expired_at&#39;</span><span class="o">])</span> <span class="k">return</span> <span class="s2">&#34;idnumber.empty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></div><p>可以看到这里使用了一段redis进行数量限制,百度每日可免费使用的额度是500次,避免测试中引起的差异,这里限制正式环境中每天可调用490次接口</p>
+<h4 id="营业执照识别--function-ocrbusinesslicense">营业执照识别  function OcrBusinessLicense<a hidden class="anchor" aria-hidden="true" href="#营业执照识别--function-ocrbusinesslicense">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">public <span class="k">function</span> OcrBusinessLicense<span class="o">(</span><span class="nv">$image</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>, <span class="nv">$url</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="nv">$image</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;image&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$image</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span> elseif <span class="o">(</span><span class="nv">$url</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;url&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$url</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$redisValue</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;redis-&gt;get<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:BusinessLicense&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$redisDate</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;redis-&gt;get<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:BusinessLicenseDate&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>!<span class="nv">$redisDate</span> <span class="o">||</span> <span class="nv">$redisDate</span> !<span class="o">=</span> date<span class="o">(</span><span class="s2">&#34;Y-m-d&#34;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$this</span>-&gt;redis-&gt;set<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:BusinessLicenseDate&#34;</span>, date<span class="o">(</span><span class="s2">&#34;Y-m-d&#34;</span><span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$redisValue</span> <span class="o">=</span> 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="nv">$redisValue</span> <span class="o">&amp;&amp;</span> <span class="nv">$redisValue</span> &gt; 190<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="s2">&#34;api.count.limit&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span>-&gt;redis-&gt;set<span class="o">(</span><span class="s2">&#34;Ocr:Baidu:BusinessLicense&#34;</span>, <span class="nv">$redisValue</span> ? <span class="nv">$redisValue</span> + <span class="m">1</span> : 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="s2">&#34;/rest/2.0/ocr/v1/business_license&#34;</span>, <span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;error_msg&#34;</span><span class="o">]))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;error_msg&#34;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;reg_num&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;社会信用代码&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;社会信用代码&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //注册号
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;name&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;单位名称&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;单位名称&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //公司名称
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;type&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;类型&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;类型&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //公司类型
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;person&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;法人&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;法人&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //公司法人
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;establish_date&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;成立日期&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;成立日期&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //公司注册日期
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;valid_period&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;有效期&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;有效期&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //公司营业期限终止日期
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;address&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;地址&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;地址&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //公司地址
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;capital&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;注册资本&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;注册资本&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //注册资本
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;business&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;经营范围&#34;</span><span class="o">]</span> ? <span class="nv">$resp</span><span class="o">[</span><span class="s2">&#34;words_result&#34;</span><span class="o">][</span><span class="s2">&#34;经营范围&#34;</span><span class="o">][</span><span class="s1">&#39;words&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>, //经营范围
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>!<span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;reg_num&#39;</span><span class="o">])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="s2">&#34;reg_num.empty&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;establish_date&#39;</span><span class="o">]</span> <span class="o">=</span> str_replace<span class="o">([</span><span class="s2">&#34;年&#34;</span>, <span class="s2">&#34;月&#34;</span><span class="o">]</span>, <span class="s2">&#34;-&#34;</span>, <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;establish_date&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;establish_date&#39;</span><span class="o">]</span> <span class="o">=</span> str_replace<span class="o">([</span><span class="s2">&#34;日&#34;</span><span class="o">]</span>, <span class="s2">&#34;&#34;</span>, <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;establish_date&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;valid_period&#39;</span><span class="o">]</span> <span class="o">=</span> str_replace<span class="o">([</span><span class="s2">&#34;年&#34;</span>, <span class="s2">&#34;月&#34;</span><span class="o">]</span>, <span class="s2">&#34;-&#34;</span>, <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;valid_period&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;valid_period&#39;</span><span class="o">]</span> <span class="o">=</span> str_replace<span class="o">([</span><span class="s2">&#34;日&#34;</span><span class="o">]</span>, <span class="s2">&#34;&#34;</span>, <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;valid_period&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/php/">php</a></li>
+      <li><a href="/tags/ocr/">ocr</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

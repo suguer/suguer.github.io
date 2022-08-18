@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>swagger on Ken Blog</title>
+    <link>/tags/swagger/</link>
+    <description>Recent content in swagger on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 12 Aug 2022 16:06:00 +0800</lastBuildDate><atom:link href="/tags/swagger/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Php-Swagger代码了解</title>
+      <link>/tech/php-swagger/</link>
+      <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
+      
+      <guid>/tech/php-swagger/</guid>
+      <description>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
+目标 前置条件 zircote/swagger-php document
+正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=&amp;ldquo;Fapi&amp;rdquo;, version=&amp;ldquo;0.1&amp;rdquo;,description=&amp;ldquo;antdv5的接口前缀为/api/v2
+当前版本为/api/返回列表的格式有区别外其他一致&amp;rdquo;),
+文档中的api路径 @OA\Server(url=&amp;ldquo;http://www.github.com/&amp;quot;,description=&amp;quot;github&amp;quot;,),
+预先定义好返回数据的格式 @OA\Schema(
+schema=&amp;ldquo;Pagination&amp;rdquo;,
+@OA\Property(property=&amp;ldquo;current&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+@OA\Property(property=&amp;ldquo;total&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+@OA\Property(property=&amp;ldquo;pageSize&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+)
+分组每种接口的类别,如/user, /order /record 等, @OA\Tag(name=&amp;ldquo;api-tag&amp;rdquo;, description=&amp;ldquo;Tag&amp;rdquo;)
+编写接口的声明 @OA\Post( path=&amp;#34;/api/index&amp;#34;, summary=&amp;#34;api name&amp;#34;, operationId=&amp;#34;UniqueOperationId&amp;#34;, tags={&amp;#34;api-tag&amp;#34;}, @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;fIDDomainFolder&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;string&amp;#34;},description=&amp;#34;&amp;#34;), @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;intActive&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;integer&amp;#34;},description=&amp;#34;&amp;#34;), @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;timetype&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;string&amp;#34;,&amp;#34;enum&amp;#34;:{&amp;#34;created_at&amp;#34;,&amp;#34;expired_at&amp;#34;,&amp;#34;update_at&amp;#34;}},description=&amp;#34;时间类型&amp;#34;), @OA\Response( response=&amp;#34;200&amp;#34;, description=&amp;#34;An example resource&amp;#34;, @OA\JsonContent( @OA\Property(property=&amp;#34;Pagination&amp;#34;,type=&amp;#34;object&amp;#34;, ref=&amp;#34;#/components/schemas/Pagination&amp;#34;), ) ), ) 2. 将定义好的注释声明生成openapi.json $openapi = \OpenApi\Generator::scan([ path . &amp;#39;api&amp;#39;, path . &amp;#39;model&amp;#39;, ]); $openapi-&amp;gt;toJson() 3.</description>
+    </item>
+    
+  </channel>
+</rss>

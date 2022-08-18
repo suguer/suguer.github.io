@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>pay on Ken Blog</title>
+    <link>/tags/pay/</link>
+    <description>Recent content in pay on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 12 Aug 2022 15:32:00 +0800</lastBuildDate><atom:link href="/tags/pay/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Php支付接口</title>
+      <link>/tech/php-pay/</link>
+      <pubDate>Fri, 12 Aug 2022 15:32:00 +0800</pubDate>
+      
+      <guid>/tech/php-pay/</guid>
+      <description>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &amp;#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&amp;#34;; $resp = $this-&amp;gt;request($action, [], &amp;#39;GET&amp;#39;); return $resp; } private function sign($url, $params, $method) { $params[&amp;#39;mchid&amp;#39;] = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;mch_id&amp;#39;]; $serial_no = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;serial_no&amp;#39;]; $mch_private_key = file_get_contents(&amp;#34;/conf/wechat_private_key.</description>
+    </item>
+    
+  </channel>
+</rss>

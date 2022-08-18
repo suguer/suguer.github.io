@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ssl on Ken Blog</title>
+    <link>/tags/ssl/</link>
+    <description>Recent content in ssl on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 12 Aug 2022 16:45:00 +0800</lastBuildDate><atom:link href="/tags/ssl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Php-生成ssl证书所需的csr信息</title>
+      <link>/study/php-ssl/</link>
+      <pubDate>Fri, 12 Aug 2022 16:45:00 +0800</pubDate>
+      
+      <guid>/study/php-ssl/</guid>
+      <description>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&amp;gt;all(); $dn = [ &amp;#34;countryName&amp;#34; =&amp;gt; trim(strtoupper($all[&amp;#39;countryName&amp;#39;])), //所在国家 &amp;#34;stateOrProvinceName&amp;#34; =&amp;gt; trim($all[&amp;#39;stateOrProvinceName&amp;#39;]), //所在省份 &amp;#34;localityName&amp;#34; =&amp;gt; trim($all[&amp;#39;localityName&amp;#39;]), //所在城市 &amp;#34;organizationName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationName&amp;#39;]), //注册人姓名 &amp;#34;organizationalUnitName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationalUnitName&amp;#39;]), //组织名称 &amp;#34;commonName&amp;#34; =&amp;gt; trim($all[&amp;#39;commonName&amp;#39;]), //公共名称 ]; if (isset($all[&amp;#39;emailAddress&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;emailAddress&amp;#39;]) { $dn[&amp;#39;emailAddress&amp;#39;] = $all[&amp;#39;emailAddress&amp;#39;]; } $config = [ &amp;#34;private_key_bits&amp;#34; =&amp;gt; isset($all[&amp;#39;keysize&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;keysize&amp;#39;] ? $all[&amp;#39;keysize&amp;#39;] : 2048, //字节数 512 1024 2048 4096 等 &amp;#34;private_key_type&amp;#34; =&amp;gt; OPENSSL_KEYTYPE_RSA, //加密类型 &amp;#39;digest_alg&amp;#39; =&amp;gt; &amp;#39;sha256&amp;#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&amp;#39;config&amp;#39;] = &amp;#34;D:/phpstudy_pro/Extensions/Apache2.</description>
+    </item>
+    
+  </channel>
+</rss>

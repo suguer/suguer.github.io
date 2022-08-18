@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>wechaty-001 on Ken Blog</title>
+    <link>/tags/wechaty-001/</link>
+    <description>Recent content in wechaty-001 on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 11:30:00 +0800</lastBuildDate><atom:link href="/tags/wechaty-001/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>wechaty-001</title>
+      <link>/study/wechaty-001/</link>
+      <pubDate>Mon, 15 Aug 2022 11:30:00 +0800</pubDate>
+      
+      <guid>/study/wechaty-001/</guid>
+      <description>wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
+其他教程 wechaty.readthedocs.io
+有关视频教程资源:
+live-coding
+AI情话
+准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主</description>
+    </item>
+    
+  </channel>
+</rss>

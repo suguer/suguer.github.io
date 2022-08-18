@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Php支付接口 | Ken Blog</title>
+<meta name="keywords" content="php, pay">
+<meta name="description" content="前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/php-pay/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Php支付接口" />
+<meta property="og:description" content="前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tech/php-pay/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-12T15:32:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T15:32:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Php支付接口"/>
+<meta name="twitter:description" content="前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Php支付接口",
+      "item": "/tech/php-pay/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Php支付接口",
+  "name": "Php支付接口",
+  "description": "前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录\n目标 通过合并支付的接口,让用户在选择支付上能更简单快捷\n前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP\n正式内容 支付的需求最主要在于3个接口的实现\ninterface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = \u0026#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}\u0026#34;; $resp = $this-\u0026gt;request($action, [], \u0026#39;GET\u0026#39;); return $resp; } private function sign($url, $params, $method) { $params[\u0026#39;mchid\u0026#39;] = $this-\u0026gt;apiConfig-\u0026gt;ExtraConfig[\u0026#39;mch_id\u0026#39;]; $serial_no = $this-\u0026gt;apiConfig-\u0026gt;ExtraConfig[\u0026#39;serial_no\u0026#39;]; $mch_private_key = file_get_contents(\u0026#34;/conf/wechat_private_key.",
+  "keywords": [
+    "php", "pay"
+  ],
+  "articleBody": "前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录\n目标 通过合并支付的接口,让用户在选择支付上能更简单快捷\n前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP\n正式内容 支付的需求最主要在于3个接口的实现\ninterface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = \"/v3/pay/transactions/out-trade-no/{$out_trade_no}\"; $resp = $this-\u003erequest($action, [], 'GET'); return $resp; } private function sign($url, $params, $method) { $params['mchid'] = $this-\u003eapiConfig-\u003eExtraConfig['mch_id']; $serial_no = $this-\u003eapiConfig-\u003eExtraConfig['serial_no']; $mch_private_key = file_get_contents(\"/conf/wechat_private_key.pem\"); ksort($params); $timestamp = time(); $nonce = $this-\u003egetNonceStr(32); $body = ($method == \"POST\" ? json_encode($params, JSON_UNESCAPED_UNICODE) : \"\"); $url_parts = parse_url($url); $canonical_url = $url_parts['path'] . ($method == \"POST\" ? \"\" : \"?\" . http_build_query($params)); $message = $method . \"\\n\" . $canonical_url . \"\\n\" . $timestamp . \"\\n\" . $nonce . \"\\n\" . $body . \"\\n\"; openssl_sign($message, $raw_sign, $mch_private_key, 'sha256WithRSAEncryption'); $sign = base64_encode($raw_sign); $token = sprintf('mchid=\"%s\",nonce_str=\"%s\",timestamp=\"%d\",serial_no=\"%s\",signature=\"%s\"', $params['mchid'], $nonce, $timestamp, $serial_no, $sign); return ['query' =\u003e $params, 'token' =\u003e $token]; } /** * @param $action * @param $params * @return mixed * @throws GuzzleHttp\\Exception\\GuzzleException */ private function request($action, $params, $method = \"POST\") { $url = $this-\u003eapiConfig-\u003eHost . $action; $data = $this-\u003esign($url, $params, $method); $option = [ 'verify' =\u003e false, 'headers' =\u003e [ 'User-Agent' =\u003e 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)', 'Accept' =\u003e '*/*', 'Content-Type' =\u003e 'application/json', 'Authorization' =\u003e \"WECHATPAY2-SHA256-RSA2048 {$data['token']}\", ], 'http_errors' =\u003e false, ]; if ($method == \"GET\") { $option['query'] = $data['query']; } else { $option['body'] = json_encode($data['query'], JSON_UNESCAPED_UNICODE); } try { $request = $this-\u003eclient-\u003erequest($method, $url, $option ) -\u003egetBody() -\u003egetContents(); return json_decode($request, 1); } catch (GuzzleHttp\\Exception\\GuzzleException $e) { return ['error' =\u003e $e-\u003egetMessage()]; } catch (\\Throwable $e) { return ['error'=\u003e$e-\u003egetMessage()] ; } } /** * * 产生随机字符串，不长于32位 * @param int $length * @return string 产生的随机字符串 */ public function getNonceStr($length = 32) { $chars = \"abcdefghijklmnopqrstuvwxyz0123456789\"; $str = \"\"; for ($i = 0; $i \u003c $length; $i++) { $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1); } return $str; } /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function jsapi($out_trade_no, $total_fee, $param = []) { $action = \"/v3/pay/transactions/jsapi\"; $p = [ 'appid' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['appid'], 'description' =\u003e '充值', 'out_trade_no' =\u003e $out_trade_no, 'amount' =\u003e [ 'total' =\u003e $total_fee * 100, 'currency' =\u003e 'CNY', ], 'notify_url' =\u003e (isset($_SERVER['REQUEST_SCHEME']) \u0026\u0026 $_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : request()-\u003eserver('REQUEST_SCHEME')) . \"://\" . MAINSITE . \"/payment/wxpay_notify_v3.php\", // 'notify_url' =\u003e \"http://\" . MAINSITE . \"/payment/wxpay_notify_v3.php\", 'payer' =\u003e [ 'openid' =\u003e $param['openid'], ], ]; $resp = $this-\u003erequest($action, $p); if (isset($resp['code'])) return $resp['message']; $data = [ 'appId' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['appid'], 'timeStamp' =\u003e strval(time()), 'nonceStr' =\u003e DomainUtil::generateDomainPassword(24, false), 'package' =\u003e \"prepay_id={$resp['prepay_id']}\", ]; $message=\"{$data['appId']}\\n{$data['timeStamp']}\\n{$data['nonceStr']}\\n{$data['package']}\\n\"; openssl_sign($message, $raw_sign, file_get_contents(WWWBASE . \"/conf/global/wechat_private_key.pem\"), 'sha256WithRSAEncryption'); $data['paySign'] = base64_encode($raw_sign); $data['openid']=$param['openid']; $data['signType']='RSA'; return ['content'=\u003e$data,'Type'=\u003e'JSAPI']; } /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no, $total_fee, $param = []) { $action = \"/v3/pay/transactions/native\"; $p = [ 'appid' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['appid'], 'description' =\u003e '充值', 'out_trade_no' =\u003e $out_trade_no, 'amount' =\u003e [ 'total' =\u003e intval(strval(round($total_fee,2) * 100)), 'currency' =\u003e 'CNY', ], 'notify_url' =\u003e \"your website url\", ]; $resp = $this-\u003erequest($action, $p); if (isset($resp['error'])\u0026\u0026$resp['error']) return $resp['error']; if(isset($resp['message'])\u0026\u0026$resp['message']) return $resp['message']; return [ 'content' =\u003e $resp['code_url'], 'QrcodeUrl' =\u003e $resp['code_url'], 'Type' =\u003e 'qrcode_url']; } /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all) { // TODO: Implement handle() method. } public function decode($associatedData, $nonceStr, $ciphertext) { $ciphertext = base64_decode($ciphertext); if (strlen($ciphertext) \u003c= self::AUTH_TAG_LENGTH_BYTE) { return false; } if (function_exists('\\sodium_crypto_aead_aes256gcm_is_available') \u0026\u0026 sodium_crypto_aead_aes256gcm_is_available()) { return sodium_crypto_aead_aes256gcm_decrypt($ciphertext, $associatedData, $nonceStr, $this-\u003eapiConfig-\u003eExtraConfig['key']); } // ext-libsodium (need install libsodium-php 1.x via pecl) if (function_exists('\\Sodium\\crypto_aead_aes256gcm_is_available') \u0026\u0026 \\Sodium\\crypto_aead_aes256gcm_is_available()) { return \\Sodium\\crypto_aead_aes256gcm_decrypt($ciphertext, $associatedData, $nonceStr, $this-\u003eapiConfig-\u003eExtraConfig['key']); } // openssl (PHP \u003e= 7.1 support AEAD) if (PHP_VERSION_ID \u003e= 70100 \u0026\u0026 in_array('aes-256-gcm', \\openssl_get_cipher_methods())) { $ctext = substr($ciphertext, 0, -self::AUTH_TAG_LENGTH_BYTE); $authTag = substr($ciphertext, -self::AUTH_TAG_LENGTH_BYTE); return \\openssl_decrypt($ctext, 'aes-256-gcm', $this-\u003eapiConfig-\u003eExtraConfig['key'], \\OPENSSL_RAW_DATA, $nonceStr, $authTag, $associatedData); } return false; } alipay 支付宝支付 public function pay($out_trade_no, $total_fee, $param = []) { $p = [ 'service' =\u003e $this-\u003eis_mobile_request()?'alipay.wap.create.direct.pay.by.user':\"create_direct_pay_by_user\", 'partner' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['partner'], 'return_url' =\u003e (isset($_SERVER['REQUEST_SCHEME']) \u0026\u0026 $_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : request()-\u003eserver('REQUEST_SCHEME')) . \"://\" . MAINSITE . \"/payment/alipay_return_url.php\", 'notify_url' =\u003e (isset($_SERVER['REQUEST_SCHEME']) \u0026\u0026 $_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : request()-\u003eserver('REQUEST_SCHEME')) . \"://\" . MAINSITE . \"/payment/alipay_notify_url.php\", '_input_charset'=\u003e'utf-8', 'subject'=\u003e'网上汇入', 'body'=\u003e'网上汇入', 'out_trade_no'=\u003e$out_trade_no, 'total_fee'=\u003e$total_fee, 'payment_type'=\u003e1, 'show_url'=\u003e(isset($_SERVER['REQUEST_SCHEME']) \u0026\u0026 $_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : request()-\u003eserver('REQUEST_SCHEME')).\"://\".MAINSITE, 'seller_email'=\u003e$this-\u003eapiConfig-\u003eExtraConfig['seller_email'], ]; $action=\"https://mapi.alipay.com/gateway.do\"; $resp=$this-\u003esign($p); return ['content' =\u003e $action.\"?\".http_build_query($resp), 'Type' =\u003e 'url']; } public function sign($p){ $prestr=\"\"; ksort($p); foreach ($p as $key=\u003e$value){ $prestr.=\"{$key}={$value}\u0026\"; } $prestr=trim($prestr,\"\u0026\"); $p['sign_type']='MD5'; $p['sign']=md5($prestr.$this-\u003eapiConfig-\u003eExtraConfig['security_code']); return $p; } function is_mobile_request() { $_SERVER['ALL_HTTP'] = isset($_SERVER['ALL_HTTP']) ? $_SERVER['ALL_HTTP'] : ''; $mobile_browser = '0'; if(isset($_SERVER['HTTP_USER_AGENT'])\u0026\u0026preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|iphone|ipad|ipod|android|xoom)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) $mobile_browser++; if((isset($_SERVER['HTTP_ACCEPT'])) and (strpos(strtolower($_SERVER['HTTP_ACCEPT']),'application/vnd.wap.xhtml+xml') !== false)) $mobile_browser++; if(isset($_SERVER['HTTP_X_WAP_PROFILE'])) $mobile_browser++; if(isset($_SERVER['HTTP_PROFILE'])) $mobile_browser++; if(isset($_SERVER['HTTP_USER_AGENT'])) { $mobile_ua = strtolower(substr($_SERVER['HTTP_USER_AGENT'], 0, 4)); $mobile_agents = array( 'w3c ', 'acs-', 'alav', 'alca', 'amoi', 'audi', 'avan', 'benq', 'bird', 'blac', 'blaz', 'brew', 'cell', 'cldc', 'cmd-', 'dang', 'doco', 'eric', 'hipt', 'inno', 'ipaq', 'java', 'jigs', 'kddi', 'keji', 'leno', 'lg-c', 'lg-d', 'lg-g', 'lge-', 'maui', 'maxo', 'midp', 'mits', 'mmef', 'mobi', 'mot-', 'moto', 'mwbp', 'nec-', 'newt', 'noki', 'oper', 'palm', 'pana', 'pant', 'phil', 'play', 'port', 'prox', 'qwap', 'sage', 'sams', 'sany', 'sch-', 'sec-', 'send', 'seri', 'sgh-', 'shar', 'sie-', 'siem', 'smal', 'smar', 'sony', 'sph-', 'symb', 't-mo', 'teli', 'tim-', 'tosh', 'tsm-', 'upg1', 'upsi', 'vk-v', 'voda', 'wap-', 'wapa', 'wapi', 'wapp', 'wapr', 'webc', 'winw', 'winw', 'xda', 'xda-' ); if(in_array($mobile_ua, $mobile_agents)) $mobile_browser++; } if(strpos(strtolower($_SERVER['ALL_HTTP']), 'operamini') !== false) $mobile_browser++; // Pre-final check to reset everything if the user is on Windows if( isset($_SERVER['HTTP_USER_AGENT'])\u0026\u0026strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'windows') !== false) $mobile_browser=0; // But WP7 is also Windows, with a slightly different characteristic if(isset($_SERVER['HTTP_USER_AGENT'])\u0026\u0026strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'windows phone') !== false) $mobile_browser++; if($mobile_browser\u003e0) return true; else return false; } globalalipay 海外支付宝支付 /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no, $total_fee, $param = []) { $p = [ // 'product_code' =\u003e 'NEW_OVERSEAS_SELLER', 'service' =\u003e 'create_forex_trade', 'partner' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['partner'], 'return_url' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['return_url'], 'notify_url' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['notify_url'], '_input_charset'=\u003e'utf-8', 'subject'=\u003e'網上匯入', 'body'=\u003e'網上匯入', 'out_trade_no'=\u003e$out_trade_no, 'total_fee'=\u003e$total_fee, 'payment_type'=\u003e1, 'show_url'=\u003e(isset($_SERVER['REQUEST_SCHEME']) \u0026\u0026 $_SERVER['REQUEST_SCHEME'] ? $_SERVER['REQUEST_SCHEME'] : request()-\u003eserver('REQUEST_SCHEME')).\"://\".MAINSITE, 'seller_email'=\u003e$this-\u003eapiConfig-\u003eExtraConfig['seller_email'], 'currency'=\u003eisset($param['currency'])\u0026\u0026$param['currency']?$param['currency']:\"HKD\", ]; $action=\"https://mapi.alipay.com/gateway.do\"; $resp=$this-\u003esign($p); return ['content' =\u003e $action.\"?\".http_build_query($resp), 'Type' =\u003e 'url']; } public function sign($p){ $prestr=\"\"; ksort($p); foreach ($p as $key=\u003e$value){ $prestr.=\"{$key}={$value}\u0026\"; } $prestr=trim($prestr,\"\u0026\"); $p['sign_type']='MD5'; $p['sign']=md5($prestr.$this-\u003eapiConfig-\u003eExtraConfig['security_code']); return $p; } Tonglian 通联支付 /** * 网关支付 * @param $out_trade_no * @param $total_fee * @param array $param * @return array */ public function gateway($out_trade_no, $total_fee, $param = []) { $p = [ 'cusid' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['cusid'], 'appid' =\u003e $this-\u003eapiConfig-\u003eUsername, 'charset' =\u003e 'UTF-8', // 'returl' =\u003e '', 'returl' =\u003e( isset($_SERVER['REQUEST_SCHEME'])\u0026\u0026$_SERVER['REQUEST_SCHEME']?$_SERVER['REQUEST_SCHEME']: request()-\u003eserver('REQUEST_SCHEME')) . \"://\" . MAINSITE . \"/payment/allinpay_notify_url.php\", 'notifyurl' =\u003e( isset($_SERVER['REQUEST_SCHEME'])\u0026\u0026$_SERVER['REQUEST_SCHEME']?$_SERVER['REQUEST_SCHEME']: request()-\u003eserver('REQUEST_SCHEME')) . \"://\" . MAINSITE . \"/payment/allinpay_notify_url.php\", 'trxamt' =\u003e $total_fee * 100, 'orderid' =\u003e $out_trade_no, 'randomstr' =\u003e time(), 'gateid' =\u003e isset($param['bankid'])\u0026\u0026$param['bankid']?$param['bankid']:\"\", 'paytype' =\u003eisset($param['bankid'])\u0026\u0026$param['bankid']?\"B2C\": 'B2C,B2B', ]; $p['sign'] = $this-\u003esign($p); $url = \"{$this-\u003eapiConfig-\u003eHost}/gateway/pay\"; $str = \"\"; foreach ($p as $key =\u003e $value) { $str .= \"\"; } $str .= ''; return ['content' =\u003e $str, 'Type' =\u003e 'form']; } /** * 支付请求 * 文档url: https://aipboss.allinpay.com/know/devhelp/main.php?pid=15#mid=88 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no, $total_fee, $param = []) { $action = \"/unitorder/pay\"; $paytype = \"W01\"; if (isset($param['paytype'])) { switch ($param['paytype']) { case \"wechat\": $paytype = \"W01\"; break; case \"alipay\": $paytype = \"A01\"; break; case \"qq\": $paytype = \"Q01\"; break; case \"union\": $paytype = \"U01\"; break; } } $p = [ 'trxamt' =\u003e $total_fee * 100, 'reqsn' =\u003e $out_trade_no, 'paytype' =\u003e $paytype, 'randomstr' =\u003e time(), 'body' =\u003e '充值', 'remark' =\u003e $out_trade_no, 'notify_url' =\u003e( isset($_SERVER['REQUEST_SCHEME'])\u0026\u0026$_SERVER['REQUEST_SCHEME']?$_SERVER['REQUEST_SCHEME']: request()-\u003eserver('REQUEST_SCHEME')) . \"://\" . MAINSITE . \"/payment/allinpay_notify_url.php\", ]; $resp = $this-\u003erequest($action, $p); if (isset($resp['errmsg'])) { return $resp['errmsg']; } $array = [ 'Type' =\u003e 'qrcode_url', 'QrcodeUrl' =\u003e $resp['payinfo'], 'content' =\u003e $resp['payinfo'], ]; return $array; } public function gateway_query($out_trade_no, $param = []) { $action=\"/gateway/query\"; $p=[ 'orderid'=\u003e$out_trade_no, ]; $resp=$this-\u003erequest($action,$p); return isset($resp['errmsg'])?$resp['errmsg']: $resp; } /** * 查询支付结果 * @return mixed */ public function query($out_trade_no, $param = []) { $action=\"/unitorder/query\"; $p=[ 'reqsn'=\u003e$out_trade_no, ]; $resp=$this-\u003erequest($action,$p); return isset($resp['errmsg'])?$resp['errmsg']: $resp; } public function sign($param) { $param['key'] = $this-\u003eapiConfig-\u003ePassword; ksort($param); $buff = \"\"; foreach ($param as $k =\u003e $v) { if ($v != \"\" \u0026\u0026 !is_array($v)) { $buff .= $k . \"=\" . $v . \"\u0026\"; } } return md5(trim($buff, \"\u0026\")); } public function request($action, $param) { $param['cusid'] = $this-\u003eapiConfig-\u003eExtraConfig['cusid']; $param['appid'] = $this-\u003eapiConfig-\u003eUsername; $param['version'] = $this-\u003eapiConfig-\u003eExtraConfig['version']; $sign = $this-\u003esign($param); $param[\"sign\"] = $sign; $content = $this-\u003eclient-\u003erequest(\"POST\", $this-\u003eapiConfig-\u003eHost . $action, [ 'form_params' =\u003e $param ])-\u003egetBody()-\u003egetContents(); return json_decode($content, 1); } /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all) { $sign = $all['sign']; unset($all['sign']); $mySign = $this-\u003esign($all); if (strtolower($sign) == strtolower($mySign)) { return [ 'out_trade_no' =\u003e $all['cusorderid'], 'amount' =\u003e $all['trxamt'] / 100, 'attach' =\u003e isset($all['trxreserved']) ? $all['trxreserved'] : \"\", 'created_at' =\u003e date(\"Y-m-d H:i:s\", strtotime($all['trxdate'])), 'payed_at' =\u003e date(\"Y-m-d H:i:s\", strtotime($all['paytime'])), ]; } return false; } public function refund($out_trade_no, $total_fee, $param = []) { $action = \"/unitorder/refund\"; $p = [ 'trxamt' =\u003e $total_fee * 100, 'oldreqsn' =\u003e $out_trade_no, 'reqsn'=\u003e\"{$out_trade_no}_refund\", 'remark'=\u003e'退款' ]; return $this-\u003erequest($action, $p); } union 银联支付 public function pay($out_trade_no, $total_fee, $param = []) { $http_type = ((isset($_SERVER['HTTPS']) \u0026\u0026 $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) \u0026\u0026 $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://'; $returnUrl = $http_type . '/payment/unionpay_result.php?';//返回URL $notifyUrl = $http_type . '/payment/unionpay_result.php?';//通知URL $p = [ 'version' =\u003e '1.0.0', 'charset' =\u003e 'UTF-8', 'merId' =\u003e $this-\u003eapiConfig-\u003eExtraConfig['merId'], 'merAbbr' =\u003e 'merAbbr', 'acqCode' =\u003e '', 'merCode' =\u003e '', 'transType' =\u003e '01', 'origQid' =\u003e '', 'commodityUrl' =\u003e '', 'commodityName' =\u003e '', 'commodityUnitPrice' =\u003e $total_fee * 100, 'commodityQuantity' =\u003e 1, 'commodityDiscount' =\u003e 0, 'transferFee' =\u003e 0, 'orderNumber' =\u003e $out_trade_no, 'orderAmount' =\u003e $total_fee * 100, 'orderCurrency' =\u003e '156', 'orderTime' =\u003e date('YmdHis'), 'customerIp' =\u003e '', 'customerName' =\u003e '', 'defaultPayType' =\u003e '', 'defaultBankNumber' =\u003e '', 'transTimeout' =\u003e '300000', 'merReserved' =\u003e '', 'frontEndUrl' =\u003e $returnUrl, 'backEndUrl' =\u003e $notifyUrl, ]; $url=$this-\u003eapiConfig-\u003eHost.\"/api/Pay.action\"; $p=$this-\u003esign($p); $str = \"\"; foreach ($p as $key =\u003e $value) { $str .= \"\"; } $str .= ''; return ['content' =\u003e $str, 'Type' =\u003e 'form']; } public function sign($p){ $prestr=\"\"; ksort($p); reset($p); foreach ($p as $key=\u003e$value){ $prestr.=\"{$key}={$value}\u0026\"; } $p['signMethod']='MD5'; $p['signature']=md5($prestr.md5($this-\u003eapiConfig-\u003eExtraConfig['sucurity_key'])); return $p; } ",
+  "wordCount" : "1623",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T15:32:00+08:00",
+  "dateModified": "2022-08-12T15:32:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/tech/php-pay/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+    <h1 class="post-title">
+      Php支付接口
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 15:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;8 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/php-pay.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%89%8d%e8%a8%80" aria-label="前言">前言</a></li>
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87" aria-label="目标">目标</a></li>
+                <li>
+                    <a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" aria-label="前置条件">前置条件</a></li>
+                <li>
+                    <a href="#%e6%ad%a3%e5%bc%8f%e5%86%85%e5%ae%b9" aria-label="正式内容">正式内容</a><ul>
+                        
+                <li>
+                    <a href="#wechat-%e5%be%ae%e4%bf%a1%e6%94%af%e4%bb%98" aria-label="wechat 微信支付">wechat 微信支付</a></li>
+                <li>
+                    <a href="#alipay-%e6%94%af%e4%bb%98%e5%ae%9d%e6%94%af%e4%bb%98" aria-label="alipay 支付宝支付">alipay 支付宝支付</a></li>
+                <li>
+                    <a href="#globalalipay-%e6%b5%b7%e5%a4%96%e6%94%af%e4%bb%98%e5%ae%9d%e6%94%af%e4%bb%98" aria-label="globalalipay 海外支付宝支付">globalalipay 海外支付宝支付</a></li>
+                <li>
+                    <a href="#tonglian-%e9%80%9a%e8%81%94%e6%94%af%e4%bb%98" aria-label="Tonglian 通联支付">Tonglian 通联支付</a></li>
+                <li>
+                    <a href="#union-%e9%93%b6%e8%81%94%e6%94%af%e4%bb%98" aria-label="union 银联支付">union 银联支付</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h2>
+<p>项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录</p>
+<h2 id="目标">目标<a hidden class="anchor" aria-hidden="true" href="#目标">#</a></h2>
+<p>通过合并支付的接口,让用户在选择支付上能更简单快捷</p>
+<h2 id="前置条件">前置条件<a hidden class="anchor" aria-hidden="true" href="#前置条件">#</a></h2>
+<p>相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册
+环境 PHP</p>
+<h2 id="正式内容">正式内容<a hidden class="anchor" aria-hidden="true" href="#正式内容">#</a></h2>
+<p>支付的需求最主要在于3个接口的实现</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">interface PaymentClientInterface
+</span></span><span class="line"><span class="cl"><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 支付请求
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$order_out_no</span>
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$total_fee</span>
+</span></span><span class="line"><span class="cl">     * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> pay<span class="o">(</span><span class="nv">$out_trade_no</span>,<span class="nv">$total_fee</span>,<span class="nv">$param</span><span class="o">=[])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 查询支付结果
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> query<span class="o">(</span><span class="nv">$out_trade_no</span>,<span class="nv">$param</span><span class="o">=[])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$all</span>
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> handle<span class="o">(</span><span class="nv">$all</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h3 id="wechat-微信支付">wechat 微信支付<a hidden class="anchor" aria-hidden="true" href="#wechat-微信支付">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">  public <span class="k">function</span> query<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            <span class="nv">$action</span> <span class="o">=</span> <span class="s2">&#34;/v3/pay/transactions/out-trade-no/{</span><span class="nv">$out_trade_no</span><span class="s2">}&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>, <span class="o">[]</span>, <span class="s1">&#39;GET&#39;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$resp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">private <span class="k">function</span> sign<span class="o">(</span><span class="nv">$url</span>, <span class="nv">$params</span>, <span class="nv">$method</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$params</span><span class="o">[</span><span class="s1">&#39;mchid&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;mch_id&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$serial_no</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;serial_no&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$mch_private_key</span> <span class="o">=</span> file_get_contents<span class="o">(</span><span class="s2">&#34;/conf/wechat_private_key.pem&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        ksort<span class="o">(</span><span class="nv">$params</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$timestamp</span> <span class="o">=</span> time<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$nonce</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;getNonceStr<span class="o">(</span>32<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$body</span> <span class="o">=</span> <span class="o">(</span><span class="nv">$method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span> ? json_encode<span class="o">(</span><span class="nv">$params</span>, JSON_UNESCAPED_UNICODE<span class="o">)</span> : <span class="s2">&#34;&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$url_parts</span> <span class="o">=</span> parse_url<span class="o">(</span><span class="nv">$url</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$canonical_url</span> <span class="o">=</span> <span class="nv">$url_parts</span><span class="o">[</span><span class="s1">&#39;path&#39;</span><span class="o">]</span> . <span class="o">(</span><span class="nv">$method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span> ? <span class="s2">&#34;&#34;</span> : <span class="s2">&#34;?&#34;</span> . http_build_query<span class="o">(</span><span class="nv">$params</span><span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$message</span> <span class="o">=</span> <span class="nv">$method</span> . <span class="s2">&#34;\n&#34;</span> .
+</span></span><span class="line"><span class="cl">            <span class="nv">$canonical_url</span> . <span class="s2">&#34;\n&#34;</span> .
+</span></span><span class="line"><span class="cl">            <span class="nv">$timestamp</span> . <span class="s2">&#34;\n&#34;</span> .
+</span></span><span class="line"><span class="cl">            <span class="nv">$nonce</span> . <span class="s2">&#34;\n&#34;</span> .
+</span></span><span class="line"><span class="cl">            <span class="nv">$body</span> . <span class="s2">&#34;\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        openssl_sign<span class="o">(</span><span class="nv">$message</span>, <span class="nv">$raw_sign</span>, <span class="nv">$mch_private_key</span>, <span class="s1">&#39;sha256WithRSAEncryption&#39;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$sign</span> <span class="o">=</span> base64_encode<span class="o">(</span><span class="nv">$raw_sign</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$token</span> <span class="o">=</span> sprintf<span class="o">(</span><span class="s1">&#39;mchid=&#34;%s&#34;,nonce_str=&#34;%s&#34;,timestamp=&#34;%d&#34;,serial_no=&#34;%s&#34;,signature=&#34;%s&#34;&#39;</span>,
+</span></span><span class="line"><span class="cl">            <span class="nv">$params</span><span class="o">[</span><span class="s1">&#39;mchid&#39;</span><span class="o">]</span>, <span class="nv">$nonce</span>, <span class="nv">$timestamp</span>, <span class="nv">$serial_no</span>, <span class="nv">$sign</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;query&#39;</span> <span class="o">=</span>&gt; <span class="nv">$params</span>, <span class="s1">&#39;token&#39;</span> <span class="o">=</span>&gt; <span class="nv">$token</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$action</span>
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$params</span>
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     * @throws GuzzleHttp<span class="se">\E</span>xception<span class="se">\G</span>uzzleException
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    private <span class="k">function</span> request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$params</span>, <span class="nv">$method</span> <span class="o">=</span> <span class="s2">&#34;POST&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;Host . <span class="nv">$action</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;sign<span class="o">(</span><span class="nv">$url</span>, <span class="nv">$params</span>, <span class="nv">$method</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$option</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;verify&#39;</span> <span class="o">=</span>&gt; false,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;headers&#39;</span> <span class="o">=</span>&gt; <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;User-Agent&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Accept&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;*/*&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Content-Type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;application/json&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Authorization&#39;</span> <span class="o">=</span>&gt; <span class="s2">&#34;WECHATPAY2-SHA256-RSA2048 {</span><span class="nv">$data</span><span class="s2">[&#39;token&#39;]}&#34;</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;http_errors&#39;</span> <span class="o">=</span>&gt; false,
+</span></span><span class="line"><span class="cl">        <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="nv">$method</span> <span class="o">==</span> <span class="s2">&#34;GET&#34;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$option</span><span class="o">[</span><span class="s1">&#39;query&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;query&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$option</span><span class="o">[</span><span class="s1">&#39;body&#39;</span><span class="o">]</span> <span class="o">=</span> json_encode<span class="o">(</span><span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;query&#39;</span><span class="o">]</span>, JSON_UNESCAPED_UNICODE<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        try <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$request</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;client-&gt;request<span class="o">(</span><span class="nv">$method</span>,
+</span></span><span class="line"><span class="cl">                <span class="nv">$url</span>,
+</span></span><span class="line"><span class="cl">                <span class="nv">$option</span>
+</span></span><span class="line"><span class="cl">            <span class="o">)</span>
+</span></span><span class="line"><span class="cl">                -&gt;getBody<span class="o">()</span>
+</span></span><span class="line"><span class="cl">                -&gt;getContents<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> json_decode<span class="o">(</span><span class="nv">$request</span>, 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> catch <span class="o">(</span>GuzzleHttp<span class="se">\E</span>xception<span class="se">\G</span>uzzleException <span class="nv">$e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=</span>&gt; <span class="nv">$e</span>-&gt;getMessage<span class="o">()]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> catch <span class="o">(</span><span class="se">\T</span>hrowable <span class="nv">$e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;error&#39;</span><span class="o">=</span>&gt;<span class="nv">$e</span>-&gt;getMessage<span class="o">()]</span> <span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">     /**
+</span></span><span class="line"><span class="cl">         *
+</span></span><span class="line"><span class="cl">         * 产生随机字符串，不长于32位
+</span></span><span class="line"><span class="cl">         * @param int <span class="nv">$length</span>
+</span></span><span class="line"><span class="cl">         * @return string 产生的随机字符串
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        public <span class="k">function</span> getNonceStr<span class="o">(</span><span class="nv">$length</span> <span class="o">=</span> 32<span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$chars</span> <span class="o">=</span> <span class="s2">&#34;abcdefghijklmnopqrstuvwxyz0123456789&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$str</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="o">(</span><span class="nv">$i</span> <span class="o">=</span> 0<span class="p">;</span> <span class="nv">$i</span> &lt; <span class="nv">$length</span><span class="p">;</span> <span class="nv">$i</span>++<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$str</span> .<span class="o">=</span> substr<span class="o">(</span><span class="nv">$chars</span>, mt_rand<span class="o">(</span>0, strlen<span class="o">(</span><span class="nv">$chars</span><span class="o">)</span> - 1<span class="o">)</span>, 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 支付请求
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$order_out_no</span>
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$total_fee</span>
+</span></span><span class="line"><span class="cl">     * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> jsapi<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$action</span> <span class="o">=</span> <span class="s2">&#34;/v3/pay/transactions/jsapi&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;appid&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;appid&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;description&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;充值&#39;</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;out_trade_no&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;amount&#39;</span> <span class="o">=</span>&gt; <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;total&#39;</span> <span class="o">=</span>&gt; <span class="nv">$total_fee</span> * 100,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;currency&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;CNY&#39;</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;notify_url&#39;</span> <span class="o">=</span>&gt; <span class="o">(</span>isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span> ? <span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span> : request<span class="o">()</span>-&gt;server<span class="o">(</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">))</span> . <span class="s2">&#34;://&#34;</span> . MAINSITE . <span class="s2">&#34;/payment/wxpay_notify_v3.php&#34;</span>,
+</span></span><span class="line"><span class="cl">//            <span class="s1">&#39;notify_url&#39;</span> <span class="o">=</span>&gt;  <span class="s2">&#34;http://&#34;</span> . MAINSITE . <span class="s2">&#34;/payment/wxpay_notify_v3.php&#34;</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;payer&#39;</span> <span class="o">=</span>&gt; <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;openid&#39;</span> <span class="o">=</span>&gt; <span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;openid&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span>,
+</span></span><span class="line"><span class="cl">        <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;code&#39;</span><span class="o">]))</span> <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;message&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$data</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;appId&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;appid&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;timeStamp&#39;</span> <span class="o">=</span>&gt; strval<span class="o">(</span>time<span class="o">())</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;nonceStr&#39;</span> <span class="o">=</span>&gt; DomainUtil::generateDomainPassword<span class="o">(</span>24, <span class="nb">false</span><span class="o">)</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;package&#39;</span> <span class="o">=</span>&gt; <span class="s2">&#34;prepay_id={</span><span class="nv">$resp</span><span class="s2">[&#39;prepay_id&#39;]}&#34;</span>,
+</span></span><span class="line"><span class="cl">        <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$message</span><span class="o">=</span><span class="s2">&#34;{</span><span class="nv">$data</span><span class="s2">[&#39;appId&#39;]}\n{</span><span class="nv">$data</span><span class="s2">[&#39;timeStamp&#39;]}\n{</span><span class="nv">$data</span><span class="s2">[&#39;nonceStr&#39;]}\n{</span><span class="nv">$data</span><span class="s2">[&#39;package&#39;]}\n&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        openssl_sign<span class="o">(</span><span class="nv">$message</span>,
+</span></span><span class="line"><span class="cl">            <span class="nv">$raw_sign</span>,
+</span></span><span class="line"><span class="cl">            file_get_contents<span class="o">(</span>WWWBASE . <span class="s2">&#34;/conf/global/wechat_private_key.pem&#34;</span><span class="o">)</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;sha256WithRSAEncryption&#39;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;paySign&#39;</span><span class="o">]</span> <span class="o">=</span> base64_encode<span class="o">(</span><span class="nv">$raw_sign</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;openid&#39;</span><span class="o">]=</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;openid&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$data</span><span class="o">[</span><span class="s1">&#39;signType&#39;</span><span class="o">]=</span><span class="s1">&#39;RSA&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;content&#39;</span><span class="o">=</span>&gt;<span class="nv">$data</span>,<span class="s1">&#39;Type&#39;</span><span class="o">=</span>&gt;<span class="s1">&#39;JSAPI&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        /**
+</span></span><span class="line"><span class="cl">         * 支付请求
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$order_out_no</span>
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$total_fee</span>
+</span></span><span class="line"><span class="cl">         * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">         * @return mixed
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        public <span class="k">function</span> pay<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$action</span> <span class="o">=</span> <span class="s2">&#34;/v3/pay/transactions/native&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;appid&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;appid&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;description&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;充值&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;out_trade_no&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;amount&#39;</span> <span class="o">=</span>&gt; <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;total&#39;</span> <span class="o">=</span>&gt; intval<span class="o">(</span>strval<span class="o">(</span>round<span class="o">(</span><span class="nv">$total_fee</span>,2<span class="o">)</span> * 100<span class="o">))</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;currency&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;CNY&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;notify_url&#39;</span> <span class="o">=</span>&gt;  <span class="s2">&#34;your website url&#34;</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;error&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;error&#39;</span><span class="o">])</span> <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;error&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="o">(</span>isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;message&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;message&#39;</span><span class="o">])</span> <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;message&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;content&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;code_url&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;QrcodeUrl&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;code_url&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;Type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;qrcode_url&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$all</span>
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> handle<span class="o">(</span><span class="nv">$all</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        // TODO: Implement handle<span class="o">()</span> method.
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        public <span class="k">function</span> decode<span class="o">(</span><span class="nv">$associatedData</span>, <span class="nv">$nonceStr</span>, <span class="nv">$ciphertext</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$ciphertext</span> <span class="o">=</span> base64_decode<span class="o">(</span><span class="nv">$ciphertext</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>strlen<span class="o">(</span><span class="nv">$ciphertext</span><span class="o">)</span> &lt;<span class="o">=</span> self::AUTH_TAG_LENGTH_BYTE<span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> false<span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>function_exists<span class="o">(</span><span class="s1">&#39;\sodium_crypto_aead_aes256gcm_is_available&#39;</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                sodium_crypto_aead_aes256gcm_is_available<span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> sodium_crypto_aead_aes256gcm_decrypt<span class="o">(</span><span class="nv">$ciphertext</span>, <span class="nv">$associatedData</span>, <span class="nv">$nonceStr</span>, <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;key&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            // ext-libsodium <span class="o">(</span>need install libsodium-php 1.x via pecl<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>function_exists<span class="o">(</span><span class="s1">&#39;\Sodium\crypto_aead_aes256gcm_is_available&#39;</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                <span class="se">\S</span>odium<span class="se">\c</span>rypto_aead_aes256gcm_is_available<span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="se">\S</span>odium<span class="se">\c</span>rypto_aead_aes256gcm_decrypt<span class="o">(</span><span class="nv">$ciphertext</span>, <span class="nv">$associatedData</span>, <span class="nv">$nonceStr</span>, <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;key&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">            // openssl <span class="o">(</span>PHP &gt;<span class="o">=</span> 7.1 support AEAD<span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span>PHP_VERSION_ID &gt;<span class="o">=</span> <span class="m">70100</span> <span class="o">&amp;&amp;</span> in_array<span class="o">(</span><span class="s1">&#39;aes-256-gcm&#39;</span>, <span class="se">\o</span>penssl_get_cipher_methods<span class="o">()))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$ctext</span> <span class="o">=</span> substr<span class="o">(</span><span class="nv">$ciphertext</span>, 0, -self::AUTH_TAG_LENGTH_BYTE<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$authTag</span> <span class="o">=</span> substr<span class="o">(</span><span class="nv">$ciphertext</span>, -self::AUTH_TAG_LENGTH_BYTE<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="se">\o</span>penssl_decrypt<span class="o">(</span><span class="nv">$ctext</span>, <span class="s1">&#39;aes-256-gcm&#39;</span>, <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;key&#39;</span><span class="o">]</span>, <span class="se">\O</span>PENSSL_RAW_DATA, <span class="nv">$nonceStr</span>,
+</span></span><span class="line"><span class="cl">                    <span class="nv">$authTag</span>, <span class="nv">$associatedData</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> false<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span></code></pre></div><h3 id="alipay-支付宝支付">alipay 支付宝支付<a hidden class="anchor" aria-hidden="true" href="#alipay-支付宝支付">#</a></h3>
+<pre tabindex="0"><code> public function pay($out_trade_no, $total_fee, $param = [])
+        {
+            $p = [
+                &#39;service&#39; =&gt; $this-&gt;is_mobile_request()?&#39;alipay.wap.create.direct.pay.by.user&#39;:&#34;create_direct_pay_by_user&#34;,
+                &#39;partner&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;partner&#39;],
+                &#39;return_url&#39; =&gt; (isset($_SERVER[&#39;REQUEST_SCHEME&#39;]) &amp;&amp; $_SERVER[&#39;REQUEST_SCHEME&#39;] ? $_SERVER[&#39;REQUEST_SCHEME&#39;] : request()-&gt;server(&#39;REQUEST_SCHEME&#39;)) . &#34;://&#34; . MAINSITE . &#34;/payment/alipay_return_url.php&#34;,
+                &#39;notify_url&#39; =&gt; (isset($_SERVER[&#39;REQUEST_SCHEME&#39;]) &amp;&amp; $_SERVER[&#39;REQUEST_SCHEME&#39;] ? $_SERVER[&#39;REQUEST_SCHEME&#39;] : request()-&gt;server(&#39;REQUEST_SCHEME&#39;)) . &#34;://&#34; . MAINSITE . &#34;/payment/alipay_notify_url.php&#34;,
+                &#39;_input_charset&#39;=&gt;&#39;utf-8&#39;,
+                &#39;subject&#39;=&gt;&#39;网上汇入&#39;,
+                &#39;body&#39;=&gt;&#39;网上汇入&#39;,
+                &#39;out_trade_no&#39;=&gt;$out_trade_no,
+                &#39;total_fee&#39;=&gt;$total_fee,
+                &#39;payment_type&#39;=&gt;1,
+                &#39;show_url&#39;=&gt;(isset($_SERVER[&#39;REQUEST_SCHEME&#39;]) &amp;&amp; $_SERVER[&#39;REQUEST_SCHEME&#39;] ? $_SERVER[&#39;REQUEST_SCHEME&#39;] : request()-&gt;server(&#39;REQUEST_SCHEME&#39;)).&#34;://&#34;.MAINSITE,
+                &#39;seller_email&#39;=&gt;$this-&gt;apiConfig-&gt;ExtraConfig[&#39;seller_email&#39;],
+            ];
+            $action=&#34;https://mapi.alipay.com/gateway.do&#34;;
+            $resp=$this-&gt;sign($p);
+            return [&#39;content&#39; =&gt; $action.&#34;?&#34;.http_build_query($resp), &#39;Type&#39; =&gt; &#39;url&#39;];
+        }
+        
+        
+       public function sign($p){
+            $prestr=&#34;&#34;;
+            ksort($p);
+            foreach ($p as $key=&gt;$value){
+                $prestr.=&#34;{$key}={$value}&amp;&#34;;
+            }
+            $prestr=trim($prestr,&#34;&amp;&#34;);
+            $p[&#39;sign_type&#39;]=&#39;MD5&#39;;
+            $p[&#39;sign&#39;]=md5($prestr.$this-&gt;apiConfig-&gt;ExtraConfig[&#39;security_code&#39;]);
+            return $p;
+        }
+        
+        
+          function is_mobile_request()
+            {
+                $_SERVER[&#39;ALL_HTTP&#39;] = isset($_SERVER[&#39;ALL_HTTP&#39;]) ? $_SERVER[&#39;ALL_HTTP&#39;] : &#39;&#39;;
+                $mobile_browser = &#39;0&#39;;
+                if(isset($_SERVER[&#39;HTTP_USER_AGENT&#39;])&amp;&amp;preg_match(&#39;/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|iphone|ipad|ipod|android|xoom)/i&#39;, strtolower($_SERVER[&#39;HTTP_USER_AGENT&#39;])))
+                    $mobile_browser++;
+                if((isset($_SERVER[&#39;HTTP_ACCEPT&#39;])) and (strpos(strtolower($_SERVER[&#39;HTTP_ACCEPT&#39;]),&#39;application/vnd.wap.xhtml+xml&#39;) !== false))
+                    $mobile_browser++;
+                if(isset($_SERVER[&#39;HTTP_X_WAP_PROFILE&#39;]))
+                    $mobile_browser++;
+                if(isset($_SERVER[&#39;HTTP_PROFILE&#39;]))
+                    $mobile_browser++;
+                if(isset($_SERVER[&#39;HTTP_USER_AGENT&#39;])) {
+                    $mobile_ua = strtolower(substr($_SERVER[&#39;HTTP_USER_AGENT&#39;], 0, 4));
+                    $mobile_agents = array(
+                        &#39;w3c &#39;, &#39;acs-&#39;, &#39;alav&#39;, &#39;alca&#39;, &#39;amoi&#39;, &#39;audi&#39;, &#39;avan&#39;, &#39;benq&#39;, &#39;bird&#39;, &#39;blac&#39;,
+                        &#39;blaz&#39;, &#39;brew&#39;, &#39;cell&#39;, &#39;cldc&#39;, &#39;cmd-&#39;, &#39;dang&#39;, &#39;doco&#39;, &#39;eric&#39;, &#39;hipt&#39;, &#39;inno&#39;,
+                        &#39;ipaq&#39;, &#39;java&#39;, &#39;jigs&#39;, &#39;kddi&#39;, &#39;keji&#39;, &#39;leno&#39;, &#39;lg-c&#39;, &#39;lg-d&#39;, &#39;lg-g&#39;, &#39;lge-&#39;,
+                        &#39;maui&#39;, &#39;maxo&#39;, &#39;midp&#39;, &#39;mits&#39;, &#39;mmef&#39;, &#39;mobi&#39;, &#39;mot-&#39;, &#39;moto&#39;, &#39;mwbp&#39;, &#39;nec-&#39;,
+                        &#39;newt&#39;, &#39;noki&#39;, &#39;oper&#39;, &#39;palm&#39;, &#39;pana&#39;, &#39;pant&#39;, &#39;phil&#39;, &#39;play&#39;, &#39;port&#39;, &#39;prox&#39;,
+                        &#39;qwap&#39;, &#39;sage&#39;, &#39;sams&#39;, &#39;sany&#39;, &#39;sch-&#39;, &#39;sec-&#39;, &#39;send&#39;, &#39;seri&#39;, &#39;sgh-&#39;, &#39;shar&#39;,
+                        &#39;sie-&#39;, &#39;siem&#39;, &#39;smal&#39;, &#39;smar&#39;, &#39;sony&#39;, &#39;sph-&#39;, &#39;symb&#39;, &#39;t-mo&#39;, &#39;teli&#39;, &#39;tim-&#39;,
+                        &#39;tosh&#39;, &#39;tsm-&#39;, &#39;upg1&#39;, &#39;upsi&#39;, &#39;vk-v&#39;, &#39;voda&#39;, &#39;wap-&#39;, &#39;wapa&#39;, &#39;wapi&#39;, &#39;wapp&#39;,
+                        &#39;wapr&#39;, &#39;webc&#39;, &#39;winw&#39;, &#39;winw&#39;, &#39;xda&#39;, &#39;xda-&#39;
+                    );
+                    if(in_array($mobile_ua, $mobile_agents))
+                        $mobile_browser++;
+                }
+                if(strpos(strtolower($_SERVER[&#39;ALL_HTTP&#39;]), &#39;operamini&#39;) !== false)
+                    $mobile_browser++;
+                // Pre-final check to reset everything if the user is on Windows
+                if( isset($_SERVER[&#39;HTTP_USER_AGENT&#39;])&amp;&amp;strpos(strtolower($_SERVER[&#39;HTTP_USER_AGENT&#39;]), &#39;windows&#39;) !== false)
+                    $mobile_browser=0;
+                // But WP7 is also Windows, with a slightly different characteristic
+                if(isset($_SERVER[&#39;HTTP_USER_AGENT&#39;])&amp;&amp;strpos(strtolower($_SERVER[&#39;HTTP_USER_AGENT&#39;]), &#39;windows phone&#39;) !== false)
+                    $mobile_browser++;
+                if($mobile_browser&gt;0)
+                    return true;
+                else
+                    return false;
+            }
+</code></pre><h3 id="globalalipay-海外支付宝支付">globalalipay 海外支付宝支付<a hidden class="anchor" aria-hidden="true" href="#globalalipay-海外支付宝支付">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> /**
+</span></span><span class="line"><span class="cl">         * 支付请求
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$order_out_no</span>
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$total_fee</span>
+</span></span><span class="line"><span class="cl">         * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">         * @return mixed
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        public <span class="k">function</span> pay<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">    //            <span class="s1">&#39;product_code&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;NEW_OVERSEAS_SELLER&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;service&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;create_forex_trade&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;partner&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;partner&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;return_url&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;return_url&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;notify_url&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;notify_url&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;_input_charset&#39;</span><span class="o">=</span>&gt;<span class="s1">&#39;utf-8&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;subject&#39;</span><span class="o">=</span>&gt;<span class="s1">&#39;網上匯入&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;body&#39;</span><span class="o">=</span>&gt;<span class="s1">&#39;網上匯入&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;out_trade_no&#39;</span><span class="o">=</span>&gt;<span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;total_fee&#39;</span><span class="o">=</span>&gt;<span class="nv">$total_fee</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;payment_type&#39;</span><span class="o">=</span>&gt;1,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;show_url&#39;</span><span class="o">=</span>&gt;<span class="o">(</span>isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span> ? <span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span> : request<span class="o">()</span>-&gt;server<span class="o">(</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">))</span>.<span class="s2">&#34;://&#34;</span>.MAINSITE,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;seller_email&#39;</span><span class="o">=</span>&gt;<span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;seller_email&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;currency&#39;</span><span class="o">=</span>&gt;isset<span class="o">(</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;currency&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;currency&#39;</span><span class="o">]</span>?<span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;currency&#39;</span><span class="o">]</span>:<span class="s2">&#34;HKD&#34;</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$action</span><span class="o">=</span><span class="s2">&#34;https://mapi.alipay.com/gateway.do&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$resp</span><span class="o">=</span><span class="nv">$this</span>-&gt;sign<span class="o">(</span><span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;content&#39;</span> <span class="o">=</span>&gt; <span class="nv">$action</span>.<span class="s2">&#34;?&#34;</span>.http_build_query<span class="o">(</span><span class="nv">$resp</span><span class="o">)</span>, <span class="s1">&#39;Type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;url&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">            public <span class="k">function</span> sign<span class="o">(</span><span class="nv">$p</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$prestr</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                ksort<span class="o">(</span><span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                foreach <span class="o">(</span><span class="nv">$p</span> as <span class="nv">$key</span><span class="o">=</span>&gt;<span class="nv">$value</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$prestr</span>.<span class="o">=</span><span class="s2">&#34;{</span><span class="nv">$key</span><span class="s2">}={</span><span class="nv">$value</span><span class="s2">}&amp;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$prestr</span><span class="o">=</span>trim<span class="o">(</span><span class="nv">$prestr</span>,<span class="s2">&#34;&amp;&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;sign_type&#39;</span><span class="o">]=</span><span class="s1">&#39;MD5&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;sign&#39;</span><span class="o">]=</span>md5<span class="o">(</span><span class="nv">$prestr</span>.<span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;security_code&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span></code></pre></div><h3 id="tonglian-通联支付">Tonglian 通联支付<a hidden class="anchor" aria-hidden="true" href="#tonglian-通联支付">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"> /**
+</span></span><span class="line"><span class="cl">         * 网关支付
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$out_trade_no</span>
+</span></span><span class="line"><span class="cl">         * @param <span class="nv">$total_fee</span>
+</span></span><span class="line"><span class="cl">         * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">         * @return array
+</span></span><span class="line"><span class="cl">         */
+</span></span><span class="line"><span class="cl">        public <span class="k">function</span> gateway<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;cusid&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;cusid&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;appid&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;Username,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;charset&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;UTF-8&#39;</span>,
+</span></span><span class="line"><span class="cl">    //            <span class="s1">&#39;returl&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;returl&#39;</span> <span class="o">=</span>&gt;<span class="o">(</span> isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span>?<span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span>: request<span class="o">()</span>-&gt;server<span class="o">(</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">))</span> . <span class="s2">&#34;://&#34;</span> . MAINSITE . <span class="s2">&#34;/payment/allinpay_notify_url.php&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;notifyurl&#39;</span> <span class="o">=</span>&gt;<span class="o">(</span> isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span>?<span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span>: request<span class="o">()</span>-&gt;server<span class="o">(</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">))</span> . <span class="s2">&#34;://&#34;</span> . MAINSITE . <span class="s2">&#34;/payment/allinpay_notify_url.php&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;trxamt&#39;</span> <span class="o">=</span>&gt; <span class="nv">$total_fee</span> * 100,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;orderid&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;randomstr&#39;</span> <span class="o">=</span>&gt; time<span class="o">()</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;gateid&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;bankid&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;bankid&#39;</span><span class="o">]</span>?<span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;bankid&#39;</span><span class="o">]</span>:<span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;paytype&#39;</span> <span class="o">=</span>&gt;isset<span class="o">(</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;bankid&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;bankid&#39;</span><span class="o">]</span>?<span class="s2">&#34;B2C&#34;</span>: <span class="s1">&#39;B2C,B2B&#39;</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;sign&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;sign<span class="o">(</span><span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$url</span> <span class="o">=</span> <span class="s2">&#34;{</span><span class="nv">$this</span><span class="s2">-&gt;apiConfig-&gt;Host}/gateway/pay&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$str</span> <span class="o">=</span> <span class="s2">&#34;&lt;form id=&#39;myform1&#39; method=&#39;post&#39; action=&#39;{</span><span class="nv">$url</span><span class="s2">}&#39; target=&#39;_blank&#39; &gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            foreach <span class="o">(</span><span class="nv">$p</span> as <span class="nv">$key</span> <span class="o">=</span>&gt; <span class="nv">$value</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$str</span> .<span class="o">=</span> <span class="s2">&#34;&lt;input type=&#39;hidden&#39; name=&#39;{</span><span class="nv">$key</span><span class="s2">}&#39; value=&#39;{</span><span class="nv">$value</span><span class="s2">}&#39;/&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$str</span> .<span class="o">=</span> <span class="s1">&#39;&lt;/form&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;content&#39;</span> <span class="o">=</span>&gt; <span class="nv">$str</span>, <span class="s1">&#39;Type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;form&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        /**
+</span></span><span class="line"><span class="cl">             * 支付请求
+</span></span><span class="line"><span class="cl">             * 文档url: https://aipboss.allinpay.com/know/devhelp/main.php?pid<span class="o">=</span>15#mid<span class="o">=</span><span class="m">88</span>
+</span></span><span class="line"><span class="cl">             * @param <span class="nv">$order_out_no</span>
+</span></span><span class="line"><span class="cl">             * @param <span class="nv">$total_fee</span>
+</span></span><span class="line"><span class="cl">             * @param array <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">             * @return mixed
+</span></span><span class="line"><span class="cl">             */
+</span></span><span class="line"><span class="cl">            public <span class="k">function</span> pay<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">            <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$action</span> <span class="o">=</span> <span class="s2">&#34;/unitorder/pay&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$paytype</span> <span class="o">=</span> <span class="s2">&#34;W01&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;paytype&#39;</span><span class="o">]))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    switch <span class="o">(</span><span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;paytype&#39;</span><span class="o">])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">case</span> <span class="s2">&#34;wechat&#34;</span>:
+</span></span><span class="line"><span class="cl">                            <span class="nv">$paytype</span> <span class="o">=</span> <span class="s2">&#34;W01&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            break<span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">case</span> <span class="s2">&#34;alipay&#34;</span>:
+</span></span><span class="line"><span class="cl">                            <span class="nv">$paytype</span> <span class="o">=</span> <span class="s2">&#34;A01&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            break<span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">case</span> <span class="s2">&#34;qq&#34;</span>:
+</span></span><span class="line"><span class="cl">                            <span class="nv">$paytype</span> <span class="o">=</span> <span class="s2">&#34;Q01&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            break<span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">case</span> <span class="s2">&#34;union&#34;</span>:
+</span></span><span class="line"><span class="cl">                            <span class="nv">$paytype</span> <span class="o">=</span> <span class="s2">&#34;U01&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            break<span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;trxamt&#39;</span> <span class="o">=</span>&gt; <span class="nv">$total_fee</span> * 100,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;reqsn&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;paytype&#39;</span> <span class="o">=</span>&gt; <span class="nv">$paytype</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;randomstr&#39;</span> <span class="o">=</span>&gt; time<span class="o">()</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;body&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;充值&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;remark&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;notify_url&#39;</span> <span class="o">=</span>&gt;<span class="o">(</span> isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">])&amp;&amp;</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span>?<span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">]</span>: request<span class="o">()</span>-&gt;server<span class="o">(</span><span class="s1">&#39;REQUEST_SCHEME&#39;</span><span class="o">))</span> . <span class="s2">&#34;://&#34;</span> . MAINSITE . <span class="s2">&#34;/payment/allinpay_notify_url.php&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">                <span class="nv">$resp</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;errmsg&#39;</span><span class="o">]))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;errmsg&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$array</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;Type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;qrcode_url&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;QrcodeUrl&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;payinfo&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;content&#39;</span> <span class="o">=</span>&gt; <span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;payinfo&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$array</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">          public <span class="k">function</span> gateway_query<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">            <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$action</span><span class="o">=</span><span class="s2">&#34;/gateway/query&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">=[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;orderid&#39;</span><span class="o">=</span>&gt;<span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$resp</span><span class="o">=</span><span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>,<span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;errmsg&#39;</span><span class="o">])</span>?<span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;errmsg&#39;</span><span class="o">]</span>: <span class="nv">$resp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            /**
+</span></span><span class="line"><span class="cl">                 * 查询支付结果
+</span></span><span class="line"><span class="cl">                 * @return mixed
+</span></span><span class="line"><span class="cl">                 */
+</span></span><span class="line"><span class="cl">                public <span class="k">function</span> query<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">                <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                   <span class="nv">$action</span><span class="o">=</span><span class="s2">&#34;/unitorder/query&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                   <span class="nv">$p</span><span class="o">=[</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;reqsn&#39;</span><span class="o">=</span>&gt;<span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                   <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                   <span class="nv">$resp</span><span class="o">=</span><span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>,<span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> isset<span class="o">(</span><span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;errmsg&#39;</span><span class="o">])</span>?<span class="nv">$resp</span><span class="o">[</span><span class="s1">&#39;errmsg&#39;</span><span class="o">]</span>: <span class="nv">$resp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> public <span class="k">function</span> sign<span class="o">(</span><span class="nv">$param</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;key&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;Password<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        ksort<span class="o">(</span><span class="nv">$param</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$buff</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        foreach <span class="o">(</span><span class="nv">$param</span> as <span class="nv">$k</span> <span class="o">=</span>&gt; <span class="nv">$v</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="nv">$v</span> !<span class="o">=</span> <span class="s2">&#34;&#34;</span> <span class="o">&amp;&amp;</span> !is_array<span class="o">(</span><span class="nv">$v</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$buff</span> .<span class="o">=</span> <span class="nv">$k</span> . <span class="s2">&#34;=&#34;</span> . <span class="nv">$v</span> . <span class="s2">&#34;&amp;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> md5<span class="o">(</span>trim<span class="o">(</span><span class="nv">$buff</span>, <span class="s2">&#34;&amp;&#34;</span><span class="o">))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$param</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;cusid&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;cusid&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;appid&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;Username<span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$param</span><span class="o">[</span><span class="s1">&#39;version&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;version&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$sign</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;sign<span class="o">(</span><span class="nv">$param</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$param</span><span class="o">[</span><span class="s2">&#34;sign&#34;</span><span class="o">]</span> <span class="o">=</span> <span class="nv">$sign</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$content</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;client-&gt;request<span class="o">(</span><span class="s2">&#34;POST&#34;</span>, <span class="nv">$this</span>-&gt;apiConfig-&gt;Host . <span class="nv">$action</span>, <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;form_params&#39;</span> <span class="o">=</span>&gt; <span class="nv">$param</span>
+</span></span><span class="line"><span class="cl">        <span class="o">])</span>-&gt;getBody<span class="o">()</span>-&gt;getContents<span class="o">()</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> json_decode<span class="o">(</span><span class="nv">$content</span>, 1<span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    /**
+</span></span><span class="line"><span class="cl">     * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理
+</span></span><span class="line"><span class="cl">     * @param <span class="nv">$all</span>
+</span></span><span class="line"><span class="cl">     * @return mixed
+</span></span><span class="line"><span class="cl">     */
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> handle<span class="o">(</span><span class="nv">$all</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$sign</span> <span class="o">=</span> <span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;sign&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        unset<span class="o">(</span><span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;sign&#39;</span><span class="o">])</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$mySign</span> <span class="o">=</span> <span class="nv">$this</span>-&gt;sign<span class="o">(</span><span class="nv">$all</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span>strtolower<span class="o">(</span><span class="nv">$sign</span><span class="o">)</span> <span class="o">==</span> strtolower<span class="o">(</span><span class="nv">$mySign</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;out_trade_no&#39;</span> <span class="o">=</span>&gt; <span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;cusorderid&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;amount&#39;</span> <span class="o">=</span>&gt; <span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;trxamt&#39;</span><span class="o">]</span> / 100,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;attach&#39;</span> <span class="o">=</span>&gt; isset<span class="o">(</span><span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;trxreserved&#39;</span><span class="o">])</span> ? <span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;trxreserved&#39;</span><span class="o">]</span> : <span class="s2">&#34;&#34;</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;created_at&#39;</span> <span class="o">=</span>&gt; date<span class="o">(</span><span class="s2">&#34;Y-m-d H:i:s&#34;</span>, strtotime<span class="o">(</span><span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;trxdate&#39;</span><span class="o">]))</span>,
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;payed_at&#39;</span> <span class="o">=</span>&gt; date<span class="o">(</span><span class="s2">&#34;Y-m-d H:i:s&#34;</span>, strtotime<span class="o">(</span><span class="nv">$all</span><span class="o">[</span><span class="s1">&#39;paytime&#39;</span><span class="o">]))</span>,
+</span></span><span class="line"><span class="cl">            <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> false<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    public <span class="k">function</span> refund<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$action</span> <span class="o">=</span> <span class="s2">&#34;/unitorder/refund&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;trxamt&#39;</span> <span class="o">=</span>&gt; <span class="nv">$total_fee</span> * 100,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;oldreqsn&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;reqsn&#39;</span><span class="o">=</span>&gt;<span class="s2">&#34;{</span><span class="nv">$out_trade_no</span><span class="s2">}_refund&#34;</span>,
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;remark&#39;</span><span class="o">=</span>&gt;<span class="s1">&#39;退款&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span>-&gt;request<span class="o">(</span><span class="nv">$action</span>, <span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span></code></pre></div><h3 id="union-银联支付">union 银联支付<a hidden class="anchor" aria-hidden="true" href="#union-银联支付">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  public <span class="k">function</span> pay<span class="o">(</span><span class="nv">$out_trade_no</span>, <span class="nv">$total_fee</span>, <span class="nv">$param</span> <span class="o">=</span> <span class="o">[])</span>
+</span></span><span class="line"><span class="cl">            <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$http_type</span> <span class="o">=</span> <span class="o">((</span>isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;HTTPS&#39;</span><span class="o">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;HTTPS&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;on&#39;</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span>isset<span class="o">(</span><span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;HTTP_X_FORWARDED_PROTO&#39;</span><span class="o">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_SERVER</span><span class="o">[</span><span class="s1">&#39;HTTP_X_FORWARDED_PROTO&#39;</span><span class="o">]</span> <span class="o">==</span> <span class="s1">&#39;https&#39;</span><span class="o">))</span> ? <span class="s1">&#39;https://&#39;</span> : <span class="s1">&#39;http://&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$returnUrl</span> <span class="o">=</span> <span class="nv">$http_type</span> . <span class="s1">&#39;/payment/unionpay_result.php?&#39;</span><span class="p">;</span>//返回URL
+</span></span><span class="line"><span class="cl">                <span class="nv">$notifyUrl</span> <span class="o">=</span> <span class="nv">$http_type</span> . <span class="s1">&#39;/payment/unionpay_result.php?&#39;</span><span class="p">;</span>//通知URL
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;version&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;1.0.0&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;charset&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;UTF-8&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;merId&#39;</span> <span class="o">=</span>&gt; <span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;merId&#39;</span><span class="o">]</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;merAbbr&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;merAbbr&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;acqCode&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;merCode&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;transType&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;01&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;origQid&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;commodityUrl&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;commodityName&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;commodityUnitPrice&#39;</span> <span class="o">=</span>&gt; <span class="nv">$total_fee</span> * 100,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;commodityQuantity&#39;</span> <span class="o">=</span>&gt; 1,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;commodityDiscount&#39;</span> <span class="o">=</span>&gt; 0,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;transferFee&#39;</span> <span class="o">=</span>&gt; 0,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;orderNumber&#39;</span> <span class="o">=</span>&gt; <span class="nv">$out_trade_no</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;orderAmount&#39;</span> <span class="o">=</span>&gt; <span class="nv">$total_fee</span> * 100,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;orderCurrency&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;156&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;orderTime&#39;</span> <span class="o">=</span>&gt; date<span class="o">(</span><span class="s1">&#39;YmdHis&#39;</span><span class="o">)</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;customerIp&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;customerName&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;defaultPayType&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;defaultBankNumber&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;transTimeout&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;300000&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;merReserved&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;&#39;</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;frontEndUrl&#39;</span> <span class="o">=</span>&gt; <span class="nv">$returnUrl</span>,
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;backEndUrl&#39;</span> <span class="o">=</span>&gt; <span class="nv">$notifyUrl</span>,
+</span></span><span class="line"><span class="cl">                <span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$url</span><span class="o">=</span><span class="nv">$this</span>-&gt;apiConfig-&gt;Host.<span class="s2">&#34;/api/Pay.action&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">=</span><span class="nv">$this</span>-&gt;sign<span class="o">(</span><span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$str</span> <span class="o">=</span> <span class="s2">&#34;&lt;form id=&#39;myform1&#39; method=&#39;post&#39; action=&#39;{</span><span class="nv">$url</span><span class="s2">}&#39; target=&#39;_blank&#39; &gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                foreach <span class="o">(</span><span class="nv">$p</span> as <span class="nv">$key</span> <span class="o">=</span>&gt; <span class="nv">$value</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$str</span> .<span class="o">=</span> <span class="s2">&#34;&lt;input type=&#39;hidden&#39; name=&#39;{</span><span class="nv">$key</span><span class="s2">}&#39; id=&#39;{</span><span class="nv">$key</span><span class="s2">}&#39; value=&#39;{</span><span class="nv">$value</span><span class="s2">}&#39;/&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$str</span> .<span class="o">=</span> <span class="s1">&#39;&lt;/form&gt;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="o">[</span><span class="s1">&#39;content&#39;</span> <span class="o">=</span>&gt; <span class="nv">$str</span>, <span class="s1">&#39;Type&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;form&#39;</span><span class="o">]</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">            public <span class="k">function</span> sign<span class="o">(</span><span class="nv">$p</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$prestr</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                ksort<span class="o">(</span><span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                reset<span class="o">(</span><span class="nv">$p</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">                foreach <span class="o">(</span><span class="nv">$p</span> as <span class="nv">$key</span><span class="o">=</span>&gt;<span class="nv">$value</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$prestr</span>.<span class="o">=</span><span class="s2">&#34;{</span><span class="nv">$key</span><span class="s2">}={</span><span class="nv">$value</span><span class="s2">}&amp;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;signMethod&#39;</span><span class="o">]=</span><span class="s1">&#39;MD5&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$p</span><span class="o">[</span><span class="s1">&#39;signature&#39;</span><span class="o">]=</span>md5<span class="o">(</span><span class="nv">$prestr</span>.md5<span class="o">(</span><span class="nv">$this</span>-&gt;apiConfig-&gt;ExtraConfig<span class="o">[</span><span class="s1">&#39;sucurity_key&#39;</span><span class="o">]))</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/php/">php</a></li>
+      <li><a href="/tags/pay/">pay</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ocr on Ken Blog</title>
+    <link>/tags/ocr/</link>
+    <description>Recent content in ocr on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 10:35:00 +0800</lastBuildDate><atom:link href="/tags/ocr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>php-分享自有系统接入OCR图片识别</title>
+      <link>/tech/php-ocr/</link>
+      <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
+      
+      <guid>/tech/php-ocr/</guid>
+      <description>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$this-&amp;gt;access_key}.json&amp;#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&amp;#39;expires_in&amp;#39;]) &amp;gt; time()) { return $json[&amp;#39;access_token&amp;#39;]; } } } $resp = json_decode($this-&amp;gt;client-&amp;gt;request(&amp;#34;POST&amp;#34;, &amp;#34;https://aip.baidubce.com/oauth/2.0/token&amp;#34;, [ &amp;#39;form_params&amp;#39; =&amp;gt; [ &amp;#39;grant_type&amp;#39; =&amp;gt; &amp;#39;client_credentials&amp;#39;, &amp;#39;client_id&amp;#39; =&amp;gt; $this-&amp;gt;access_key, &amp;#39;client_secret&amp;#39; =&amp;gt; $this-&amp;gt;secret_key, ] ])-&amp;gt;getBody()-&amp;gt;getContents(), 1); $data = [ &amp;#39;access_token&amp;#39; =&amp;gt; $resp[&amp;#39;access_token&amp;#39;], &amp;#39;expires_in&amp;#39; =&amp;gt; date(&amp;#34;Y-m-d H:i:s&amp;#34;, strtotime(&amp;#34;+29 day&amp;#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&amp;#39;access_token&amp;#39;]; } private function request($action, $p) { $option = [ &amp;#39;query&amp;#39; =&amp;gt; [ &amp;#39;access_token&amp;#39; =&amp;gt; $this-&amp;gt;getToken(), ], ]; if ($this-&amp;gt;target == &amp;#39;face&amp;#39;) { $option[&amp;#39;json&amp;#39;] = $p; } else { $option[&amp;#39;form_params&amp;#39;] = $p; } $resp = $this-&amp;gt;client-&amp;gt;request(&amp;#34;POST&amp;#34;, &amp;#34;{$api_url}/{$action}&amp;#34;, $option) -&amp;gt;getBody() -&amp;gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>tronlink on Ken Blog</title>
+    <link>/tags/tronlink/</link>
+    <description>Recent content in tronlink on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 16 Aug 2022 10:15:00 +0800</lastBuildDate><atom:link href="/tags/tronlink/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tronlink-从0到1搭建自己的归集系统</title>
+      <link>/tech/tronlink-001/</link>
+      <pubDate>Tue, 16 Aug 2022 10:15:00 +0800</pubDate>
+      
+      <guid>/tech/tronlink-001/</guid>
+      <description>前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
+目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
+前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
+1个总钱包,其中会扩展的功能有,分发冻结能量,收款,激活钱包,也可以看业务需要拆开成3个钱包
+开发环境: python mysql
+正式内容 所有的接口以及交互均来自 波场链官网文档 ,如果对于文档不太熟的同学请先阅读了解下波场链的交易流程
+主要数据结构 节点数据 block_chain_block
+数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet
+数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API</description>
+    </item>
+    
+    <item>
+      <title>python-波场区块链的扫块系统</title>
+      <link>/life/python-tronlink-scan/</link>
+      <pubDate>Mon, 15 Aug 2022 11:26:00 +0800</pubDate>
+      
+      <guid>/life/python-tronlink-scan/</guid>
+      <description>[github]路径(https://github.com/suguer/python-tronlink-scan)
+python-tronlink-scan 波场链的扫块功能,如果对于需要获取波场链上的交易情况,又没有条件部署一台自己的节点,那么采用本文的方式是一个不错的选择,通过调用接口也能及时获取到交易信息
+安装需要的用到的插件
+pip install -r requirements.txt 运行即可,有需要的可调整为数据库的结构来存
+python main.py example: 需要记录的合约 config/contract.csv
+地址|名称|精度
+address,name,decimals TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,USDT,6 TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8,USDC,6 TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4,BitTorrent,18 需要记录的钱包 config/wallet.csv
+地址|密钥
+address,private_key TSRg164MqUKMxDn2eQYvAg9iFNhQYXAFa8, TNV2h4c2ibuQKes5XTgwuuP9mdfQiAHxpL, TGn37A4yEjVBCXojhFNpZvovWvfNdzwC3x, 激活的要以 config/transaction.csv
+hash|区块|发出地址|接收地址|区块时间|数额|合约地址|状态
+hash,block,from,to,block_at,amount,contract_address,status f474e2ceb883637aae1f666adc7714309bf933cfd956173c68bd0512e2190f34,40967609,TPJA5T1QaJEZnCgujC36GpX2wGLYsYnqAh,TNV2h4c2ibuQKes5XTgwuuP9mdfQiAHxpL,2022-05-25 13:32:27,28.29,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,success fbd03d69af7ba8e1f7c56dd11738c8d6269497193daf0efa23eff3ed477e6f12,40969058,TJDFLrCiKneK2rXjCudn4gGMcYhVeqB8ru,TGn37A4yEjVBCXojhFNpZvovWvfNdzwC3x,2022-05-25 14:45:06,7229.02,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,success </description>
+    </item>
+    
+  </channel>
+</rss>

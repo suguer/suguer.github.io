@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>baota on Ken Blog</title>
+    <link>/tags/baota/</link>
+    <description>Recent content in baota on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 12 Aug 2022 16:55:00 +0800</lastBuildDate><atom:link href="/tags/baota/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从0到1 用宝塔集成虚拟主机提供商</title>
+      <link>/tech/baota/</link>
+      <pubDate>Fri, 12 Aug 2022 16:55:00 +0800</pubDate>
+      
+      <guid>/tech/baota/</guid>
+      <description>前言 对比一般市场上的虚拟主机,宝塔都能兼容支持绝大多数的功能,并且宝塔有个比较大的特点为,页面上的接口均可以通过api请求,因此产生了这个想法定制出宝塔基础的虚拟主机
+目标 前置条件 window server的主机
+宝塔需安装在数据盘D盘上
+正式内容 定义的配置文件 /data/vhost/baota.conf.json
+[ { &amp;#34;fchrServer&amp;#34;:&amp;#34;flage&amp;#34;, &amp;#34;host&amp;#34;:&amp;#34;127.0.0.1&amp;#34;, &amp;#34;key&amp;#34;:&amp;#34;bt_api_key&amp;#34;, &amp;#34;port&amp;#34;:&amp;#34;8888&amp;#34;, &amp;#34;mysql&amp;#34;:&amp;#34;mysql_password&amp;#34;, &amp;#34;sqlserver&amp;#34;:&amp;#34;mssql_password&amp;#34;, &amp;#34;region_id&amp;#34;:&amp;#34;hk&amp;#34;, &amp;#34;zone_id&amp;#34;:&amp;#34;hk-02&amp;#34;, &amp;#34;network&amp;#34;:&amp;#34;bgp&amp;#34; } ] 封装好的交互php函数方法
+class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use ApiLoggerTrait; private $client; private $key = &amp;#34;&amp;#34;; public $host = &amp;#34;&amp;#34;; private $port = &amp;#34;8888&amp;#34;; private $mssql_password = &amp;#34;&amp;#34;; /** * @var array 远端主机的状态转换 */ public $RemoteStatus = [ &amp;#39;1&amp;#39; =&amp;gt; &amp;#39;Running&amp;#39;, &amp;#39;0&amp;#39; =&amp;gt; &amp;#39;Stopped&amp;#39;, ]; public $IISRemoteStatus = [ &amp;#39;Started&amp;#39; =&amp;gt; &amp;#39;Running&amp;#39;, &amp;#39;Stopped&amp;#39; =&amp;gt; &amp;#39;Stopped&amp;#39;, ]; public static function getConfig() { return json_decode(file_get_contents(&amp;#39;/data/vhost/baota.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Php-生成ssl证书所需的csr信息 | Ken Blog</title>
+<meta name="keywords" content="php, ssl">
+<meta name="description" content="/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&gt;all(); $dn = [ &#34;countryName&#34; =&gt; trim(strtoupper($all[&#39;countryName&#39;])), //所在国家 &#34;stateOrProvinceName&#34; =&gt; trim($all[&#39;stateOrProvinceName&#39;]), //所在省份 &#34;localityName&#34; =&gt; trim($all[&#39;localityName&#39;]), //所在城市 &#34;organizationName&#34; =&gt; trim($all[&#39;organizationName&#39;]), //注册人姓名 &#34;organizationalUnitName&#34; =&gt; trim($all[&#39;organizationalUnitName&#39;]), //组织名称 &#34;commonName&#34; =&gt; trim($all[&#39;commonName&#39;]), //公共名称 ]; if (isset($all[&#39;emailAddress&#39;]) &amp;&amp; $all[&#39;emailAddress&#39;]) { $dn[&#39;emailAddress&#39;] = $all[&#39;emailAddress&#39;]; } $config = [ &#34;private_key_bits&#34; =&gt; isset($all[&#39;keysize&#39;]) &amp;&amp; $all[&#39;keysize&#39;] ? $all[&#39;keysize&#39;] : 2048, //字节数 512 1024 2048 4096 等 &#34;private_key_type&#34; =&gt; OPENSSL_KEYTYPE_RSA, //加密类型 &#39;digest_alg&#39; =&gt; &#39;sha256&#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&#39;config&#39;] = &#34;D:/phpstudy_pro/Extensions/Apache2.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/php-ssl/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Php-生成ssl证书所需的csr信息" />
+<meta property="og:description" content="/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&gt;all(); $dn = [ &#34;countryName&#34; =&gt; trim(strtoupper($all[&#39;countryName&#39;])), //所在国家 &#34;stateOrProvinceName&#34; =&gt; trim($all[&#39;stateOrProvinceName&#39;]), //所在省份 &#34;localityName&#34; =&gt; trim($all[&#39;localityName&#39;]), //所在城市 &#34;organizationName&#34; =&gt; trim($all[&#39;organizationName&#39;]), //注册人姓名 &#34;organizationalUnitName&#34; =&gt; trim($all[&#39;organizationalUnitName&#39;]), //组织名称 &#34;commonName&#34; =&gt; trim($all[&#39;commonName&#39;]), //公共名称 ]; if (isset($all[&#39;emailAddress&#39;]) &amp;&amp; $all[&#39;emailAddress&#39;]) { $dn[&#39;emailAddress&#39;] = $all[&#39;emailAddress&#39;]; } $config = [ &#34;private_key_bits&#34; =&gt; isset($all[&#39;keysize&#39;]) &amp;&amp; $all[&#39;keysize&#39;] ? $all[&#39;keysize&#39;] : 2048, //字节数 512 1024 2048 4096 等 &#34;private_key_type&#34; =&gt; OPENSSL_KEYTYPE_RSA, //加密类型 &#39;digest_alg&#39; =&gt; &#39;sha256&#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&#39;config&#39;] = &#34;D:/phpstudy_pro/Extensions/Apache2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/php-ssl/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-12T16:45:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T16:45:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Php-生成ssl证书所需的csr信息"/>
+<meta name="twitter:description" content="/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&gt;all(); $dn = [ &#34;countryName&#34; =&gt; trim(strtoupper($all[&#39;countryName&#39;])), //所在国家 &#34;stateOrProvinceName&#34; =&gt; trim($all[&#39;stateOrProvinceName&#39;]), //所在省份 &#34;localityName&#34; =&gt; trim($all[&#39;localityName&#39;]), //所在城市 &#34;organizationName&#34; =&gt; trim($all[&#39;organizationName&#39;]), //注册人姓名 &#34;organizationalUnitName&#34; =&gt; trim($all[&#39;organizationalUnitName&#39;]), //组织名称 &#34;commonName&#34; =&gt; trim($all[&#39;commonName&#39;]), //公共名称 ]; if (isset($all[&#39;emailAddress&#39;]) &amp;&amp; $all[&#39;emailAddress&#39;]) { $dn[&#39;emailAddress&#39;] = $all[&#39;emailAddress&#39;]; } $config = [ &#34;private_key_bits&#34; =&gt; isset($all[&#39;keysize&#39;]) &amp;&amp; $all[&#39;keysize&#39;] ? $all[&#39;keysize&#39;] : 2048, //字节数 512 1024 2048 4096 等 &#34;private_key_type&#34; =&gt; OPENSSL_KEYTYPE_RSA, //加密类型 &#39;digest_alg&#39; =&gt; &#39;sha256&#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&#39;config&#39;] = &#34;D:/phpstudy_pro/Extensions/Apache2."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Php-生成ssl证书所需的csr信息",
+      "item": "/study/php-ssl/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Php-生成ssl证书所需的csr信息",
+  "name": "Php-生成ssl证书所需的csr信息",
+  "description": "/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-\u0026gt;all(); $dn = [ \u0026#34;countryName\u0026#34; =\u0026gt; trim(strtoupper($all[\u0026#39;countryName\u0026#39;])), //所在国家 \u0026#34;stateOrProvinceName\u0026#34; =\u0026gt; trim($all[\u0026#39;stateOrProvinceName\u0026#39;]), //所在省份 \u0026#34;localityName\u0026#34; =\u0026gt; trim($all[\u0026#39;localityName\u0026#39;]), //所在城市 \u0026#34;organizationName\u0026#34; =\u0026gt; trim($all[\u0026#39;organizationName\u0026#39;]), //注册人姓名 \u0026#34;organizationalUnitName\u0026#34; =\u0026gt; trim($all[\u0026#39;organizationalUnitName\u0026#39;]), //组织名称 \u0026#34;commonName\u0026#34; =\u0026gt; trim($all[\u0026#39;commonName\u0026#39;]), //公共名称 ]; if (isset($all[\u0026#39;emailAddress\u0026#39;]) \u0026amp;\u0026amp; $all[\u0026#39;emailAddress\u0026#39;]) { $dn[\u0026#39;emailAddress\u0026#39;] = $all[\u0026#39;emailAddress\u0026#39;]; } $config = [ \u0026#34;private_key_bits\u0026#34; =\u0026gt; isset($all[\u0026#39;keysize\u0026#39;]) \u0026amp;\u0026amp; $all[\u0026#39;keysize\u0026#39;] ? $all[\u0026#39;keysize\u0026#39;] : 2048, //字节数 512 1024 2048 4096 等 \u0026#34;private_key_type\u0026#34; =\u0026gt; OPENSSL_KEYTYPE_RSA, //加密类型 \u0026#39;digest_alg\u0026#39; =\u0026gt; \u0026#39;sha256\u0026#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[\u0026#39;config\u0026#39;] = \u0026#34;D:/phpstudy_pro/Extensions/Apache2.",
+  "keywords": [
+    "php", "ssl"
+  ],
+  "articleBody": " /** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-\u003eall(); $dn = [ \"countryName\" =\u003e trim(strtoupper($all['countryName'])), //所在国家 \"stateOrProvinceName\" =\u003e trim($all['stateOrProvinceName']), //所在省份 \"localityName\" =\u003e trim($all['localityName']), //所在城市 \"organizationName\" =\u003e trim($all['organizationName']), //注册人姓名 \"organizationalUnitName\" =\u003e trim($all['organizationalUnitName']), //组织名称 \"commonName\" =\u003e trim($all['commonName']), //公共名称 ]; if (isset($all['emailAddress']) \u0026\u0026 $all['emailAddress']) { $dn['emailAddress'] = $all['emailAddress']; } $config = [ \"private_key_bits\" =\u003e isset($all['keysize']) \u0026\u0026 $all['keysize'] ? $all['keysize'] : 2048, //字节数 512 1024 2048 4096 等 \"private_key_type\" =\u003e OPENSSL_KEYTYPE_RSA, //加密类型 'digest_alg' =\u003e 'sha256', ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config['config'] = \"D:/phpstudy_pro/Extensions/Apache2.4.39/conf/openssl.cnf\"; // $config['config'] = \"/etc/pki/tls/openssl.cnf\"; $privkey = openssl_pkey_new($config); } $csr = openssl_csr_new($dn, $privkey, $config); // $sscert = openssl_csr_sign($csr, null, $privkey, 365, $csr,$config); // openssl_x509_export($sscert, $csrkey); //将公钥证书存储到一个变量 $csrkey，由 PEM 编码格式命名。 openssl_csr_export($csr, $csrout); openssl_pkey_export($privkey, $privatekey, null, $config); return $this-\u003ereturnResponse([ 'certificate' =\u003e $csrout, 'privatekey' =\u003e $privatekey ]); } ",
+  "wordCount" : "129",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T16:45:00+08:00",
+  "dateModified": "2022-08-12T16:45:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/php-ssl/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+    <h1 class="post-title">
+      Php-生成ssl证书所需的csr信息
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 16:45:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/php-ssl.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> 
+
+  <div class="post-content"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"> <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 生成CSR和KEY
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">CreateCsr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$all</span> <span class="o">=</span> <span class="nx">request</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$dn</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;countryName&#34;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">strtoupper</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;countryName&#39;</span><span class="p">])),</span>                                  <span class="c1">//所在国家
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;stateOrProvinceName&#34;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;stateOrProvinceName&#39;</span><span class="p">]),</span>                    <span class="c1">//所在省份
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;localityName&#34;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;localityName&#39;</span><span class="p">]),</span>                        <span class="c1">//所在城市
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;organizationName&#34;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;organizationName&#39;</span><span class="p">]),</span>         <span class="c1">//注册人姓名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;organizationalUnitName&#34;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;organizationalUnitName&#39;</span><span class="p">]),</span>   <span class="c1">//组织名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;commonName&#34;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;commonName&#39;</span><span class="p">]),</span>                          <span class="c1">//公共名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;emailAddress&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;emailAddress&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$dn</span><span class="p">[</span><span class="s1">&#39;emailAddress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;emailAddress&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$config</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;private_key_bits&#34;</span> <span class="o">=&gt;</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;keysize&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;keysize&#39;</span><span class="p">]</span> <span class="o">?</span> <span class="nv">$all</span><span class="p">[</span><span class="s1">&#39;keysize&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="mi">2048</span><span class="p">,</span>                     <span class="c1">//字节数    512 1024  2048   4096 等
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s2">&#34;private_key_type&#34;</span> <span class="o">=&gt;</span> <span class="nx">OPENSSL_KEYTYPE_RSA</span><span class="p">,</span>     <span class="c1">//加密类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="s1">&#39;digest_alg&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;sha256&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$privkey</span> <span class="o">=</span> <span class="nx">openssl_pkey_new</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$privkey</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;D:/phpstudy_pro/Extensions/Apache2.4.39/conf/openssl.cnf&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//            $config[&#39;config&#39;] = &#34;/etc/pki/tls/openssl.cnf&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$privkey</span> <span class="o">=</span> <span class="nx">openssl_pkey_new</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$csr</span> <span class="o">=</span> <span class="nx">openssl_csr_new</span><span class="p">(</span><span class="nv">$dn</span><span class="p">,</span> <span class="nv">$privkey</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//        $sscert = openssl_csr_sign($csr, null, $privkey, 365, $csr,$config);
+</span></span></span><span class="line"><span class="cl"><span class="c1">//        openssl_x509_export($sscert, $csrkey); //将公钥证书存储到一个变量 $csrkey，由 PEM 编码格式命名。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">openssl_csr_export</span><span class="p">(</span><span class="nv">$csr</span><span class="p">,</span> <span class="nv">$csrout</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nx">openssl_pkey_export</span><span class="p">(</span><span class="nv">$privkey</span><span class="p">,</span> <span class="nv">$privatekey</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">returnResponse</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;certificate&#39;</span> <span class="o">=&gt;</span> <span class="nv">$csrout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;privatekey&#39;</span> <span class="o">=&gt;</span> <span class="nv">$privatekey</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/php/">php</a></li>
+      <li><a href="/tags/ssl/">ssl</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="/study/php-distance/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Php-根据经纬度计算直线距离</span>
+  </a>
+  <a class="next" href="/study/python-tensorflow-002/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Python-初学tensorflow第二天-学习例子</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

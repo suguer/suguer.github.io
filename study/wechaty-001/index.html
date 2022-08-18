@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>wechaty-初识wechaty用途 | Ken Blog</title>
+<meta name="keywords" content="wechaty">
+<meta name="description" content="wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
+其他教程 wechaty.readthedocs.io
+有关视频教程资源:
+live-coding
+AI情话
+准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/wechaty-001/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="wechaty-初识wechaty用途" />
+<meta property="og:description" content="wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
+其他教程 wechaty.readthedocs.io
+有关视频教程资源:
+live-coding
+AI情话
+准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/wechaty-001/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-15T11:30:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-15T11:30:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="wechaty-初识wechaty用途"/>
+<meta name="twitter:description" content="wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
+其他教程 wechaty.readthedocs.io
+有关视频教程资源:
+live-coding
+AI情话
+准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "wechaty-初识wechaty用途",
+      "item": "/study/wechaty-001/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "wechaty-初识wechaty用途",
+  "name": "wechaty-初识wechaty用途",
+  "description": "wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程\n其他教程 wechaty.readthedocs.io\n有关视频教程资源:\nlive-coding\nAI情话\n准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主",
+  "keywords": [
+    "wechaty"
+  ],
+  "articleBody": "wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程\n其他教程 wechaty.readthedocs.io\n有关视频教程资源:\nlive-coding\nAI情话\n准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主\n",
+  "wordCount" : "16",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-15T11:30:00+08:00",
+  "dateModified": "2022-08-15T11:30:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/wechaty-001/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+    <h1 class="post-title">
+      wechaty-初识wechaty用途
+    </h1>
+    <div class="post-meta"><span title='2022-08-15 11:30:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/wechaty-001.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#wechaty%e8%83%bd%e5%81%9a%e5%88%b0%e4%bb%80%e4%b9%88" aria-label="wechaty能做到什么">wechaty能做到什么</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="wechaty能做到什么">wechaty能做到什么<a hidden class="anchor" aria-hidden="true" href="#wechaty能做到什么">#</a></h1>
+<hr>
+<ul>
+<li>能自定制微信机器人服务,为你订造专属智能客服</li>
+<li>能利用微信强大的社交机制带来潜在利益</li>
+</ul>
+<p><a href="https://github.com/wechaty/python-wechaty/">github</a>  |
+<a href="https://wechaty.js.org/docs/api/room">官网教程</a><br>
+其他教程 <a href="https://wechaty.readthedocs.io/zh_CN/latest/">wechaty.readthedocs.io</a></p>
+<p>有关视频教程资源:<br>
+<a href="https://www.bilibili.com/video/BV1dv411k75G">live-coding</a><br>
+<a href="https://www.bilibili.com/video/BV1BB4y1A714?from=search&amp;seid=13874361539953942172">AI情话</a></p>
+<p>  准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 <a href="https://wechaty.js.org/docs/puppet-services/">Padlocal协议</a> 和 <a href="https://wechaty.js.org/docs/puppet-services/paimon">Paimon协议</a>, 本教程主要以自搭建为主</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/wechaty/">wechaty</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="/study/wechaty-002/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>wechaty-描述各方法的类型</span>
+  </a>
+  <a class="next" href="/study/hugo-003/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>从0到1 记录搭建Hugo个人博客-03 使用Algolia搜索</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

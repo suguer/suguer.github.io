@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>php on Ken Blog</title>
+    <link>/tags/php/</link>
+    <description>Recent content in php on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 11:25:00 +0800</lastBuildDate><atom:link href="/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>php-域名竞价模块</title>
+      <link>/life/php-domain-auction/</link>
+      <pubDate>Mon, 15 Aug 2022 11:25:00 +0800</pubDate>
+      
+      <guid>/life/php-domain-auction/</guid>
+      <description>域名竞价交易,即为域名充当交易物品进行价值交换,其中比较出名的有国内聚名 ,以及海外的GNAME, 以GNAME为例子讲述如何对接交易模块,
+Gname的API接口文档
+过期预定预定 预定结束=&amp;gt; [抢注成功直接得标, 抢注失败直接失标, 抢注失败需竞价] 竞价域名,涉及到本地多人出价的竞价已经与远端竞价的比较 [直接出价,代理出价] 竞价结束 =&amp;gt; [竞价成功,竞价失败] 简单描述竞价流程
+竞价域名详情 DescribeAuctionInstance 参数 Domain 域名
+检查竞价类型 本地竞价 检查竞价时间是否已过期等 远端竞价 同步远端竞价详情,根据实际情况是否更新本地的出价进度 ##竞价域名出价 CreateAuctionInstance
+参数 Domain 域名 , Price 价格
+同步远端竞价详情,根据实际情况是否更新本地的出价进度 判断是否需要闯入竞价 判断余额是否足够支付提交的冻结金 判断本地是否存在代理出价 有其他用户的代理出价,并且当前出价高于Price,直接出局 该用户的代理出价则比较金额大小 大于单次最低出价就要生成代理出价 提交请求远端的出价记录 </description>
+    </item>
+    
+    <item>
+      <title>php-laravel升级注意事项</title>
+      <link>/study/php-laravel-002/</link>
+      <pubDate>Mon, 15 Aug 2022 11:18:00 +0800</pubDate>
+      
+      <guid>/study/php-laravel-002/</guid>
+      <description>官网 现在laravel的最新版已经升级到了9.0,目前公司还在用5.x版本,因此对于升级的注意事项做个记录,当做预防以后的踩坑
+注意事项
+同一个设置成支持php7.0,php8,新的9.0仅支持php8以上,为了能平滑迁移项目,需要服务器可支持2个版本 购物车插件gloudemans/shoppingcart 不可使用 , 测试 bumbummen99/shoppingcart 是否可替代 接收参数函数 Input::get() 废弃,用request()-&amp;gt;get() 替代 $input{$i+1} 花括号不可用 $input[$i+1] Route::controller 隐式控制路由废弃, 使用lesichkovm/laravel-advanced-route 插件 AdvancedRoute::controller 替代 队列在redis上保存的值有较大变动, laravel/vendor/laravel/framework/src/Illuminate/Queue/Queue.php createPayload函数 增加部分变量 laravel/vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php createPayload函数 attempts设置默认为0 原生类的构造函数改成__construct 对于整形和字符串判断更严格了,如mktime 参数必须是int; abs(&amp;quot;&amp;quot;) 会报错 有用到的废弃函数 create_function 需要更换 ORM查询返回的数据永远是obj类型, conf/database.inc.php 设置的$ORM-&amp;gt;setFetchMode(PDO::FETCH_ASSOC); 无效,源自 https://laravel.com/docs/5.4/upgrade 以上的记录是我实际的项目产生的问题,因此不一定适合大部分人
+正则表达式替换php7的语法警告
+(\$[a-zA-Z\_]+)\[([a-zA-Z]+[a-zA-Z\_\d]*)\] $1[&amp;#39;$2&amp;#39;] </description>
+    </item>
+    
+    <item>
+      <title>php-总结laravel使用技巧-001</title>
+      <link>/study/php-laravel-001/</link>
+      <pubDate>Mon, 15 Aug 2022 11:05:00 +0800</pubDate>
+      
+      <guid>/study/php-laravel-001/</guid>
+      <description>是否有人对于每次写一个laravel的控制器都要在路由上写一堆的声明路由感到麻烦,后期维护又不好处理,这里总结下如何让自己写出的接口更加规范格式化,本人在laravel项目中使用了dingo/api
+.env上配置dingo的配置信息 #Dingo API API_PREFIX=api API_VERSION=v1 API_DEBUG=true 在route.php的路由方法中添加这几行代码 $api = app(&amp;#39;Dingo\Api\Routing\Router&amp;#39;); $api-&amp;gt;version(&amp;#39;v1&amp;#39;, function ($api) { $api-&amp;gt;any(&amp;#39;{slug}&amp;#39;, &amp;#39;\App\Http\ApiRouter@route&amp;#39;)-&amp;gt;where(&amp;#39;slug&amp;#39;, &amp;#39;(.*)?&amp;#39;); }); 封装统一入口ApiRouter.php use App; use Dingo\Api\Routing\Helpers; use Illuminate\Routing\Controller; use Illuminate\Support\Str; use core\util\router\RouterHelper; class ApiRouter extends Controller { use Helpers; private $ns; const API_NS = &amp;#39;core\bapi&amp;#39;; function __construct($ns) { header(&amp;#39;Access-Control-Allow-Origin: *&amp;#39;); header(&amp;#39;Access-Control-Allow-Methods:*&amp;#39;); header(&amp;#39;Access-Control-Allow-Headers:*&amp;#39;); $this-&amp;gt;ns = $ns; } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.</description>
+    </item>
+    
+    <item>
+      <title>php-分享自有系统接入OCR图片识别</title>
+      <link>/tech/php-ocr/</link>
+      <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
+      
+      <guid>/tech/php-ocr/</guid>
+      <description>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$this-&amp;gt;access_key}.json&amp;#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&amp;#39;expires_in&amp;#39;]) &amp;gt; time()) { return $json[&amp;#39;access_token&amp;#39;]; } } } $resp = json_decode($this-&amp;gt;client-&amp;gt;request(&amp;#34;POST&amp;#34;, &amp;#34;https://aip.baidubce.com/oauth/2.0/token&amp;#34;, [ &amp;#39;form_params&amp;#39; =&amp;gt; [ &amp;#39;grant_type&amp;#39; =&amp;gt; &amp;#39;client_credentials&amp;#39;, &amp;#39;client_id&amp;#39; =&amp;gt; $this-&amp;gt;access_key, &amp;#39;client_secret&amp;#39; =&amp;gt; $this-&amp;gt;secret_key, ] ])-&amp;gt;getBody()-&amp;gt;getContents(), 1); $data = [ &amp;#39;access_token&amp;#39; =&amp;gt; $resp[&amp;#39;access_token&amp;#39;], &amp;#39;expires_in&amp;#39; =&amp;gt; date(&amp;#34;Y-m-d H:i:s&amp;#34;, strtotime(&amp;#34;+29 day&amp;#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&amp;#39;access_token&amp;#39;]; } private function request($action, $p) { $option = [ &amp;#39;query&amp;#39; =&amp;gt; [ &amp;#39;access_token&amp;#39; =&amp;gt; $this-&amp;gt;getToken(), ], ]; if ($this-&amp;gt;target == &amp;#39;face&amp;#39;) { $option[&amp;#39;json&amp;#39;] = $p; } else { $option[&amp;#39;form_params&amp;#39;] = $p; } $resp = $this-&amp;gt;client-&amp;gt;request(&amp;#34;POST&amp;#34;, &amp;#34;{$api_url}/{$action}&amp;#34;, $option) -&amp;gt;getBody() -&amp;gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下</description>
+    </item>
+    
+    <item>
+      <title>Php-自定义封装加密方法</title>
+      <link>/study/php-encrypter/</link>
+      <pubDate>Mon, 15 Aug 2022 10:34:00 +0800</pubDate>
+      
+      <guid>/study/php-encrypter/</guid>
+      <description>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &amp;#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&amp;#34;; private static $cipher = &amp;#34;AES-256-CBC&amp;#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &amp;#39;iv&amp;#39; =&amp;gt; $iv, &amp;#39;value&amp;#39; =&amp;gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&amp;#39;iv&amp;#39;]); $decrypted = openssl_decrypt($payload[&amp;#39;value&amp;#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </description>
+    </item>
+    
+    <item>
+      <title>Php邮件收取imap</title>
+      <link>/tech/php-imap/</link>
+      <pubDate>Fri, 12 Aug 2022 17:32:00 +0800</pubDate>
+      
+      <guid>/tech/php-imap/</guid>
+      <description>前言 招商银行的收款通知可以添加邮件推送,因此利用php-imap收取邮件,可达到自动化确款的目的
+目标 前置条件 composer require php-imap/php-imap
+正式内容 php-imap 的使用 $mailbox = new Mailbox( &amp;#39;{SMTP服务器:SMTP端口号/imap}INBOX&amp;#39;, // IMAP server and mailbox folder &amp;#39;邮箱账号&amp;#39;, // Username for the before configured mailbox &amp;#39;邮箱密码&amp;#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &amp;#39;UTF-8&amp;#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&amp;gt;searchMailbox(&amp;#39;ALL&amp;#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &amp;#34;IMAP connection failed: &amp;#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&amp;gt; $item) { //循环遍历 $mail = $mailbox-&amp;gt;getMail($item); $fromAddress = $mail-&amp;gt;fromAddress; $content = $mail-&amp;gt;textHtml; if(!</description>
+    </item>
+    
+    <item>
+      <title>Php-根据经纬度计算直线距离</title>
+      <link>/study/php-distance/</link>
+      <pubDate>Fri, 12 Aug 2022 16:53:00 +0800</pubDate>
+      
+      <guid>/study/php-distance/</guid>
+      <description> static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &amp;gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &amp;lt; -self::$DEF_PI) $dew = self::$DEF_2PI + $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx + $dy * $dy); return $distance; } </description>
+    </item>
+    
+    <item>
+      <title>Php-编码解码punycode</title>
+      <link>/tech/php-punycode/</link>
+      <pubDate>Fri, 12 Aug 2022 16:51:00 +0800</pubDate>
+      
+      <guid>/tech/php-punycode/</guid>
+      <description>前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&amp;ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &amp;lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &amp;#39;-&amp;#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格.</description>
+    </item>
+    
+    <item>
+      <title>Php-生成ssl证书所需的csr信息</title>
+      <link>/study/php-ssl/</link>
+      <pubDate>Fri, 12 Aug 2022 16:45:00 +0800</pubDate>
+      
+      <guid>/study/php-ssl/</guid>
+      <description>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&amp;gt;all(); $dn = [ &amp;#34;countryName&amp;#34; =&amp;gt; trim(strtoupper($all[&amp;#39;countryName&amp;#39;])), //所在国家 &amp;#34;stateOrProvinceName&amp;#34; =&amp;gt; trim($all[&amp;#39;stateOrProvinceName&amp;#39;]), //所在省份 &amp;#34;localityName&amp;#34; =&amp;gt; trim($all[&amp;#39;localityName&amp;#39;]), //所在城市 &amp;#34;organizationName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationName&amp;#39;]), //注册人姓名 &amp;#34;organizationalUnitName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationalUnitName&amp;#39;]), //组织名称 &amp;#34;commonName&amp;#34; =&amp;gt; trim($all[&amp;#39;commonName&amp;#39;]), //公共名称 ]; if (isset($all[&amp;#39;emailAddress&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;emailAddress&amp;#39;]) { $dn[&amp;#39;emailAddress&amp;#39;] = $all[&amp;#39;emailAddress&amp;#39;]; } $config = [ &amp;#34;private_key_bits&amp;#34; =&amp;gt; isset($all[&amp;#39;keysize&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;keysize&amp;#39;] ? $all[&amp;#39;keysize&amp;#39;] : 2048, //字节数 512 1024 2048 4096 等 &amp;#34;private_key_type&amp;#34; =&amp;gt; OPENSSL_KEYTYPE_RSA, //加密类型 &amp;#39;digest_alg&amp;#39; =&amp;gt; &amp;#39;sha256&amp;#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&amp;#39;config&amp;#39;] = &amp;#34;D:/phpstudy_pro/Extensions/Apache2.</description>
+    </item>
+    
+    <item>
+      <title>Php-Swagger代码了解</title>
+      <link>/tech/php-swagger/</link>
+      <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
+      
+      <guid>/tech/php-swagger/</guid>
+      <description>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
+目标 前置条件 zircote/swagger-php document
+正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=&amp;ldquo;Fapi&amp;rdquo;, version=&amp;ldquo;0.1&amp;rdquo;,description=&amp;ldquo;antdv5的接口前缀为/api/v2
+当前版本为/api/返回列表的格式有区别外其他一致&amp;rdquo;),
+文档中的api路径 @OA\Server(url=&amp;ldquo;http://www.github.com/&amp;quot;,description=&amp;quot;github&amp;quot;,),
+预先定义好返回数据的格式 @OA\Schema(
+schema=&amp;ldquo;Pagination&amp;rdquo;,
+@OA\Property(property=&amp;ldquo;current&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+@OA\Property(property=&amp;ldquo;total&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+@OA\Property(property=&amp;ldquo;pageSize&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+)
+分组每种接口的类别,如/user, /order /record 等, @OA\Tag(name=&amp;ldquo;api-tag&amp;rdquo;, description=&amp;ldquo;Tag&amp;rdquo;)
+编写接口的声明 @OA\Post( path=&amp;#34;/api/index&amp;#34;, summary=&amp;#34;api name&amp;#34;, operationId=&amp;#34;UniqueOperationId&amp;#34;, tags={&amp;#34;api-tag&amp;#34;}, @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;fIDDomainFolder&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;string&amp;#34;},description=&amp;#34;&amp;#34;), @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;intActive&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;integer&amp;#34;},description=&amp;#34;&amp;#34;), @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;timetype&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;string&amp;#34;,&amp;#34;enum&amp;#34;:{&amp;#34;created_at&amp;#34;,&amp;#34;expired_at&amp;#34;,&amp;#34;update_at&amp;#34;}},description=&amp;#34;时间类型&amp;#34;), @OA\Response( response=&amp;#34;200&amp;#34;, description=&amp;#34;An example resource&amp;#34;, @OA\JsonContent( @OA\Property(property=&amp;#34;Pagination&amp;#34;,type=&amp;#34;object&amp;#34;, ref=&amp;#34;#/components/schemas/Pagination&amp;#34;), ) ), ) 2. 将定义好的注释声明生成openapi.json $openapi = \OpenApi\Generator::scan([ path . &amp;#39;api&amp;#39;, path . &amp;#39;model&amp;#39;, ]); $openapi-&amp;gt;toJson() 3.</description>
+    </item>
+    
+    <item>
+      <title>Php支付接口</title>
+      <link>/tech/php-pay/</link>
+      <pubDate>Fri, 12 Aug 2022 15:32:00 +0800</pubDate>
+      
+      <guid>/tech/php-pay/</guid>
+      <description>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &amp;#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&amp;#34;; $resp = $this-&amp;gt;request($action, [], &amp;#39;GET&amp;#39;); return $resp; } private function sign($url, $params, $method) { $params[&amp;#39;mchid&amp;#39;] = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;mch_id&amp;#39;]; $serial_no = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;serial_no&amp;#39;]; $mch_private_key = file_get_contents(&amp;#34;/conf/wechat_private_key.</description>
+    </item>
+    
+  </channel>
+</rss>

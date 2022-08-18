@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Php-编码解码punycode | Ken Blog</title>
+<meta name="keywords" content="php">
+<meta name="description" content="前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &#39;-&#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/php-punycode/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Php-编码解码punycode" />
+<meta property="og:description" content="前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &#39;-&#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tech/php-punycode/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-12T16:51:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T16:51:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Php-编码解码punycode"/>
+<meta name="twitter:description" content="前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &#39;-&#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Php-编码解码punycode",
+      "item": "/tech/php-punycode/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Php-编码解码punycode",
+  "name": "Php-编码解码punycode",
+  "description": "前言 域名的编码解码\n什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢\n在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn\u0026ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码\n目标 前置条件 正式内容 \u0026lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = \u0026#39;-\u0026#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格.",
+  "keywords": [
+    "php"
+  ],
+  "articleBody": "前言 域名的编码解码\n什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢\n在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn–fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码\n目标 前置条件 正式内容 \u003c?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = '-'; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格. * 以.分割几段来进行处理 * 对中文全角字母不区分大小写 * 中文字符不能包含@#$%之类的字符 * @param string $code 字符编码 */ public static function encode($input, $code=\"UTF-8\") { $input=trim($input); //由于包括CNNIC在内的中国技术人员的倡导和推动，此次发布的国际标准在英文句号\".\"的基础上，另外增加了中文句号作为多语种域名各级之间的分隔符。 //这主要是为了满足中文域名的独特需求，省去输入中文域名时中英文之间切换的麻烦。 $input=str_replace(\"。\",\".\",$input); if (!self::hasChinese($input)) return $input; //$input = stripslashes($input); $strarr=array(); $strarr=explode(\".\",$input); $output=\"\"; for ($i=0;$i\u003ccount($strarr);$i++){ $tmp_output = self::encodeHandle($strarr[$i], $code); if(!$tmp_output || $tmp_output\u003c0)\treturn; if ($i!=count($strarr)-1) $tmp_output.=\".\"; $output.=$tmp_output; } return $output; } /** * 判断域名是否包含中文字符 * @param string $domain * @return bool */ public static function hasChinese($domain) { $len=strlen($domain); for($i=0;$i\u003c$len;$i++){ if(ord(substr($domain,$i,1))\u003e128) return true; } return false; } /** * unicode 编码 * @param string $str * @return string $newstr */ public static function unicodeEncode($str) { //$newstr = chr(255).chr(254); $newstr = ''; for ($i=0; $i\u003cstrlen($str); $i+=2) { $newstr .= chr(ord(substr($str, $i+1, 1))).chr(ord(substr($str, $i, 1))); } return $newstr; } /** * 判断数字是否是ansi字符,禁止 @#$%^ 之类的符号 * @param string $char * @return bool */ public static function isBasic($char) { return $char\u003c128; //return $aa=(($c==45) || ($c\u003e=48 \u0026\u0026 $c\u003c=57) || ($c\u003e=65 \u0026\u0026 $c\u003c=90) || ($c\u003e=97 \u0026\u0026 $c\u003c=122)); } /** * 处理数字,大小写字母 * @param string $bcp * @param string $flag */ public static function basicEncode($bcp, $flag) { //if ($bcp-97\u003c26) $bcp-=32; $bcp-=($bcp-97\u003c26)\u003c\u003c5; return $bcp+((!$flag \u0026\u0026 ($bcp-65\u003c26))\u003c\u003c5); } /** * 处理数字,大小写字母 * @param char $d * @param char $flag * @return char */ public static function digitEncode($d,$flag) { $s1=(int)($d\u003c26);//0或1 $s2=(int)($flag!=0); return $d+22+75*$s1-($s2\u003c\u003c5); } /** * 编码的参数 */ public static function adapt($delta,$numpoints,$firsttime) { $delta= $firsttime ? (int)($delta/self::DAMP) : (int)($delta/2); $delta+=(int)($delta/$numpoints); for ($k=0; $delta\u003e(int)(((self::BASE-self::TMIN)*self::TMAX)/2); $k+=self::BASE){ $delta = (int)($delta/(self::BASE-self::TMIN)); } return $k+(int)(((self::BASE-self::TMIN+1)*$delta)/($delta+self::SKEW)); } //主要的编码转换工作 public static function encodeHandle($input, $code=\"UTF-8\") { $oldinput=$input; //将输入字符转换为Unicode.cnnic用GBK,GBK是GB2312的扩展.取代GBK的是GB18030 if (self::CHARSET_MODE == 1) { $input = iconv($code, \"Unicode\", $input); } elseif (self::CHARSET_MODE == 2) { $input = iconv($code, \"Unicode-1-1\", $input); $input = self::unicodeEncode($input); } elseif (self::CHARSET_MODE == 3) { $input = mb_convert_encoding($input, \"Unicode\", $code); $input = self::unicodeEncode($input); } //去掉前面的255和254 if (ord(substr($input, 0)) == 255 \u0026\u0026 ord(substr($input, 1)) == 254) $input = substr($input, 2); $n = self::INITIAL_N; $delta = 0; $out = 0; $max_out = 256; $bias = self::INITIAL_BIAS; $output = \"\"; $inputlen = strlen($input); $ar = array(); //用一个数组来保存字的编码 for ($i=0; $i\u003c$inputlen; $i+=2){ $tmpar = ord($input{$i+1}) * 256 + ord($input{$i}); //32为空格的Unicode,空格后不作处理(参考cnnic).输入是最好限制输入不能包含空格 if ($tmpar == 32) break; $ar[]=$tmpar; } $inputlen = count($ar); //将大写全角字符转为小写 for ($i=0; $i\u003c$inputlen; $i++) { if ($ar[$i] \u003e= 65313 \u0026\u0026 $ar[$i] \u003c= 65338) $ar[$i] = $ar[$i]+32; } //$arr=array(); $case_flags = ''; for ($j=0; $j\u003c$inputlen; $j++){ if (self::isBasic($ar[$j])){ if ($max_out-$out\u003c2) return self::ERROR_BIG_OUTPUT; //$arr[]=$case_flags ? punycode_encode_basic($input{$j}, $case_flags{$j}) : ord($input{$j}); $output.=$case_flags ? chr(self::basicEncode($ar[$j], $case_flags{$j})) : chr($ar[$j]);//不考虑大小写 $out++; } } $h=$b=$out; if ($b\u003e0) { $output .= self::DELIMITER; $out++; } while ($h\u003c$inputlen){ for ($m=self::MAXINT,$j=0;$j\u003c$inputlen;$j++){ if ($ar[$j]\u003e=$n \u0026\u0026 $ar[$j]\u003c$m) $m=$ar[$j]; } if ($m-$n\u003e(self::MAXINT-$delta)/($h+1)) return self::ERROR_OVERFLOW; $delta+=($m-$n)*($h+1); $n=$m; for ($j=0;$j\u003c$inputlen;$j++){ if ($ar[$j]\u003c$n){ if (++$delta==0) return self::ERROR_OVERFLOW; } if ($ar[$j]==$n){ $q=$delta; for ($k=self::BASE; ;$k+=self::BASE){ if ($out\u003e=$max_out) return self::ERROR_BIG_OUTPUT; $t=$k\u003c=$bias ? self::TMIN:($k\u003e=($bias+self::TMAX) ? self::TMAX:($k-$bias)); if ($q\u003c$t) break; //$arr[]=punycode_encode_digit($t+($q-$t)%(punycode_BASE-$t),0); $output.=chr(self::digitEncode($t+($q-$t)%(self::BASE-$t),0)); $out++; $q=(int)(($q-$t)/(self::BASE-$t)); } //$arr[]=punycode_encode_digit($q,$case_flags \u0026\u0026 $case_flags{$j}); //$output.=chr(punycode_encode_digit($q,$case_flags \u0026\u0026 $case_flags{$j})); $output.=chr(self::digitEncode($q,0));//忽略大小写（0输出小写字母,1输出大写字母） $out++; $bias=self::adapt($delta, $h+1, $h==$b); $delta=0; $h++; } } $delta++; $n++; } if (substr($output,-1,1)==self::DELIMITER) $output=substr($output,0,-1); if ($output!=$oldinput) $output=\"xn--\".$output; return $output; } //============================================= /** * punycode 解码 * @param string $input * @param string $code * @return string */ public static function decode($input, $code=\"UTF-8\") { $input=trim($input); if (self::hasChinese($input)) return $input; $strarr=array(); $strarr=explode(\".\",$input); $output=\"\"; for ($i=0;$i\u003ccount($strarr);$i++){ if (substr($strarr[$i],0,4)==\"xn--\"){ $input=substr($strarr[$i],4); $outtmp=self::decodeHandle($input, $code); if (!$outtmp || $outtmp\u003c0) return; $output.=$outtmp; }else{ $output.=$strarr[$i]; } if ($i!=count($strarr)-1) $output.=\".\"; }//for return $output; } /** * 主要的解码转换工作 * @param string $input * @param string $code * @return string */ public static function decodeHandle($input, $code=\"UTF-8\") { $n = self::INITIAL_N; $out = 0; $i = 0; $max_out = 256; $bias = self::INITIAL_BIAS; $inputlen = strlen($input); $outputa = array(); $b = 0; for ($j=0;$j\u003c$inputlen;$j++) if ($input{$j}==\"-\") $b=$j; for ($j=0; $j\u003c$b; $j++) { /*不考虑大小写 if (ord($input{$j})-65\u003c26) $case_flags[$out]=\"1\"; else $case_flags[$out]=\"0\"; */ if (ord($input{$j})\u003e128) return -1; //$output.=$input{$j}; $outputa[]=ord($input{$j}); $out++; } for ($in=$b\u003e0?$b+1:0;$in\u003c$inputlen;$out++) { $oldi=$i; $w=1; for ($k=self::BASE; ;$k+=self::BASE){ if ($in\u003e=$inputlen) return -2; $digit = self::digitDecode(ord($input{$in++})); if ($digit\u003e=self::BASE) return -3; if ($digit\u003e(self::MAXINT-$i)/$w) return -4; $i=$i+$digit*$w; $t=$k\u003c=$bias ? self::TMIN : ($k\u003e=($bias+self::TMAX) ? self::TMAX:($k-$bias)); if ($digit\u003c$t) break; if ($w\u003eself::MAXINT/(self::BASE-$t)) return -5; $w=$w*(self::BASE-$t); } $bias = self::adapt($i-$oldi,$out+1,$oldi==0); if ($i/($out+1)\u003eself::MAXINT-$n) return -6; $n+=(int)($i/($out+1)); $i=$i%($out+1); if ($out\u003e=$max_out) return -7; /*不考虑大小写 for ($q=0;$q\u003c$out-$i;$i++) $case_flags[$i+1+$q]= $case_flags[$i+$q]; if ($input[$in-1]-65\u003c26) $case_flags[$i]='1'; else $case_flags[$i]='0'; */ for ($qq=0;$qq\u003c($out-$i);$qq++) $outputa[($i+$out)-$i-$qq]=$outputa[($i+$out)-$i-$qq-1]; $outputa[$i++]=$n; } $outputstr=\"\"; for ($i=0;$i\u003ccount($outputa);$i++){ if ($outputa[$i]\u003c128) $outputstr.=chr($outputa[$i]).chr(0); else{ $hx=dechex($outputa[$i]); $gaowei=substr($hx,2,2); $diwei=substr($hx,0,2); $tmp_output=chr(hexdec($gaowei)).chr(hexdec($diwei)); $outputstr.=$tmp_output; } } //echo $outputstr.\" \"; //for ($i=0; $i",
+  "wordCount" : "847",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T16:51:00+08:00",
+  "dateModified": "2022-08-12T16:51:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/tech/php-punycode/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+    <h1 class="post-title">
+      Php-编码解码punycode
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 16:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/php-punycode.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%89%8d%e8%a8%80" aria-label="前言">前言</a><ul>
+                        
+                <li>
+                    <a href="#%e4%bb%80%e4%b9%88%e6%98%afpunycode" aria-label="什么是PunyCode">什么是PunyCode</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87" aria-label="目标">目标</a></li>
+                <li>
+                    <a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" aria-label="前置条件">前置条件</a></li>
+                <li>
+                    <a href="#%e6%ad%a3%e5%bc%8f%e5%86%85%e5%ae%b9" aria-label="正式内容">正式内容</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h2>
+<p>域名的编码解码</p>
+<h3 id="什么是punycode">什么是PunyCode<a hidden class="anchor" aria-hidden="true" href="#什么是punycode">#</a></h3>
+<p>英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。
+中文域名在IIS或Apache中应如何设置主机头呢<br>
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&ndash;fiqsC146Ah4ex80Cro7A.com)便可。
+新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码</p>
+<h2 id="目标">目标<a hidden class="anchor" aria-hidden="true" href="#目标">#</a></h2>
+<h2 id="前置条件">前置条件<a hidden class="anchor" aria-hidden="true" href="#前置条件">#</a></h2>
+<h2 id="正式内容">正式内容<a hidden class="anchor" aria-hidden="true" href="#正式内容">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Punycode</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">TMIN</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">TMAX</span><span class="o">=</span><span class="mi">26</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">BASE</span> <span class="o">=</span> <span class="mi">36</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">INITIAL_N</span> <span class="o">=</span> <span class="mi">128</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">INITIAL_BIAS</span> <span class="o">=</span> <span class="mi">72</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">DAMP</span> <span class="o">=</span> <span class="mi">700</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">SKEW</span> <span class="o">=</span> <span class="mi">38</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">DELIMITER</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">MAXINT</span> <span class="o">=</span> <span class="mi">2147483647</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//encode编码时候的错误返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">const</span> <span class="no">ERROR_BAD_INPUT</span>  <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">ERROR_BIG_OUTPUT</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">ERROR_OVERFLOW</span>   <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 配置
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 1: 使用iconv
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 2: iconv Unicode-1-1
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 3: 使用mb_convert_encoding(较通用，需mb_string支持)
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="no">CHARSET_MODE</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * punycode编码
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $input
+</span></span></span><span class="line"><span class="cl"><span class="sd">     *      输入的字符传不能有空格.
+</span></span></span><span class="line"><span class="cl"><span class="sd">     *      以.分割几段来进行处理
+</span></span></span><span class="line"><span class="cl"><span class="sd">     *      对中文全角字母不区分大小写
+</span></span></span><span class="line"><span class="cl"><span class="sd">     *      中文字符不能包含@#$%之类的字符
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $code 字符编码
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">encode</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="nv">$code</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$input</span><span class="o">=</span><span class="nx">trim</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//由于包括CNNIC在内的中国技术人员的倡导和推动，此次发布的国际标准在英文句号&#34;.&#34;的基础上，另外增加了中文句号作为多语种域名各级之间的分隔符。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//这主要是为了满足中文域名的独特需求，省去输入中文域名时中英文之间切换的麻烦。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$input</span><span class="o">=</span><span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;。&#34;</span><span class="p">,</span><span class="s2">&#34;.&#34;</span><span class="p">,</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">self</span><span class="o">::</span><span class="na">hasChinese</span><span class="p">(</span><span class="nv">$input</span><span class="p">))</span> <span class="k">return</span> <span class="nv">$input</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//$input = stripslashes($input);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$strarr</span><span class="o">=</span><span class="k">array</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$strarr</span><span class="o">=</span><span class="nx">explode</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">,</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$output</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nx">count</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">);</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$tmp_output</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">encodeHandle</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span> <span class="nv">$code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$tmp_output</span> <span class="o">||</span> <span class="nv">$tmp_output</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>	<span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span><span class="o">!=</span><span class="nx">count</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="nv">$tmp_output</span><span class="o">.=</span><span class="s2">&#34;.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$output</span><span class="o">.=</span><span class="nv">$tmp_output</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$output</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 判断域名是否包含中文字符
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $domain
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return bool
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">hasChinese</span><span class="p">(</span><span class="nv">$domain</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$len</span><span class="o">=</span><span class="nx">strlen</span><span class="p">(</span><span class="nv">$domain</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nv">$len</span><span class="p">;</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$domain</span><span class="p">,</span><span class="nv">$i</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">128</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * unicode 编码
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $str
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return string $newstr
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">unicodeEncode</span><span class="p">(</span><span class="nv">$str</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//$newstr = chr(255).chr(254);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$newstr</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="nx">strlen</span><span class="p">(</span><span class="nv">$str</span><span class="p">);</span> <span class="nv">$i</span><span class="o">+=</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$newstr</span> <span class="o">.=</span> <span class="nx">chr</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nv">$i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="nx">chr</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nv">$i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$newstr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 判断数字是否是ansi字符,禁止 @#$%^ 之类的符号
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $char
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return bool
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">isBasic</span><span class="p">(</span><span class="nv">$char</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$char</span><span class="o">&lt;</span><span class="mi">128</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//return $aa=(($c==45) || ($c&gt;=48 &amp;&amp; $c&lt;=57) || ($c&gt;=65 &amp;&amp; $c&lt;=90) || ($c&gt;=97 &amp;&amp; $c&lt;=122));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 处理数字,大小写字母
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $bcp
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $flag
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">basicEncode</span><span class="p">(</span><span class="nv">$bcp</span><span class="p">,</span> <span class="nv">$flag</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//if ($bcp-97&lt;26) $bcp-=32;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$bcp</span><span class="o">-=</span><span class="p">(</span><span class="nv">$bcp</span><span class="o">-</span><span class="mi">97</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$bcp</span><span class="o">+</span><span class="p">((</span><span class="o">!</span><span class="nv">$flag</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$bcp</span><span class="o">-</span><span class="mi">65</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">))</span><span class="o">&lt;&lt;</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 处理数字,大小写字母
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param char $d
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param char $flag
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return char
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">digitEncode</span><span class="p">(</span><span class="nv">$d</span><span class="p">,</span><span class="nv">$flag</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$s1</span><span class="o">=</span><span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$d</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">);</span><span class="c1">//0或1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$s2</span><span class="o">=</span><span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$flag</span><span class="o">!=</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$d</span><span class="o">+</span><span class="mi">22</span><span class="o">+</span><span class="mi">75</span><span class="o">*</span><span class="nv">$s1</span><span class="o">-</span><span class="p">(</span><span class="nv">$s2</span><span class="o">&lt;&lt;</span><span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 编码的参数
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">adapt</span><span class="p">(</span><span class="nv">$delta</span><span class="p">,</span><span class="nv">$numpoints</span><span class="p">,</span><span class="nv">$firsttime</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$delta</span><span class="o">=</span> <span class="nv">$firsttime</span> <span class="o">?</span> <span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$delta</span><span class="o">/</span><span class="nx">self</span><span class="o">::</span><span class="na">DAMP</span><span class="p">)</span> <span class="o">:</span> <span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$delta</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$delta</span><span class="o">+=</span><span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$delta</span><span class="o">/</span><span class="nv">$numpoints</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$delta</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">int</span><span class="p">)(((</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nx">self</span><span class="o">::</span><span class="na">TMIN</span><span class="p">)</span><span class="o">*</span><span class="nx">self</span><span class="o">::</span><span class="na">TMAX</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">);</span> <span class="nv">$k</span><span class="o">+=</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$delta</span> <span class="o">=</span> <span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$delta</span><span class="o">/</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nx">self</span><span class="o">::</span><span class="na">TMIN</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$k</span><span class="o">+</span><span class="p">(</span><span class="nx">int</span><span class="p">)(((</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nx">self</span><span class="o">::</span><span class="na">TMIN</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nv">$delta</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nv">$delta</span><span class="o">+</span><span class="nx">self</span><span class="o">::</span><span class="na">SKEW</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//主要的编码转换工作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">encodeHandle</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="nv">$code</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$oldinput</span><span class="o">=</span><span class="nv">$input</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将输入字符转换为Unicode.cnnic用GBK,GBK是GB2312的扩展.取代GBK的是GB18030
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">CHARSET_MODE</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$input</span> <span class="o">=</span> <span class="nx">iconv</span><span class="p">(</span><span class="nv">$code</span><span class="p">,</span> <span class="s2">&#34;Unicode&#34;</span><span class="p">,</span> <span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">CHARSET_MODE</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$input</span> <span class="o">=</span> <span class="nx">iconv</span><span class="p">(</span><span class="nv">$code</span><span class="p">,</span> <span class="s2">&#34;Unicode-1-1&#34;</span><span class="p">,</span> <span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$input</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">unicodeEncode</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">CHARSET_MODE</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$input</span> <span class="o">=</span> <span class="nx">mb_convert_encoding</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="s2">&#34;Unicode&#34;</span><span class="p">,</span> <span class="nv">$code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$input</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">unicodeEncode</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//去掉前面的255和254
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="mi">255</span> <span class="o">&amp;&amp;</span> <span class="nx">ord</span><span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="mi">254</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$input</span> <span class="o">=</span> <span class="nx">substr</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$n</span>        <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">INITIAL_N</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$delta</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$out</span>      <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$max_out</span>  <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$bias</span>     <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">INITIAL_BIAS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$output</span>   <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$inputlen</span> <span class="o">=</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$ar</span>       <span class="o">=</span> <span class="k">array</span><span class="p">();</span>  <span class="c1">//用一个数组来保存字的编码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span> <span class="nv">$i</span><span class="o">+=</span><span class="mi">2</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$tmpar</span> <span class="o">=</span> <span class="nx">ord</span><span class="p">(</span><span class="nv">$input</span><span class="p">{</span><span class="nv">$i</span><span class="o">+</span><span class="mi">1</span><span class="p">})</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="nx">ord</span><span class="p">(</span><span class="nv">$input</span><span class="p">{</span><span class="nv">$i</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//32为空格的Unicode,空格后不作处理(参考cnnic).输入是最好限制输入不能包含空格
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="nv">$tmpar</span> <span class="o">==</span> <span class="mi">32</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$ar</span><span class="p">[]</span><span class="o">=</span><span class="nv">$tmpar</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$inputlen</span> <span class="o">=</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$ar</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将大写全角字符转为小写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">65313</span> <span class="o">&amp;&amp;</span> <span class="nv">$ar</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">65338</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$ar</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$ar</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">+</span><span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//$arr=array();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$case_flags</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$j</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span> <span class="nv">$j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">isBasic</span><span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">])){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$max_out</span><span class="o">-</span><span class="nv">$out</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">ERROR_BIG_OUTPUT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//$arr[]=$case_flags ? punycode_encode_basic($input{$j}, $case_flags{$j}) : ord($input{$j});
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$output</span><span class="o">.=</span><span class="nv">$case_flags</span> <span class="o">?</span> <span class="nx">chr</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">basicEncode</span><span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">],</span> <span class="nv">$case_flags</span><span class="p">{</span><span class="nv">$j</span><span class="p">}))</span> <span class="o">:</span> <span class="nx">chr</span><span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">]);</span><span class="c1">//不考虑大小写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$out</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$h</span><span class="o">=</span><span class="nv">$b</span><span class="o">=</span><span class="nv">$out</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$b</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$output</span> <span class="o">.=</span> <span class="nx">self</span><span class="o">::</span><span class="na">DELIMITER</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$out</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="nv">$h</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="nv">$m</span><span class="o">=</span><span class="nx">self</span><span class="o">::</span><span class="na">MAXINT</span><span class="p">,</span><span class="nv">$j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$j</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span><span class="nv">$j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">]</span><span class="o">&gt;=</span><span class="nv">$n</span> <span class="o">&amp;&amp;</span> <span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">]</span><span class="o">&lt;</span><span class="nv">$m</span><span class="p">)</span> <span class="nv">$m</span><span class="o">=</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$m</span><span class="o">-</span><span class="nv">$n</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">MAXINT</span><span class="o">-</span><span class="nv">$delta</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nv">$h</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">ERROR_OVERFLOW</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$delta</span><span class="o">+=</span><span class="p">(</span><span class="nv">$m</span><span class="o">-</span><span class="nv">$n</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nv">$h</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$n</span><span class="o">=</span><span class="nv">$m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="nv">$j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$j</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span><span class="nv">$j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">]</span><span class="o">&lt;</span><span class="nv">$n</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="o">++</span><span class="nv">$delta</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">ERROR_OVERFLOW</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$ar</span><span class="p">[</span><span class="nv">$j</span><span class="p">]</span><span class="o">==</span><span class="nv">$n</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$q</span><span class="o">=</span><span class="nv">$delta</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">for</span> <span class="p">(</span><span class="nv">$k</span><span class="o">=</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">;</span> <span class="p">;</span><span class="nv">$k</span><span class="o">+=</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="nv">$out</span><span class="o">&gt;=</span><span class="nv">$max_out</span><span class="p">)</span> <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">ERROR_BIG_OUTPUT</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$t</span><span class="o">=</span><span class="nv">$k</span><span class="o">&lt;=</span><span class="nv">$bias</span> <span class="o">?</span> <span class="nx">self</span><span class="o">::</span><span class="na">TMIN</span><span class="o">:</span><span class="p">(</span><span class="nv">$k</span><span class="o">&gt;=</span><span class="p">(</span><span class="nv">$bias</span><span class="o">+</span><span class="nx">self</span><span class="o">::</span><span class="na">TMAX</span><span class="p">)</span> <span class="o">?</span> <span class="nx">self</span><span class="o">::</span><span class="na">TMAX</span><span class="o">:</span><span class="p">(</span><span class="nv">$k</span><span class="o">-</span><span class="nv">$bias</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="nv">$q</span><span class="o">&lt;</span><span class="nv">$t</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//$arr[]=punycode_encode_digit($t+($q-$t)%(punycode_BASE-$t),0);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="nv">$output</span><span class="o">.=</span><span class="nx">chr</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">digitEncode</span><span class="p">(</span><span class="nv">$t</span><span class="o">+</span><span class="p">(</span><span class="nv">$q</span><span class="o">-</span><span class="nv">$t</span><span class="p">)</span><span class="o">%</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nv">$t</span><span class="p">),</span><span class="mi">0</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$out</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$q</span><span class="o">=</span><span class="p">(</span><span class="nx">int</span><span class="p">)((</span><span class="nv">$q</span><span class="o">-</span><span class="nv">$t</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nv">$t</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="c1">//$arr[]=punycode_encode_digit($q,$case_flags &amp;&amp; $case_flags{$j});
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="c1">//$output.=chr(punycode_encode_digit($q,$case_flags &amp;&amp; $case_flags{$j}));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$output</span><span class="o">.=</span><span class="nx">chr</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">digitEncode</span><span class="p">(</span><span class="nv">$q</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span><span class="c1">//忽略大小写（0输出小写字母,1输出大写字母）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$out</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$bias</span><span class="o">=</span><span class="nx">self</span><span class="o">::</span><span class="na">adapt</span><span class="p">(</span><span class="nv">$delta</span><span class="p">,</span> <span class="nv">$h</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nv">$h</span><span class="o">==</span><span class="nv">$b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$delta</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$h</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$delta</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$n</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$output</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="nx">self</span><span class="o">::</span><span class="na">DELIMITER</span><span class="p">)</span> <span class="nv">$output</span><span class="o">=</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$output</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$output</span><span class="o">!=</span><span class="nv">$oldinput</span><span class="p">)</span> <span class="nv">$output</span><span class="o">=</span><span class="s2">&#34;xn--&#34;</span><span class="o">.</span><span class="nv">$output</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$output</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//=============================================
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * punycode 解码
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $input
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $code
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return string
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">decode</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="nv">$code</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$input</span><span class="o">=</span><span class="nx">trim</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">hasChinese</span><span class="p">(</span><span class="nv">$input</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$input</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$strarr</span><span class="o">=</span><span class="k">array</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$strarr</span><span class="o">=</span><span class="nx">explode</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">,</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$output</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nx">count</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">);</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="o">==</span><span class="s2">&#34;xn--&#34;</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$input</span><span class="o">=</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">[</span><span class="nv">$i</span><span class="p">],</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$outtmp</span><span class="o">=</span><span class="nx">self</span><span class="o">::</span><span class="na">decodeHandle</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="nv">$code</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$outtmp</span> <span class="o">||</span> <span class="nv">$outtmp</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>  <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$output</span><span class="o">.=</span><span class="nv">$outtmp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$output</span><span class="o">.=</span><span class="nv">$strarr</span><span class="p">[</span><span class="nv">$i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span><span class="o">!=</span><span class="nx">count</span><span class="p">(</span><span class="nv">$strarr</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="nv">$output</span><span class="o">.=</span><span class="s2">&#34;.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="c1">//for
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nv">$output</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 主要的解码转换工作
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $input
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param string $code
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return string
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">decodeHandle</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="nv">$code</span><span class="o">=</span><span class="s2">&#34;UTF-8&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$n</span>        <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">INITIAL_N</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$out</span>      <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$i</span>        <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$max_out</span>  <span class="o">=</span> <span class="mi">256</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$bias</span>     <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">INITIAL_BIAS</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$inputlen</span> <span class="o">=</span> <span class="nx">strlen</span><span class="p">(</span><span class="nv">$input</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$outputa</span>  <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$j</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span><span class="nv">$j</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$input</span><span class="p">{</span><span class="nv">$j</span><span class="p">}</span><span class="o">==</span><span class="s2">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$b</span><span class="o">=</span><span class="nv">$j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nv">$j</span><span class="o">&lt;</span><span class="nv">$b</span><span class="p">;</span> <span class="nv">$j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="cm">/*不考虑大小写
+</span></span></span><span class="line"><span class="cl"><span class="cm">            if (ord($input{$j})-65&lt;26)
+</span></span></span><span class="line"><span class="cl"><span class="cm">                $case_flags[$out]=&#34;1&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="cm">            else
+</span></span></span><span class="line"><span class="cl"><span class="cm">                $case_flags[$out]=&#34;0&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="cm">            */</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="nv">$input</span><span class="p">{</span><span class="nv">$j</span><span class="p">})</span><span class="o">&gt;</span><span class="mi">128</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//$output.=$input{$j};
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nv">$outputa</span><span class="p">[]</span><span class="o">=</span><span class="nx">ord</span><span class="p">(</span><span class="nv">$input</span><span class="p">{</span><span class="nv">$j</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$out</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$in</span><span class="o">=</span><span class="nv">$b</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">?</span><span class="nv">$b</span><span class="o">+</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">;</span><span class="nv">$in</span><span class="o">&lt;</span><span class="nv">$inputlen</span><span class="p">;</span><span class="nv">$out</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$oldi</span><span class="o">=</span><span class="nv">$i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$w</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="nv">$k</span><span class="o">=</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">;</span> <span class="p">;</span><span class="nv">$k</span><span class="o">+=</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$in</span><span class="o">&gt;=</span><span class="nv">$inputlen</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$digit</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">digitDecode</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="nv">$input</span><span class="p">{</span><span class="nv">$in</span><span class="o">++</span><span class="p">}));</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$digit</span><span class="o">&gt;=</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$digit</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">MAXINT</span><span class="o">-</span><span class="nv">$i</span><span class="p">)</span><span class="o">/</span><span class="nv">$w</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$i</span><span class="o">=</span><span class="nv">$i</span><span class="o">+</span><span class="nv">$digit</span><span class="o">*</span><span class="nv">$w</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$t</span><span class="o">=</span><span class="nv">$k</span><span class="o">&lt;=</span><span class="nv">$bias</span> <span class="o">?</span> <span class="nx">self</span><span class="o">::</span><span class="na">TMIN</span> <span class="o">:</span> <span class="p">(</span><span class="nv">$k</span><span class="o">&gt;=</span><span class="p">(</span><span class="nv">$bias</span><span class="o">+</span><span class="nx">self</span><span class="o">::</span><span class="na">TMAX</span><span class="p">)</span> <span class="o">?</span> <span class="nx">self</span><span class="o">::</span><span class="na">TMAX</span><span class="o">:</span><span class="p">(</span><span class="nv">$k</span><span class="o">-</span><span class="nv">$bias</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$digit</span><span class="o">&lt;</span><span class="nv">$t</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$w</span><span class="o">&gt;</span><span class="nx">self</span><span class="o">::</span><span class="na">MAXINT</span><span class="o">/</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nv">$t</span><span class="p">))</span> <span class="k">return</span> <span class="o">-</span><span class="mi">5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$w</span><span class="o">=</span><span class="nv">$w</span><span class="o">*</span><span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="o">-</span><span class="nv">$t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nv">$bias</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">adapt</span><span class="p">(</span><span class="nv">$i</span><span class="o">-</span><span class="nv">$oldi</span><span class="p">,</span><span class="nv">$out</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nv">$oldi</span><span class="o">==</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span><span class="o">/</span><span class="p">(</span><span class="nv">$out</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">&gt;</span><span class="nx">self</span><span class="o">::</span><span class="na">MAXINT</span><span class="o">-</span><span class="nv">$n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="o">-</span><span class="mi">6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$n</span><span class="o">+=</span><span class="p">(</span><span class="nx">int</span><span class="p">)(</span><span class="nv">$i</span><span class="o">/</span><span class="p">(</span><span class="nv">$out</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$i</span><span class="o">=</span><span class="nv">$i</span><span class="o">%</span><span class="p">(</span><span class="nv">$out</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$out</span><span class="o">&gt;=</span><span class="nv">$max_out</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="cm">/*不考虑大小写
+</span></span></span><span class="line"><span class="cl"><span class="cm">                    for ($q=0;$q&lt;$out-$i;$i++) $case_flags[$i+1+$q]= $case_flags[$i+$q];
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">                    if ($input[$in-1]-65&lt;26)
+</span></span></span><span class="line"><span class="cl"><span class="cm">                        $case_flags[$i]=&#39;1&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="cm">                    else
+</span></span></span><span class="line"><span class="cl"><span class="cm">                        $case_flags[$i]=&#39;0&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="cm">            */</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="nv">$qq</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$qq</span><span class="o">&lt;</span><span class="p">(</span><span class="nv">$out</span><span class="o">-</span><span class="nv">$i</span><span class="p">);</span><span class="nv">$qq</span><span class="o">++</span><span class="p">)</span> <span class="nv">$outputa</span><span class="p">[(</span><span class="nv">$i</span><span class="o">+</span><span class="nv">$out</span><span class="p">)</span><span class="o">-</span><span class="nv">$i</span><span class="o">-</span><span class="nv">$qq</span><span class="p">]</span><span class="o">=</span><span class="nv">$outputa</span><span class="p">[(</span><span class="nv">$i</span><span class="o">+</span><span class="nv">$out</span><span class="p">)</span><span class="o">-</span><span class="nv">$i</span><span class="o">-</span><span class="nv">$qq</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nv">$outputa</span><span class="p">[</span><span class="nv">$i</span><span class="o">++</span><span class="p">]</span><span class="o">=</span><span class="nv">$n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nv">$outputstr</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="nx">count</span><span class="p">(</span><span class="nv">$outputa</span><span class="p">);</span><span class="nv">$i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$outputa</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">128</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$outputstr</span><span class="o">.=</span><span class="nx">chr</span><span class="p">(</span><span class="nv">$outputa</span><span class="p">[</span><span class="nv">$i</span><span class="p">])</span><span class="o">.</span><span class="nx">chr</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$hx</span><span class="o">=</span><span class="nx">dechex</span><span class="p">(</span><span class="nv">$outputa</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$gaowei</span><span class="o">=</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$hx</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$diwei</span><span class="o">=</span><span class="nx">substr</span><span class="p">(</span><span class="nv">$hx</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$tmp_output</span><span class="o">=</span><span class="nx">chr</span><span class="p">(</span><span class="nx">hexdec</span><span class="p">(</span><span class="nv">$gaowei</span><span class="p">))</span><span class="o">.</span><span class="nx">chr</span><span class="p">(</span><span class="nx">hexdec</span><span class="p">(</span><span class="nv">$diwei</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$outputstr</span><span class="o">.=</span><span class="nv">$tmp_output</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo $outputstr.&#34; &lt;br&gt;&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">//for ($i=0; $i&lt;strlen($outputstr); $i++) echo ord(substr($outputstr,$i,1)).&#34; &#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">CHARSET_MODE</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$outputstr</span> <span class="o">=</span> <span class="nx">iconv</span><span class="p">(</span><span class="s2">&#34;Unicode&#34;</span><span class="p">,</span> <span class="nv">$code</span><span class="p">,</span> <span class="nv">$outputstr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">CHARSET_MODE</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$outputstr</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">unicodeEncode</span><span class="p">(</span><span class="nv">$outputstr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$outputstr</span> <span class="o">=</span> <span class="nx">iconv</span><span class="p">(</span><span class="s2">&#34;Unicode-1-1&#34;</span><span class="p">,</span> <span class="nv">$code</span><span class="p">,</span> <span class="nv">$outputstr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nx">self</span><span class="o">::</span><span class="na">CHARSET_MODE</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$outputstr</span> <span class="o">=</span> <span class="nx">self</span><span class="o">::</span><span class="na">unicodeEncode</span><span class="p">(</span><span class="nv">$outputstr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$outputstr</span> <span class="o">=</span> <span class="nx">mb_convert_encoding</span><span class="p">(</span><span class="nv">$outputstr</span><span class="p">,</span> <span class="nv">$code</span><span class="p">,</span> <span class="s2">&#34;Unicode&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$outputstr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 处理数字,大小写字母
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param char $char
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return char
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">digitDecode</span><span class="p">(</span><span class="nv">$char</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="nv">$char</span><span class="o">-</span><span class="mi">48</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">)</span> <span class="k">return</span> <span class="p">(</span><span class="nv">$char</span><span class="o">-</span><span class="mi">22</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="nv">$char</span><span class="o">-</span><span class="mi">65</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">)</span> <span class="k">return</span> <span class="p">(</span><span class="nv">$char</span><span class="o">-</span><span class="mi">65</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="nv">$char</span><span class="o">-</span><span class="mi">97</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">)</span> <span class="k">return</span> <span class="p">(</span><span class="nv">$char</span><span class="o">-</span><span class="mi">97</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">self</span><span class="o">::</span><span class="na">BASE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/php/">php</a></li>
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

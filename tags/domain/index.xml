@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>domain on Ken Blog</title>
+    <link>/tags/domain/</link>
+    <description>Recent content in domain on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 11:25:00 +0800</lastBuildDate><atom:link href="/tags/domain/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>php-域名竞价模块</title>
+      <link>/life/php-domain-auction/</link>
+      <pubDate>Mon, 15 Aug 2022 11:25:00 +0800</pubDate>
+      
+      <guid>/life/php-domain-auction/</guid>
+      <description>域名竞价交易,即为域名充当交易物品进行价值交换,其中比较出名的有国内聚名 ,以及海外的GNAME, 以GNAME为例子讲述如何对接交易模块,
+Gname的API接口文档
+过期预定预定 预定结束=&amp;gt; [抢注成功直接得标, 抢注失败直接失标, 抢注失败需竞价] 竞价域名,涉及到本地多人出价的竞价已经与远端竞价的比较 [直接出价,代理出价] 竞价结束 =&amp;gt; [竞价成功,竞价失败] 简单描述竞价流程
+竞价域名详情 DescribeAuctionInstance 参数 Domain 域名
+检查竞价类型 本地竞价 检查竞价时间是否已过期等 远端竞价 同步远端竞价详情,根据实际情况是否更新本地的出价进度 ##竞价域名出价 CreateAuctionInstance
+参数 Domain 域名 , Price 价格
+同步远端竞价详情,根据实际情况是否更新本地的出价进度 判断是否需要闯入竞价 判断余额是否足够支付提交的冻结金 判断本地是否存在代理出价 有其他用户的代理出价,并且当前出价高于Price,直接出局 该用户的代理出价则比较金额大小 大于单次最低出价就要生成代理出价 提交请求远端的出价记录 </description>
+    </item>
+    
+  </channel>
+</rss>

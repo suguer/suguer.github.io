@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Teches on Ken Blog</title>
+    <link>/tech/</link>
+    <description>Recent content in Teches on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 16 Aug 2022 15:50:00 +0800</lastBuildDate><atom:link href="/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gitblit-如何实现自动编译发布</title>
+      <link>/tech/gitblit/</link>
+      <pubDate>Tue, 16 Aug 2022 15:50:00 +0800</pubDate>
+      
+      <guid>/tech/gitblit/</guid>
+      <description>前言 在外网正式环境中如果配置不足,编译前端项目可能导致服务器的卡死甚至死机,因此可采取内网服务器上编译再自动发布
+目标 内网编译前端项目,分发到另一个git项目并自动提交发布
+前置条件 gitblit
+正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&amp;#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&amp;#34;) def rootFolder = &amp;#39;/home/git/&amp;#39; def bare = false def cloneAllBranches = true def cloneBranch = &amp;#39;refs/heads/master&amp;#39; def includeSubmodules = true def repoName = repository.</description>
+    </item>
+    
+    <item>
+      <title>Github-</title>
+      <link>/tech/github-001/</link>
+      <pubDate>Tue, 16 Aug 2022 15:35:00 +0800</pubDate>
+      
+      <guid>/tech/github-001/</guid>
+      <description>前言 目前github已经不允许使用账号密码上传代码,因此记录如何通过设置ssh来上传
+目标 前置条件 能运行ssh-keygen
+正式内容 ssh-keygen -t rsa -C &amp;ldquo;email&amp;rdquo;
+在 C:\Users\用户.ssh下
+|- id_rsa (上传的时候携带该数据)
+|- id_rsa.pub (可在项目或者个人中心设置中添加该数据)
+如果想要免密码上传代码
+可输入 http://账号:密码@url.gt</description>
+    </item>
+    
+    <item>
+      <title>tronlink-从0到1搭建自己的归集系统</title>
+      <link>/tech/tronlink-001/</link>
+      <pubDate>Tue, 16 Aug 2022 10:15:00 +0800</pubDate>
+      
+      <guid>/tech/tronlink-001/</guid>
+      <description>前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
+目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
+前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
+1个总钱包,其中会扩展的功能有,分发冻结能量,收款,激活钱包,也可以看业务需要拆开成3个钱包
+开发环境: python mysql
+正式内容 所有的接口以及交互均来自 波场链官网文档 ,如果对于文档不太熟的同学请先阅读了解下波场链的交易流程
+主要数据结构 节点数据 block_chain_block
+数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet
+数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API</description>
+    </item>
+    
+    <item>
+      <title>php-分享自有系统接入OCR图片识别</title>
+      <link>/tech/php-ocr/</link>
+      <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
+      
+      <guid>/tech/php-ocr/</guid>
+      <description>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
+目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
+前置条件 开发环境 PHP 百度云能企业认证
+正式内容 百度接口的认证方式 百度的鉴权方式是以Token的方式,具体教程可查看官网API,这里不重复说明了
+function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
+public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$this-&amp;gt;access_key}.json&amp;#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&amp;#39;expires_in&amp;#39;]) &amp;gt; time()) { return $json[&amp;#39;access_token&amp;#39;]; } } } $resp = json_decode($this-&amp;gt;client-&amp;gt;request(&amp;#34;POST&amp;#34;, &amp;#34;https://aip.baidubce.com/oauth/2.0/token&amp;#34;, [ &amp;#39;form_params&amp;#39; =&amp;gt; [ &amp;#39;grant_type&amp;#39; =&amp;gt; &amp;#39;client_credentials&amp;#39;, &amp;#39;client_id&amp;#39; =&amp;gt; $this-&amp;gt;access_key, &amp;#39;client_secret&amp;#39; =&amp;gt; $this-&amp;gt;secret_key, ] ])-&amp;gt;getBody()-&amp;gt;getContents(), 1); $data = [ &amp;#39;access_token&amp;#39; =&amp;gt; $resp[&amp;#39;access_token&amp;#39;], &amp;#39;expires_in&amp;#39; =&amp;gt; date(&amp;#34;Y-m-d H:i:s&amp;#34;, strtotime(&amp;#34;+29 day&amp;#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&amp;#39;access_token&amp;#39;]; } private function request($action, $p) { $option = [ &amp;#39;query&amp;#39; =&amp;gt; [ &amp;#39;access_token&amp;#39; =&amp;gt; $this-&amp;gt;getToken(), ], ]; if ($this-&amp;gt;target == &amp;#39;face&amp;#39;) { $option[&amp;#39;json&amp;#39;] = $p; } else { $option[&amp;#39;form_params&amp;#39;] = $p; } $resp = $this-&amp;gt;client-&amp;gt;request(&amp;#34;POST&amp;#34;, &amp;#34;{$api_url}/{$action}&amp;#34;, $option) -&amp;gt;getBody() -&amp;gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下</description>
+    </item>
+    
+    <item>
+      <title>Php邮件收取imap</title>
+      <link>/tech/php-imap/</link>
+      <pubDate>Fri, 12 Aug 2022 17:32:00 +0800</pubDate>
+      
+      <guid>/tech/php-imap/</guid>
+      <description>前言 招商银行的收款通知可以添加邮件推送,因此利用php-imap收取邮件,可达到自动化确款的目的
+目标 前置条件 composer require php-imap/php-imap
+正式内容 php-imap 的使用 $mailbox = new Mailbox( &amp;#39;{SMTP服务器:SMTP端口号/imap}INBOX&amp;#39;, // IMAP server and mailbox folder &amp;#39;邮箱账号&amp;#39;, // Username for the before configured mailbox &amp;#39;邮箱密码&amp;#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &amp;#39;UTF-8&amp;#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&amp;gt;searchMailbox(&amp;#39;ALL&amp;#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &amp;#34;IMAP connection failed: &amp;#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&amp;gt; $item) { //循环遍历 $mail = $mailbox-&amp;gt;getMail($item); $fromAddress = $mail-&amp;gt;fromAddress; $content = $mail-&amp;gt;textHtml; if(!</description>
+    </item>
+    
+    <item>
+      <title>从0到1 用宝塔集成虚拟主机提供商</title>
+      <link>/tech/baota/</link>
+      <pubDate>Fri, 12 Aug 2022 16:55:00 +0800</pubDate>
+      
+      <guid>/tech/baota/</guid>
+      <description>前言 对比一般市场上的虚拟主机,宝塔都能兼容支持绝大多数的功能,并且宝塔有个比较大的特点为,页面上的接口均可以通过api请求,因此产生了这个想法定制出宝塔基础的虚拟主机
+目标 前置条件 window server的主机
+宝塔需安装在数据盘D盘上
+正式内容 定义的配置文件 /data/vhost/baota.conf.json
+[ { &amp;#34;fchrServer&amp;#34;:&amp;#34;flage&amp;#34;, &amp;#34;host&amp;#34;:&amp;#34;127.0.0.1&amp;#34;, &amp;#34;key&amp;#34;:&amp;#34;bt_api_key&amp;#34;, &amp;#34;port&amp;#34;:&amp;#34;8888&amp;#34;, &amp;#34;mysql&amp;#34;:&amp;#34;mysql_password&amp;#34;, &amp;#34;sqlserver&amp;#34;:&amp;#34;mssql_password&amp;#34;, &amp;#34;region_id&amp;#34;:&amp;#34;hk&amp;#34;, &amp;#34;zone_id&amp;#34;:&amp;#34;hk-02&amp;#34;, &amp;#34;network&amp;#34;:&amp;#34;bgp&amp;#34; } ] 封装好的交互php函数方法
+class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use ApiLoggerTrait; private $client; private $key = &amp;#34;&amp;#34;; public $host = &amp;#34;&amp;#34;; private $port = &amp;#34;8888&amp;#34;; private $mssql_password = &amp;#34;&amp;#34;; /** * @var array 远端主机的状态转换 */ public $RemoteStatus = [ &amp;#39;1&amp;#39; =&amp;gt; &amp;#39;Running&amp;#39;, &amp;#39;0&amp;#39; =&amp;gt; &amp;#39;Stopped&amp;#39;, ]; public $IISRemoteStatus = [ &amp;#39;Started&amp;#39; =&amp;gt; &amp;#39;Running&amp;#39;, &amp;#39;Stopped&amp;#39; =&amp;gt; &amp;#39;Stopped&amp;#39;, ]; public static function getConfig() { return json_decode(file_get_contents(&amp;#39;/data/vhost/baota.</description>
+    </item>
+    
+    <item>
+      <title>Php-编码解码punycode</title>
+      <link>/tech/php-punycode/</link>
+      <pubDate>Fri, 12 Aug 2022 16:51:00 +0800</pubDate>
+      
+      <guid>/tech/php-punycode/</guid>
+      <description>前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&amp;ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &amp;lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &amp;#39;-&amp;#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格.</description>
+    </item>
+    
+    <item>
+      <title>Php-Swagger代码了解</title>
+      <link>/tech/php-swagger/</link>
+      <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
+      
+      <guid>/tech/php-swagger/</guid>
+      <description>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
+目标 前置条件 zircote/swagger-php document
+正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=&amp;ldquo;Fapi&amp;rdquo;, version=&amp;ldquo;0.1&amp;rdquo;,description=&amp;ldquo;antdv5的接口前缀为/api/v2
+当前版本为/api/返回列表的格式有区别外其他一致&amp;rdquo;),
+文档中的api路径 @OA\Server(url=&amp;ldquo;http://www.github.com/&amp;quot;,description=&amp;quot;github&amp;quot;,),
+预先定义好返回数据的格式 @OA\Schema(
+schema=&amp;ldquo;Pagination&amp;rdquo;,
+@OA\Property(property=&amp;ldquo;current&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+@OA\Property(property=&amp;ldquo;total&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+@OA\Property(property=&amp;ldquo;pageSize&amp;rdquo;, type=&amp;ldquo;integer&amp;rdquo;),
+)
+分组每种接口的类别,如/user, /order /record 等, @OA\Tag(name=&amp;ldquo;api-tag&amp;rdquo;, description=&amp;ldquo;Tag&amp;rdquo;)
+编写接口的声明 @OA\Post( path=&amp;#34;/api/index&amp;#34;, summary=&amp;#34;api name&amp;#34;, operationId=&amp;#34;UniqueOperationId&amp;#34;, tags={&amp;#34;api-tag&amp;#34;}, @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;fIDDomainFolder&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;string&amp;#34;},description=&amp;#34;&amp;#34;), @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;intActive&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;integer&amp;#34;},description=&amp;#34;&amp;#34;), @OA\Parameter(in=&amp;#34;query&amp;#34;, name=&amp;#34;timetype&amp;#34;, required=false,schema={&amp;#34;type&amp;#34;:&amp;#34;string&amp;#34;,&amp;#34;enum&amp;#34;:{&amp;#34;created_at&amp;#34;,&amp;#34;expired_at&amp;#34;,&amp;#34;update_at&amp;#34;}},description=&amp;#34;时间类型&amp;#34;), @OA\Response( response=&amp;#34;200&amp;#34;, description=&amp;#34;An example resource&amp;#34;, @OA\JsonContent( @OA\Property(property=&amp;#34;Pagination&amp;#34;,type=&amp;#34;object&amp;#34;, ref=&amp;#34;#/components/schemas/Pagination&amp;#34;), ) ), ) 2. 将定义好的注释声明生成openapi.json $openapi = \OpenApi\Generator::scan([ path . &amp;#39;api&amp;#39;, path . &amp;#39;model&amp;#39;, ]); $openapi-&amp;gt;toJson() 3.</description>
+    </item>
+    
+    <item>
+      <title>Php支付接口</title>
+      <link>/tech/php-pay/</link>
+      <pubDate>Fri, 12 Aug 2022 15:32:00 +0800</pubDate>
+      
+      <guid>/tech/php-pay/</guid>
+      <description>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &amp;#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&amp;#34;; $resp = $this-&amp;gt;request($action, [], &amp;#39;GET&amp;#39;); return $resp; } private function sign($url, $params, $method) { $params[&amp;#39;mchid&amp;#39;] = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;mch_id&amp;#39;]; $serial_no = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;serial_no&amp;#39;]; $mch_private_key = file_get_contents(&amp;#34;/conf/wechat_private_key.</description>
+    </item>
+    
+    <item>
+      <title>Python-多线程</title>
+      <link>/tech/python-thread/</link>
+      <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
+      
+      <guid>/tech/python-thread/</guid>
+      <description>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &amp;#39;&amp;#39;&amp;#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&amp;#39;&amp;#39;&amp;#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &amp;#39;&amp;#39;&amp;#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&amp;#39;&amp;#39;&amp;#39; while True: if self._dismissed.is_set(): break try: &amp;#39;&amp;#39;&amp;#39; Queue.</description>
+    </item>
+    
+    <item>
+      <title>Https双向认证</title>
+      <link>/tech/https/</link>
+      <pubDate>Fri, 12 Aug 2022 13:51:00 +0800</pubDate>
+      
+      <guid>/tech/https/</guid>
+      <description>前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题
+目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作
+前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP
+正式内容 参考链接:
+阿里云指导openssl签发流程 https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz
+php官方文档
+https://www.php.net/manual/en/function.openssl-csr-sign.php
+$cacert = &amp;ldquo;file://path/to/ca.crt&amp;rdquo;; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~
+使用工具 openssl 创建根证书私钥： openssl genrsa -out root.key 1024
+创建根证书请求文件： openssl req -new -out root.csr -key root.key
+后续参数的例子提供:
+Country Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root.</description>
+    </item>
+    
+    <item>
+      <title>Prerender-单页面前端渲染</title>
+      <link>/tech/prerender/</link>
+      <pubDate>Fri, 12 Aug 2022 13:44:00 +0800</pubDate>
+      
+      <guid>/tech/prerender/</guid>
+      <description>预渲染,用于前端单页面的项目,做到被seo收录的
+#创建用户 useradd -d /home/prerender -m prerender
+#安装nginx cd /usr/local wget http://nginx.org/download/nginx-1.16.1.tar.gz tar -xzf nginx-1.16.1.tar.gz cd nginx-1.16.1 ./configure &amp;ndash;with-http_ssl_module make make install
+#测试prerender cd /home/prerender #https://github.com/prerender/prerender npm install prerender npm install prerender-memory-cache &amp;ndash;save vi server.js const prerender = require(&amp;lsquo;prerender&amp;rsquo;); const server = prerender();
+server.use(require(&amp;lsquo;prerender-memory-cache&amp;rsquo;))
+server.start(); node server #访问 http://ip:3000/render?url=http://www.baidu.com
+#配置nginx #参考https://gist.github.com/thoop/8165802 /usr/local/nginx/sbin/nginx -c /home/prerender/nginx.conf /usr/local/nginx/sbin/nginx -s stop
+nginx.conf
+events { worker_connections 1024; } http { include /usr/local/nginx/conf/mime.types; default_type application/octet-stream; # Change YOUR_TOKEN to your prerender token # Change example.</description>
+    </item>
+    
+    <item>
+      <title>Nginx-实现网站简繁体转换</title>
+      <link>/tech/nginx-002/</link>
+      <pubDate>Fri, 12 Aug 2022 12:27:00 +0800</pubDate>
+      
+      <guid>/tech/nginx-002/</guid>
+      <description>这个利用nginx（openresty）+lua+opencc，写10行代码左右就可以实现的类似繁简通的功能 可充分利用nginx的快反应和可靠性
+所需插件
+https://github.com/BYVoid/OpenCC
+https://github.com/Finalcheat/lua-resty-opencc/blob/master/lib/resty/opencc.lua
+opencc在centos7可以用yum安装，但版本很旧 yum install doxygen opencc opencc-tools opencc-devel centos7上编译新版本可能要升级gcc，比较麻烦，我在centos8上编译过新版本 参考： yum install cmake gcc-c++ bison flex http://www.doxygen.nl/download.html https://bintray.com/byvoid/opencc/OpenCC ln -s /user/bin/python3.6 /user/bin/python ln -s /usr/lib/libopencc.so.2 /usr/lib64/libopencc.so.2
+安装openresty后opencc.lua放到/usr/local/openresty/lualib/resty/
+opencc.lua
+if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_content_type, 1, 4) == &amp;#34;text&amp;#34;) then local data=ngx.ctx.data or &amp;#34;&amp;#34; local cdata=ngx.arg[1] data=data..cdata ngx.ctx.data=data if ngx.arg[2] then local opencc = require(&amp;#34;resty.opencc&amp;#34;) -- local o = opencc:new(&amp;#34;zhs2zht.ini&amp;#34;) -- opencc 0.4.x local o = opencc:new(&amp;#34;s2hk.json&amp;#34;) ngx.</description>
+    </item>
+    
+    <item>
+      <title>Nginx-了解Lua用法</title>
+      <link>/tech/nginx-001/</link>
+      <pubDate>Fri, 12 Aug 2022 12:25:00 +0800</pubDate>
+      
+      <guid>/tech/nginx-001/</guid>
+      <description>用lua实现访问限制,木桶效应
+nginx.conf
+server{ location / { access_by_lua_file /usr/local/openresty/nginx/conf/lua/domain_check.lua; index index.html index.htm; } } 限制每个IP一段时间内能访问多少次
+domain_check.lua
+local client = require &amp;#34;resty.websocket.client&amp;#34; local limit_req = require &amp;#34;resty.limit.req&amp;#34; local limit_rate = 150 local limit_burst = 50 local limit_req = require &amp;#34;resty.limit.req&amp;#34; local lim, err = limit_req.new(&amp;#34;my_limit_req_store&amp;#34;, limit_rate, limit_burst) -- 这里设置rate=2/s，漏桶桶容量设置为0，（也就是来多少水就留多少水） -- 因为resty.limit.req代码中控制粒度为毫秒级别，所以可以做到毫秒级别的平滑处理 if not lim then -- ngx.log(ngx.ERR, &amp;#34;failed to instantiate a resty.limit.req object: &amp;#34;, err) return ngx.exit(500) end local key = ngx.var.binary_remote_addr local delay, err = lim:incoming(key, true) if not delay then if err == &amp;#34;rejected&amp;#34; then return ngx.</description>
+    </item>
+    
+    <item>
+      <title>Nginx使用过程中的记录</title>
+      <link>/tech/nginx-node/</link>
+      <pubDate>Fri, 12 Aug 2022 12:25:00 +0800</pubDate>
+      
+      <guid>/tech/nginx-node/</guid>
+      <description>How to format log (eg: Y-m-d.log) http { map $host $fmt_localdate { default &amp;#39;&amp;#39;;} map $host $fmt_localtime { default &amp;#39;&amp;#39;;} log_by_lua_block { ngx.var.fmt_localdate = os.date(&amp;#34;%Y-%m-%d&amp;#34;); ngx.var.fmt_localtime = os.date(&amp;#34;%Y-%m-%d %H:%M:%S&amp;#34;); } log_format main &amp;#39;[$host][$remote_addr][$fmt_localtime][$http_referer][$http_user_agent]&amp;#39;; server { access_log /var/log/nginx/access-$fmt_localdate.log main; } } </description>
+    </item>
+    
+    <item>
+      <title>Netdata-监控apache</title>
+      <link>/tech/netdata-002/</link>
+      <pubDate>Fri, 12 Aug 2022 12:23:00 +0800</pubDate>
+      
+      <guid>/tech/netdata-002/</guid>
+      <description>安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf &amp;lt;Location &amp;#34;/server-status&amp;#34;&amp;gt; SetHandler server-status #Require host localhost #uncomment to only allow requests from localhost &amp;lt;/Location&amp;gt; 通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。 yum install lynx
+lynx http://localhost/server-status
+5.创建netdata读取apache属性的配置文件
+vi /etc/netdata/python.d/apache.conf
+# # if the URL is password protected, the following are supported: # # user:&amp;#39;username&amp;#39; # pass:&amp;#39;password&amp;#39; # ------------------------------------------------------------------- # AUTO-DETECTION JOBS # only one of them will run (they have the same name) localhost: name : &amp;#39;local&amp;#39; url : &amp;#39;http://localhost/server-status?</description>
+    </item>
+    
+    <item>
+      <title>Netdata-监控redis</title>
+      <link>/tech/netdata-001/</link>
+      <pubDate>Fri, 12 Aug 2022 12:17:00 +0800</pubDate>
+      
+      <guid>/tech/netdata-001/</guid>
+      <description>###1. 如何用netdata监控redis,官网教程
+cd /etc/netdata # Replace this path with your Netdata config directory sudo ./edit-config go.d/redis.conf # by tcp socket redis://&amp;lt;user&amp;gt;:&amp;lt;password&amp;gt;@&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt; # by unix socket unix://&amp;lt;user&amp;gt;:&amp;lt;password&amp;gt;@&amp;lt;/path/to/redis.sock 例如
+socket1: name : &amp;#39;local&amp;#39; socket : &amp;#39;/tmp/redis.sock&amp;#39; pass : &amp;#39;pass&amp;#39; socket2: name : &amp;#39;local&amp;#39; socket : &amp;#39;/var/run/redis/redis.sock&amp;#39; # pass : &amp;#39;&amp;#39; socket3: name : &amp;#39;local&amp;#39; socket : &amp;#39;/var/lib/redis/redis.sock&amp;#39; # pass : &amp;#39;&amp;#39; localhost: name : &amp;#39;local&amp;#39; host : &amp;#39;localhost&amp;#39; port : 6379 pass : &amp;#39;pass&amp;#39; localipv4: name : &amp;#39;local&amp;#39; host : &amp;#39;127.</description>
+    </item>
+    
+    <item>
+      <title>初识SSL证书</title>
+      <link>/tech/ssl-001/</link>
+      <pubDate>Fri, 12 Aug 2022 12:15:00 +0800</pubDate>
+      
+      <guid>/tech/ssl-001/</guid>
+      <description>SSL证书也就是支持https访问,其中具体的用处就不在此展开说了,主要介绍下个人使用中可以免费获取的证书渠道以及如何部署
+申请SSL证书,对于个人的需要列出几种免费获取证书的方式
+阿里云，腾讯云，七牛云
+注意：阿里云证书的领取限制是一个自然年内可以领取一次数量为20的云盾单域名试用证书 部署证书
+nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.pem; ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3; ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5; ssl_prefer_server_ciphers on; ssl_session_cache shared:SSL:10m; ssl_session_timeout 10m; } apache流程
+&amp;lt;VirtualHost *:443&amp;gt; DocumentRoot &amp;#34;project_path&amp;#34; ServerName domain.com:443 ErrorLog error_log_ssl SSLEngine on SSLProtocol ALL -SSLv2 -SSLv3 #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!RC4 SSLCertificateFile /etc/httpd/conf.d/tls/crt SSLCertificateKeyFile /etc/httpd/conf.d/tls/key SSLCertificateChainFile /etc/httpd/conf.d/tls/ca-bundle SSLVerifyClient none &amp;lt;Files ~ &amp;#34;\.(cgi|shtml|net|php?)$&amp;#34;&amp;gt; SSLOptions +StdEnvVars &amp;lt;/Files&amp;gt; &amp;lt;Directory &amp;#34;project_path&amp;#34;&amp;gt; Options FollowSymLinks AllowOverride All Require all granted &amp;lt;/Directory&amp;gt; &amp;lt;/VirtualHost&amp;gt; </description>
+    </item>
+    
+  </channel>
+</rss>

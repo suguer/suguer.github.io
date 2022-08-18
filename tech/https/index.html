@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Https双向认证 | Ken Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题
+目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作
+前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP
+正式内容 参考链接:
+阿里云指导openssl签发流程 https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz
+php官方文档
+https://www.php.net/manual/en/function.openssl-csr-sign.php
+$cacert = &ldquo;file://path/to/ca.crt&rdquo;; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~
+使用工具 openssl 创建根证书私钥： openssl genrsa -out root.key 1024
+创建根证书请求文件： openssl req -new -out root.csr -key root.key
+后续参数的例子提供:
+Country Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/tech/https/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Https双向认证" />
+<meta property="og:description" content="前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题
+目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作
+前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP
+正式内容 参考链接:
+阿里云指导openssl签发流程 https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz
+php官方文档
+https://www.php.net/manual/en/function.openssl-csr-sign.php
+$cacert = &ldquo;file://path/to/ca.crt&rdquo;; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~
+使用工具 openssl 创建根证书私钥： openssl genrsa -out root.key 1024
+创建根证书请求文件： openssl req -new -out root.csr -key root.key
+后续参数的例子提供:
+Country Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/tech/https/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-12T13:51:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-12T13:51:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="Https双向认证"/>
+<meta name="twitter:description" content="前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题
+目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作
+前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP
+正式内容 参考链接:
+阿里云指导openssl签发流程 https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz
+php官方文档
+https://www.php.net/manual/en/function.openssl-csr-sign.php
+$cacert = &ldquo;file://path/to/ca.crt&rdquo;; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~
+使用工具 openssl 创建根证书私钥： openssl genrsa -out root.key 1024
+创建根证书请求文件： openssl req -new -out root.csr -key root.key
+后续参数的例子提供:
+Country Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "/tech/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Https双向认证",
+      "item": "/tech/https/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Https双向认证",
+  "name": "Https双向认证",
+  "description": "前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题\n目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作\n前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP\n正式内容 参考链接:\n阿里云指导openssl签发流程 https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz\nphp官方文档\nhttps://www.php.net/manual/en/function.openssl-csr-sign.php\n$cacert = \u0026ldquo;file://path/to/ca.crt\u0026rdquo;; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~\n使用工具 openssl 创建根证书私钥： openssl genrsa -out root.key 1024\n创建根证书请求文件： openssl req -new -out root.csr -key root.key\n后续参数的例子提供:\nCountry Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root.",
+  "keywords": [
+    
+  ],
+  "articleBody": "前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题\n目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作\n前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP\n正式内容 参考链接:\n阿里云指导openssl签发流程 https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz\nphp官方文档\nhttps://www.php.net/manual/en/function.openssl-csr-sign.php\n$cacert = “file://path/to/ca.crt”; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~\n使用工具 openssl 创建根证书私钥： openssl genrsa -out root.key 1024\n创建根证书请求文件： openssl req -new -out root.csr -key root.key\n后续参数的例子提供:\nCountry Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root.csr -out root.crt -signkey root.key -CAcreateserial -days 36500\n创建根证书.pem openssl req -new -x509 -key root.key -out root.pem -days 36500\nphp签发个人证书的流程 $dn = array( \"countryName\" =\u003e 'cn', //所在国家 \"stateOrProvinceName\" =\u003e 'gd', //所在省份 \"localityName\" =\u003e 'zh', //所在城市 \"organizationName\" =\u003e 'company', //注册人姓名 \"organizationalUnitName\" =\u003e 'it', //组织名称 \"commonName\" =\u003e '员工账号', //公共名称 ); $config = array( 'config'=\u003e\"openssl.cnf\", ); $privkey = openssl_pkey_new($config); $csr = openssl_csr_new($dn, $privkey, $config); //php的openssl_csr_sign的时候,调用公钥证书为个人证书签名的时候,要调用root.pem $cart=openssl_csr_sign($csr,\"file://conf/ssl/root.pem\",\"file://conf/ssl/root.key\",365,$config); openssl_pkey_export($privkey, $privatekey, null, $config); $resp = openssl_pkcs12_export_to_file($cart, \"/data/ssl/{$account}.p12\", $privatekey, \"\",$config); apache配置流程 DocumentRoot \"D:/phpserver/website/public\" ServerName domain.cn ServerAlias SSLEngine on #单向认证 SSLCertificateFile \"D:/phpstudy_pro/Extensions/Apache2.4.39/conf/ssl/.crt\" SSLCertificateKeyFile \"D:/phpstudy_pro/Extensions/Apache2.4.39/conf/ssl/.key\" SSLCertificateChainFile \"D:/phpstudy_pro/Extensions/Apache2.4.39/conf/ssl/.cnchain.crt\" #双向认证的关键代码 SSLCACertificateFile \"D:/phpserver/website/public/conf/ssl/root.crt\" SSLVerifyClient require SSLVerifyDepth 1 SSLCertificateFile \"C:/Users/staff/Desktop/ssl/cacert.pem\" SSLCertificateKeyFile \"C:/Users/staff/Desktop/ssl/server.key\" FcgidInitialEnv PHPRC \"D:/phpstudy_pro/Extensions/php/php7.3.4nts\" AddHandler fcgid-script .php FcgidWrapper \"D:/phpstudy_pro/Extensions/php/php7.3.4nts/php-cgi.exe\" .php ",
+  "wordCount" : "214",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-12T13:51:00+08:00",
+  "dateModified": "2022-08-12T13:51:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/tech/https/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+    <h1 class="post-title">
+      Https双向认证
+    </h1>
+    <div class="post-meta"><span title='2022-08-12 13:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/https.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%89%8d%e8%a8%80" aria-label="前言">前言</a></li>
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87" aria-label="目标">目标</a></li>
+                <li>
+                    <a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" aria-label="前置条件">前置条件</a></li>
+                <li>
+                    <a href="#%e6%ad%a3%e5%bc%8f%e5%86%85%e5%ae%b9" aria-label="正式内容">正式内容</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h2>
+<p>由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题</p>
+<h2 id="目标">目标<a hidden class="anchor" aria-hidden="true" href="#目标">#</a></h2>
+<p>每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作</p>
+<h2 id="前置条件">前置条件<a hidden class="anchor" aria-hidden="true" href="#前置条件">#</a></h2>
+<p>拥有一张根证书,用于签发员工用的,如没有可参考教程创建
+PHP</p>
+<h2 id="正式内容">正式内容<a hidden class="anchor" aria-hidden="true" href="#正式内容">#</a></h2>
+<p>参考链接:<br>
+阿里云指导openssl签发流程
+<a href="https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz">https://help.aliyun.com/document_detail/160093.html?spm=5176.10695662.1996646101.searchclickresult.480f29d22TQ6uz</a><br>
+php官方文档<br>
+<a href="https://www.php.net/manual/en/function.openssl-csr-sign.php">https://www.php.net/manual/en/function.openssl-csr-sign.php</a><br>
+$cacert = &ldquo;file://path/to/ca.crt&rdquo;; 文档中此处值得ca.crt是下面所指的root.pem,不是根证书的root.crt,不一样的~~</p>
+<ol>
+<li>使用工具 openssl
+创建根证书私钥：</li>
+</ol>
+<blockquote>
+<p>openssl genrsa -out root.key 1024</p>
+</blockquote>
+<ol start="2">
+<li>创建根证书请求文件：</li>
+</ol>
+<blockquote>
+<p>openssl req -new -out root.csr -key root.key</p>
+</blockquote>
+<p>后续参数的例子提供:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">Country Name <span class="o">(</span><span class="m">2</span> letter code<span class="o">)</span> <span class="o">[</span>AU<span class="o">]</span>:cn  
+</span></span><span class="line"><span class="cl">State or Province Name <span class="o">(</span>full name<span class="o">)</span> <span class="o">[</span>Some-State<span class="o">]</span>:gd  
+</span></span><span class="line"><span class="cl">Locality Name <span class="o">(</span>eg, city<span class="o">)</span> <span class="o">[]</span>:zh  
+</span></span><span class="line"><span class="cl">Organization Name <span class="o">(</span>eg, company<span class="o">)</span> <span class="o">[</span>Internet Widgits Pty Ltd<span class="o">]</span>:company  
+</span></span><span class="line"><span class="cl">Organizational Unit Name <span class="o">(</span>eg, section<span class="o">)</span> <span class="o">[]</span>:it  
+</span></span><span class="line"><span class="cl">Common Name <span class="o">(</span>e.g. server FQDN or YOUR name<span class="o">)</span> <span class="o">[]</span>:root  
+</span></span></code></pre></div><ol start="3">
+<li>创建根证书：</li>
+</ol>
+<blockquote>
+<p>openssl x509 -req -in root.csr -out root.crt -signkey root.key -CAcreateserial -days 36500</p>
+</blockquote>
+<ol start="4">
+<li>创建根证书.pem</li>
+</ol>
+<blockquote>
+<p>openssl req -new -x509 -key root.key -out root.pem -days 36500</p>
+</blockquote>
+<ol start="5">
+<li>php签发个人证书的流程</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nv">$dn</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;countryName&#34;</span> <span class="o">=&gt;</span> <span class="s1">&#39;cn&#39;</span><span class="p">,</span>                                  <span class="c1">//所在国家
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s2">&#34;stateOrProvinceName&#34;</span> <span class="o">=&gt;</span> <span class="s1">&#39;gd&#39;</span><span class="p">,</span>                    <span class="c1">//所在省份
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s2">&#34;localityName&#34;</span> <span class="o">=&gt;</span> <span class="s1">&#39;zh&#39;</span><span class="p">,</span>                        <span class="c1">//所在城市
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s2">&#34;organizationName&#34;</span> <span class="o">=&gt;</span> <span class="s1">&#39;company&#39;</span><span class="p">,</span>         <span class="c1">//注册人姓名
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s2">&#34;organizationalUnitName&#34;</span> <span class="o">=&gt;</span> <span class="s1">&#39;it&#39;</span><span class="p">,</span>   <span class="c1">//组织名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="s2">&#34;commonName&#34;</span> <span class="o">=&gt;</span> <span class="s1">&#39;员工账号&#39;</span><span class="p">,</span>                          <span class="c1">//公共名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;config&#39;</span><span class="o">=&gt;</span><span class="s2">&#34;openssl.cnf&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$privkey</span> <span class="o">=</span> <span class="nx">openssl_pkey_new</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$csr</span> <span class="o">=</span> <span class="nx">openssl_csr_new</span><span class="p">(</span><span class="nv">$dn</span><span class="p">,</span> <span class="nv">$privkey</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//php的openssl_csr_sign的时候,调用公钥证书为个人证书签名的时候,要调用root.pem
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$cart</span><span class="o">=</span><span class="nx">openssl_csr_sign</span><span class="p">(</span><span class="nv">$csr</span><span class="p">,</span><span class="s2">&#34;file://conf/ssl/root.pem&#34;</span><span class="p">,</span><span class="s2">&#34;file://conf/ssl/root.key&#34;</span><span class="p">,</span><span class="mi">365</span><span class="p">,</span><span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">openssl_pkey_export</span><span class="p">(</span><span class="nv">$privkey</span><span class="p">,</span> <span class="nv">$privatekey</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$resp</span> <span class="o">=</span> <span class="nx">openssl_pkcs12_export_to_file</span><span class="p">(</span><span class="nv">$cart</span><span class="p">,</span> <span class="s2">&#34;/data/ssl/</span><span class="si">{</span><span class="nv">$account</span><span class="si">}</span><span class="s2">.p12&#34;</span><span class="p">,</span> <span class="nv">$privatekey</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span><span class="nv">$config</span><span class="p">);</span>
+</span></span></code></pre></div><ol start="6">
+<li>apache配置流程</li>
+</ol>
+<pre tabindex="0"><code class="language-apacheconfig" data-lang="apacheconfig">&lt;VirtualHost *:443&gt;
+    DocumentRoot &#34;D:/phpserver/website/public&#34;
+    ServerName domain.cn
+    ServerAlias 
+    SSLEngine on
+    #单向认证
+    SSLCertificateFile &#34;D:/phpstudy_pro/Extensions/Apache2.4.39/conf/ssl/.crt&#34;
+    SSLCertificateKeyFile &#34;D:/phpstudy_pro/Extensions/Apache2.4.39/conf/ssl/.key&#34;
+    SSLCertificateChainFile &#34;D:/phpstudy_pro/Extensions/Apache2.4.39/conf/ssl/.cnchain.crt&#34;
+   
+    #双向认证的关键代码
+   	SSLCACertificateFile &#34;D:/phpserver/website/public/conf/ssl/root.crt&#34;
+   	SSLVerifyClient require
+   	SSLVerifyDepth  1
+    
+    
+	SSLCertificateFile &#34;C:/Users/staff/Desktop/ssl/cacert.pem&#34;
+    SSLCertificateKeyFile &#34;C:/Users/staff/Desktop/ssl/server.key&#34;
+    FcgidInitialEnv PHPRC &#34;D:/phpstudy_pro/Extensions/php/php7.3.4nts&#34;
+    AddHandler fcgid-script .php
+    FcgidWrapper &#34;D:/phpstudy_pro/Extensions/php/php7.3.4nts/php-cgi.exe&#34; .php
+	
+  &lt;Directory &#34;D:/phpserver/website/public&#34;&gt;
+      Options FollowSymLinks ExecCGI
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+      Require all granted
+	  DirectoryIndex index.php index.html error/index.html
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code></pre><ol start="7">
+<li>php校验证书
+https开启后 $_SERVER[&lsquo;SSL_CLIENT_S_DN_CN&rsquo;]的信息会是之前签发的commonName,此时可校验commonName和当前登录的员工账号是否一致</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

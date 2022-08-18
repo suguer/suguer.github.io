@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Codes on Ken Blog</title>
+    <link>/code/</link>
+    <description>Recent content in Codes on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 16 Aug 2022 15:07:00 +0800</lastBuildDate><atom:link href="/code/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>python-自定义线程池</title>
+      <link>/code/python-threadpool/</link>
+      <pubDate>Tue, 16 Aug 2022 15:07:00 +0800</pubDate>
+      
+      <guid>/code/python-threadpool/</guid>
+      <description>自定义的一个小功能,线程池处理,用法很简单
+def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread, args=[1, 2], kwds={}) main.putRequest(req) #-*-encoding:utf-8-*- &amp;#39;&amp;#39;&amp;#39; Created on 2012-3-9 @summary: 线程池 &amp;#39;&amp;#39;&amp;#39; import sys import threading import queue import traceback import statistics # 定义一些Exception，用于自定义异常处理 class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self.</description>
+    </item>
+    
+  </channel>
+</rss>
