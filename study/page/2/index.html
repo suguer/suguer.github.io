@@ -158,23 +158,6 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Python-初学tensorflow第一天-搭建环境
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
-打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library ‘cudart64_110.dll’; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
-Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
-A: 找到C:\Program Files\NVIDIA Corporation\FrameViewSDK文件夹进行卸载
-Q: 安装cuda一直安装不成功,nsight visual studio edition提示安装失败 A: 尝试卸载电脑的Visual Studio Community
-Q: Downgrade the protobuf package to 3....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 15:12:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Python-初学tensorflow第一天-搭建环境" href="/study/python-tensorflow-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
     <h2>初始Python-自动化操作
     </h2>
   </header>
@@ -326,6 +309,24 @@ db.fruit.updateOne({name:&#34;apple&#34;},{$set:{from:&#34;China&#34;}}) drop �
   </div>
   <footer class="entry-footer"><span title='2022-08-12 11:09:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to Mongodb数据库-增删查改" href="/study/mongodb-003/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mongodb数据库-复制集
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本地测试结果如下
+|- D:\mongodata\db1
+|—— mongo.conf
+|- D:\mongodata\db2
+|—— mongo.conf
+mongo.conf
+storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination: file logAppend: true path: D:\mongodata\db1\mongod.log net: port: 28017 bindIp: 127.0.0.1 replication: replSetName: rs0 </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:08:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mongodb数据库-复制集" href="/study/mongodb-002/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

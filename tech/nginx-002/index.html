@@ -205,17 +205,17 @@ if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_conte
 <main class="main">
 
 <article class="post-single">
-  <header class="post-header">
-    <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
-    <h1 class="post-title">
-      Nginx-实现网站简繁体转换
-    </h1>
-    <div class="post-meta"><span title='2022-08-12 12:27:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/nginx-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+    <header class="post-header">
+        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+        <h1 class="post-title">
+            Nginx-实现网站简繁体转换
+        </h1>
+        <div class="post-meta"><span title='2022-08-12 12:27:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/nginx-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
-  </header> 
+    </header> 
 
-  <div class="post-content"><p>这个利用nginx（openresty）+lua+opencc，写10行代码左右就可以实现的类似繁简通的功能 可充分利用nginx的快反应和可靠性</p>
+    <div class="post-content"><p>这个利用nginx（openresty）+lua+opencc，写10行代码左右就可以实现的类似繁简通的功能 可充分利用nginx的快反应和可靠性</p>
 <p>所需插件<br>
 <a href="https://github.com/BYVoid/OpenCC">https://github.com/BYVoid/OpenCC</a><br>
 <a href="https://github.com/Finalcheat/lua-resty-opencc/blob/master/lib/resty/opencc.lua">https://github.com/Finalcheat/lua-resty-opencc/blob/master/lib/resty/opencc.lua</a></p>
@@ -287,14 +287,42 @@ http {
 }
 </code></pre>
 
-  </div>
+    </div>
 
-  <footer class="post-footer">
-    <ul class="post-tags">
-    </ul>
+    <footer class="post-footer">
+        <ul class="post-tags">
+        </ul>
+<nav class="paginav">
+  <a class="prev" href="/tech/prerender/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>Prerender-单页面前端渲染</span>
+  </a>
+  <a class="next" href="/tech/nginx-001/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Nginx-了解Lua用法</span>
+  </a>
+</nav>
 
-  </footer>
+    </footer>
 </article>
+<script src="https://giscus.app/client.js"
+        data-repo="suguer/giscus.github.io"
+        data-repo-id="R_kgDOH08FpA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOH08FpM4CQ2jj"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
     </main>
     
 <footer class="footer">

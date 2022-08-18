@@ -9,7 +9,7 @@
       <link>/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 17 Aug 2022 17:46:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 12:18:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Installation | Update</title>
       <link>/posts/papermod/papermod-installation/</link>
@@ -26,6 +26,22 @@
       
       <guid>/posts/papermod/papermod-features/</guid>
       <description>Learn About All Features in PaperMod</description>
+    </item>
+    
+    <item>
+      <title>从0到1 记录搭建Hugo个人博客-04 增加评论功能</title>
+      <link>/tech/hugo-004/</link>
+      <pubDate>Thu, 18 Aug 2022 12:18:00 +0800</pubDate>
+      
+      <guid>/tech/hugo-004/</guid>
+      <description>前言 搭建个人博客或者其他网站站点的时候,只有静态页面显得比较冷清,想了解自己的文章能不能帮到更多有相同疑惑的人,或者为自己的网站增添功能
+目标 扩展自己的网站支持评论功能
+前置条件 有github的账号
+正式内容 感谢提供这个评论功能的giscus,在不用维护评论功能以及数据库的情况下,这是款十分便利的评论系统
+创建github仓库 首先需要创建一个github的仓库,用于保存评论的留言,并且需要一些小小的配置,参考官网
+选择 giscus 连接到的仓库。请确保：
+此仓库是公开的，否则访客将无法查看 discussion。 giscus app 已安装否则访客将无法评论和回应。 指导入口 Discussions功能已在你的仓库中启用。指导 选择配置 创建完仓库后,在giscus的配置栏中选择自己需要的配置 如本文的配置为
+&amp;lt;script src=&amp;#34;https://giscus.app/client.js&amp;#34; data-repo=&amp;#34;suguer/giscus.github.io&amp;#34; data-repo-id=&amp;#34;R_kgDOH08FpA&amp;#34; data-category=&amp;#34;Announcements&amp;#34; data-category-id=&amp;#34;DIC_kwDOH08FpM4CQ2jj&amp;#34; data-mapping=&amp;#34;title&amp;#34; data-strict=&amp;#34;0&amp;#34; data-reactions-enabled=&amp;#34;1&amp;#34; data-emit-metadata=&amp;#34;0&amp;#34; data-input-position=&amp;#34;top&amp;#34; data-theme=&amp;#34;preferred_color_scheme&amp;#34; data-lang=&amp;#34;zh-CN&amp;#34; data-loading=&amp;#34;lazy&amp;#34; crossorigin=&amp;#34;anonymous&amp;#34; async&amp;gt; &amp;lt;/script&amp;gt; 嵌入js代码 hugo的详情文章路径一般在主题下的layouts/_default/single.html，建议不要在主题下theme直接修改文件，避免后续升级覆盖没了，可在根目录下相同创建出layouts/_default/single.html，接着在代码最后粘贴giscus的那段js代码即可</description>
     </item>
     
     <item>
@@ -187,10 +203,10 @@ Gname的API接口文档
     
     <item>
       <title>从0到1 记录搭建Hugo个人博客-03 使用Algolia搜索</title>
-      <link>/study/hugo-003/</link>
+      <link>/tech/hugo-003/</link>
       <pubDate>Mon, 15 Aug 2022 11:24:00 +0800</pubDate>
       
-      <guid>/study/hugo-003/</guid>
+      <guid>/tech/hugo-003/</guid>
       <description>Hugo添加Algolia搜索支持 本文主要介绍如何在Hugo上增加Algolia的搜索支持,Alogolia官网
 添加Algolia搜索支持主要以下步骤： ###1. 进入 Algolia 官网注册创建环境
 个人使用选择免费版即可,可以满足日常需求了
@@ -675,10 +691,10 @@ storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination:
     
     <item>
       <title>从0到1 记录搭建Hugo个人博客-02 选用模板</title>
-      <link>/study/hugo-002/</link>
+      <link>/tech/hugo-002/</link>
       <pubDate>Fri, 12 Aug 2022 10:17:00 +0800</pubDate>
       
-      <guid>/study/hugo-002/</guid>
+      <guid>/tech/hugo-002/</guid>
       <description>上文讲述了Hugo的如何搭建,这次讲述作者个人博客用的Hugo选用的模板hugo-PaperMod ，对于像我这种鉴赏能力为0的程序员，这么简单明了的风格瞬间让我沉迷了，因此也简单分享下搭建主题的过程
 git pull https://github.com/adityatelange/hugo-PaperMod.git git switch exampleSite 此时目录结构包含有 content
 assets
@@ -690,10 +706,10 @@ profileMode: enabled: true 运行hugo后首页展示就和我当前的首页类�
     
     <item>
       <title>从0到1 记录搭建Hugo个人博客-01 搭建环境</title>
-      <link>/study/hugo-001/</link>
+      <link>/tech/hugo-001/</link>
       <pubDate>Thu, 11 Aug 2022 18:09:00 +0800</pubDate>
       
-      <guid>/study/hugo-001/</guid>
+      <guid>/tech/hugo-001/</guid>
       <description>使用HUGO搭建一个自己的博客Blog 对于常在敲代码的程序员来说,有个博客能记录和分享是一个相当有意义的事情， Hugo 是一个高效的网站搭建框架,能用简单的markdown语法编辑生成出富有个性的网页,即使是刚学的小白也能很简单的入门使用
 说明：Markdown是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，同时也对图片、图表、数学公式提供了支持，可以用来书写电子书、软件文档等，同时也可以非常方便的转换为HTML页面或者是PDF文档。
 step 1:安装环境

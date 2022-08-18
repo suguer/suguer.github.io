@@ -158,6 +158,34 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Php支付接口
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
+目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
+前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
+正式内容 支付的需求最主要在于3个接口的实现
+interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;8 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php支付接口" href="/tech/php-pay/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Python-多线程
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Python-多线程" href="/tech/python-thread/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Https双向认证
     </h2>
   </header>
@@ -295,6 +323,7 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="/tech/">« 上一页</a>
+    <a class="next" href="/tech/page/3/">下一页 »</a>
   </nav>
 </footer>
     </main>

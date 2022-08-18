@@ -158,6 +158,25 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>从0到1 记录搭建Hugo个人博客-04 增加评论功能
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 搭建个人博客或者其他网站站点的时候,只有静态页面显得比较冷清,想了解自己的文章能不能帮到更多有相同疑惑的人,或者为自己的网站增添功能
+目标 扩展自己的网站支持评论功能
+前置条件 有github的账号
+正式内容 感谢提供这个评论功能的giscus,在不用维护评论功能以及数据库的情况下,这是款十分便利的评论系统
+创建github仓库 首先需要创建一个github的仓库,用于保存评论的留言,并且需要一些小小的配置,参考官网
+选择 giscus 连接到的仓库。请确保：
+此仓库是公开的，否则访客将无法查看 discussion。 giscus app 已安装否则访客将无法评论和回应。 指导入口 Discussions功能已在你的仓库中启用。指导 选择配置 创建完仓库后,在giscus的配置栏中选择自己需要的配置 如本文的配置为
+&lt;script src=&#34;https://giscus.app/client.js&#34; data-repo=&#34;suguer/giscus.github.io&#34; data-repo-id=&#34;R_kgDOH08FpA&#34; data-category=&#34;Announcements&#34; data-category-id=&#34;DIC_kwDOH08FpM4CQ2jj&#34; data-mapping=&#34;title&#34; data-strict=&#34;0&#34; data-reactions-enabled=&#34;1&#34; data-emit-metadata=&#34;0&#34; data-input-position=&#34;top&#34; data-theme=&#34;preferred_color_scheme&#34; data-lang=&#34;zh-CN&#34; data-loading=&#34;lazy&#34; crossorigin=&#34;anonymous&#34; async&gt; &lt;/script&gt; 嵌入js代码 hugo的详情文章路径一般在主题下的layouts/_default/single.html，建议不要在主题下theme直接修改文件，避免后续升级覆盖没了，可在根目录下相同创建出layouts/_default/single.html，接着在代码最后粘贴giscus的那段js代码即可</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-18 12:18:00 +0800 CST'>八月 18, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to 从0到1 记录搭建Hugo个人博客-04 增加评论功能" href="/tech/hugo-004/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Gitblit-如何实现自动编译发布
     </h2>
   </header>
@@ -208,6 +227,38 @@
   </div>
   <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to tronlink-从0到1搭建自己的归集系统" href="/tech/tronlink-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>从0到1 记录搭建Hugo个人博客-03 使用Algolia搜索
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Hugo添加Algolia搜索支持 本文主要介绍如何在Hugo上增加Algolia的搜索支持,Alogolia官网
+添加Algolia搜索支持主要以下步骤： ###1. 进入 Algolia 官网注册创建环境
+个人使用选择免费版即可,可以满足日常需求了
+地区若是国内则建议选择Hong Kong ,延迟较小效果比较好
+最后提交即可
+###2. 创建Application和Index 名称可自定义,我为了方便区别,创建都习惯用直接的域名作为名称 https://www.algolia.com/account/api-keys/all?applicationId=你的applicationId ###3. Hugo配置Algolia的环境
+修改 config.toml 文件声明需要生成Algolia索引文件以及相关信息 [outputs]
+home = [“HTML”, “RSS”, “Algolia”]
+…中间省略
+[outputFormats.Algolia]
+baseName = “algolia”
+isPlainText = true
+mediaType = “application/json”
+notAlternative = true
+[params.algolia]
+appId = “你的Application ID”
+indexName = “你的索引名字”
+searchOnlyKey = “你的Search-Only API Key”
+注意outputs下面home的末尾有&#34;Algolia&#34;，漏了就不会生成了。 appId, indexName, searchOnlyKey 填写刚才记录的Algolia信息。
+根目录下 layouts/_default (没有就新建) 文件夹中新建 list.algolia.json 文件，内容如下: {{/* 生成Algolia搜索索引文件 /}}
+{{- $.Scratch.Add “index” slice -}}...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 11:24:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to 从0到1 记录搭建Hugo个人博客-03 使用Algolia搜索" href="/tech/hugo-003/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -295,34 +346,6 @@ schema=“Pagination”,
   </div>
   <footer class="entry-footer"><span title='2022-08-12 16:06:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to Php-Swagger代码了解" href="/tech/php-swagger/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Php支付接口
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
-目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
-前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
-正式内容 支付的需求最主要在于3个接口的实现
-interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 15:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;8 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Php支付接口" href="/tech/php-pay/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Python-多线程
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Python-多线程" href="/tech/python-thread/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
