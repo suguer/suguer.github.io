@@ -9,7 +9,23 @@
       <link>/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 16 Aug 2022 15:07:00 +0800</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:30:00 +0800</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mongodb数据库-python有关的操作</title>
+      <link>/study/mongodb-004/</link>
+      <pubDate>Fri, 19 Aug 2022 15:30:00 +0800</pubDate>
+      
+      <guid>/study/mongodb-004/</guid>
+      <description>flask
+flask-pymongo
+flask-mongoengine
+数据内容
+[{ &amp;#34;_id&amp;#34;: { &amp;#34;$oid&amp;#34;: &amp;#34;62e3525f18909374eb4de53f&amp;#34; }, &amp;#34;plat&amp;#34;: { &amp;#34;wechat&amp;#34;: &amp;#34;bc61736d-7ed0-47bb-ba1b-33474fecde23&amp;#34;, &amp;#34;alipay&amp;#34;: &amp;#34;random&amp;#34; }, &amp;#34;created_at&amp;#34;: { &amp;#34;$date&amp;#34;: { &amp;#34;$numberLong&amp;#34;: &amp;#34;1659093727910&amp;#34; } }, &amp;#34;updated_at&amp;#34;: { &amp;#34;$date&amp;#34;: { &amp;#34;$numberLong&amp;#34;: &amp;#34;1659093727910&amp;#34; } }, &amp;#34;nickname&amp;#34;: &amp;#34;su&amp;#34; }] 根据 plat.wechat中来搜索用户
+pymongo语法:
+mongo.db.user.find_one(filter={&amp;#34;plat.wechat&amp;#34;:openid}) mongoengine语法:
+User.objects(plat__wechat=openid).first() </description>
+    </item>
+    
     <item>
       <title>python-自定义线程池</title>
       <link>/code/python-threadpool/</link>

@@ -160,6 +160,97 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Php-自定义封装加密方法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&#34;; private static $cipher = &#34;AES-256-CBC&#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &#39;iv&#39; =&gt; $iv, &#39;value&#39; =&gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&#39;iv&#39;]); $decrypted = openssl_decrypt($payload[&#39;value&#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php-自定义封装加密方法" href="/study/php-encrypter/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-根据经纬度计算直线距离
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:53:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php-根据经纬度计算直线距离" href="/study/php-distance/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-生成ssl证书所需的csr信息
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&gt;all(); $dn = [ &#34;countryName&#34; =&gt; trim(strtoupper($all[&#39;countryName&#39;])), //所在国家 &#34;stateOrProvinceName&#34; =&gt; trim($all[&#39;stateOrProvinceName&#39;]), //所在省份 &#34;localityName&#34; =&gt; trim($all[&#39;localityName&#39;]), //所在城市 &#34;organizationName&#34; =&gt; trim($all[&#39;organizationName&#39;]), //注册人姓名 &#34;organizationalUnitName&#34; =&gt; trim($all[&#39;organizationalUnitName&#39;]), //组织名称 &#34;commonName&#34; =&gt; trim($all[&#39;commonName&#39;]), //公共名称 ]; if (isset($all[&#39;emailAddress&#39;]) &amp;&amp; $all[&#39;emailAddress&#39;]) { $dn[&#39;emailAddress&#39;] = $all[&#39;emailAddress&#39;]; } $config = [ &#34;private_key_bits&#34; =&gt; isset($all[&#39;keysize&#39;]) &amp;&amp; $all[&#39;keysize&#39;] ? $all[&#39;keysize&#39;] : 2048, //字节数 512 1024 2048 4096 等 &#34;private_key_type&#34; =&gt; OPENSSL_KEYTYPE_RSA, //加密类型 &#39;digest_alg&#39; =&gt; &#39;sha256&#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&#39;config&#39;] = &#34;D:/phpstudy_pro/Extensions/Apache2....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:45:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php-生成ssl证书所需的csr信息" href="/study/php-ssl/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Python-初学tensorflow第二天-学习例子
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>学习来源Bilibili 根据例子编写出线性回归方程
+import tensorflow as tf import pandas as pd data=pd.read_csv(&#39;./demo1.csv&#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&#39;adam&#39;,loss=&#39;mse&#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
+1,10.000000 ,26.658839
+2,10.401338 ,27.306435
+3,10.842809 ,22.132410
+4,11.244147 ,21.169841
+5,11.645449 ,15.192634
+6,12.086957 ,26.398951
+7,12.048829 ,17.435307
+8,12.889632 ,25.507885
+9,13.290970 ,36.884595
+10,13.732441 ,39.666109
+11,14.133779 ,34.396281
+12,14.635117 ,41.497994
+13,14.978589 ,44.981575
+14,15.377926 ,47.039595
+15,15.779264 ,48.252578
+16,16.220736 ,57.034251
+17,16.622074 ,51.490919
+18,17.023411 ,51.336621
+19,17.464883 ,57.681998
+20,17.866221 ,68.553714
+21,18.267559 ,64.310925
+22,18.709030 ,68.959009
+23,19.110368 ,74.614639
+24,19.511706 ,71.867195
+25,19.913043 ,76.098135...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Python-初学tensorflow第二天-学习例子" href="/study/python-tensorflow-002/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Python-初学tensorflow第一天-搭建环境
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
+打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library ‘cudart64_110.dll’; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
+Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
+A: 找到C:\Program Files\NVIDIA Corporation\FrameViewSDK文件夹进行卸载
+Q: 安装cuda一直安装不成功,nsight visual studio edition提示安装失败 A: 尝试卸载电脑的Visual Studio Community
+Q: Downgrade the protobuf package to 3....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:12:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Python-初学tensorflow第一天-搭建环境" href="/study/python-tensorflow-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>初始Python-自动化操作
     </h2>
   </header>
@@ -231,104 +322,6 @@ RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt �
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:29:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to gitfun" href="/study/gitfun/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mysql数据库-使用记录
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>How to show binlog mysqlbinlog --no-defaults --start-datetime=&#34;2021-09-30 00:00:00&#34; --stop-datetime=&#34;2021-09-30 23:00:00&#34; -d database --base64-output=DECODE-ROWS -v /binlog/master-bin.001255 --result-file=/root/binlog/mysqllog001255.sql How to get distance ( lat and lng) lat = X lng = X select * , ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat} * PI() / 180 - lat * PI() / 180) / 2),2) &#43; COS({$lat} * PI() / 180) * COS(lat * PI() / 180) * POW(SIN(({$lng} * PI() / 180 - lng * PI() / 180) / 2),2))), 5)*1000 AS distance from table order by distance asc </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 12:13:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Mysql数据库-使用记录" href="/study/mysql-note/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mysql数据库-日期函数
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>当前日期
-select curdate(); 当月最后一天
-select last_day(curdate()); 下个月的上一天,例如今天2022-06-01 ,结果为2022-06-30
-select DATE_SUB(DATE_ADD(CURDATE(),INTERVAL 1 MONTH),INTERVAL 1 DAY) 下个月的最后一天
-select LAST_DAY(DATE_ADD(CURDATE(),INTERVAL 1 MONTH)); </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Mysql数据库-日期函数" href="/study/mysql-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mysql数据库-常见问题
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>能说下myisam 和 innodb的区别吗
-myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
-innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
-说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
-create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
-事务的基本特性
-原子性指的是一个事务中的操作要么全部成功，要么全部失败。
-一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
-隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
-持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
-主从同步
-首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
-slave连接到master，获取binlog
-master创建dump线程，推送binglog到slave
-slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
-slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
-slave记录自己的binglog</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Mysql数据库-常见问题" href="/study/mysql-question/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-增删查改
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>find MongoDB中查询数据的基本指令,类似mysql中的select
-example:
-db.movies.find({&#34;year&#34;:1975}) db.movies.find({&#34;year&#34;:1975,&#34;title&#34;:&#34;Kill&#34;}) db.movies.find({$and:[{&#34;title&#34;:&#34;Kill&#34;},{&#34;year&#34;:1989}]}) db.movies.find({$or:[{&#34;title&#34;:&#34;Kill&#34;},{&#34;year&#34;:1989}]}) 子文档查询,如文档内容
-{&#34;name&#34;:&#34;apple&#34;,&#34;from&#34;:{country:&#34;China&#34;,province:&#34;Guangdong&#34;}} db.fruit.find({&#34;from.country&#34;:&#34;China&#34;}) 条件语法
-&lt;&gt; $ne &gt; $gt &gt;= $gte &lt; $gt &lt;= $lte is null {$exists:false} in {$in:[]} not in {$nin:[]} or $or and $and ##remove 删除文档
-update updateOne 表示无论条件匹配多少条,只更新第一条
-updateMany 匹配多少就更新多少
-$push 增加一个对象到数组底部
-$pushAll 增加多个对象到数组底部
-$pop 从数组底部删除一个对象
-$pull 如果匹配指定的值,从数组中删除对应的对象 $pullAll 如果匹配任意的值,从数据中删除对应的对象
-$addToSet 如果不存在则增加一个值到数组
-db.fruit.updateOne({name:&#34;apple&#34;},{$set:{from:&#34;China&#34;}}) drop 删除集合 </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:09:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-增删查改" href="/study/mongodb-003/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-复制集
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本地测试结果如下
-|- D:\mongodata\db1
-|—— mongo.conf
-|- D:\mongodata\db2
-|—— mongo.conf
-mongo.conf
-storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination: file logAppend: true path: D:\mongodata\db1\mongod.log net: port: 28017 bindIp: 127.0.0.1 replication: replSetName: rs0 </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:08:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-复制集" href="/study/mongodb-002/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

@@ -145,6 +145,18 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>php-laravel自定义https端口访问异常
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;&amp; $port = $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;&amp; &#39;https&#39; === $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &#39;http&#39;)) { return 443; } } if ($host = $this-&gt;headers-&gt;get(&#39;HOST&#39;)) { if ($host[0] === &#39;[&#39;) { $pos = strpos($host, &#39;:&#39;, strrpos($host, &#39;]&#39;)); } else { $pos = strrpos($host, &#39;:&#39;); } if (false !== $pos) { return (int) substr($host, $pos &#43; 1); } return &#39;https&#39; === $this-&gt;getScheme() ?...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to php-laravel自定义https端口访问异常" href="/study/php-laravel-003/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>php-laravel升级注意事项
     </h2>
   </header>

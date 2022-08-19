@@ -9,7 +9,16 @@
       <link>/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 15 Aug 2022 11:18:00 +0800</lastBuildDate><atom:link href="/tags/laravel/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:35:00 +0800</lastBuildDate><atom:link href="/tags/laravel/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>php-laravel自定义https端口访问异常</title>
+      <link>/study/php-laravel-003/</link>
+      <pubDate>Fri, 19 Aug 2022 15:35:00 +0800</pubDate>
+      
+      <guid>/study/php-laravel-003/</guid>
+      <description>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&amp;gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;amp;&amp;amp; $port = $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;amp;&amp;amp; &amp;#39;https&amp;#39; === $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &amp;#39;http&amp;#39;)) { return 443; } } if ($host = $this-&amp;gt;headers-&amp;gt;get(&amp;#39;HOST&amp;#39;)) { if ($host[0] === &amp;#39;[&amp;#39;) { $pos = strpos($host, &amp;#39;:&amp;#39;, strrpos($host, &amp;#39;]&amp;#39;)); } else { $pos = strrpos($host, &amp;#39;:&amp;#39;); } if (false !== $pos) { return (int) substr($host, $pos + 1); } return &amp;#39;https&amp;#39; === $this-&amp;gt;getScheme() ?</description>
+    </item>
+    
     <item>
       <title>php-laravel升级注意事项</title>
       <link>/study/php-laravel-002/</link>

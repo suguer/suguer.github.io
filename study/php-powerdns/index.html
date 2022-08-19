@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>php-如何使用powerdns的接口 | Ken Blog</title>
+<meta name="keywords" content="php, powerdns">
+<meta name="description" content="powerdns安装教程
+如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
+Swagger 生成插件
+Sign in 登录 (没有账号的免费注册一个)
+Create New -&gt; Create New API
+创建完毕将powerdns的yaml配置文件粘贴到代码框中
+右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
+{ &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
+use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/php-powerdns/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="php-如何使用powerdns的接口" />
+<meta property="og:description" content="powerdns安装教程
+如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
+Swagger 生成插件
+Sign in 登录 (没有账号的免费注册一个)
+Create New -&gt; Create New API
+创建完毕将powerdns的yaml配置文件粘贴到代码框中
+右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
+{ &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
+use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/php-powerdns/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-19T15:39:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-19T15:39:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="php-如何使用powerdns的接口"/>
+<meta name="twitter:description" content="powerdns安装教程
+如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
+Swagger 生成插件
+Sign in 登录 (没有账号的免费注册一个)
+Create New -&gt; Create New API
+创建完毕将powerdns的yaml配置文件粘贴到代码框中
+右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
+{ &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
+use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "php-如何使用powerdns的接口",
+      "item": "/study/php-powerdns/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "php-如何使用powerdns的接口",
+  "name": "php-如何使用powerdns的接口",
+  "description": "powerdns安装教程\n如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网\nSwagger 生成插件\nSign in 登录 (没有账号的免费注册一个)\nCreate New -\u0026gt; Create New API\n创建完毕将powerdns的yaml配置文件粘贴到代码框中\n右上角 -\u0026gt; Export -\u0026gt; Client SDK -\u0026gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json\n{ \u0026#34;repositories\u0026#34;: [ { \u0026#34;type\u0026#34;: \u0026#34;git\u0026#34;, \u0026#34;url\u0026#34;: \u0026#34;https://github.com/suguer/powerdns.git\u0026#34; } ], \u0026#34;require\u0026#34;: { \u0026#34;suguer/powerdns\u0026#34;: \u0026#34;*@dev\u0026#34; } } 开始使用 DnsPowerDnsClient.php\nuse Swagger\\Client\\Api\\ZonesApi; use Swagger\\Client\\ApiException; use Swagger\\Client\\Model\\RRSet; use Swagger\\Client\\Model\\Zone; use Swagger\\Client\\Configuration; class DnsPowerDnsClient { private $server_id = \u0026#34;localhost\u0026#34;; /** * @var \\GuzzleHttp\\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [\u0026#39;ns1\u0026#39;,\u0026#39;ns2\u0026#39;]; public function __construct() { $config=[ \u0026#34;ip\u0026#34; =\u0026gt; \u0026#34;\u0026#34;, \u0026#34;api_key\u0026#34; =\u0026gt; \u0026#34;\u0026#34;, ]; $this-\u0026gt;client = new \\GuzzleHttp\\Client([ \u0026#39;timeout\u0026#39; =\u0026gt; 40.",
+  "keywords": [
+    "php", "powerdns"
+  ],
+  "articleBody": "powerdns安装教程\n如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网\nSwagger 生成插件\nSign in 登录 (没有账号的免费注册一个)\nCreate New -\u003e Create New API\n创建完毕将powerdns的yaml配置文件粘贴到代码框中\n右上角 -\u003e Export -\u003e Client SDK -\u003e 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json\n{ \"repositories\": [ { \"type\": \"git\", \"url\": \"https://github.com/suguer/powerdns.git\" } ], \"require\": { \"suguer/powerdns\": \"*@dev\" } } 开始使用 DnsPowerDnsClient.php\nuse Swagger\\Client\\Api\\ZonesApi; use Swagger\\Client\\ApiException; use Swagger\\Client\\Model\\RRSet; use Swagger\\Client\\Model\\Zone; use Swagger\\Client\\Configuration; class DnsPowerDnsClient { private $server_id = \"localhost\"; /** * @var \\GuzzleHttp\\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = ['ns1','ns2']; public function __construct() { $config=[ \"ip\" =\u003e \"\", \"api_key\" =\u003e \"\", ]; $this-\u003eclient = new \\GuzzleHttp\\Client([ 'timeout' =\u003e 40.0, ]); $this-\u003econfig = Configuration::getDefaultConfiguration() -\u003esetHost(\"http://{$config['ip']}:8081/api/v1\") -\u003esetApiKey('X-API-Key', $config['api_key']); $this-\u003ezoneApi = new ZonesApi($this-\u003eclient, $this-\u003econfig); } public function AddDomain($domain) { try { $nameservers = []; foreach ($this-\u003ecurrentNsList as $value) { $nameservers[] = \"{$value}.\"; } $zone = new Zone([ 'name' =\u003e $domain['domain'] . \".\", 'type' =\u003e 'Zone', 'kind' =\u003e 'Master', 'nameservers' =\u003e $nameservers, ]); $this-\u003ezoneApi-\u003ecreateZoneWithHttpInfo($this-\u003eserver_id, $zone, \"false\"); return true; } catch (ApiException $e) { $error = json_decode($e-\u003egetResponseBody(), 1); if (isset($error['error']) \u0026\u0026 $error['error'] == \"Conflict\") return true; return $error['error']; } } public function DeleteDomain($domain) { try { $this-\u003ezoneApi-\u003edeleteZone($this-\u003eserver_id, $domain['domain']); return true; } catch (ApiException $e) { $error = json_decode($e-\u003egetResponseBody(), 1); if (isset($error['error']) \u0026\u0026 $error['error'] == \"Conflict\") return true; return $error['error']; } } public function AddDomainRecord($record, $domain = null) { try { $domain = $record['domain']; if (in_array($record['type'], ['REDIRECT_URL', 'FORWARD_URL'])) { //还需要先判断是否有相同主机头的A记录,因为也会冲突 $exist_record = Record::where(\"host\", $record['host']) -\u003ewhere('platform', $record['platform']) -\u003ewhere('domain', $record['domain']) -\u003ewhereIn('type', [\"A\", \"CNAME\", 'REDIRECT_URL', 'FORWARD_URL']) -\u003ewhereNotNull('record_id') -\u003ewhere('id', '\u003c\u003e', $record['id']) -\u003efirst(); if ($exist_record) { return \"type-already-exists\"; } $functions = $record['type'] == \"REDIRECT_URL\" ? 1 : 2; $UrlForwardBaseResp = UrlForwardBase::createForwardAPI($this-\u003eFormatRRsetName($record) . \"{$domain}\", $functions, $record['value']); if ($UrlForwardBaseResp !== 1) { return $UrlForwardBaseResp; } } $total_repeat_record = Record::where(\"host\", $record['host']) -\u003ewhere('platform', $record['platform']) -\u003ewhere('domain', $record['domain']) -\u003ewhere('type', $record['type']) -\u003ewhereNotNull('record_id') -\u003ewhere('id', '\u003c\u003e', $record['id']) -\u003eget(); $rrset = new RRSet([ \"name\" =\u003e $this-\u003eFormatRRsetName($record) . \"{$domain}.\", \"type\" =\u003e $this-\u003eFormatRRsetType($record), \"ttl\" =\u003e $record['ttl'], \"changetype\" =\u003e \"REPLACE\", ]); $rrset_record_list = [new \\Swagger\\Client\\Model\\Record([ \"content\" =\u003e $this-\u003eFormatRRsetContent($record), \"disabled\" =\u003e $record['state'] == 2 ? true : false, ])]; if (count($total_repeat_record) \u003e 0) { foreach ($total_repeat_record as $repeat_record) { $rrset_record_list[] = new \\Swagger\\Client\\Model\\Record([ \"content\" =\u003e $this-\u003eFormatRRsetContent($repeat_record), \"disabled\" =\u003e $repeat_record['state'] == 2 ? true : false, ]); } } $rrset-\u003esetRecords($rrset_record_list); $zone = new Zone([ 'id' =\u003e $domain, 'name' =\u003e $domain, 'rrsets' =\u003e [$rrset] ]); $this-\u003ezoneApi-\u003epatchZoneWithHttpInfo($this-\u003eserver_id, $domain, $zone); return true; } catch (ApiException $e) { $error = json_decode($e-\u003egetResponseBody(), 1); return $error['error']; } } public function DeleteDomainRecord($record, $param = []) { try { $domain = $record['domain']; if (in_array($record['type'], ['REDIRECT_URL', 'FORWARD_URL'])) { $UrlForwardBaseResp = UrlForwardBase::deleteForwardAPI($this-\u003eFormatRRsetName($record) . \"{$domain}\"); if ($UrlForwardBaseResp !== 1) { return $UrlForwardBaseResp; } } $total_repeat_record = Record::where(\"host\", $record['host']) -\u003ewhere('platform', $record['platform']) -\u003ewhere('domain', $record['domain']) -\u003ewhere('type', $record['type']) -\u003ewhereNotNull('record_id') -\u003ewhere('id', '\u003c\u003e', $record['id']) -\u003eget(); if (count($total_repeat_record) \u003e 0) { $rrset = null; $rrset_record_list = []; foreach ($total_repeat_record as $repeat_record) { if (!$rrset) { $rrset = new RRSet([ \"name\" =\u003e $this-\u003eFormatRRsetName($repeat_record) . \"{$repeat_record['domain']}.\", \"type\" =\u003e $this-\u003eFormatRRsetType($repeat_record), \"ttl\" =\u003e $repeat_record['ttl'], \"changetype\" =\u003e \"REPLACE\", ]); } $rrset_record_list[] = new \\Swagger\\Client\\Model\\Record([ \"content\" =\u003e $this-\u003eFormatRRsetContent($repeat_record), \"disabled\" =\u003e false, ]); } $rrset-\u003esetRecords($rrset_record_list); } else { $rrset = new RRSet([ \"name\" =\u003e $this-\u003eFormatRRsetName($record) . \"{$domain}.\", \"type\" =\u003e $this-\u003eFormatRRsetType($record), \"ttl\" =\u003e $record['ttl'], \"changetype\" =\u003e \"DELETE\", ]); } $zone = new Zone([ 'id' =\u003e $domain, 'name' =\u003e $domain, 'rrsets' =\u003e [$rrset] ]); $this-\u003ezoneApi-\u003epatchZoneWithHttpInfo($this-\u003eserver_id, $domain, $zone); return true; } catch (ApiException $e) { $error = json_decode($e-\u003egetResponseBody(), 1); return $error['error']; } } public function UpdateDomainRecord($record, $domain = null) { try { $old_record = Record::where('id', $record['id'])-\u003efirst(); $domain = $record['domain']; if (in_array($record['type'], ['REDIRECT_URL', 'FORWARD_URL'])) { //还需要先判断是否有相同主机头的A记录,因为也会冲突 $exist_record = Record::where(\"host\", $record['host']) -\u003ewhere('platform', $record['platform']) -\u003ewhere('domain', $record['domain']) -\u003ewhereIn('type', [\"A\", \"CNAME\", 'REDIRECT_URL', 'FORWARD_URL']) -\u003ewhereNotNull('record_id') -\u003ewhere('id', '\u003c\u003e', $record['id']) -\u003efirst(); if ($exist_record) { return \"type-already-exists\"; } $functions = $record['type'] == \"REDIRECT_URL\" ? 1 : 2; if ($this-\u003eFormatRRsetName($old_record) == $this-\u003eFormatRRsetName($record)) { $UrlForwardBaseResp = UrlForwardBase::updateForwardAPI($this-\u003eFormatRRsetName($record) . \"{$domain}\", $functions, $record['value']); if ($UrlForwardBaseResp !== 1) { return $UrlForwardBaseResp; } } else { $UrlForwardBaseResp = UrlForwardBase::deleteForwardAPI($this-\u003eFormatRRsetName($old_record) . \"{$domain}\"); if ($UrlForwardBaseResp !== 1) { return $UrlForwardBaseResp; } $UrlForwardBaseResp = UrlForwardBase::createForwardAPI($this-\u003eFormatRRsetName($record) . \"{$domain}\", $functions, $record['value']); if ($UrlForwardBaseResp !== 1) { return $UrlForwardBaseResp; } } } $total_repeat_record = Record::where(\"host\", $record['host']) -\u003ewhere('platform', $record['platform']) -\u003ewhere('domain', $record['domain']) -\u003ewhere('type', $record['type']) -\u003ewhereNotNull('record_id') -\u003ewhere('id', '\u003c\u003e', $record['id']) -\u003eget(); $rrset = new RRSet([ \"name\" =\u003e $this-\u003eFormatRRsetName($record) . \"{$domain}.\", \"type\" =\u003e $this-\u003eFormatRRsetType($record), \"ttl\" =\u003e $record['ttl'], \"changetype\" =\u003e \"REPLACE\", ]); $rrset_record_list = [new \\Swagger\\Client\\Model\\Record([ \"content\" =\u003e $this-\u003eFormatRRsetContent($record), \"disabled\" =\u003e $record['state'] == 2 ? true : false, ])]; if (count($total_repeat_record) \u003e 0) { foreach ($total_repeat_record as $repeat_record) { $rrset_record_list[] = new \\Swagger\\Client\\Model\\Record([ \"content\" =\u003e $this-\u003eFormatRRsetContent($repeat_record), \"disabled\" =\u003e $repeat_record['state'] == 2 ? true : false, ]); } } $rrset-\u003esetRecords($rrset_record_list); $rrsets = [$rrset]; if ($old_record['host'] != $record['host'] || $old_record['type'] != $record['type']) { $rrset_record_list = []; //和旧记录的解析头不同,还需要吧历史的清除一下 $total_repeat_record = Record::where(\"host\", $old_record['host']) -\u003ewhere('platform', $record['platform']) -\u003ewhere('domain', $record['domain']) -\u003ewhere('type', $record['type']) -\u003ewhereNotNull('record_id') -\u003ewhere('id', '\u003c\u003e', $record['id']) -\u003eget(); $rrset = new RRSet([ \"name\" =\u003e $this-\u003eFormatRRsetName($old_record) . \"{$domain}.\", \"type\" =\u003e $this-\u003eFormatRRsetType($old_record), \"ttl\" =\u003e $record['ttl'], ]); if (count($total_repeat_record) == 0) { $rrset-\u003esetChangetype(\"DELETE\"); } else { $rrset-\u003esetChangetype(\"REPLACE\"); if (count($total_repeat_record) \u003e 0) { foreach ($total_repeat_record as $repeat_record) { $rrset_record_list[] = new \\Swagger\\Client\\Model\\Record([ \"content\" =\u003e $this-\u003eFormatRRsetContent($repeat_record), \"disabled\" =\u003e false, ]); } $rrset-\u003esetRecords($rrset_record_list); } } array_unshift($rrsets, $rrset); } $zone = new Zone([ 'id' =\u003e $domain, 'name' =\u003e $domain, 'rrsets' =\u003e $rrsets ]); $this-\u003ezoneApi-\u003epatchZoneWithHttpInfo($this-\u003eserver_id, $domain, $zone); return true; } catch (ApiException $e) { $error = json_decode($e-\u003egetResponseBody(), 1); return $error['error']; } } /** * 获取解析记录列表 * @param $DomainName * @param array $param * @return array */ public function DescribeDomainRecords($DomainName, $param = []) { try { $result = $this-\u003ezoneApi-\u003elistZone($this-\u003eserver_id, $DomainName); $list = []; foreach ($result['rrsets'] as $key =\u003e $rrset) { if ($rrset['type'] == \"SOA\") continue; $host = str_replace(\"{$DomainName}.\", \"\", $rrset['name']); $mx = \"\"; foreach ($rrset['records'] as $rrset_record) { $value = trim($rrset_record['content'], \".\"); if ($rrset['type'] == \"MX\") { $tmp = explode(\" \", $value); $mx = trim($tmp[0]); $value = trim($tmp[1]); }elseif ($rrset['type'] == \"TXT\") { $value = trim($value,\"\\\"\"); } if ($rrset['type'] == \"NS\" \u0026\u0026 in_array($value, self::$NSList)) continue; $list[] = [ 'DomainName' =\u003e $DomainName, 'RecordId' =\u003e $key + 1, 'RR' =\u003e trim($host, \".\"), 'Type' =\u003e $rrset['type'], 'MX' =\u003e $mx, 'Value' =\u003e $value, 'Line' =\u003e \"\", 'Priority' =\u003e \"\", 'TTL' =\u003e $rrset['ttl'], 'Status' =\u003e $rrset_record[\"disabled\"] ? 2 : 0, 'Locked' =\u003e '0', ]; } } return $list; } catch (ApiException $e) { $error = json_decode($e-\u003egetResponseBody(), 1); return $error['error']; } } private function FormatRRsetName($record) { $name = \"\"; if ($record['host'] == \"@\") { $name = \"\"; } elseif ($record['host']) { $name = \"{$record['host']}.\"; } return \"{$name}\"; } private function FormatRRsetType($record) { if (in_array($record['type'], ['REDIRECT_URL', 'FORWARD_URL'])) { return \"A\"; } return $record['type']; } private function FormatRRsetContent($record, $defaultContent = \"\") { $content = $record['value']; switch ($record['type']) { case \"MX\": $content = \"{$record['mx']} {$record['value']}.\"; break; case \"TXT\": $content = \"\\\"{$content}\\\"\"; break; case \"CNAME\": case \"NS\": case \"SRV\": $content = \"{$record['value']}.\"; break; case \"REDIRECT_URL\": // 显性URL转发 case \"FORWARD_URL\": //隐性URL转发 // $content = UrlForwardBase::getFastDomain().\".\"; $content = gethostbyname(UrlForwardBase::getFastDomain()); //先请求添加转发服务器,添加成功往下走,否则失败 break; default: break; } return $content; } /** * 更新解析状态 * @param $record * @param $status * @param array $param * @return mixed */ public function SetDomainRecordStatus($record, $status, $param = []) { $record-\u003estate = $status == 'Disable' ? 2 : 0; return $this-\u003eUpdateDomainRecord($record); } } 4.数据库表结构\nCREATE TABLE `domains` ( `id` int(11) NOT NULL AUTO_INCREMENT, `domain` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `remote_id` varchar(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `created_at` timestamp(0) NULL, `updated_at` timestamp(0) NULL, `deleted_at` timestamp(0) NULL DEFAULT NULL, `platform` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT 'dnscom', `dns` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '', `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '', PRIMARY KEY (`id`) USING BTREE ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic; CREATE TABLE `records` ( `id` int(11) NOT NULL AUTO_INCREMENT, `domain` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `record_id` bigint(32) NULL DEFAULT NULL, `host` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `state` int(11) NULL DEFAULT 0, `type` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `value` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `ttl` int(11) NULL DEFAULT 0, `mx` int(11) NULL DEFAULT 0, `url_type` int(11) NULL DEFAULT 0, `remark` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL, `created_at` timestamp(0) NULL DEFAULT NULL, `updated_at` timestamp(0) NULL DEFAULT NULL, `deleted_at` timestamp(0) NULL DEFAULT NULL, `platform` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT 'dnscom', `dns` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT '', PRIMARY KEY (`id`) USING BTREE ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic; ",
+  "wordCount" : "1377",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-19T15:39:00+08:00",
+  "dateModified": "2022-08-19T15:39:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/php-powerdns/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script><meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
+<meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+    <header class="post-header">
+        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+        <h1 class="post-title">
+            php-如何使用powerdns的接口
+        </h1>
+        <div class="post-meta"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/php-powerdns.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+    </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8powerdns%e7%9a%84http-api-" aria-label="如何使用powerdns的http-api ?">如何使用powerdns的http-api ?</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+    <div class="post-content"><p><a href="/study/powerdns">powerdns安装教程</a></p>
+<h3 id="如何使用powerdns的http-api-">如何使用powerdns的http-api ?<a hidden class="anchor" aria-hidden="true" href="#如何使用powerdns的http-api-">#</a></h3>
+<ol>
+<li>
+<p>文档需知
+<a href="https://doc.powerdns.com/authoritative/http-api/index.html#working-with-the-api">powerdns文档</a> <br>
+Swagger接入开发 <a href="https://raw.githubusercontent.com/PowerDNS/pdns/master/docs/http-api/swagger/authoritative-api-swagger.yaml">powerdns的yaml配置文件</a> | <a href="https://swagger.io/tools/swaggerhub/enterprise/">swagger官网</a></p>
+</li>
+<li>
+<p>Swagger 生成插件<br>
+Sign in 登录 (没有账号的免费注册一个)<br>
+Create New -&gt; Create New API<br>
+创建完毕将powerdns的yaml配置文件粘贴到代码框中<br>
+右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP
+github创建一个新的 repository , 将导出来的文件上传上去
+修改composer.json</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;repositories&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;git&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;url&#34;</span><span class="p">:</span> <span class="s2">&#34;https://github.com/suguer/powerdns.git&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;require&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;suguer/powerdns&#34;</span><span class="p">:</span> <span class="s2">&#34;*@dev&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
+<li>
+<p>开始使用 DnsPowerDnsClient.php</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Swagger\Client\Api\ZonesApi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Swagger\Client\ApiException</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Swagger\Client\Model\RRSet</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Swagger\Client\Model\Zone</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Swagger\Client\Configuration</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">DnsPowerDnsClient</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">private</span> <span class="nv">$server_id</span> <span class="o">=</span> <span class="s2">&#34;localhost&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">         * @var \GuzzleHttp\Client
+</span></span></span><span class="line"><span class="cl"><span class="sd">         */</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span> <span class="nv">$client</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">         <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">         * @var ZonesApi
+</span></span></span><span class="line"><span class="cl"><span class="sd">         */</span>
+</span></span><span class="line"><span class="cl">       <span class="k">private</span> <span class="nv">$zoneApi</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">       <span class="k">private</span> <span class="nv">$currentNsList</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ns1&#39;</span><span class="p">,</span><span class="s1">&#39;ns2&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">       <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$config</span><span class="o">=</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;ip&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;api_key&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="p">];</span>
+</span></span><span class="line"><span class="cl">           <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\GuzzleHttp\Client</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                       <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mf">40.0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                   <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">           <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">config</span> <span class="o">=</span> <span class="nx">Configuration</span><span class="o">::</span><span class="na">getDefaultConfiguration</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">setHost</span><span class="p">(</span><span class="s2">&#34;http://</span><span class="si">{</span><span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:8081/api/v1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">setApiKey</span><span class="p">(</span><span class="s1">&#39;X-API-Key&#39;</span><span class="p">,</span> <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;api_key&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">           <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ZonesApi</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">client</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">config</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">AddDomain</span><span class="p">(</span><span class="nv">$domain</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$nameservers</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">currentNsList</span> <span class="k">as</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$nameservers</span><span class="p">[]</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$value</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$zone</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Zone</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span> <span class="o">.</span> <span class="s2">&#34;.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Zone&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;kind&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Master&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;nameservers&#39;</span> <span class="o">=&gt;</span> <span class="nv">$nameservers</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span><span class="o">-&gt;</span><span class="na">createZoneWithHttpInfo</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">server_id</span><span class="p">,</span> <span class="nv">$zone</span><span class="p">,</span> <span class="s2">&#34;false&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ApiException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$error</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getResponseBody</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;Conflict&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">DeleteDomain</span><span class="p">(</span><span class="nv">$domain</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span><span class="o">-&gt;</span><span class="na">deleteZone</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">server_id</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ApiException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$error</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getResponseBody</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;Conflict&#34;</span><span class="p">)</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">      <span class="k">public</span> <span class="k">function</span> <span class="nf">AddDomainRecord</span><span class="p">(</span><span class="nv">$record</span><span class="p">,</span> <span class="nv">$domain</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$domain</span> <span class="o">=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;REDIRECT_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;FORWARD_URL&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//还需要先判断是否有相同主机头的A记录,因为也会冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nv">$exist_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s2">&#34;host&#34;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;CNAME&#34;</span><span class="p">,</span> <span class="s1">&#39;REDIRECT_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;FORWARD_URL&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">whereNotNull</span><span class="p">(</span><span class="s1">&#39;record_id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$exist_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="s2">&#34;type-already-exists&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">                    <span class="nv">$functions</span> <span class="o">=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;REDIRECT_URL&#34;</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$UrlForwardBaseResp</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">UrlForwardBase</span><span class="o">::</span><span class="na">createForwardAPI</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$functions</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$UrlForwardBaseResp</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="nv">$UrlForwardBaseResp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$total_repeat_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s2">&#34;host&#34;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">whereNotNull</span><span class="p">(</span><span class="s1">&#39;record_id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$rrset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RRSet</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;type&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetType</span><span class="p">(</span><span class="nv">$record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;ttl&#34;</span> <span class="o">=&gt;</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;ttl&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;changetype&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;REPLACE&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$rrset_record_list</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">\Swagger\Client\Model\Record</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;content&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetContent</span><span class="p">(</span><span class="nv">$record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;disabled&#34;</span> <span class="o">=&gt;</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">])];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$total_repeat_record</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$total_repeat_record</span> <span class="k">as</span> <span class="nv">$repeat_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$rrset_record_list</span><span class="p">[]</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">new</span> <span class="nx">\Swagger\Client\Model\Record</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;content&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetContent</span><span class="p">(</span><span class="nv">$repeat_record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;disabled&#34;</span> <span class="o">=&gt;</span> <span class="nv">$repeat_record</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$rrset</span><span class="o">-&gt;</span><span class="na">setRecords</span><span class="p">(</span><span class="nv">$rrset_record_list</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$zone</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Zone</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s1">&#39;rrsets&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nv">$rrset</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span><span class="o">-&gt;</span><span class="na">patchZoneWithHttpInfo</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">server_id</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$zone</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ApiException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$error</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getResponseBody</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">          <span class="k">public</span> <span class="k">function</span> <span class="nf">DeleteDomainRecord</span><span class="p">(</span><span class="nv">$record</span><span class="p">,</span> <span class="nv">$param</span> <span class="o">=</span> <span class="p">[])</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$domain</span> <span class="o">=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;REDIRECT_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;FORWARD_URL&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$UrlForwardBaseResp</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                            <span class="nx">UrlForwardBase</span><span class="o">::</span><span class="na">deleteForwardAPI</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="nv">$UrlForwardBaseResp</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span> <span class="nv">$UrlForwardBaseResp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$total_repeat_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s2">&#34;host&#34;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">whereNotNull</span><span class="p">(</span><span class="s1">&#39;record_id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$total_repeat_record</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$rrset</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$rrset_record_list</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$total_repeat_record</span> <span class="k">as</span> <span class="nv">$repeat_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$rrset</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                                <span class="nv">$rrset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RRSet</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s2">&#34;name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$repeat_record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$repeat_record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s2">&#34;type&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetType</span><span class="p">(</span><span class="nv">$repeat_record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s2">&#34;ttl&#34;</span> <span class="o">=&gt;</span> <span class="nv">$repeat_record</span><span class="p">[</span><span class="s1">&#39;ttl&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s2">&#34;changetype&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;REPLACE&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$rrset_record_list</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Swagger\Client\Model\Record</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;content&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetContent</span><span class="p">(</span><span class="nv">$repeat_record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                <span class="s2">&#34;disabled&#34;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$rrset</span><span class="o">-&gt;</span><span class="na">setRecords</span><span class="p">(</span><span class="nv">$rrset_record_list</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$rrset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RRSet</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;type&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetType</span><span class="p">(</span><span class="nv">$record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ttl&#34;</span> <span class="o">=&gt;</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;ttl&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;changetype&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;DELETE&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$zone</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Zone</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;rrsets&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nv">$rrset</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span><span class="o">-&gt;</span><span class="na">patchZoneWithHttpInfo</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">server_id</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$zone</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ApiException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$error</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getResponseBody</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">UpdateDomainRecord</span><span class="p">(</span><span class="nv">$record</span><span class="p">,</span> <span class="nv">$domain</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$old_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$domain</span> <span class="o">=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;REDIRECT_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;FORWARD_URL&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//还需要先判断是否有相同主机头的A记录,因为也会冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$exist_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s2">&#34;host&#34;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;CNAME&#34;</span><span class="p">,</span> <span class="s1">&#39;REDIRECT_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;FORWARD_URL&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">whereNotNull</span><span class="p">(</span><span class="s1">&#39;record_id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$exist_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="s2">&#34;type-already-exists&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$functions</span> <span class="o">=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;REDIRECT_URL&#34;</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$old_record</span><span class="p">)</span> <span class="o">==</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$UrlForwardBaseResp</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">UrlForwardBase</span><span class="o">::</span><span class="na">updateForwardAPI</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$functions</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$UrlForwardBaseResp</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="nv">$UrlForwardBaseResp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$UrlForwardBaseResp</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">UrlForwardBase</span><span class="o">::</span><span class="na">deleteForwardAPI</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$old_record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$UrlForwardBaseResp</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="nv">$UrlForwardBaseResp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="nv">$UrlForwardBaseResp</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">UrlForwardBase</span><span class="o">::</span><span class="na">createForwardAPI</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$functions</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$UrlForwardBaseResp</span> <span class="o">!==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="nv">$UrlForwardBaseResp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$total_repeat_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s2">&#34;host&#34;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">whereNotNull</span><span class="p">(</span><span class="s1">&#39;record_id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$rrset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RRSet</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;type&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetType</span><span class="p">(</span><span class="nv">$record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;ttl&#34;</span> <span class="o">=&gt;</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;ttl&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;changetype&#34;</span> <span class="o">=&gt;</span> <span class="s2">&#34;REPLACE&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$rrset_record_list</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">\Swagger\Client\Model\Record</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;content&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetContent</span><span class="p">(</span><span class="nv">$record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;disabled&#34;</span> <span class="o">=&gt;</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">])];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$total_repeat_record</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">foreach</span> <span class="p">(</span><span class="nv">$total_repeat_record</span> <span class="k">as</span> <span class="nv">$repeat_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$rrset_record_list</span><span class="p">[]</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">new</span> <span class="nx">\Swagger\Client\Model\Record</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;content&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetContent</span><span class="p">(</span><span class="nv">$repeat_record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;disabled&#34;</span> <span class="o">=&gt;</span> <span class="nv">$repeat_record</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">?</span> <span class="k">true</span> <span class="o">:</span> <span class="k">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$rrset</span><span class="o">-&gt;</span><span class="na">setRecords</span><span class="p">(</span><span class="nv">$rrset_record_list</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$rrsets</span> <span class="o">=</span> <span class="p">[</span><span class="nv">$rrset</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$old_record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">]</span> <span class="o">||</span> <span class="nv">$old_record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$rrset_record_list</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//和旧记录的解析头不同,还需要吧历史的清除一下
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$total_repeat_record</span> <span class="o">=</span> <span class="nx">Record</span><span class="o">::</span><span class="na">where</span><span class="p">(</span><span class="s2">&#34;host&#34;</span><span class="p">,</span> <span class="nv">$old_record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;platform&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;domain&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">whereNotNull</span><span class="p">(</span><span class="s1">&#39;record_id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&gt;&#39;</span><span class="p">,</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$rrset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RRSet</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;name&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetName</span><span class="p">(</span><span class="nv">$old_record</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$domain</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;type&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetType</span><span class="p">(</span><span class="nv">$old_record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;ttl&#34;</span> <span class="o">=&gt;</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;ttl&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$total_repeat_record</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$rrset</span><span class="o">-&gt;</span><span class="na">setChangetype</span><span class="p">(</span><span class="s2">&#34;DELETE&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$rrset</span><span class="o">-&gt;</span><span class="na">setChangetype</span><span class="p">(</span><span class="s2">&#34;REPLACE&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$total_repeat_record</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$total_repeat_record</span> <span class="k">as</span> <span class="nv">$repeat_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="nv">$rrset_record_list</span><span class="p">[]</span> <span class="o">=</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">new</span> <span class="nx">\Swagger\Client\Model\Record</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s2">&#34;content&#34;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">FormatRRsetContent</span><span class="p">(</span><span class="nv">$repeat_record</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s2">&#34;disabled&#34;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$rrset</span><span class="o">-&gt;</span><span class="na">setRecords</span><span class="p">(</span><span class="nv">$rrset_record_list</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">array_unshift</span><span class="p">(</span><span class="nv">$rrsets</span><span class="p">,</span> <span class="nv">$rrset</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$zone</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Zone</span><span class="p">([</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$domain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;rrsets&#39;</span> <span class="o">=&gt;</span> <span class="nv">$rrsets</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span><span class="o">-&gt;</span><span class="na">patchZoneWithHttpInfo</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">server_id</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$zone</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ApiException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$error</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getResponseBody</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 获取解析记录列表
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param $DomainName
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param array $param
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return array
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">DescribeDomainRecords</span><span class="p">(</span><span class="nv">$DomainName</span><span class="p">,</span> <span class="nv">$param</span> <span class="o">=</span> <span class="p">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">zoneApi</span><span class="o">-&gt;</span><span class="na">listZone</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">server_id</span><span class="p">,</span> <span class="nv">$DomainName</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$list</span> <span class="o">=</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">            <span class="k">foreach</span> <span class="p">(</span><span class="nv">$result</span><span class="p">[</span><span class="s1">&#39;rrsets&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$rrset</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;SOA&#34;</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$host</span> <span class="o">=</span> <span class="nx">str_replace</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">{</span><span class="nv">$DomainName</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$mx</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">foreach</span> <span class="p">(</span><span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;records&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$rrset_record</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$rrset_record</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="s2">&#34;.&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;MX&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$tmp</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$mx</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span><span class="k">elseif</span> <span class="p">(</span><span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;TXT&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nv">$value</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span><span class="s2">&#34;</span><span class="se">\&#34;</span><span class="s2">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;NS&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">in_array</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="nx">self</span><span class="o">::</span><span class="nv">$NSList</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nv">$list</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;DomainName&#39;</span> <span class="o">=&gt;</span> <span class="nv">$DomainName</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;RecordId&#39;</span> <span class="o">=&gt;</span> <span class="nv">$key</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;RR&#39;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$host</span><span class="p">,</span> <span class="s2">&#34;.&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;Type&#39;</span> <span class="o">=&gt;</span> <span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;MX&#39;</span> <span class="o">=&gt;</span> <span class="nv">$mx</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;Value&#39;</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;Line&#39;</span> <span class="o">=&gt;</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;Priority&#39;</span> <span class="o">=&gt;</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;TTL&#39;</span> <span class="o">=&gt;</span> <span class="nv">$rrset</span><span class="p">[</span><span class="s1">&#39;ttl&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;Status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$rrset_record</span><span class="p">[</span><span class="s2">&#34;disabled&#34;</span><span class="p">]</span> <span class="o">?</span> <span class="mi">2</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="s1">&#39;Locked&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$list</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">ApiException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$error</span> <span class="o">=</span> <span class="nx">json_decode</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getResponseBody</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="k">function</span> <span class="nf">FormatRRsetName</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;@&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$name</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="k">function</span> <span class="nf">FormatRRsetType</span><span class="p">(</span><span class="nv">$record</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">in_array</span><span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;REDIRECT_URL&#39;</span><span class="p">,</span> <span class="s1">&#39;FORWARD_URL&#39;</span><span class="p">]))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s2">&#34;A&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="k">function</span> <span class="nf">FormatRRsetContent</span><span class="p">(</span><span class="nv">$record</span><span class="p">,</span> <span class="nv">$defaultContent</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$content</span> <span class="o">=</span> <span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">switch</span> <span class="p">(</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="s2">&#34;MX&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$content</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;mx&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="s2">&#34;TXT&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$content</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="se">\&#34;</span><span class="si">{</span><span class="nv">$content</span><span class="si">}</span><span class="se">\&#34;</span><span class="s2">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="s2">&#34;CNAME&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="s2">&#34;NS&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="s2">&#34;SRV&#34;</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nv">$content</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{</span><span class="nv">$record</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">case</span> <span class="s2">&#34;REDIRECT_URL&#34;</span><span class="o">:</span> <span class="c1">// 显性URL转发
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">case</span> <span class="s2">&#34;FORWARD_URL&#34;</span><span class="o">:</span> <span class="c1">//隐性URL转发
+</span></span></span><span class="line"><span class="cl"><span class="c1">//                $content = UrlForwardBase::getFastDomain().&#34;.&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nv">$content</span> <span class="o">=</span> <span class="nx">gethostbyname</span><span class="p">(</span><span class="nx">UrlForwardBase</span><span class="o">::</span><span class="na">getFastDomain</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//先请求添加转发服务器,添加成功往下走,否则失败
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">default</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * 更新解析状态
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param $record
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param $status
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param array $param
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return mixed
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">SetDomainRecordStatus</span><span class="p">(</span><span class="nv">$record</span><span class="p">,</span> <span class="nv">$status</span><span class="p">,</span> <span class="nv">$param</span> <span class="o">=</span> <span class="p">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$record</span><span class="o">-&gt;</span><span class="na">state</span> <span class="o">=</span> <span class="nv">$status</span> <span class="o">==</span> <span class="s1">&#39;Disable&#39;</span> <span class="o">?</span> <span class="mi">2</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">UpdateDomainRecord</span><span class="p">(</span><span class="nv">$record</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>4.数据库表结构</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="sb">`domains`</span>  <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`id`</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="nx">AUTO_INCREMENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`domain`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`remote_id`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`created_at`</span> <span class="nx">timestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`updated_at`</span> <span class="nx">timestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`deleted_at`</span> <span class="nx">timestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`platform`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;dnscom&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`dns`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`status`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="sb">`id`</span><span class="p">)</span> <span class="nx">USING</span> <span class="nx">BTREE</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="nx">ENGINE</span> <span class="o">=</span> <span class="nx">InnoDB</span> <span class="nx">AUTO_INCREMENT</span> <span class="o">=</span> <span class="mi">1</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="o">=</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="o">=</span> <span class="nx">utf8_unicode_ci</span> <span class="nx">ROW_FORMAT</span> <span class="o">=</span> <span class="nx">Dynamic</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="sb">`records`</span>  <span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`id`</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="nx">AUTO_INCREMENT</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`domain`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`record_id`</span> <span class="nx">bigint</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`host`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`state`</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`type`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`value`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`ttl`</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`mx`</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`url_type`</span> <span class="nx">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`remark`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`created_at`</span> <span class="nx">timestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`updated_at`</span> <span class="nx">timestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`deleted_at`</span> <span class="nx">timestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="k">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`platform`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;dnscom&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="sb">`dns`</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="nx">utf8_unicode_ci</span> <span class="k">NULL</span> <span class="k">DEFAULT</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="sb">`id`</span><span class="p">)</span> <span class="nx">USING</span> <span class="nx">BTREE</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="nx">ENGINE</span> <span class="o">=</span> <span class="nx">InnoDB</span> <span class="nx">AUTO_INCREMENT</span> <span class="o">=</span> <span class="mi">1</span> <span class="nx">CHARACTER</span> <span class="nx">SET</span> <span class="o">=</span> <span class="nx">utf8</span> <span class="nx">COLLATE</span> <span class="o">=</span> <span class="nx">utf8_unicode_ci</span> <span class="nx">ROW_FORMAT</span> <span class="o">=</span> <span class="nx">Dynamic</span><span class="p">;</span>
+</span></span></code></pre></div>
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li><a href="/tags/php/">php</a></li>
+            <li><a href="/tags/powerdns/">powerdns</a></li>
+        </ul>
+<nav class="paginav">
+  <a class="prev" href="/study/dapp/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>dapp</span>
+  </a>
+  <a class="next" href="/study/php-laravel-003/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>php-laravel自定义https端口访问异常</span>
+  </a>
+</nav>
+
+    </footer>
+</article>
+<script src="https://giscus.app/client.js"
+        data-repo="suguer/giscus.github.io"
+        data-repo-id="R_kgDOH08FpA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOH08FpM4CQ2jj"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

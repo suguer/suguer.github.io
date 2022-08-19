@@ -145,6 +145,25 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>Mongodb数据库-python有关的操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>flask
+flask-pymongo
+flask-mongoengine
+数据内容
+[{ &#34;_id&#34;: { &#34;$oid&#34;: &#34;62e3525f18909374eb4de53f&#34; }, &#34;plat&#34;: { &#34;wechat&#34;: &#34;bc61736d-7ed0-47bb-ba1b-33474fecde23&#34;, &#34;alipay&#34;: &#34;random&#34; }, &#34;created_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;updated_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;nickname&#34;: &#34;su&#34; }] 根据 plat.wechat中来搜索用户
+pymongo语法:
+mongo.db.user.find_one(filter={&#34;plat.wechat&#34;:openid}) mongoengine语法:
+User.objects(plat__wechat=openid).first() </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-19 15:30:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mongodb数据库-python有关的操作" href="/study/mongodb-004/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>python-自定义线程池
     </h2>
   </header>

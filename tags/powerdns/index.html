@@ -145,6 +145,26 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>php-如何使用powerdns的接口
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>powerdns安装教程
+如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
+Swagger 生成插件
+Sign in 登录 (没有账号的免费注册一个)
+Create New -&gt; Create New API
+创建完毕将powerdns的yaml配置文件粘贴到代码框中
+右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
+{ &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
+use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to php-如何使用powerdns的接口" href="/study/php-powerdns/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>powerdns-学习如何搭建个人专属DNS服务器
     </h2>
   </header>

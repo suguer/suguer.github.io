@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>dapp on Ken Blog</title>
+    <link>/tags/dapp/</link>
+    <description>Recent content in dapp on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="/tags/dapp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dapp</title>
+      <link>/study/dapp/</link>
+      <pubDate>Fri, 19 Aug 2022 15:41:00 +0800</pubDate>
+      
+      <guid>/study/dapp/</guid>
+      <description>合约在线开发IDE
+solidity 中文文档
+trongrid.io
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&amp;#34;&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;title&amp;gt;dapp&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;vue&amp;#34;&amp;gt; 目标地址:&amp;lt;input v-model=&amp;#34;to_address&amp;#34; style=&amp;#34;width: 100%&amp;#34;&amp;gt; 订单编号:&amp;lt;input v-model=&amp;#34;transaction&amp;#34; style=&amp;#34;width: 100%&amp;#34;&amp;gt; &amp;lt;br/&amp;gt; &amp;lt;br/&amp;gt; &amp;lt;button @click=&amp;#34;init_tronWeb&amp;#34;&amp;gt; 登录tronlink &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;transferTrx&amp;#34;&amp;gt; transferTrx &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;getBalance&amp;#34;&amp;gt; 获取trx余额 &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;getUSDTBalance&amp;#34;&amp;gt; 获取usdt余额 &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;transferUSDT&amp;#34;&amp;gt; 转账0.001usdt &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;transferUSDTRemark&amp;#34;&amp;gt; 带备注的转账0.001usdt &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;getTransaction&amp;#34;&amp;gt; 获取交易详情 &amp;lt;/button&amp;gt; &amp;lt;p v-show=&amp;#34;result.length&amp;#34; v-html=&amp;#34;result.join(&amp;#39;&amp;lt;br/&amp;gt;&amp;#39;)&amp;#34;&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;./js/tronweb.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;./js/trongrid.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;./js/vue.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;.</description>
+    </item>
+    
+  </channel>
+</rss>

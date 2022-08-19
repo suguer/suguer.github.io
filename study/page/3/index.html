@@ -160,12 +160,112 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Mysql数据库-使用记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>How to show binlog mysqlbinlog --no-defaults --start-datetime=&#34;2021-09-30 00:00:00&#34; --stop-datetime=&#34;2021-09-30 23:00:00&#34; -d database --base64-output=DECODE-ROWS -v /binlog/master-bin.001255 --result-file=/root/binlog/mysqllog001255.sql How to get distance ( lat and lng) lat = X lng = X select * , ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat} * PI() / 180 - lat * PI() / 180) / 2),2) &#43; COS({$lat} * PI() / 180) * COS(lat * PI() / 180) * POW(SIN(({$lng} * PI() / 180 - lng * PI() / 180) / 2),2))), 5)*1000 AS distance from table order by distance asc </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 12:13:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mysql数据库-使用记录" href="/study/mysql-note/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mysql数据库-日期函数
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>当前日期
+select curdate(); 当月最后一天
+select last_day(curdate()); 下个月的上一天,例如今天2022-06-01 ,结果为2022-06-30
+select DATE_SUB(DATE_ADD(CURDATE(),INTERVAL 1 MONTH),INTERVAL 1 DAY) 下个月的最后一天
+select LAST_DAY(DATE_ADD(CURDATE(),INTERVAL 1 MONTH)); </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mysql数据库-日期函数" href="/study/mysql-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mysql数据库-常见问题
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>能说下myisam 和 innodb的区别吗
+myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
+innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
+说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
+create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
+事务的基本特性
+原子性指的是一个事务中的操作要么全部成功，要么全部失败。
+一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
+隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
+持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
+主从同步
+首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
+slave连接到master，获取binlog
+master创建dump线程，推送binglog到slave
+slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
+slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
+slave记录自己的binglog</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mysql数据库-常见问题" href="/study/mysql-question/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mongodb数据库-增删查改
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>find MongoDB中查询数据的基本指令,类似mysql中的select
+example:
+db.movies.find({&#34;year&#34;:1975}) db.movies.find({&#34;year&#34;:1975,&#34;title&#34;:&#34;Kill&#34;}) db.movies.find({$and:[{&#34;title&#34;:&#34;Kill&#34;},{&#34;year&#34;:1989}]}) db.movies.find({$or:[{&#34;title&#34;:&#34;Kill&#34;},{&#34;year&#34;:1989}]}) 子文档查询,如文档内容
+{&#34;name&#34;:&#34;apple&#34;,&#34;from&#34;:{country:&#34;China&#34;,province:&#34;Guangdong&#34;}} db.fruit.find({&#34;from.country&#34;:&#34;China&#34;}) 条件语法
+&lt;&gt; $ne &gt; $gt &gt;= $gte &lt; $gt &lt;= $lte is null {$exists:false} in {$in:[]} not in {$nin:[]} or $or and $and ##remove 删除文档
+update updateOne 表示无论条件匹配多少条,只更新第一条
+updateMany 匹配多少就更新多少
+$push 增加一个对象到数组底部
+$pushAll 增加多个对象到数组底部
+$pop 从数组底部删除一个对象
+$pull 如果匹配指定的值,从数组中删除对应的对象 $pullAll 如果匹配任意的值,从数据中删除对应的对象
+$addToSet 如果不存在则增加一个值到数组
+db.fruit.updateOne({name:&#34;apple&#34;},{$set:{from:&#34;China&#34;}}) drop 删除集合 </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:09:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mongodb数据库-增删查改" href="/study/mongodb-003/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mongodb数据库-复制集
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本地测试结果如下
+|- D:\mongodata\db1
+|—— mongo.conf
+|- D:\mongodata\db2
+|—— mongo.conf
+mongo.conf
+storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination: file logAppend: true path: D:\mongodata\db1\mongod.log net: port: 28017 bindIp: 127.0.0.1 replication: replSetName: rs0 </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:08:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Mongodb数据库-复制集" href="/study/mongodb-002/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Mongodb数据库-初识
     </h2>
   </header>
   <div class="entry-content">
     <p>了解mongodb的基本情况
-数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 </p>
+数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 聚合查询 pipeline=[$stage1,$stage2,…$stageN] aggregate db..aggregate(pipeline,{options})
+常见步骤
+步骤 作用 SQL等价运算法 $match 过滤 where $project 投影 as $sort 排序 order by $group 分组 group by $skip/$limit 结果限制,分页 offset/limit $lookup 左外连接 left outer join 完整的分片集群 应用全透明,无特殊处理 数据自动均衡 动态扩容,无需下线 提供三种分片方式 性能监控 MongoDB Ops Manager Percona 通用监控平台 程序脚本 db....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 10:37:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to Mongodb数据库-初识" href="/study/mongodb-001/"></a>

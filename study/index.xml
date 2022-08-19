@@ -9,7 +9,74 @@
       <link>/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 17 Aug 2022 17:46:00 +0800</lastBuildDate><atom:link href="/study/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="/study/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dapp</title>
+      <link>/study/dapp/</link>
+      <pubDate>Fri, 19 Aug 2022 15:41:00 +0800</pubDate>
+      
+      <guid>/study/dapp/</guid>
+      <description>合约在线开发IDE
+solidity 中文文档
+trongrid.io
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&amp;#34;&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34;&amp;gt; &amp;lt;title&amp;gt;dapp&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;#34;vue&amp;#34;&amp;gt; 目标地址:&amp;lt;input v-model=&amp;#34;to_address&amp;#34; style=&amp;#34;width: 100%&amp;#34;&amp;gt; 订单编号:&amp;lt;input v-model=&amp;#34;transaction&amp;#34; style=&amp;#34;width: 100%&amp;#34;&amp;gt; &amp;lt;br/&amp;gt; &amp;lt;br/&amp;gt; &amp;lt;button @click=&amp;#34;init_tronWeb&amp;#34;&amp;gt; 登录tronlink &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;transferTrx&amp;#34;&amp;gt; transferTrx &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;getBalance&amp;#34;&amp;gt; 获取trx余额 &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;getUSDTBalance&amp;#34;&amp;gt; 获取usdt余额 &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;transferUSDT&amp;#34;&amp;gt; 转账0.001usdt &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;transferUSDTRemark&amp;#34;&amp;gt; 带备注的转账0.001usdt &amp;lt;/button&amp;gt; &amp;lt;button @click=&amp;#34;getTransaction&amp;#34;&amp;gt; 获取交易详情 &amp;lt;/button&amp;gt; &amp;lt;p v-show=&amp;#34;result.length&amp;#34; v-html=&amp;#34;result.join(&amp;#39;&amp;lt;br/&amp;gt;&amp;#39;)&amp;#34;&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;./js/tronweb.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;./js/trongrid.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;./js/vue.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;.</description>
+    </item>
+    
+    <item>
+      <title>php-如何使用powerdns的接口</title>
+      <link>/study/php-powerdns/</link>
+      <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
+      
+      <guid>/study/php-powerdns/</guid>
+      <description>powerdns安装教程
+如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
+Swagger 生成插件
+Sign in 登录 (没有账号的免费注册一个)
+Create New -&amp;gt; Create New API
+创建完毕将powerdns的yaml配置文件粘贴到代码框中
+右上角 -&amp;gt; Export -&amp;gt; Client SDK -&amp;gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
+{ &amp;#34;repositories&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;git&amp;#34;, &amp;#34;url&amp;#34;: &amp;#34;https://github.com/suguer/powerdns.git&amp;#34; } ], &amp;#34;require&amp;#34;: { &amp;#34;suguer/powerdns&amp;#34;: &amp;#34;*@dev&amp;#34; } } 开始使用 DnsPowerDnsClient.php
+use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &amp;#34;localhost&amp;#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&amp;#39;ns1&amp;#39;,&amp;#39;ns2&amp;#39;]; public function __construct() { $config=[ &amp;#34;ip&amp;#34; =&amp;gt; &amp;#34;&amp;#34;, &amp;#34;api_key&amp;#34; =&amp;gt; &amp;#34;&amp;#34;, ]; $this-&amp;gt;client = new \GuzzleHttp\Client([ &amp;#39;timeout&amp;#39; =&amp;gt; 40.</description>
+    </item>
+    
+    <item>
+      <title>php-laravel自定义https端口访问异常</title>
+      <link>/study/php-laravel-003/</link>
+      <pubDate>Fri, 19 Aug 2022 15:35:00 +0800</pubDate>
+      
+      <guid>/study/php-laravel-003/</guid>
+      <description>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&amp;gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;amp;&amp;amp; $port = $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;amp;&amp;amp; &amp;#39;https&amp;#39; === $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &amp;#39;http&amp;#39;)) { return 443; } } if ($host = $this-&amp;gt;headers-&amp;gt;get(&amp;#39;HOST&amp;#39;)) { if ($host[0] === &amp;#39;[&amp;#39;) { $pos = strpos($host, &amp;#39;:&amp;#39;, strrpos($host, &amp;#39;]&amp;#39;)); } else { $pos = strrpos($host, &amp;#39;:&amp;#39;); } if (false !== $pos) { return (int) substr($host, $pos + 1); } return &amp;#39;https&amp;#39; === $this-&amp;gt;getScheme() ?</description>
+    </item>
+    
+    <item>
+      <title>keycloak</title>
+      <link>/study/keycloak/</link>
+      <pubDate>Fri, 19 Aug 2022 15:32:00 +0800</pubDate>
+      
+      <guid>/study/keycloak/</guid>
+      <description>Keycloak
+1. create realm 用于对接不同网站的登录用户,隔离区域
+2. how to use php
+composer require stevenmaguire/oauth2-keycloak SsoKeycloakClient.php
+class SsoKeycloakClient implements SsoClientInterface { use ApiConfigTrait; use ApiLoggerTrait; const API_NAME = &amp;#34;keycloak&amp;#34;; private $server_access_token_path = &amp;#34;/data/keycloak_server_access_token.log&amp;#34;; /** * @var Keycloak */ protected $provider; /** * @var GuzzleHttp\Client */ private $client; public function __construct() { $this-&amp;gt;initLogger(-3, 2); $this-&amp;gt;loadApiConfig(self::API_NAME); try { $redirectUri = ShareSession::get(&amp;#39;redirect_uri&amp;#39;) ? ShareSession::get(&amp;#39;redirect_uri&amp;#39;) : $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;redirect_uri&amp;#39;]; } catch (\Throwable $e) { $redirectUri = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;redirect_uri&amp;#39;]; } $redirectUri = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;redirect_uri&amp;#39;]; $this-&amp;gt;provider = new Keycloak([ &amp;#39;authServerUrl&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;Host, &amp;#39;realm&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;realm&amp;#39;], &amp;#39;clientId&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;login_client_id&amp;#39;], &amp;#39;clientSecret&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;login_client_secret&amp;#39;], &amp;#39;redirectUri&amp;#39; =&amp;gt; $redirectUri, ]); $this-&amp;gt;client = new GuzzleHttp\Client([ &amp;#39;timeout&amp;#39; =&amp;gt; 30.</description>
+    </item>
+    
+    <item>
+      <title>Mongodb数据库-python有关的操作</title>
+      <link>/study/mongodb-004/</link>
+      <pubDate>Fri, 19 Aug 2022 15:30:00 +0800</pubDate>
+      
+      <guid>/study/mongodb-004/</guid>
+      <description>flask
+flask-pymongo
+flask-mongoengine
+数据内容
+[{ &amp;#34;_id&amp;#34;: { &amp;#34;$oid&amp;#34;: &amp;#34;62e3525f18909374eb4de53f&amp;#34; }, &amp;#34;plat&amp;#34;: { &amp;#34;wechat&amp;#34;: &amp;#34;bc61736d-7ed0-47bb-ba1b-33474fecde23&amp;#34;, &amp;#34;alipay&amp;#34;: &amp;#34;random&amp;#34; }, &amp;#34;created_at&amp;#34;: { &amp;#34;$date&amp;#34;: { &amp;#34;$numberLong&amp;#34;: &amp;#34;1659093727910&amp;#34; } }, &amp;#34;updated_at&amp;#34;: { &amp;#34;$date&amp;#34;: { &amp;#34;$numberLong&amp;#34;: &amp;#34;1659093727910&amp;#34; } }, &amp;#34;nickname&amp;#34;: &amp;#34;su&amp;#34; }] 根据 plat.wechat中来搜索用户
+pymongo语法:
+mongo.db.user.find_one(filter={&amp;#34;plat.wechat&amp;#34;:openid}) mongoengine语法:
+User.objects(plat__wechat=openid).first() </description>
+    </item>
+    
     <item>
       <title>powerdns-学习如何搭建个人专属DNS服务器</title>
       <link>/study/powerdns/</link>
@@ -301,7 +368,9 @@ storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination:
       
       <guid>/study/mongodb-001/</guid>
       <description>了解mongodb的基本情况
-数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 </description>
+数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 聚合查询 pipeline=[$stage1,$stage2,&amp;hellip;$stageN] aggregate db..aggregate(pipeline,{options})
+常见步骤
+步骤 作用 SQL等价运算法 $match 过滤 where $project 投影 as $sort 排序 order by $group 分组 group by $skip/$limit 结果限制,分页 offset/limit $lookup 左外连接 left outer join 完整的分片集群 应用全透明,无特殊处理 数据自动均衡 动态扩容,无需下线 提供三种分片方式 性能监控 MongoDB Ops Manager Percona 通用监控平台 程序脚本 db.</description>
     </item>
     
   </channel>

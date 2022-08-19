@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>keycloak on Ken Blog</title>
+    <link>/tags/keycloak/</link>
+    <description>Recent content in keycloak on Ken Blog</description>
+    <image>
+      <url>/papermod-cover.png</url>
+      <link>/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 19 Aug 2022 15:32:00 +0800</lastBuildDate><atom:link href="/tags/keycloak/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>keycloak</title>
+      <link>/study/keycloak/</link>
+      <pubDate>Fri, 19 Aug 2022 15:32:00 +0800</pubDate>
+      
+      <guid>/study/keycloak/</guid>
+      <description>Keycloak
+1. create realm 用于对接不同网站的登录用户,隔离区域
+2. how to use php
+composer require stevenmaguire/oauth2-keycloak SsoKeycloakClient.php
+class SsoKeycloakClient implements SsoClientInterface { use ApiConfigTrait; use ApiLoggerTrait; const API_NAME = &amp;#34;keycloak&amp;#34;; private $server_access_token_path = &amp;#34;/data/keycloak_server_access_token.log&amp;#34;; /** * @var Keycloak */ protected $provider; /** * @var GuzzleHttp\Client */ private $client; public function __construct() { $this-&amp;gt;initLogger(-3, 2); $this-&amp;gt;loadApiConfig(self::API_NAME); try { $redirectUri = ShareSession::get(&amp;#39;redirect_uri&amp;#39;) ? ShareSession::get(&amp;#39;redirect_uri&amp;#39;) : $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;redirect_uri&amp;#39;]; } catch (\Throwable $e) { $redirectUri = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;redirect_uri&amp;#39;]; } $redirectUri = $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;redirect_uri&amp;#39;]; $this-&amp;gt;provider = new Keycloak([ &amp;#39;authServerUrl&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;Host, &amp;#39;realm&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;realm&amp;#39;], &amp;#39;clientId&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;login_client_id&amp;#39;], &amp;#39;clientSecret&amp;#39; =&amp;gt; $this-&amp;gt;apiConfig-&amp;gt;ExtraConfig[&amp;#39;login_client_secret&amp;#39;], &amp;#39;redirectUri&amp;#39; =&amp;gt; $redirectUri, ]); $this-&amp;gt;client = new GuzzleHttp\Client([ &amp;#39;timeout&amp;#39; =&amp;gt; 30.</description>
+    </item>
+    
+  </channel>
+</rss>

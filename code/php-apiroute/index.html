@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>php-自定义统一的api入口路由 | Ken Blog</title>
+<meta name="keywords" content="php">
+<meta name="description" content="route.php
+Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt; [&#39;web&#39;]], function () { Route::any(&#39;{slug}&#39;, &#39;Cloud\Rent\Classes\Api\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); ApiRouter.php
+&lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); header(&#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/code/php-apiroute/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="php-自定义统一的api入口路由" />
+<meta property="og:description" content="route.php
+Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt; [&#39;web&#39;]], function () { Route::any(&#39;{slug}&#39;, &#39;Cloud\Rent\Classes\Api\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); ApiRouter.php
+&lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); header(&#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/code/php-apiroute/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="code" />
+<meta property="article:published_time" content="2022-08-19T15:34:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-19T15:34:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="php-自定义统一的api入口路由"/>
+<meta name="twitter:description" content="route.php
+Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt; [&#39;web&#39;]], function () { Route::any(&#39;{slug}&#39;, &#39;Cloud\Rent\Classes\Api\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); ApiRouter.php
+&lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); header(&#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Codes",
+      "item": "/code/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "php-自定义统一的api入口路由",
+      "item": "/code/php-apiroute/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "php-自定义统一的api入口路由",
+  "name": "php-自定义统一的api入口路由",
+  "description": "route.php\nRoute::group([\u0026#39;prefix\u0026#39; =\u0026gt; \u0026#39;fapi/\u0026#39;, \u0026#39;middleware\u0026#39; =\u0026gt; [\u0026#39;web\u0026#39;]], function () { Route::any(\u0026#39;{slug}\u0026#39;, \u0026#39;Cloud\\Rent\\Classes\\Api\\ApiRouter@route\u0026#39;)-\u0026gt;where(\u0026#39;slug\u0026#39;, \u0026#39;(.*)?\u0026#39;); }); ApiRouter.php\n\u0026lt;?php namespace Cloud\\Rent\\Classes\\Api; use App; use Illuminate\\Routing\\Controller as ControllerBase; use October\\Rain\\Router\\Helper as RouterHelper; use Illuminate\\Support\\Str; /** * Class ApiRouter * API例子：在Now\\Youpin\\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\\Youpin\\Classes\\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(\u0026#39;Access-Control-Allow-Origin: *\u0026#39;); header(\u0026#39;Access-Control-Allow-Methods:*\u0026#39;); header(\u0026#39;Access-Control-Allow-Headers:*\u0026#39;); header(\u0026#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding\u0026#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.",
+  "keywords": [
+    "php"
+  ],
+  "articleBody": "route.php\nRoute::group(['prefix' =\u003e 'fapi/', 'middleware' =\u003e ['web']], function () { Route::any('{slug}', 'Cloud\\Rent\\Classes\\Api\\ApiRouter@route')-\u003ewhere('slug', '(.*)?'); }); ApiRouter.php\n\u003c?php namespace Cloud\\Rent\\Classes\\Api; use App; use Illuminate\\Routing\\Controller as ControllerBase; use October\\Rain\\Router\\Helper as RouterHelper; use Illuminate\\Support\\Str; /** * Class ApiRouter * API例子：在Now\\Youpin\\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\\Youpin\\Classes\\Api */ class ApiRouter extends ControllerBase { public function __construct() { header('Access-Control-Allow-Origin: *'); header('Access-Control-Allow-Methods:*'); header('Access-Control-Allow-Headers:*'); header(\"Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding\"); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters. */ public static $params; public function route($url = null) { //echo $url;exit; $params = RouterHelper::segmentizeUrl($url); /* * Look for a Api controller */ $api = isset($params[0]) ? $params[0] : null; if (is_null($api)) { return $this-\u003ehandle404Error('api not exist'); } $api = Str::ucfirst($api); self::$action = $action = isset($params[1]) ? $this-\u003eparseAction($params[1]) : null; self::$params = $controllerParams = array_slice($params, 2); $apiClass = 'Cloud\\Rent\\Fapi'.\"\\\\\".$api.\"Api\"; if (!class_exists($apiClass)) { return $this-\u003ehandle404Error('api path not exist'); } else { $controllerObj = App::make($apiClass); if ($controllerObj-\u003eactionExists($action)) { return $controllerObj-\u003ehandle($action, $controllerParams); } else { return $this-\u003ehandle404Error('api command not exist'); } } } public function broute($url = null) { //echo $url;exit; $params = RouterHelper::segmentizeUrl($url); /* * Look for a Api controller */ $api = isset($params[0]) ? $params[0] : null; if (is_null($api)) { return $this-\u003ehandle404Error('api not exist'); } $api = Str::ucfirst($api); self::$action = $action = isset($params[1]) ? $this-\u003eparseAction($params[1]) : null; self::$params = $controllerParams = array_slice($params, 2); $apiClass = 'Cloud\\Rent\\Bapi'.\"\\\\\".$api.\"Api\"; if (!class_exists($apiClass)) { return $this-\u003ehandle404Error('api path not exist'); } else { $controllerObj = App::make($apiClass); if ($controllerObj-\u003eactionExists($action)) { return $controllerObj-\u003ehandle($action, $controllerParams); } else { return $this-\u003ehandle404Error('api command not exist'); } } } public function handle404Error($msg) { $data = [ 'code' =\u003e ApiStatusCode::Not_Found, 'msg' =\u003e $msg, ]; return json_encode($data); } /** * Process the action name, since dashes are not supported in PHP methods. * @param string $actionName * @return string */ protected function parseAction($actionName) { if (strpos($actionName, '-') !== false) { return camel_case($actionName); } return $actionName; } } ",
+  "wordCount" : "316",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-19T15:34:00+08:00",
+  "dateModified": "2022-08-19T15:34:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/code/php-apiroute/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script><meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
+<meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+    <header class="post-header">
+        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/code/">Codes</a></div>
+        <h1 class="post-title">
+            php-自定义统一的api入口路由
+        </h1>
+        <div class="post-meta"><span title='2022-08-19 15:34:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/code/php-ApiRoute.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+    </header> 
+
+    <div class="post-content"><p>route.php</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="nx">Route</span><span class="o">::</span><span class="na">group</span><span class="p">([</span><span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;fapi/&#39;</span><span class="p">,</span> <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;web&#39;</span><span class="p">]],</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Route</span><span class="o">::</span><span class="na">any</span><span class="p">(</span><span class="s1">&#39;{slug}&#39;</span><span class="p">,</span> <span class="s1">&#39;Cloud\Rent\Classes\Api\ApiRouter@route&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;slug&#39;</span><span class="p">,</span> <span class="s1">&#39;(.*)?&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>ApiRouter.php</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">namespace</span> <span class="nx">Cloud\Rent\Classes\Api</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">App</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Illuminate\Routing\Controller</span> <span class="k">as</span> <span class="nx">ControllerBase</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">October\Rain\Router\Helper</span> <span class="k">as</span> <span class="nx">RouterHelper</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">use</span> <span class="nx">Illuminate\Support\Str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd"> * Class ApiRouter
+</span></span></span><span class="line"><span class="cl"><span class="sd"> * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello
+</span></span></span><span class="line"><span class="cl"><span class="sd"> * @package Now\Youpin\Classes\Api
+</span></span></span><span class="line"><span class="cl"><span class="sd"> */</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ApiRouter</span> <span class="k">extends</span> <span class="nx">ControllerBase</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Access-Control-Allow-Origin: *&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Access-Control-Allow-Methods:*&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Access-Control-Allow-Headers:*&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">header</span><span class="p">(</span><span class="s2">&#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @var string Allows early access to page action.
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="nv">$action</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @var array Allows early access to page parameters.
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">static</span> <span class="nv">$params</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">route</span><span class="p">(</span><span class="nv">$url</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo $url;exit;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$params</span> <span class="o">=</span> <span class="nx">RouterHelper</span><span class="o">::</span><span class="na">segmentizeUrl</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">         * Look for a Api controller
+</span></span></span><span class="line"><span class="cl"><span class="cm">         */</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$api</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_null</span><span class="p">(</span><span class="nv">$api</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle404Error</span><span class="p">(</span><span class="s1">&#39;api not exist&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$api</span> <span class="o">=</span> <span class="nx">Str</span><span class="o">::</span><span class="na">ucfirst</span><span class="p">(</span><span class="nv">$api</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">self</span><span class="o">::</span><span class="nv">$action</span> <span class="o">=</span> <span class="nv">$action</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">parseAction</span><span class="p">(</span><span class="nv">$params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">self</span><span class="o">::</span><span class="nv">$params</span> <span class="o">=</span> <span class="nv">$controllerParams</span> <span class="o">=</span> <span class="nx">array_slice</span><span class="p">(</span><span class="nv">$params</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$apiClass</span> <span class="o">=</span> <span class="s1">&#39;Cloud\Rent\Fapi&#39;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\\</span><span class="s2">&#34;</span><span class="o">.</span><span class="nv">$api</span><span class="o">.</span><span class="s2">&#34;Api&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">class_exists</span><span class="p">(</span><span class="nv">$apiClass</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle404Error</span><span class="p">(</span><span class="s1">&#39;api path not exist&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$controllerObj</span> <span class="o">=</span> <span class="nx">App</span><span class="o">::</span><span class="na">make</span><span class="p">(</span><span class="nv">$apiClass</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$controllerObj</span><span class="o">-&gt;</span><span class="na">actionExists</span><span class="p">(</span><span class="nv">$action</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$controllerObj</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nv">$action</span><span class="p">,</span> <span class="nv">$controllerParams</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle404Error</span><span class="p">(</span><span class="s1">&#39;api command not exist&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">broute</span><span class="p">(</span><span class="nv">$url</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//echo $url;exit;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nv">$params</span> <span class="o">=</span> <span class="nx">RouterHelper</span><span class="o">::</span><span class="na">segmentizeUrl</span><span class="p">(</span><span class="nv">$url</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">         * Look for a Api controller
+</span></span></span><span class="line"><span class="cl"><span class="cm">         */</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$api</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">is_null</span><span class="p">(</span><span class="nv">$api</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle404Error</span><span class="p">(</span><span class="s1">&#39;api not exist&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$api</span> <span class="o">=</span> <span class="nx">Str</span><span class="o">::</span><span class="na">ucfirst</span><span class="p">(</span><span class="nv">$api</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">self</span><span class="o">::</span><span class="nv">$action</span> <span class="o">=</span> <span class="nv">$action</span> <span class="o">=</span> <span class="nx">isset</span><span class="p">(</span><span class="nv">$params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">parseAction</span><span class="p">(</span><span class="nv">$params</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">self</span><span class="o">::</span><span class="nv">$params</span> <span class="o">=</span> <span class="nv">$controllerParams</span> <span class="o">=</span> <span class="nx">array_slice</span><span class="p">(</span><span class="nv">$params</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$apiClass</span> <span class="o">=</span> <span class="s1">&#39;Cloud\Rent\Bapi&#39;</span><span class="o">.</span><span class="s2">&#34;</span><span class="se">\\</span><span class="s2">&#34;</span><span class="o">.</span><span class="nv">$api</span><span class="o">.</span><span class="s2">&#34;Api&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">class_exists</span><span class="p">(</span><span class="nv">$apiClass</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle404Error</span><span class="p">(</span><span class="s1">&#39;api path not exist&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nv">$controllerObj</span> <span class="o">=</span> <span class="nx">App</span><span class="o">::</span><span class="na">make</span><span class="p">(</span><span class="nv">$apiClass</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="nv">$controllerObj</span><span class="o">-&gt;</span><span class="na">actionExists</span><span class="p">(</span><span class="nv">$action</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$controllerObj</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nv">$action</span><span class="p">,</span> <span class="nv">$controllerParams</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">handle404Error</span><span class="p">(</span><span class="s1">&#39;api command not exist&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">public</span> <span class="k">function</span> <span class="nf">handle404Error</span><span class="p">(</span><span class="nv">$msg</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;code&#39;</span> <span class="o">=&gt;</span> <span class="nx">ApiStatusCode</span><span class="o">::</span><span class="na">Not_Found</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s1">&#39;msg&#39;</span> <span class="o">=&gt;</span> <span class="nv">$msg</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">json_encode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="sd">/**
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * Process the action name, since dashes are not supported in PHP methods.
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @param  string $actionName
+</span></span></span><span class="line"><span class="cl"><span class="sd">     * @return string
+</span></span></span><span class="line"><span class="cl"><span class="sd">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">protected</span> <span class="k">function</span> <span class="nf">parseAction</span><span class="p">(</span><span class="nv">$actionName</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">strpos</span><span class="p">(</span><span class="nv">$actionName</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nx">camel_case</span><span class="p">(</span><span class="nv">$actionName</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nv">$actionName</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li><a href="/tags/php/">php</a></li>
+        </ul>
+
+    </footer>
+</article>
+<script src="https://giscus.app/client.js"
+        data-repo="suguer/giscus.github.io"
+        data-repo-id="R_kgDOH08FpA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOH08FpM4CQ2jj"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

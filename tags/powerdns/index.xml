@@ -9,7 +9,24 @@
       <link>/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 17 Aug 2022 17:46:00 +0800</lastBuildDate><atom:link href="/tags/powerdns/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:39:00 +0800</lastBuildDate><atom:link href="/tags/powerdns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>php-如何使用powerdns的接口</title>
+      <link>/study/php-powerdns/</link>
+      <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
+      
+      <guid>/study/php-powerdns/</guid>
+      <description>powerdns安装教程
+如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
+Swagger 生成插件
+Sign in 登录 (没有账号的免费注册一个)
+Create New -&amp;gt; Create New API
+创建完毕将powerdns的yaml配置文件粘贴到代码框中
+右上角 -&amp;gt; Export -&amp;gt; Client SDK -&amp;gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
+{ &amp;#34;repositories&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;git&amp;#34;, &amp;#34;url&amp;#34;: &amp;#34;https://github.com/suguer/powerdns.git&amp;#34; } ], &amp;#34;require&amp;#34;: { &amp;#34;suguer/powerdns&amp;#34;: &amp;#34;*@dev&amp;#34; } } 开始使用 DnsPowerDnsClient.php
+use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &amp;#34;localhost&amp;#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&amp;#39;ns1&amp;#39;,&amp;#39;ns2&amp;#39;]; public function __construct() { $config=[ &amp;#34;ip&amp;#34; =&amp;gt; &amp;#34;&amp;#34;, &amp;#34;api_key&amp;#34; =&amp;gt; &amp;#34;&amp;#34;, ]; $this-&amp;gt;client = new \GuzzleHttp\Client([ &amp;#39;timeout&amp;#39; =&amp;gt; 40.</description>
+    </item>
+    
     <item>
       <title>powerdns-学习如何搭建个人专属DNS服务器</title>
       <link>/study/powerdns/</link>

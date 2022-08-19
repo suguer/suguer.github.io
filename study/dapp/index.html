@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>dapp | Ken Blog</title>
+<meta name="keywords" content="dapp">
+<meta name="description" content="合约在线开发IDE
+solidity 中文文档
+trongrid.io
+&lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&#34;&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;title&gt;dapp&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;vue&#34;&gt; 目标地址:&lt;input v-model=&#34;to_address&#34; style=&#34;width: 100%&#34;&gt; 订单编号:&lt;input v-model=&#34;transaction&#34; style=&#34;width: 100%&#34;&gt; &lt;br/&gt; &lt;br/&gt; &lt;button @click=&#34;init_tronWeb&#34;&gt; 登录tronlink &lt;/button&gt; &lt;button @click=&#34;transferTrx&#34;&gt; transferTrx &lt;/button&gt; &lt;button @click=&#34;getBalance&#34;&gt; 获取trx余额 &lt;/button&gt; &lt;button @click=&#34;getUSDTBalance&#34;&gt; 获取usdt余额 &lt;/button&gt; &lt;button @click=&#34;transferUSDT&#34;&gt; 转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;transferUSDTRemark&#34;&gt; 带备注的转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;getTransaction&#34;&gt; 获取交易详情 &lt;/button&gt; &lt;p v-show=&#34;result.length&#34; v-html=&#34;result.join(&#39;&lt;br/&gt;&#39;)&#34;&gt;&lt;/p&gt; &lt;/div&gt; &lt;script src=&#34;./js/tronweb.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/trongrid.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/vue.min.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="/study/dapp/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="dapp" />
+<meta property="og:description" content="合约在线开发IDE
+solidity 中文文档
+trongrid.io
+&lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&#34;&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;title&gt;dapp&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;vue&#34;&gt; 目标地址:&lt;input v-model=&#34;to_address&#34; style=&#34;width: 100%&#34;&gt; 订单编号:&lt;input v-model=&#34;transaction&#34; style=&#34;width: 100%&#34;&gt; &lt;br/&gt; &lt;br/&gt; &lt;button @click=&#34;init_tronWeb&#34;&gt; 登录tronlink &lt;/button&gt; &lt;button @click=&#34;transferTrx&#34;&gt; transferTrx &lt;/button&gt; &lt;button @click=&#34;getBalance&#34;&gt; 获取trx余额 &lt;/button&gt; &lt;button @click=&#34;getUSDTBalance&#34;&gt; 获取usdt余额 &lt;/button&gt; &lt;button @click=&#34;transferUSDT&#34;&gt; 转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;transferUSDTRemark&#34;&gt; 带备注的转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;getTransaction&#34;&gt; 获取交易详情 &lt;/button&gt; &lt;p v-show=&#34;result.length&#34; v-html=&#34;result.join(&#39;&lt;br/&gt;&#39;)&#34;&gt;&lt;/p&gt; &lt;/div&gt; &lt;script src=&#34;./js/tronweb.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/trongrid.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/vue.min.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/study/dapp/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="article:published_time" content="2022-08-19T15:41:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-19T15:41:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/papermod-cover.png"/>
+
+<meta name="twitter:title" content="dapp"/>
+<meta name="twitter:description" content="合约在线开发IDE
+solidity 中文文档
+trongrid.io
+&lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&#34;&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;title&gt;dapp&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;vue&#34;&gt; 目标地址:&lt;input v-model=&#34;to_address&#34; style=&#34;width: 100%&#34;&gt; 订单编号:&lt;input v-model=&#34;transaction&#34; style=&#34;width: 100%&#34;&gt; &lt;br/&gt; &lt;br/&gt; &lt;button @click=&#34;init_tronWeb&#34;&gt; 登录tronlink &lt;/button&gt; &lt;button @click=&#34;transferTrx&#34;&gt; transferTrx &lt;/button&gt; &lt;button @click=&#34;getBalance&#34;&gt; 获取trx余额 &lt;/button&gt; &lt;button @click=&#34;getUSDTBalance&#34;&gt; 获取usdt余额 &lt;/button&gt; &lt;button @click=&#34;transferUSDT&#34;&gt; 转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;transferUSDTRemark&#34;&gt; 带备注的转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;getTransaction&#34;&gt; 获取交易详情 &lt;/button&gt; &lt;p v-show=&#34;result.length&#34; v-html=&#34;result.join(&#39;&lt;br/&gt;&#39;)&#34;&gt;&lt;/p&gt; &lt;/div&gt; &lt;script src=&#34;./js/tronweb.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/trongrid.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/vue.min.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Studies",
+      "item": "/study/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "dapp",
+      "item": "/study/dapp/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "dapp",
+  "name": "dapp",
+  "description": "合约在线开发IDE\nsolidity 中文文档\ntrongrid.io\n\u0026lt;!DOCTYPE html\u0026gt; \u0026lt;html lang=\u0026#34;en\u0026#34;\u0026gt; \u0026lt;head\u0026gt; \u0026lt;meta name=\u0026#34;viewport\u0026#34; content=\u0026#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\u0026#34;\u0026gt; \u0026lt;meta charset=\u0026#34;UTF-8\u0026#34;\u0026gt; \u0026lt;title\u0026gt;dapp\u0026lt;/title\u0026gt; \u0026lt;/head\u0026gt; \u0026lt;body\u0026gt; \u0026lt;div id=\u0026#34;vue\u0026#34;\u0026gt; 目标地址:\u0026lt;input v-model=\u0026#34;to_address\u0026#34; style=\u0026#34;width: 100%\u0026#34;\u0026gt; 订单编号:\u0026lt;input v-model=\u0026#34;transaction\u0026#34; style=\u0026#34;width: 100%\u0026#34;\u0026gt; \u0026lt;br/\u0026gt; \u0026lt;br/\u0026gt; \u0026lt;button @click=\u0026#34;init_tronWeb\u0026#34;\u0026gt; 登录tronlink \u0026lt;/button\u0026gt; \u0026lt;button @click=\u0026#34;transferTrx\u0026#34;\u0026gt; transferTrx \u0026lt;/button\u0026gt; \u0026lt;button @click=\u0026#34;getBalance\u0026#34;\u0026gt; 获取trx余额 \u0026lt;/button\u0026gt; \u0026lt;button @click=\u0026#34;getUSDTBalance\u0026#34;\u0026gt; 获取usdt余额 \u0026lt;/button\u0026gt; \u0026lt;button @click=\u0026#34;transferUSDT\u0026#34;\u0026gt; 转账0.001usdt \u0026lt;/button\u0026gt; \u0026lt;button @click=\u0026#34;transferUSDTRemark\u0026#34;\u0026gt; 带备注的转账0.001usdt \u0026lt;/button\u0026gt; \u0026lt;button @click=\u0026#34;getTransaction\u0026#34;\u0026gt; 获取交易详情 \u0026lt;/button\u0026gt; \u0026lt;p v-show=\u0026#34;result.length\u0026#34; v-html=\u0026#34;result.join(\u0026#39;\u0026lt;br/\u0026gt;\u0026#39;)\u0026#34;\u0026gt;\u0026lt;/p\u0026gt; \u0026lt;/div\u0026gt; \u0026lt;script src=\u0026#34;./js/tronweb.js\u0026#34;\u0026gt;\u0026lt;/script\u0026gt; \u0026lt;script src=\u0026#34;./js/trongrid.js\u0026#34;\u0026gt;\u0026lt;/script\u0026gt; \u0026lt;script src=\u0026#34;./js/vue.min.js\u0026#34;\u0026gt;\u0026lt;/script\u0026gt; \u0026lt;script src=\u0026#34;.",
+  "keywords": [
+    "dapp"
+  ],
+  "articleBody": "合约在线开发IDE\nsolidity 中文文档\ntrongrid.io\n\u003c!DOCTYPE html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1\"\u003e \u003cmeta charset=\"UTF-8\"\u003e \u003ctitle\u003edapp\u003c/title\u003e \u003c/head\u003e \u003cbody\u003e \u003cdiv id=\"vue\"\u003e 目标地址:\u003cinput v-model=\"to_address\" style=\"width: 100%\"\u003e 订单编号:\u003cinput v-model=\"transaction\" style=\"width: 100%\"\u003e \u003cbr/\u003e \u003cbr/\u003e \u003cbutton @click=\"init_tronWeb\"\u003e 登录tronlink \u003c/button\u003e \u003cbutton @click=\"transferTrx\"\u003e transferTrx \u003c/button\u003e \u003cbutton @click=\"getBalance\"\u003e 获取trx余额 \u003c/button\u003e \u003cbutton @click=\"getUSDTBalance\"\u003e 获取usdt余额 \u003c/button\u003e \u003cbutton @click=\"transferUSDT\"\u003e 转账0.001usdt \u003c/button\u003e \u003cbutton @click=\"transferUSDTRemark\"\u003e 带备注的转账0.001usdt \u003c/button\u003e \u003cbutton @click=\"getTransaction\"\u003e 获取交易详情 \u003c/button\u003e \u003cp v-show=\"result.length\" v-html=\"result.join('')\"\u003e\u003c/p\u003e \u003c/div\u003e \u003cscript src=\"./js/tronweb.js\"\u003e\u003c/script\u003e \u003cscript src=\"./js/trongrid.js\"\u003e\u003c/script\u003e \u003cscript src=\"./js/vue.min.js\"\u003e\u003c/script\u003e \u003cscript src=\"./js/jQuery-2.1.4.min.js\"\u003e\u003c/script\u003e \u003cscript\u003e window.addEventListener('message', function (e) { // console.log('message'); // console.log(e); if (e.data.message \u0026\u0026 e.data.message.action == \"tabReply\") { // console.log(\"tabReply event\", e.data.message) // if (e.data.message.data.data.node.chain == '_') { // console.log(\"tronLink currently selects the main chain\") // } else { // console.log(\"tronLink currently selects the side chain\") // } } if (e.data.message \u0026\u0026 e.data.message.action == \"setAccount\") { // console.log(\"setAccount event\", e.data.message) // console.log(\"current address:\", e.data.message.data.address) } if (e.data.message \u0026\u0026 e.data.message.action == \"setNode\") { // console.log(\"setNode event\", e.data.message) if (e.data.message.data.node.chain == '_') { // console.log(\"tronLink currently selects the main chain\") } else { // console.log(\"tronLink currently selects the side chain\") } } }) // const HttpProvider = TronWeb.providers.HttpProvider; // const fullNode = new HttpProvider(\"https://api.shasta.trongrid.io\"); // const solidityNode = new HttpProvider(\"https://api.shasta.trongrid.io\"); // const eventServer = new HttpProvider(\"https://api.shasta.trongrid.io\"); // const privateKey = \"\"; // console.log(window.tronWeb); // window.tronWeb = new TronWeb(fullNode, solidityNode, eventServer, privateKey); // var vconsole = new VConsole(); // var tronGrid = new trongrid(tronWeb); // console.log(tronGrid); var vue = new Vue({ el: \"#vue\", data: { usdtContract: \"\", tronWeb: null, walletAddress: '', contract: null, address: \"\", // eee result: [], to_address: \"TAmXc5JmMecTSexXydSnJmaZEUxFgAxMw7\", //sdhl transaction: \"5d760063a0969530842ed933836f6fb6f81e593fc913e83a1acb5707e61f7f41\", }, methods: { //获取交易详情 getTransaction() { // 交易单号 d449953019071634a0ffe0f969908480478c4293f61c3bd6276f5b05152bc798 this.tronWeb.trx.getTransaction(this.transaction).then(result =\u003e { vue.result.push(\"交易单号:\" + this.transaction); vue.result.push(\"\" + JSON.stringify(result, null, 2) + \"\"); }); }, async transferTrx(){ var unSignedTxn = await this.tronWeb.transactionBuilder.sendTrx(vue.to_address, 1); console.log(unSignedTxn); // var unSignedTxnWithNote = await this.tronWeb.transactionBuilder.addUpdateData(unSignedTxn, {data:\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}, 'utf8'); var unSignedTxnWithNote = await this.tronWeb.transactionBuilder.addUpdateData(unSignedTxn, \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", 'utf8'); console.log(unSignedTxnWithNote); var signedTxn = await this.tronWeb.trx.sign(unSignedTxnWithNote); console.log(signedTxn); // const broastTx = await this.tronWeb.trx.sendRawTransaction(signedTxn); // console.log( broastTx); // vue.result.push(\"调用成功\"); // vue.result.push(\"交易订单号:\" + broastTx.txid); // vue.transaction = broastTx.txid; // this.getTransaction(); }, //usdt转账 async transferUSDT() { const parameter = [{type: 'address', value: vue.to_address}, {type: 'uint256', value: 1000}]; var tx = await this.tronWeb.transactionBuilder.triggerSmartContract( this.usdtContract, \"transfer(address,uint256)\", { // feeLimit:0.01*Math.pow(10,6), }, parameter, this.walletAddress ); var signedTx = await this.tronWeb.trx.sign(tx.transaction); var broastTx = await this.tronWeb.trx.sendRawTransaction(signedTx); console.log(broastTx); vue.result.push(\"调用成功\"); vue.result.push(\"交易订单号:\" + broastTx.txid); vue.transaction = broastTx.txid; this.getTransaction(); }, //usdt转账 (带备注) async transferUSDTRemark() { const parameter = [{type: 'address', value: vue.to_address}, {type: 'uint256', value: 1000}]; var tx = await this.tronWeb.transactionBuilder.triggerSmartContract( this.usdtContract, \"transfer(address,uint256)\", { // feeLimit:0.01*Math.pow(10,6), }, parameter, this.walletAddress ); var r = await this.tronWeb.transactionBuilder.addUpdateData(tx.transaction, \"备注信息\", 'utf8'); var signedTx = await this.tronWeb.trx.sign(r); var broastTx = await this.tronWeb.trx.sendRawTransaction(signedTx); console.log(broastTx); vue.result.push(\"调用成功\"); vue.result.push(\"交易订单号:\" + broastTx.txid); vue.transaction = broastTx.txid; this.getTransaction(); }, //获取usdt余额 async getUSDTBalance() { this.tronWeb.contract().at(this.usdtContract).then(contract =\u003e { contract.balanceOf(this.walletAddress).call().then(resp =\u003e { console.log(resp); var balance = vue.tronWeb.toDecimal(resp._hex) vue.result.push(\"USDT余额:\" + vue.tronWeb.fromSun(balance)); }) }); }, //trx转账交易 async transaction() { var tx = await this.tronWeb.transactionBuilder.sendTrx( this.walletAddress, 0.01 * Math.pow(10, 6), this.to_address ); var signedTx = await this.tronWeb.trx.sign(tx); var broastTx = await this.tronWeb.trx.sendRawTransaction(signedTx); vue.result.push(\"交易订单号:\" + broastTx); }, init_tronWeb() { if (window.tronWeb \u0026\u0026 window.tronWeb.defaultAddress.base58) { this.tronWeb = window.tronWeb; this.walletAddress = this.tronWeb.defaultAddress.base58; vue.result.push(\"钱包地址:\" + this.walletAddress); } }, //查询钱包余额 async getBalance() { //当前连接的钱包地址获取 window.tronWeb.defaultAddress.base58 var balance = await this.tronWeb.trx.getBalance(this.walletAddress); vue.result.push(\"trx可用余额:\" + vue.tronWeb.fromSun(balance)); }, }, mounted: function () { this.$nextTick(function () { var obj = setInterval(() =\u003e { vue.init_tronWeb(); if (vue.walletAddress) { clearInterval(obj) console.log(vue.walletAddress); } else if (!window.tronWeb) { clearInterval(obj) vue.result.push(\"请安装tronlink插件或者app上打开\"); } }, 1000) }) } }) \u003c/script\u003e \u003c/body\u003e \u003c/html\u003e ",
+  "wordCount" : "554",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-19T15:41:00+08:00",
+  "dateModified": "2022-08-19T15:41:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/study/dapp/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script><meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
+<meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+    <header class="post-header">
+        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+        <h1 class="post-title">
+            dapp
+        </h1>
+        <div class="post-meta"><span title='2022-08-19 15:41:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/dapp.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+    </header> 
+
+    <div class="post-content"><p>合约在线开发IDE<br>
+<a href="https://solidity-cn.readthedocs.io/zh/develop/index.html">solidity 中文文档</a><br>
+<a href="https://www.trongrid.io/dashboard">trongrid.io</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;en&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>dapp<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;vue&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    目标地址:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">v-model</span><span class="o">=</span><span class="s">&#34;to_address&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width: 100%&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    订单编号:<span class="p">&lt;</span><span class="nt">input</span> <span class="na">v-model</span><span class="o">=</span><span class="s">&#34;transaction&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width: 100%&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;init_tronWeb&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        登录tronlink
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;transferTrx&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        transferTrx
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;getBalance&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        获取trx余额
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;getUSDTBalance&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        获取usdt余额
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;transferUSDT&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        转账0.001usdt
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;transferUSDTRemark&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        带备注的转账0.001usdt
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&#34;getTransaction&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        获取交易详情
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">v-show</span><span class="o">=</span><span class="s">&#34;result.length&#34;</span> <span class="na">v-html</span><span class="o">=</span><span class="s">&#34;result.join(&#39;&lt;br/&gt;&#39;)&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;./js/tronweb.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;./js/trongrid.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;./js/vue.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;./js/jQuery-2.1.4.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// console.log(&#39;message&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// console.log(e);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">action</span> <span class="o">==</span> <span class="s2">&#34;tabReply&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// console.log(&#34;tabReply event&#34;, e.data.message)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// if (e.data.message.data.data.node.chain == &#39;_&#39;) {
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// console.log(&#34;tronLink currently selects the main chain&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// } else {
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// console.log(&#34;tronLink currently selects the side chain&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">action</span> <span class="o">==</span> <span class="s2">&#34;setAccount&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// console.log(&#34;setAccount event&#34;, e.data.message)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// console.log(&#34;current address:&#34;, e.data.message.data.address)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">action</span> <span class="o">==</span> <span class="s2">&#34;setNode&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// console.log(&#34;setNode event&#34;, e.data.message)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">chain</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// console.log(&#34;tronLink currently selects the main chain&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// console.log(&#34;tronLink currently selects the side chain&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// const HttpProvider = TronWeb.providers.HttpProvider;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// const fullNode = new HttpProvider(&#34;https://api.shasta.trongrid.io&#34;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// const solidityNode = new HttpProvider(&#34;https://api.shasta.trongrid.io&#34;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// const eventServer = new HttpProvider(&#34;https://api.shasta.trongrid.io&#34;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// const privateKey = &#34;&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// console.log(window.tronWeb);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// window.tronWeb = new TronWeb(fullNode, solidityNode, eventServer, privateKey);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// var vconsole = new VConsole();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// var tronGrid = new trongrid(tronWeb);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// console.log(tronGrid);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">vue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">el</span><span class="o">:</span> <span class="s2">&#34;#vue&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">usdtContract</span><span class="o">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">tronWeb</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">walletAddress</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">contract</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">address</span><span class="o">:</span> <span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="c1">// eee
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">result</span><span class="o">:</span> <span class="p">[],</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">to_address</span><span class="o">:</span> <span class="s2">&#34;TAmXc5JmMecTSexXydSnJmaZEUxFgAxMw7&#34;</span><span class="p">,</span> <span class="c1">//sdhl
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">transaction</span><span class="o">:</span> <span class="s2">&#34;5d760063a0969530842ed933836f6fb6f81e593fc913e83a1acb5707e61f7f41&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//获取交易详情
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">getTransaction</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 交易单号 d449953019071634a0ffe0f969908480478c4293f61c3bd6276f5b05152bc798
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">getTransaction</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">transaction</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">result</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;交易单号:&#34;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">transaction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;&lt;pre&gt;&#34;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;&lt;/pre&gt;&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="kr">async</span> <span class="nx">transferTrx</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">unSignedTxn</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">transactionBuilder</span><span class="p">.</span><span class="nx">sendTrx</span><span class="p">(</span><span class="nx">vue</span><span class="p">.</span><span class="nx">to_address</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">unSignedTxn</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// var unSignedTxnWithNote = await this.tronWeb.transactionBuilder.addUpdateData(unSignedTxn, {data:&#34;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#34;}, &#39;utf8&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="kd">var</span> <span class="nx">unSignedTxnWithNote</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">transactionBuilder</span><span class="p">.</span><span class="nx">addUpdateData</span><span class="p">(</span><span class="nx">unSignedTxn</span><span class="p">,</span> <span class="s2">&#34;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa&#34;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">unSignedTxnWithNote</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">signedTxn</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">unSignedTxnWithNote</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">signedTxn</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// const broastTx = await this.tronWeb.trx.sendRawTransaction(signedTxn);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// console.log( broastTx);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1">// vue.result.push(&#34;调用成功&#34;);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// vue.result.push(&#34;交易订单号:&#34; + broastTx.txid);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// vue.transaction = broastTx.txid;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// this.getTransaction();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//usdt转账
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kr">async</span> <span class="nx">transferUSDT</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kr">const</span> <span class="nx">parameter</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">vue</span><span class="p">.</span><span class="nx">to_address</span><span class="p">},</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;uint256&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">1000</span><span class="p">}];</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">tx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">transactionBuilder</span><span class="p">.</span><span class="nx">triggerSmartContract</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">usdtContract</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;transfer(address,uint256)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">// feeLimit:0.01*Math.pow(10,6),
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">parameter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span>
+</span></span><span class="line"><span class="cl">                <span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">signedTx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">tx</span><span class="p">.</span><span class="nx">transaction</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">broastTx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sendRawTransaction</span><span class="p">(</span><span class="nx">signedTx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">broastTx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;调用成功&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;交易订单号:&#34;</span> <span class="o">+</span> <span class="nx">broastTx</span><span class="p">.</span><span class="nx">txid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">transaction</span> <span class="o">=</span> <span class="nx">broastTx</span><span class="p">.</span><span class="nx">txid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">getTransaction</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//usdt转账 (带备注)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kr">async</span> <span class="nx">transferUSDTRemark</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kr">const</span> <span class="nx">parameter</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">vue</span><span class="p">.</span><span class="nx">to_address</span><span class="p">},</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;uint256&#39;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="mi">1000</span><span class="p">}];</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">tx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">transactionBuilder</span><span class="p">.</span><span class="nx">triggerSmartContract</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">usdtContract</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;transfer(address,uint256)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">// feeLimit:0.01*Math.pow(10,6),
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">parameter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span>
+</span></span><span class="line"><span class="cl">                <span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">transactionBuilder</span><span class="p">.</span><span class="nx">addUpdateData</span><span class="p">(</span><span class="nx">tx</span><span class="p">.</span><span class="nx">transaction</span><span class="p">,</span> <span class="s2">&#34;备注信息&#34;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">signedTx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">r</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">broastTx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sendRawTransaction</span><span class="p">(</span><span class="nx">signedTx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">broastTx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;调用成功&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;交易订单号:&#34;</span> <span class="o">+</span> <span class="nx">broastTx</span><span class="p">.</span><span class="nx">txid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">transaction</span> <span class="o">=</span> <span class="nx">broastTx</span><span class="p">.</span><span class="nx">txid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">getTransaction</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//获取usdt余额
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kr">async</span> <span class="nx">getUSDTBalance</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">contract</span><span class="p">().</span><span class="nx">at</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">usdtContract</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">contract</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">contract</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span><span class="p">).</span><span class="nx">call</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">resp</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">resp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="kd">var</span> <span class="nx">balance</span> <span class="o">=</span> <span class="nx">vue</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">toDecimal</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">_hex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;USDT余额:&#34;</span> <span class="o">+</span> <span class="nx">vue</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">fromSun</span><span class="p">(</span><span class="nx">balance</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//trx转账交易
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kr">async</span> <span class="nx">transaction</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">tx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">transactionBuilder</span><span class="p">.</span><span class="nx">sendTrx</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="mf">0.01</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">to_address</span>
+</span></span><span class="line"><span class="cl">                <span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">signedTx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">tx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">broastTx</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">sendRawTransaction</span><span class="p">(</span><span class="nx">signedTx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;交易订单号:&#34;</span> <span class="o">+</span> <span class="nx">broastTx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">init_tronWeb</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">tronWeb</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">defaultAddress</span><span class="p">.</span><span class="nx">base58</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">defaultAddress</span><span class="p">.</span><span class="nx">base58</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;钱包地址:&#34;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//查询钱包余额
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="kr">async</span> <span class="nx">getBalance</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//当前连接的钱包地址获取 window.tronWeb.defaultAddress.base58
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="kd">var</span> <span class="nx">balance</span> <span class="o">=</span> <span class="kr">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">trx</span><span class="p">.</span><span class="nx">getBalance</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">walletAddress</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;trx可用余额:&#34;</span> <span class="o">+</span> <span class="nx">vue</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">.</span><span class="nx">fromSun</span><span class="p">(</span><span class="nx">balance</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mounted</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">$nextTick</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">vue</span><span class="p">.</span><span class="nx">init_tronWeb</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="nx">vue</span><span class="p">.</span><span class="nx">walletAddress</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">vue</span><span class="p">.</span><span class="nx">walletAddress</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">tronWeb</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="nx">vue</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;请安装tronlink插件或者app上打开&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div>
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li><a href="/tags/dapp/">dapp</a></li>
+        </ul>
+<nav class="paginav">
+  <a class="next" href="/study/php-powerdns/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>php-如何使用powerdns的接口</span>
+  </a>
+</nav>
+
+    </footer>
+</article>
+<script src="https://giscus.app/client.js"
+        data-repo="suguer/giscus.github.io"
+        data-repo-id="R_kgDOH08FpA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOH08FpM4CQ2jj"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
