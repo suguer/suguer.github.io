@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>tronlink-归集系统 | Ken Blog</title>
+<meta name="keywords" content="tronlink">
+<meta name="description" content="前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx
+相关笔记 tronlink-扫块系统,有需要的可先前往了解
+目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出
+前置条件 python
+正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理
+获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
+def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime.">
+<meta name="author" content="Theme PaperMod">
+<link rel="canonical" href="http://www.hello-api.cn/tech/tronlink-002/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="tronlink-归集系统" />
+<meta property="og:description" content="前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx
+相关笔记 tronlink-扫块系统,有需要的可先前往了解
+目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出
+前置条件 python
+正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理
+获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
+def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.hello-api.cn/tech/tronlink-002/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2022-08-20T10:32:00&#43;08:00" />
+<meta property="article:modified_time" content="2022-08-20T10:32:00&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
+
+<meta name="twitter:title" content="tronlink-归集系统"/>
+<meta name="twitter:description" content="前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx
+相关笔记 tronlink-扫块系统,有需要的可先前往了解
+目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出
+前置条件 python
+正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理
+获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
+def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Teches",
+      "item": "http://www.hello-api.cn/tech/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "tronlink-归集系统",
+      "item": "http://www.hello-api.cn/tech/tronlink-002/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "tronlink-归集系统",
+  "name": "tronlink-归集系统",
+  "description": "前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx\n相关笔记 tronlink-扫块系统,有需要的可先前往了解\n目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出\n前置条件 python\n正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理\n获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-\u0026gt;质押)*n-\u0026gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次\ndef get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[\u0026#39;freeNetUsed\u0026#39;] if \u0026#39;freeNetUsed\u0026#39; in getaccountnet else 0 freeNetLimit = getaccountnet[\u0026#39;freeNetLimit\u0026#39;] if \u0026#39;freeNetLimit\u0026#39; in getaccountnet else 0 NetUsed = getaccountnet[\u0026#39;NetUsed\u0026#39;] if \u0026#39;NetUsed\u0026#39; in getaccountnet else 0 NetLimit = getaccountnet[\u0026#39;NetLimit\u0026#39;] if \u0026#39;NetLimit\u0026#39; in getaccountnet else 0 bandwidth = NetLimit + freeNetLimit - NetUsed - freeNetUsed # 质押-\u0026gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(\u0026#34;[%s]:当前带宽:%s 可操作:%s个地址\u0026#34; % (datetime.",
+  "keywords": [
+    "tronlink"
+  ],
+  "articleBody": "前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx\n相关笔记 tronlink-扫块系统,有需要的可先前往了解\n目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出\n前置条件 python\n正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理\n获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-\u003e质押)*n-\u003e投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次\ndef get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet['freeNetUsed'] if 'freeNetUsed' in getaccountnet else 0 freeNetLimit = getaccountnet['freeNetLimit'] if 'freeNetLimit' in getaccountnet else 0 NetUsed = getaccountnet['NetUsed'] if 'NetUsed' in getaccountnet else 0 NetLimit = getaccountnet['NetLimit'] if 'NetLimit' in getaccountnet else 0 bandwidth = NetLimit + freeNetLimit - NetUsed - freeNetUsed # 质押-\u003e投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(\"[%s]:当前带宽:%s 可操作:%s个地址\" % (datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"),bandwidth,counts)) return counts 从接口或者数据库中查询需要冻结的钱包 本项目的子钱包的表由于需要保存到密钥,因此相对放在另一处服务器保存比较完全\ndef get_need_freeze_array(): try: global default_min_energy url = \"api url\" response = requests.get(url) data = response.json() if 'status_code' in data: print(\"[%s]:请求需冻结钱包失败,返回:[%s]%s\" % ( datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"), data['status_code'], data['message'])) return [] if 'Energy' in data: default_min_energy=data['Energy'] if 'Data' not in data: return [] return data['Data'] except Exception as r: return [] 如使用仿照例子则接口返回的格式如下\n{\"Data\":[{\"address\":\"TBbcpKgoEW56RDXDyFvCkNmtNGMnruZDF9\"}],\"Energy\":20000} 计算子钱包归集转账一次需要冻结多少trx 归集的能量如需要20000,但需要换算出具体需要多少trx,而这个值是需要根据全网的情况换算得出,不能固定写死的\ndef get_min_trx(tronapi): account = tronapi.getaccount() account_balance = math.floor(account['balance'] / TRX) if 'balance' in account else 0 time.sleep(1) getaccountnet = tronapi.getaccountresource() # 换算计算出当前最低需冻结的trx min_trx = 10 + math.ceil( default_min_energy / (getaccountnet['TotalEnergyLimit'] / getaccountnet['TotalEnergyWeight'])) tronPowerLimit = getaccountnet['tronPowerLimit'] if 'tronPowerLimit' in getaccountnet else 0 print( \"[%s]:总TRX %s,可用TRX %s,已冻结 %s,单次最低 %s\" % ( datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"), tronPowerLimit + account_balance, account_balance, tronPowerLimit, min_trx)) return {\"min_trx\": min_trx} 解冻历史的已冻结过的钱包 need_unfreeze_count 需要解冻的数量, 如目前已冻结了10个钱包,我可能只需要解冻2~3个就满足该次的需求,那么就没必要把全部的钱包都解冻了,这样可以保证在tronlink中的投票收益最大化,而且解冻过程中需要使用主钱包的带宽,用过多的带宽也是会损耗trx的,\ndef unfreeze_address(tronapi, need_unfreeze_count=0): excute_unfreeze_address = False try: now_unfreeze_count = 0 newJson = [] self_unfreeze = tronapi.unfreeze_balance() time.sleep(1) if not self_unfreeze.get('response').get(\"Error\"): excute_unfreeze_address = True else: newJson.append({'address': energy_config.owner_address}) GetDelegatedResourceAccountIndex = tronapi.GetDelegatedResourceAccountIndex() array = GetDelegatedResourceAccountIndex['toAccounts'] print( \"[%s]:已冻结用户:%s 个\" % ( datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"), len(array))) for address in array: GetDelegatedResource = tronapi.GetDelegatedResource(keys.to_base58check_address(address)) time.sleep(1) expire_time = None resource = \"ENERGY\" try: expire_time = GetDelegatedResource['delegatedResource'][0]['expire_time_for_energy'] resource=\"ENERGY\" except Exception as r: expire_time = GetDelegatedResource['delegatedResource'][0]['expire_time_for_bandwidth'] resource=\"BANDWIDTH\" if expire_time is not None and (int(time.time() * 1000) \u003e expire_time): if now_unfreeze_count \u003c need_unfreeze_count: print(\"[%s]:地址:%s 已解冻\" % (datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"), keys.to_base58check_address(address),)) tronapi.unfreeze_balance(receiver=keys.to_base58check_address(address),resource=resource) time.sleep(1) excute_unfreeze_address = True now_unfreeze_count = now_unfreeze_count + 1 else: newJson.append({'address': keys.to_base58check_address(address)}) else: print(\"[%s]:地址:%s 解冻 %s\" % (datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"), keys.to_base58check_address(address), time.strftime(\"%Y-%m-%d %H:%M:%S\", time.localtime( GetDelegatedResource['delegatedResource'][0][ 'expire_time_for_energy'] / 1000)) )) newJson.append({'address': keys.to_base58check_address(address)}) return {'newJson': newJson, 'excute_unfreeze_address': excute_unfreeze_address} except Exception as r: print(\"[%s]:解冻流程报错:%s\" % (datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\"),r)) return {'newJson': [], 'excute_unfreeze_address': False} 主循环程序 流程说明:\n获取需要新冻结的钱包列表,换算该次执行的单次能量的最小trx,主钱包可冻结的钱包数 循环执行冻结 投票获取收益 睡眠等到下次的执行时间 def now_time_format(): return datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S\") tronapi = Tronapi( network=energy_config.environment, priv_key=energy_config.owner_key, owner=energy_config.owner_address ) while True: try: default_min_energy = energy_config.default_min_energy need_freeze_array = get_need_freeze_array() resp = get_min_trx(tronapi) min_trx = resp['min_trx'] time.sleep(1) print( \"[%s]:需冻结%s 个\" % (now_time_format(), len(need_freeze_array))) if len(need_freeze_array) \u003e 0: #是否需要投票 isNeedvote = False max_unfreeze_count = get_max_unfreeze_count(tronapi) if max_unfreeze_count \u003c= 0: print( \"[%s]:当前带宽不足 \" % (now_time_format())) raise BaseException(\"60\") need_unfreeze_count=len(need_freeze_array) if len(need_freeze_array)\u003cmax_unfreeze_count else max_unfreeze_count newJsonResp = unfreeze_address( tronapi, need_unfreeze_count=need_unfreeze_count) newJson = newJsonResp['newJson'] excute_unfreeze_address = newJsonResp['excute_unfreeze_address'] time.sleep(1) getaccountnet = tronapi.getaccountresource() tronPowerLimit = getaccountnet['tronPowerLimit'] if 'tronPowerLimit' in getaccountnet else 0 time.sleep(1) account = tronapi.getaccount() account_balance = math.floor(account['balance'] / TRX) if 'balance' in account else 0 print( \"[%s]:总TRX%s,可用TRX%s,已冻结%s\" % (now_time_format(), tronPowerLimit + account_balance, account_balance, tronPowerLimit)) address_array = [(item.get('address')) for n, item in enumerate(newJson)] for i in range(max_unfreeze_count): target = need_freeze_array.pop() if target['address'] not in address_array: freeze_resp = tronapi.freeze_balance(amount=min_trx, receiver=target['address']) if freeze_resp.get('response').get(\"Error\"): print( \"[%s]:地址 %s,冻结失败%s\" % (now_time_format(), target['address'], freeze_resp.get('response').get(\"Error\"))) else: isNeedvote = True print(\"[%s]:地址 %s,冻结能量%s\" % (now_time_format(), target['address'], min_trx)) newJson.append({\"address\": target['address']}) time.sleep(5) if len(need_freeze_array) == 0: break getaccountnet = tronapi.getaccountresource() tronPowerLimit = getaccountnet['tronPowerLimit'] if 'tronPowerLimit' in getaccountnet else 0 if (tronPowerLimit \u003e 0 and isNeedvote is True) or excute_unfreeze_address is True: vote_witness_account_resp = tronapi.vote_witness_account( vote_count=tronPowerLimit, vote_address=energy_config.vote_address) print( \"[%s]:已冻结 %s,投票 %s\" % (now_time_format(), tronPowerLimit, energy_config.vote_address)) print( \"[%s]:执行结束\" % (now_time_format())) time.sleep(60 * 30) else: time.sleep(60 * 30) except BaseException as e: time.sleep(60 * int(str(e))) ",
+  "wordCount" : "556",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-20T10:32:00+08:00",
+  "dateModified": "2022-08-20T10:32:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Theme PaperMod"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://www.hello-api.cn/tech/tronlink-002/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Ken Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://www.hello-api.cn/favicon.ico"
+    }
+  }
+}
+</script><meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
+<meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
+
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://www.hello-api.cn/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+    <header class="post-header">
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tech/">Teches</a></div>
+        <h1 class="post-title">
+            tronlink-归集系统
+        </h1>
+        <div class="post-meta"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/tronlink-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+    </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%89%8d%e8%a8%80" aria-label="前言">前言</a></li>
+                <li>
+                    <a href="#%e7%9b%ae%e6%a0%87" aria-label="目标">目标</a></li>
+                <li>
+                    <a href="#%e5%89%8d%e7%bd%ae%e6%9d%a1%e4%bb%b6" aria-label="前置条件">前置条件</a></li>
+                <li>
+                    <a href="#%e6%ad%a3%e5%bc%8f%e5%86%85%e5%ae%b9" aria-label="正式内容">正式内容</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#%e8%8e%b7%e5%8f%96%e5%bd%93%e6%ac%a1%e5%8f%af%e5%86%bb%e7%bb%93%e7%9a%84%e9%92%b1%e5%8c%85%e6%95%b0" aria-label="获取当次可冻结的钱包数">获取当次可冻结的钱包数</a></li>
+                <li>
+                    <a href="#%e4%bb%8e%e6%8e%a5%e5%8f%a3%e6%88%96%e8%80%85%e6%95%b0%e6%8d%ae%e5%ba%93%e4%b8%ad%e6%9f%a5%e8%af%a2%e9%9c%80%e8%a6%81%e5%86%bb%e7%bb%93%e7%9a%84%e9%92%b1%e5%8c%85" aria-label="从接口或者数据库中查询需要冻结的钱包">从接口或者数据库中查询需要冻结的钱包</a></li>
+                <li>
+                    <a href="#%e8%ae%a1%e7%ae%97%e5%ad%90%e9%92%b1%e5%8c%85%e5%bd%92%e9%9b%86%e8%bd%ac%e8%b4%a6%e4%b8%80%e6%ac%a1%e9%9c%80%e8%a6%81%e5%86%bb%e7%bb%93%e5%a4%9a%e5%b0%91trx" aria-label="计算子钱包归集转账一次需要冻结多少trx">计算子钱包归集转账一次需要冻结多少trx</a></li>
+                <li>
+                    <a href="#%e8%a7%a3%e5%86%bb%e5%8e%86%e5%8f%b2%e7%9a%84%e5%b7%b2%e5%86%bb%e7%bb%93%e8%bf%87%e7%9a%84%e9%92%b1%e5%8c%85" aria-label="解冻历史的已冻结过的钱包">解冻历史的已冻结过的钱包</a></li>
+                <li>
+                    <a href="#%e4%b8%bb%e5%be%aa%e7%8e%af%e7%a8%8b%e5%ba%8f" aria-label="主循环程序">主循环程序</a>
+                </li>
+            </ul>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+    <div class="post-content"><h2 id="前言">前言<a hidden class="anchor" aria-hidden="true" href="#前言">#</a></h2>
+<p>首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx</p>
+<p>相关笔记 <a href="/tech/tronlink-001/">tronlink-扫块系统</a>,有需要的可先前往了解</p>
+<h2 id="目标">目标<a hidden class="anchor" aria-hidden="true" href="#目标">#</a></h2>
+<p>搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出</p>
+<h2 id="前置条件">前置条件<a hidden class="anchor" aria-hidden="true" href="#前置条件">#</a></h2>
+<p>python</p>
+<h2 id="正式内容">正式内容<a hidden class="anchor" aria-hidden="true" href="#正式内容">#</a></h2>
+<p>下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理</p>
+<h4 id="获取当次可冻结的钱包数">获取当次可冻结的钱包数<a hidden class="anchor" aria-hidden="true" href="#获取当次可冻结的钱包数">#</a></h4>
+<p>每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_max_unfreeze_count</span><span class="p">(</span><span class="n">tronapi</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">once</span> <span class="o">=</span> <span class="mi">300</span>
+</span></span><span class="line"><span class="cl">    <span class="n">getaccountnet</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">getaccountresource</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">freeNetUsed</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;freeNetUsed&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;freeNetUsed&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">freeNetLimit</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;freeNetLimit&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;freeNetLimit&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NetUsed</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;NetUsed&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;NetUsed&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NetLimit</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;NetLimit&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;NetLimit&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">NetLimit</span> <span class="o">+</span> <span class="n">freeNetLimit</span> <span class="o">-</span> <span class="n">NetUsed</span> <span class="o">-</span> <span class="n">freeNetUsed</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 质押-&gt;投票 固定操作两次</span>
+</span></span><span class="line"><span class="cl">    <span class="n">counts</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">bandwidth</span><span class="o">-</span><span class="n">once</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">once</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:当前带宽:</span><span class="si">%s</span><span class="s2"> 可操作:</span><span class="si">%s</span><span class="s2">个地址&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span><span class="n">bandwidth</span><span class="p">,</span><span class="n">counts</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">counts</span>
+</span></span></code></pre></div><h4 id="从接口或者数据库中查询需要冻结的钱包">从接口或者数据库中查询需要冻结的钱包<a hidden class="anchor" aria-hidden="true" href="#从接口或者数据库中查询需要冻结的钱包">#</a></h4>
+<p>本项目的子钱包的表由于需要保存到密钥,因此相对放在另一处服务器保存比较完全</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_need_freeze_array</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">global</span> <span class="n">default_min_energy</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;api url&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;status_code&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:请求需冻结钱包失败,返回:[</span><span class="si">%s</span><span class="s2">]</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;status_code&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;Energy&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">default_min_energy</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="s1">&#39;Data&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">[]</span>
+</span></span></code></pre></div><p>如使用仿照例子则接口返回的格式如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span><span class="nt">&#34;Data&#34;</span><span class="p">:[{</span><span class="nt">&#34;address&#34;</span><span class="p">:</span><span class="s2">&#34;TBbcpKgoEW56RDXDyFvCkNmtNGMnruZDF9&#34;</span><span class="p">}],</span><span class="nt">&#34;Energy&#34;</span><span class="p">:</span><span class="mi">20000</span><span class="p">}</span>
+</span></span></code></pre></div><h4 id="计算子钱包归集转账一次需要冻结多少trx">计算子钱包归集转账一次需要冻结多少trx<a hidden class="anchor" aria-hidden="true" href="#计算子钱包归集转账一次需要冻结多少trx">#</a></h4>
+<p>归集的能量如需要20000,但需要换算出具体需要多少trx,而这个值是需要根据全网的情况换算得出,不能固定写死的</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_min_trx</span><span class="p">(</span><span class="n">tronapi</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">account</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">getaccount</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">account_balance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">account</span><span class="p">[</span><span class="s1">&#39;balance&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">TRX</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;balance&#39;</span> <span class="ow">in</span> <span class="n">account</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">getaccountnet</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">getaccountresource</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 换算计算出当前最低需冻结的trx</span>
+</span></span><span class="line"><span class="cl">    <span class="n">min_trx</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">default_min_energy</span> <span class="o">/</span> <span class="p">(</span><span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;TotalEnergyLimit&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;TotalEnergyWeight&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tronPowerLimit</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;tronPowerLimit&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;tronPowerLimit&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:总TRX </span><span class="si">%s</span><span class="s2">,可用TRX </span><span class="si">%s</span><span class="s2">,已冻结 </span><span class="si">%s</span><span class="s2">,单次最低 </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span> <span class="n">tronPowerLimit</span> <span class="o">+</span> <span class="n">account_balance</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">account_balance</span><span class="p">,</span> <span class="n">tronPowerLimit</span><span class="p">,</span> <span class="n">min_trx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;min_trx&#34;</span><span class="p">:</span> <span class="n">min_trx</span><span class="p">}</span>
+</span></span></code></pre></div><h4 id="解冻历史的已冻结过的钱包">解冻历史的已冻结过的钱包<a hidden class="anchor" aria-hidden="true" href="#解冻历史的已冻结过的钱包">#</a></h4>
+<p>need_unfreeze_count 需要解冻的数量,
+如目前已冻结了10个钱包,我可能只需要解冻2~3个就满足该次的需求,那么就没必要把全部的钱包都解冻了,这样可以保证在tronlink中的投票收益最大化,而且解冻过程中需要使用主钱包的带宽,用过多的带宽也是会损耗trx的,</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">unfreeze_address</span><span class="p">(</span><span class="n">tronapi</span><span class="p">,</span> <span class="n">need_unfreeze_count</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excute_unfreeze_address</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">now_unfreeze_count</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="n">newJson</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">self_unfreeze</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">unfreeze_balance</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">self_unfreeze</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;Error&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">excute_unfreeze_address</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newJson</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">energy_config</span><span class="o">.</span><span class="n">owner_address</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GetDelegatedResourceAccountIndex</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">GetDelegatedResourceAccountIndex</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">array</span> <span class="o">=</span> <span class="n">GetDelegatedResourceAccountIndex</span><span class="p">[</span><span class="s1">&#39;toAccounts&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:已冻结用户:</span><span class="si">%s</span><span class="s2"> 个&#34;</span> <span class="o">%</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">address</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">GetDelegatedResource</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">GetDelegatedResource</span><span class="p">(</span><span class="n">keys</span><span class="o">.</span><span class="n">to_base58check_address</span><span class="p">(</span><span class="n">address</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expire_time</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">            <span class="n">resource</span> <span class="o">=</span> <span class="s2">&#34;ENERGY&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">expire_time</span> <span class="o">=</span> <span class="n">GetDelegatedResource</span><span class="p">[</span><span class="s1">&#39;delegatedResource&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;expire_time_for_energy&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="n">resource</span><span class="o">=</span><span class="s2">&#34;ENERGY&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">expire_time</span> <span class="o">=</span> <span class="n">GetDelegatedResource</span><span class="p">[</span><span class="s1">&#39;delegatedResource&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;expire_time_for_bandwidth&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="n">resource</span><span class="o">=</span><span class="s2">&#34;BANDWIDTH&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">expire_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">expire_time</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span>  <span class="n">now_unfreeze_count</span> <span class="o">&lt;</span> <span class="n">need_unfreeze_count</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:地址:</span><span class="si">%s</span><span class="s2"> 已解冻&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                                     <span class="n">keys</span><span class="o">.</span><span class="n">to_base58check_address</span><span class="p">(</span><span class="n">address</span><span class="p">),))</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">tronapi</span><span class="o">.</span><span class="n">unfreeze_balance</span><span class="p">(</span><span class="n">receiver</span><span class="o">=</span><span class="n">keys</span><span class="o">.</span><span class="n">to_base58check_address</span><span class="p">(</span><span class="n">address</span><span class="p">),</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">excute_unfreeze_address</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">now_unfreeze_count</span> <span class="o">=</span> <span class="n">now_unfreeze_count</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">newJson</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">keys</span><span class="o">.</span><span class="n">to_base58check_address</span><span class="p">(</span><span class="n">address</span><span class="p">)})</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:地址:</span><span class="si">%s</span><span class="s2"> 解冻 </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="n">keys</span><span class="o">.</span><span class="n">to_base58check_address</span><span class="p">(</span><span class="n">address</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                                                       <span class="n">GetDelegatedResource</span><span class="p">[</span><span class="s1">&#39;delegatedResource&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span>
+</span></span><span class="line"><span class="cl">                                                           <span class="s1">&#39;expire_time_for_energy&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                                                   <span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="n">newJson</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="n">keys</span><span class="o">.</span><span class="n">to_base58check_address</span><span class="p">(</span><span class="n">address</span><span class="p">)})</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;newJson&#39;</span><span class="p">:</span> <span class="n">newJson</span><span class="p">,</span> <span class="s1">&#39;excute_unfreeze_address&#39;</span><span class="p">:</span> <span class="n">excute_unfreeze_address</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:解冻流程报错:</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">),</span><span class="n">r</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;newJson&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;excute_unfreeze_address&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</span></span></code></pre></div><h4 id="主循环程序">主循环程序<a hidden class="anchor" aria-hidden="true" href="#主循环程序">#</a></h4>
+<p>流程说明:</p>
+<ol>
+<li>获取需要新冻结的钱包列表,换算该次执行的单次能量的最小trx,主钱包可冻结的钱包数</li>
+<li>循环执行冻结</li>
+<li>投票获取收益</li>
+<li>睡眠等到下次的执行时间</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">now_time_format</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tronapi</span> <span class="o">=</span> <span class="n">Tronapi</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">network</span><span class="o">=</span><span class="n">energy_config</span><span class="o">.</span><span class="n">environment</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">priv_key</span><span class="o">=</span><span class="n">energy_config</span><span class="o">.</span><span class="n">owner_key</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">owner</span><span class="o">=</span><span class="n">energy_config</span><span class="o">.</span><span class="n">owner_address</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">default_min_energy</span> <span class="o">=</span> <span class="n">energy_config</span><span class="o">.</span><span class="n">default_min_energy</span>
+</span></span><span class="line"><span class="cl">        <span class="n">need_freeze_array</span> <span class="o">=</span> <span class="n">get_need_freeze_array</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">resp</span> <span class="o">=</span> <span class="n">get_min_trx</span><span class="p">(</span><span class="n">tronapi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">min_trx</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;min_trx&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:需冻结</span><span class="si">%s</span><span class="s2"> 个&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">need_freeze_array</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">need_freeze_array</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#是否需要投票</span>
+</span></span><span class="line"><span class="cl">            <span class="n">isNeedvote</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">            <span class="n">max_unfreeze_count</span> <span class="o">=</span> <span class="n">get_max_unfreeze_count</span><span class="p">(</span><span class="n">tronapi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">max_unfreeze_count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:当前带宽不足 &#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">                <span class="k">raise</span> <span class="ne">BaseException</span><span class="p">(</span><span class="s2">&#34;60&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">need_unfreeze_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">need_freeze_array</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">need_freeze_array</span><span class="p">)</span><span class="o">&lt;</span><span class="n">max_unfreeze_count</span> <span class="k">else</span> <span class="n">max_unfreeze_count</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newJsonResp</span> <span class="o">=</span> <span class="n">unfreeze_address</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tronapi</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">need_unfreeze_count</span><span class="o">=</span><span class="n">need_unfreeze_count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">newJson</span> <span class="o">=</span> <span class="n">newJsonResp</span><span class="p">[</span><span class="s1">&#39;newJson&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">excute_unfreeze_address</span> <span class="o">=</span> <span class="n">newJsonResp</span><span class="p">[</span><span class="s1">&#39;excute_unfreeze_address&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">getaccountnet</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">getaccountresource</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tronPowerLimit</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;tronPowerLimit&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;tronPowerLimit&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">account</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">getaccount</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">account_balance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">account</span><span class="p">[</span><span class="s1">&#39;balance&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">TRX</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;balance&#39;</span> <span class="ow">in</span> <span class="n">account</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:总TRX</span><span class="si">%s</span><span class="s2">,可用TRX</span><span class="si">%s</span><span class="s2">,已冻结</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">(),</span> <span class="n">tronPowerLimit</span> <span class="o">+</span> <span class="n">account_balance</span><span class="p">,</span> <span class="n">account_balance</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tronPowerLimit</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">address_array</span> <span class="o">=</span> <span class="p">[(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;address&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">newJson</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_unfreeze_count</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">target</span> <span class="o">=</span> <span class="n">need_freeze_array</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">target</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">address_array</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">freeze_resp</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">freeze_balance</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">min_trx</span><span class="p">,</span> <span class="n">receiver</span><span class="o">=</span><span class="n">target</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">freeze_resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;Error&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                        <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:地址 </span><span class="si">%s</span><span class="s2">,冻结失败</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">(),</span> <span class="n">target</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">],</span> <span class="n">freeze_resp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;Error&#34;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">isNeedvote</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">                        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:地址 </span><span class="si">%s</span><span class="s2">,冻结能量</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">(),</span> <span class="n">target</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">],</span> <span class="n">min_trx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">newJson</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&#34;address&#34;</span><span class="p">:</span> <span class="n">target</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]})</span>
+</span></span><span class="line"><span class="cl">                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">need_freeze_array</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span>
+</span></span><span class="line"><span class="cl">            <span class="n">getaccountnet</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">getaccountresource</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tronPowerLimit</span> <span class="o">=</span> <span class="n">getaccountnet</span><span class="p">[</span><span class="s1">&#39;tronPowerLimit&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;tronPowerLimit&#39;</span> <span class="ow">in</span> <span class="n">getaccountnet</span> <span class="k">else</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">tronPowerLimit</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">isNeedvote</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="ow">or</span> <span class="n">excute_unfreeze_address</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">vote_witness_account_resp</span> <span class="o">=</span> <span class="n">tronapi</span><span class="o">.</span><span class="n">vote_witness_account</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">vote_count</span><span class="o">=</span><span class="n">tronPowerLimit</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">vote_address</span><span class="o">=</span><span class="n">energy_config</span><span class="o">.</span><span class="n">vote_address</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:已冻结 </span><span class="si">%s</span><span class="s2">,投票 </span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">(),</span> <span class="n">tronPowerLimit</span><span class="p">,</span> <span class="n">energy_config</span><span class="o">.</span><span class="n">vote_address</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span> <span class="s2">&#34;[</span><span class="si">%s</span><span class="s2">]:执行结束&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">now_time_format</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+</span></span></code></pre></div>
+
+    </div>
+
+    <footer class="post-footer">
+        <ul class="post-tags">
+            <li><a href="http://www.hello-api.cn/tags/tronlink/">tronlink</a></li>
+        </ul>
+
+    </footer>
+</article>
+<script src="https://giscus.app/client.js"
+        data-repo="suguer/giscus.github.io"
+        data-repo-id="R_kgDOH08FpA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOH08FpM4CQ2jj"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
+    <span>
+       Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+    <a href="http://beian.miit.gov.cn/" target="_blank">粤ICP备19150058号</a>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

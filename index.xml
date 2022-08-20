@@ -9,7 +9,7 @@
       <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Aug 2022 10:32:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Installation | Update</title>
       <link>http://www.hello-api.cn/posts/papermod/papermod-installation/</link>
@@ -26,6 +26,21 @@
       
       <guid>http://www.hello-api.cn/posts/papermod/papermod-features/</guid>
       <description>Learn About All Features in PaperMod</description>
+    </item>
+    
+    <item>
+      <title>tronlink-归集系统</title>
+      <link>http://www.hello-api.cn/tech/tronlink-002/</link>
+      <pubDate>Sat, 20 Aug 2022 10:32:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/tech/tronlink-002/</guid>
+      <description>前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx
+相关笔记 tronlink-扫块系统,有需要的可先前往了解
+目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出
+前置条件 python
+正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理
+获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&amp;gt;质押)*n-&amp;gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
+def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&amp;#39;freeNetUsed&amp;#39;] if &amp;#39;freeNetUsed&amp;#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&amp;#39;freeNetLimit&amp;#39;] if &amp;#39;freeNetLimit&amp;#39; in getaccountnet else 0 NetUsed = getaccountnet[&amp;#39;NetUsed&amp;#39;] if &amp;#39;NetUsed&amp;#39; in getaccountnet else 0 NetLimit = getaccountnet[&amp;#39;NetLimit&amp;#39;] if &amp;#39;NetLimit&amp;#39; in getaccountnet else 0 bandwidth = NetLimit + freeNetLimit - NetUsed - freeNetUsed # 质押-&amp;gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&amp;#34;[%s]:当前带宽:%s 可操作:%s个地址&amp;#34; % (datetime.</description>
     </item>
     
     <item>
@@ -186,7 +201,7 @@ def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread,
     </item>
     
     <item>
-      <title>tronlink-从0到1搭建自己的归集系统</title>
+      <title>tronlink-扫块系统</title>
       <link>http://www.hello-api.cn/tech/tronlink-001/</link>
       <pubDate>Tue, 16 Aug 2022 10:15:00 +0800</pubDate>
       

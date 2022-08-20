@@ -145,7 +145,25 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
-    <h2>tronlink-从0到1搭建自己的归集系统
+    <h2>tronlink-归集系统
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 首先要了解下tronlink的交易机制,进行trc20如usdt和usdc转账的时候,如果没有冻结能量将会损耗一定的trx,该系统的目的就是减少这部分损耗的trx
+相关笔记 tronlink-扫块系统,有需要的可先前往了解
+目标 搭建冻结能量系统,例如你有10000trx后,在自己的交易系统里可以根据需求为自己的子钱包进行冻结能量,减少trx的支出
+前置条件 python
+正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理
+获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
+def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to tronlink-归集系统" href="http://www.hello-api.cn/tech/tronlink-002/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>tronlink-扫块系统
     </h2>
   </header>
   <div class="entry-content">
@@ -160,7 +178,7 @@
 数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API...</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to tronlink-从0到1搭建自己的归集系统" href="http://www.hello-api.cn/tech/tronlink-001/"></a>
+  <a class="entry-link" aria-label="post link to tronlink-扫块系统" href="http://www.hello-api.cn/tech/tronlink-001/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 

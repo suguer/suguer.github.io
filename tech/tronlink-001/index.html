@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>tronlink-从0到1搭建自己的归集系统 | Ken Blog</title>
+<title>tronlink-扫块系统 | Ken Blog</title>
 <meta name="keywords" content="tronlink">
 <meta name="description" content="前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
 目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
@@ -62,7 +62,7 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="tronlink-从0到1搭建自己的归集系统" />
+</noscript><meta property="og:title" content="tronlink-扫块系统" />
 <meta property="og:description" content="前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
 目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
 前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
@@ -80,7 +80,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
-<meta name="twitter:title" content="tronlink-从0到1搭建自己的归集系统"/>
+<meta name="twitter:title" content="tronlink-扫块系统"/>
 <meta name="twitter:description" content="前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
 目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
 前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
@@ -106,7 +106,7 @@
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "tronlink-从0到1搭建自己的归集系统",
+      "name": "tronlink-扫块系统",
       "item": "http://www.hello-api.cn/tech/tronlink-001/"
     }
   ]
@@ -116,14 +116,14 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "tronlink-从0到1搭建自己的归集系统",
-  "name": "tronlink-从0到1搭建自己的归集系统",
+  "headline": "tronlink-扫块系统",
+  "name": "tronlink-扫块系统",
   "description": "前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,\n目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用\n前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多\n1个总钱包,其中会扩展的功能有,分发冻结能量,收款,激活钱包,也可以看业务需要拆开成3个钱包\n开发环境: python mysql\n正式内容 所有的接口以及交互均来自 波场链官网文档 ,如果对于文档不太熟的同学请先阅读了解下波场链的交易流程\n主要数据结构 节点数据 block_chain_block\n数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet\n数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API",
   "keywords": [
     "tronlink"
   ],
-  "articleBody": "前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,\n目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用\n前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多\n1个总钱包,其中会扩展的功能有,分发冻结能量,收款,激活钱包,也可以看业务需要拆开成3个钱包\n开发环境: python mysql\n正式内容 所有的接口以及交互均来自 波场链官网文档 ,如果对于文档不太熟的同学请先阅读了解下波场链的交易流程\n主要数据结构 节点数据 block_chain_block\n数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet\n数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API\n查询当前最新节点 文档 通过接口获取到当前最新节点和本地已同步的节点比较,能知道当前程序同步的情况如何,如果存在\"追不上\"差值越来越大,可能需要增加线程处理等方式 接口: /walletsolidity/getnowblock\n{ \"blockID\": \"000000000198e6cee71c8e83366b925e64c5cf715529ac009bfbaff132e98d6b\", \"block_header\": { \"raw_data\": { \"number\": 26797774, \"txTrieRoot\": \"f5689c087055959a66ac7638e79c57319dffb84631992852791a3f47784b267e\", \"witness_address\": \"41d42e593de3cee8156934cc2182ef4d107e9291f0\", \"parentHash\": \"000000000198e6cde394799dcc330b00422a8cc028be767526e1f1500afcd682\", \"version\": 24, \"timestamp\": 1660618479000 }, \"witness_signature\": \"c4317733f65fe7a9f3d235f9037b903cb1e3c6b2192f4dce5a24930c92f0663167ed9dbbdb5c134692c107416d44a874d07fd62dc61fed4bde318eae3adf8f0300\" }, \"transactions\": [ { \"ret\": [ { \"contractRet\": \"SUCCESS\" } ], \"signature\": [ \"fd0750453b2ae27ae02df417b724518ceac4fb432181f30dafddc2e73d83784768143ae9e12cb15816c9f852436f48303fd927aa3e6908cc9880ecf505fffe8300\" ], \"txID\": \"92e168626aa79ed3c307ce2030acf12aa92dcb6114f66b53a8243dba738ea720\", \"raw_data\": { \"contract\": [ { \"parameter\": { \"value\": { \"amount\": 650, \"owner_address\": \"411b51ed3f22cec14b4c53abb99c4f5bff1aa5b5d1\", \"to_address\": \"41a7040c812f5e8188243bc781dfbcace984ec832b\" }, \"type_url\": \"type.googleapis.com/protocol.TransferContract\" }, \"type\": \"TransferContract\" } ], \"ref_block_bytes\": \"e6bb\", \"ref_block_hash\": \"2f39e8e056fb3672\", \"expiration\": 1660618536000, \"timestamp\": 1660618476362 }, \"raw_data_hex\": \"0a02e6bb22082f39e8e056fb367240c0e8cfa4aa305a66080112620a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412310a15411b51ed3f22cec14b4c53abb99c4f5bff1aa5b5d1121541a7040c812f5e8188243bc781dfbcace984ec832b188a0570ca96cca4aa30\" }, { \"ret\": [ { \"contractRet\": \"SUCCESS\" } ], \"signature\": [ \"6fc213cc693d9aadf7941792e5ee35dd33203290428391be499e9ea1f9799febbc5265eea5ed342b5c006a8a9e7113bbc34ecf148005e32cd8ea127ecbd094a700\" ], \"txID\": \"48855473d1263692f6b8ce34c654996cdb05d89fcbd7c8eb152736fcd4c10bb7\", \"raw_data\": { \"contract\": [ { \"parameter\": { \"value\": { \"amount\": 60500, \"owner_address\": \"41b3dbb883203c53cdf3d7d85521ee8322c1d92125\", \"to_address\": \"41000e42c42d4d525eb291ef7374da28d3f251c9b0\" }, \"type_url\": \"type.googleapis.com/protocol.TransferContract\" }, \"type\": \"TransferContract\" } ], \"ref_block_bytes\": \"e6bb\", \"ref_block_hash\": \"2f39e8e056fb3672\", \"expiration\": 1660618537006, \"timestamp\": 1660618477006 }, \"raw_data_hex\": \"0a02e6bb22082f39e8e056fb367240aef0cfa4aa305a67080112630a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412320a1541b3dbb883203c53cdf3d7d85521ee8322c1d92125121541000e42c42d4d525eb291ef7374da28d3f251c9b018d4d80370ce9bcca4aa30\" } ] } 当前节点为 now_block_num = int(GetNowBlock.get(‘block_header’).get(‘raw_data’).get(’number’))\n查询数据表中已同步最新的节点 block = session.query(BlockChainBlock).order_by(BlockChainBlock.id.desc()).first() if block is None: blocksnum = now_block_num - 95 else: blocksnum = block.id + 1 if blocksnum \u003e now_block_num: print(\"扫块速度过快超过波场出块,停歇一会\") time.sleep(3) continue 每次按批查询一定节点的数据 min_block_num = min(blocksnum + 30, now_block_num) for i in range(blocksnum, min_block_num): block = session.query(BlockChainBlock).filter(BlockChainBlock.id == i).first() if block is not None: continue else: block = BlockChainBlock( id=i, total=0, active=0, created_at=datetime.datetime.now(), updated_at=datetime.datetime.now(), ) session.add(block) session.commit() req = WorkRequest(handleThread, args=[i, 1], kwds={}) main.putRequest(req) # 将之前没同步到的区块重新查一下 history_block_list = session.query(BlockChainBlock) \\ .filter( # BlockChainBlock.ended_at == None, BlockChainBlock.error == '503 Service Temporarily Unavailable', BlockChainBlock.updated_at \u003c= (datetime.datetime.now() - datetime.timedelta(minutes=15)).strftime(\"%Y-%m-%d %H:%M:%S\")) \\ .all() for block in history_block_list: block.updated_at = datetime.datetime.now() session.add(block) session.commit() req = WorkRequest(handleThread, args=[block.id, 1], kwds={}) main.putRequest(req) try: # 清理一下历史没问题的节点数据,释放数据库空间 session.query(BlockChainBlock).filter( BlockChainBlock.active == 0, # BlockChainBlock.ended_at != None, BlockChainBlock.updated_at \u003c= (datetime.datetime.now() - datetime.timedelta(hours=6)).strftime(\"%Y-%m-%d %H:%M:%S\") ).delete() session.commit() except Exception as e: print(e) pass # 如果当前最新需同步的区块较少的,可等待久点累积一下 if min_block_num - blocksnum \u003c 5: time.sleep(10) else: time.sleep(1) 处理节点数据,获取交易列表详情\n这段的代码比较多,基本来说就是获取每个节点下的交易数据,然后把每条交易数据进行解析,获取需要合约地址,金额,对象,时间,这样处理后扫块的流程基本就完结 pool_engine = create_engine(config.SQLALCHEMY_DATABASE_URI, pool_size=10, max_overflow=10, pool_timeout=180) PoolSession = sessionmaker(bind=pool_engine) def handleThread(blocksnum, delay=0): trx = Trx(None) session = PoolSession() block = session.query(BlockChainBlock).filter(BlockChainBlock.id == blocksnum).first() #更新开始执行时间 block.started_at = datetime.datetime.now() block.error = \"\" session.add(block) session.commit() try: #获取当前节点的全部交易数据 transactionsData = trx.get_walletsolidity_block_by_num(block.id) except Exception as e: print(\"get_walletsolidity_block_by_num\") print(e) block.error = \"503 Service Temporarily Unavailable\" block.ended_at = datetime.datetime.now() session.add(block) session.commit() session.close() return try: transaction_at = (transactionsData['block_header']['raw_data']['timestamp']) / 1000 transaction_at = time.strftime(\"%Y-%m-%d %H:%M:%S\", time.localtime(transaction_at)) except Exception as e: print(e) block.error = \"not timestamp\" block.ended_at = datetime.datetime.now() session.add(block) session.commit() session.close() return if transactionsData.get(\"transactions\") is None: block.error = \"not transactions\" block.ended_at = datetime.datetime.now() block.block_at = transaction_at session.add(block) session.commit() session.close() return block.block_at = transaction_at block.total = len(transactionsData['transactions']) session.add(block) session.commit() active = 0 exist_count = 0 for transaction in transactionsData['transactions']: out_trade_no = transaction['txID'] status = transaction['ret'][0]['contractRet'].lower() if status != 'success': continue try: contract = transaction['raw_data']['contract'][0]['parameter']['value']['contract_address'] contract = keys.to_base58check_address(contract) except: continue #active_contract = None #for contract_address in config_contract.contract_address: # if contract_address.get(\"address\") == contract: # active_contract = contract_address # break #if active_contract is None: # continue func = transaction['raw_data'][\"contract\"][0][\"parameter\"][\"value\"][\"data\"][0:8] if func != \"a9059cbb\": continue to_address = keys.to_base58check_address( transaction['raw_data'][\"contract\"][0][\"parameter\"][\"value\"][\"data\"][9:72].lstrip(\"0\")) try: transactionAmount = int( transaction['raw_data'][\"contract\"][0][\"parameter\"][\"value\"][\"data\"][72:].lstrip(\"0\"), 16) / 1000000 except: continue # transaction_at 交易时间 # contract 合约地址 # to_address 收款地址 # transactionAmount 收款金额 # 实现自己的功能 block.ended_at = datetime.datetime.now() block.doed_at = transaction_at block.active = active session.add(block) session.commit() 多线程处理 handleThread 节点之间的数据查询并不会影响,因此在处理节点数据handleThread的时候,可增加多线程来操作,加快扫块的效率 本文主要讲述的是扫块的模块,还有冻结能量的模块另外再展开说明\n",
-  "wordCount" : "573",
+  "articleBody": "前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,\n目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用\n前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多\n1个总钱包,其中会扩展的功能有,分发冻结能量,收款,激活钱包,也可以看业务需要拆开成3个钱包\n开发环境: python mysql\n正式内容 所有的接口以及交互均来自 波场链官网文档 ,如果对于文档不太熟的同学请先阅读了解下波场链的交易流程\n主要数据结构 节点数据 block_chain_block\n数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet\n数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API\n1. 查询当前最新节点 文档 通过接口获取到当前最新节点和本地已同步的节点比较,能知道当前程序同步的情况如何,如果存在\"追不上\"差值越来越大,可能需要增加线程处理等方式\n接口: /walletsolidity/getnowblock\n{ \"blockID\": \"000000000198e6cee71c8e83366b925e64c5cf715529ac009bfbaff132e98d6b\", \"block_header\": { \"raw_data\": { \"number\": 26797774, \"txTrieRoot\": \"f5689c087055959a66ac7638e79c57319dffb84631992852791a3f47784b267e\", \"witness_address\": \"41d42e593de3cee8156934cc2182ef4d107e9291f0\", \"parentHash\": \"000000000198e6cde394799dcc330b00422a8cc028be767526e1f1500afcd682\", \"version\": 24, \"timestamp\": 1660618479000 }, \"witness_signature\": \"c4317733f65fe7a9f3d235f9037b903cb1e3c6b2192f4dce5a24930c92f0663167ed9dbbdb5c134692c107416d44a874d07fd62dc61fed4bde318eae3adf8f0300\" }, \"transactions\": [ { \"ret\": [ { \"contractRet\": \"SUCCESS\" } ], \"signature\": [ \"fd0750453b2ae27ae02df417b724518ceac4fb432181f30dafddc2e73d83784768143ae9e12cb15816c9f852436f48303fd927aa3e6908cc9880ecf505fffe8300\" ], \"txID\": \"92e168626aa79ed3c307ce2030acf12aa92dcb6114f66b53a8243dba738ea720\", \"raw_data\": { \"contract\": [ { \"parameter\": { \"value\": { \"amount\": 650, \"owner_address\": \"411b51ed3f22cec14b4c53abb99c4f5bff1aa5b5d1\", \"to_address\": \"41a7040c812f5e8188243bc781dfbcace984ec832b\" }, \"type_url\": \"type.googleapis.com/protocol.TransferContract\" }, \"type\": \"TransferContract\" } ], \"ref_block_bytes\": \"e6bb\", \"ref_block_hash\": \"2f39e8e056fb3672\", \"expiration\": 1660618536000, \"timestamp\": 1660618476362 }, \"raw_data_hex\": \"0a02e6bb22082f39e8e056fb367240c0e8cfa4aa305a66080112620a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412310a15411b51ed3f22cec14b4c53abb99c4f5bff1aa5b5d1121541a7040c812f5e8188243bc781dfbcace984ec832b188a0570ca96cca4aa30\" }, { \"ret\": [ { \"contractRet\": \"SUCCESS\" } ], \"signature\": [ \"6fc213cc693d9aadf7941792e5ee35dd33203290428391be499e9ea1f9799febbc5265eea5ed342b5c006a8a9e7113bbc34ecf148005e32cd8ea127ecbd094a700\" ], \"txID\": \"48855473d1263692f6b8ce34c654996cdb05d89fcbd7c8eb152736fcd4c10bb7\", \"raw_data\": { \"contract\": [ { \"parameter\": { \"value\": { \"amount\": 60500, \"owner_address\": \"41b3dbb883203c53cdf3d7d85521ee8322c1d92125\", \"to_address\": \"41000e42c42d4d525eb291ef7374da28d3f251c9b0\" }, \"type_url\": \"type.googleapis.com/protocol.TransferContract\" }, \"type\": \"TransferContract\" } ], \"ref_block_bytes\": \"e6bb\", \"ref_block_hash\": \"2f39e8e056fb3672\", \"expiration\": 1660618537006, \"timestamp\": 1660618477006 }, \"raw_data_hex\": \"0a02e6bb22082f39e8e056fb367240aef0cfa4aa305a67080112630a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412320a1541b3dbb883203c53cdf3d7d85521ee8322c1d92125121541000e42c42d4d525eb291ef7374da28d3f251c9b018d4d80370ce9bcca4aa30\" } ] } 当前节点为 now_block_num = int(GetNowBlock.get(‘block_header’).get(‘raw_data’).get(’number’))\n2. 查询数据表中已同步最新的节点 block = session.query(BlockChainBlock).order_by(BlockChainBlock.id.desc()).first() if block is None: blocksnum = now_block_num - 95 else: blocksnum = block.id + 1 if blocksnum \u003e now_block_num: print(\"扫块速度过快超过波场出块,停歇一会\") time.sleep(3) continue 3. 每次按批查询一定节点的数据 min_block_num = min(blocksnum + 30, now_block_num) for i in range(blocksnum, min_block_num): block = session.query(BlockChainBlock).filter(BlockChainBlock.id == i).first() if block is not None: continue else: block = BlockChainBlock( id=i, total=0, active=0, created_at=datetime.datetime.now(), updated_at=datetime.datetime.now(), ) session.add(block) session.commit() req = WorkRequest(handleThread, args=[i, 1], kwds={}) main.putRequest(req) # 将之前没同步到的区块重新查一下 history_block_list = session.query(BlockChainBlock) \\ .filter( # BlockChainBlock.ended_at == None, BlockChainBlock.error == '503 Service Temporarily Unavailable', BlockChainBlock.updated_at \u003c= (datetime.datetime.now() - datetime.timedelta(minutes=15)).strftime(\"%Y-%m-%d %H:%M:%S\")) \\ .all() for block in history_block_list: block.updated_at = datetime.datetime.now() session.add(block) session.commit() req = WorkRequest(handleThread, args=[block.id, 1], kwds={}) main.putRequest(req) try: # 清理一下历史没问题的节点数据,释放数据库空间 session.query(BlockChainBlock).filter( BlockChainBlock.active == 0, # BlockChainBlock.ended_at != None, BlockChainBlock.updated_at \u003c= (datetime.datetime.now() - datetime.timedelta(hours=6)).strftime(\"%Y-%m-%d %H:%M:%S\") ).delete() session.commit() except Exception as e: print(e) pass # 如果当前最新需同步的区块较少的,可等待久点累积一下 if min_block_num - blocksnum \u003c 5: time.sleep(10) else: time.sleep(1) 4. 处理节点数据,获取交易列表详情 这段的代码比较多,基本来说就是获取每个节点下的交易数据,然后把每条交易数据进行解析,获取需要合约地址,金额,对象,时间,这样处理后扫块的流程基本就完结\npool_engine = create_engine(config.SQLALCHEMY_DATABASE_URI, pool_size=10, max_overflow=10, pool_timeout=180) PoolSession = sessionmaker(bind=pool_engine) def handleThread(blocksnum, delay=0): trx = Trx(None) session = PoolSession() block = session.query(BlockChainBlock).filter(BlockChainBlock.id == blocksnum).first() #更新开始执行时间 block.started_at = datetime.datetime.now() block.error = \"\" session.add(block) session.commit() try: #获取当前节点的全部交易数据 transactionsData = trx.get_walletsolidity_block_by_num(block.id) except Exception as e: print(\"get_walletsolidity_block_by_num\") print(e) block.error = \"503 Service Temporarily Unavailable\" block.ended_at = datetime.datetime.now() session.add(block) session.commit() session.close() return try: transaction_at = (transactionsData['block_header']['raw_data']['timestamp']) / 1000 transaction_at = time.strftime(\"%Y-%m-%d %H:%M:%S\", time.localtime(transaction_at)) except Exception as e: print(e) block.error = \"not timestamp\" block.ended_at = datetime.datetime.now() session.add(block) session.commit() session.close() return if transactionsData.get(\"transactions\") is None: block.error = \"not transactions\" block.ended_at = datetime.datetime.now() block.block_at = transaction_at session.add(block) session.commit() session.close() return block.block_at = transaction_at block.total = len(transactionsData['transactions']) session.add(block) session.commit() active = 0 exist_count = 0 for transaction in transactionsData['transactions']: out_trade_no = transaction['txID'] status = transaction['ret'][0]['contractRet'].lower() if status != 'success': continue try: contract = transaction['raw_data']['contract'][0]['parameter']['value']['contract_address'] contract = keys.to_base58check_address(contract) except: continue #active_contract = None #for contract_address in config_contract.contract_address: # if contract_address.get(\"address\") == contract: # active_contract = contract_address # break #if active_contract is None: # continue func = transaction['raw_data'][\"contract\"][0][\"parameter\"][\"value\"][\"data\"][0:8] if func != \"a9059cbb\": continue to_address = keys.to_base58check_address( transaction['raw_data'][\"contract\"][0][\"parameter\"][\"value\"][\"data\"][9:72].lstrip(\"0\")) try: transactionAmount = int( transaction['raw_data'][\"contract\"][0][\"parameter\"][\"value\"][\"data\"][72:].lstrip(\"0\"), 16) / 1000000 except: continue # transaction_at 交易时间 # contract 合约地址 # to_address 收款地址 # transactionAmount 收款金额 # 实现自己的功能 block.ended_at = datetime.datetime.now() block.doed_at = transaction_at block.active = active session.add(block) session.commit() 5. 多线程处理 handleThread 节点之间的数据查询并不会影响,因此在处理节点数据handleThread的时候,可增加多线程来操作,加快扫块的效率\n本文主要讲述的是扫块的模块,还有冻结能量的模块另外再展开说明\n",
+  "wordCount" : "578",
   "inLanguage": "zh",
   "datePublished": "2022-08-16T10:15:00+08:00",
   "dateModified": "2022-08-16T10:15:00+08:00",
@@ -213,7 +213,7 @@
     <header class="post-header">
         <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tech/">Teches</a></div>
         <h1 class="post-title">
-            tronlink-从0到1搭建自己的归集系统
+            tronlink-扫块系统
         </h1>
         <div class="post-meta"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/tronlink-001.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
@@ -237,8 +237,21 @@
                 <li>
                     <a href="#%e4%b8%bb%e8%a6%81%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" aria-label="主要数据结构">主要数据结构</a></li>
                 <li>
-                    <a href="#%e6%89%ab%e5%9d%97%e7%b3%bb%e7%bb%9f" aria-label="扫块系统">扫块系统</a>
+                    <a href="#%e6%89%ab%e5%9d%97%e7%b3%bb%e7%bb%9f" aria-label="扫块系统">扫块系统</a><ul>
+                        
+                <li>
+                    <a href="#1-%e6%9f%a5%e8%af%a2%e5%bd%93%e5%89%8d%e6%9c%80%e6%96%b0%e8%8a%82%e7%82%b9" aria-label="1. 查询当前最新节点">1. 查询当前最新节点</a></li>
+                <li>
+                    <a href="#2-%e6%9f%a5%e8%af%a2%e6%95%b0%e6%8d%ae%e8%a1%a8%e4%b8%ad%e5%b7%b2%e5%90%8c%e6%ad%a5%e6%9c%80%e6%96%b0%e7%9a%84%e8%8a%82%e7%82%b9" aria-label="2. 查询数据表中已同步最新的节点">2. 查询数据表中已同步最新的节点</a></li>
+                <li>
+                    <a href="#3-%e6%af%8f%e6%ac%a1%e6%8c%89%e6%89%b9%e6%9f%a5%e8%af%a2%e4%b8%80%e5%ae%9a%e8%8a%82%e7%82%b9%e7%9a%84%e6%95%b0%e6%8d%ae" aria-label="3. 每次按批查询一定节点的数据">3. 每次按批查询一定节点的数据</a></li>
+                <li>
+                    <a href="#4-%e5%a4%84%e7%90%86%e8%8a%82%e7%82%b9%e6%95%b0%e6%8d%ae%e8%8e%b7%e5%8f%96%e4%ba%a4%e6%98%93%e5%88%97%e8%a1%a8%e8%af%a6%e6%83%85" aria-label="4. 处理节点数据,获取交易列表详情">4. 处理节点数据,获取交易列表详情</a></li>
+                <li>
+                    <a href="#5-%e5%a4%9a%e7%ba%bf%e7%a8%8b%e5%a4%84%e7%90%86-handlethread" aria-label="5. 多线程处理 handleThread">5. 多线程处理 handleThread</a>
                 </li>
+            </ul>
+            </li>
             </ul>
             </li>
             </ul>
@@ -372,10 +385,8 @@
 </table>
 <h3 id="扫块系统">扫块系统<a hidden class="anchor" aria-hidden="true" href="#扫块系统">#</a></h3>
 <p>想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API</p>
-<ol>
-<li>查询当前最新节点
-<a href="https://cn.developers.tron.network/reference/getnowblock">文档</a> 通过接口获取到当前最新节点和本地已同步的节点比较,能知道当前程序同步的情况如何,如果存在&quot;追不上&quot;差值越来越大,可能需要增加线程处理等方式</li>
-</ol>
+<h4 id="1-查询当前最新节点">1. 查询当前最新节点<a hidden class="anchor" aria-hidden="true" href="#1-查询当前最新节点">#</a></h4>
+<p><a href="https://cn.developers.tron.network/reference/getnowblock">文档</a> 通过接口获取到当前最新节点和本地已同步的节点比较,能知道当前程序同步的情况如何,如果存在&quot;追不上&quot;差值越来越大,可能需要增加线程处理等方式</p>
 <blockquote>
 <p>接口: <a href="https://cn.developers.tron.network/reference/getnowblock">/walletsolidity/getnowblock</a></p>
 </blockquote>
@@ -458,9 +469,7 @@
 </span></span><span class="line"><span class="cl">  <span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>当前节点为 now_block_num = int(GetNowBlock.get(&lsquo;block_header&rsquo;).get(&lsquo;raw_data&rsquo;).get(&rsquo;number&rsquo;))</p>
-<ol start="2">
-<li>查询数据表中已同步最新的节点</li>
-</ol>
+<h4 id="2-查询数据表中已同步最新的节点">2. 查询数据表中已同步最新的节点<a hidden class="anchor" aria-hidden="true" href="#2-查询数据表中已同步最新的节点">#</a></h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">block</span> <span class="o">=</span> session.query<span class="o">(</span>BlockChainBlock<span class="o">)</span>.order_by<span class="o">(</span>BlockChainBlock.id.desc<span class="o">())</span>.first<span class="o">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">if</span> block is None:
 </span></span><span class="line"><span class="cl">  <span class="nv">blocksnum</span> <span class="o">=</span> now_block_num - <span class="m">95</span>
@@ -471,9 +480,7 @@
 </span></span><span class="line"><span class="cl">  print<span class="o">(</span><span class="s2">&#34;扫块速度过快超过波场出块,停歇一会&#34;</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">  time.sleep<span class="o">(</span>3<span class="o">)</span>
 </span></span><span class="line"><span class="cl">  <span class="k">continue</span>
-</span></span></code></pre></div><ol start="3">
-<li>每次按批查询一定节点的数据</li>
-</ol>
+</span></span></code></pre></div><h4 id="3-每次按批查询一定节点的数据">3. 每次按批查询一定节点的数据<a hidden class="anchor" aria-hidden="true" href="#3-每次按批查询一定节点的数据">#</a></h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nv">min_block_num</span> <span class="o">=</span> min<span class="o">(</span>blocksnum + 30, now_block_num<span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">for</span> i in range<span class="o">(</span>blocksnum, min_block_num<span class="o">)</span>:
 </span></span><span class="line"><span class="cl">  <span class="nv">block</span> <span class="o">=</span> session.query<span class="o">(</span>BlockChainBlock<span class="o">)</span>.filter<span class="o">(</span>BlockChainBlock.id <span class="o">==</span> i<span class="o">)</span>.first<span class="o">()</span>
@@ -524,10 +531,8 @@
 </span></span><span class="line"><span class="cl">  time.sleep<span class="o">(</span>10<span class="o">)</span>
 </span></span><span class="line"><span class="cl"><span class="k">else</span>:
 </span></span><span class="line"><span class="cl">  time.sleep<span class="o">(</span>1<span class="o">)</span>
-</span></span></code></pre></div><ol start="4">
-<li>处理节点数据,获取交易列表详情<br>
-这段的代码比较多,基本来说就是获取每个节点下的交易数据,然后把每条交易数据进行解析,获取需要合约地址,金额,对象,时间,这样处理后扫块的流程基本就完结</li>
-</ol>
+</span></span></code></pre></div><h4 id="4-处理节点数据获取交易列表详情">4. 处理节点数据,获取交易列表详情<a hidden class="anchor" aria-hidden="true" href="#4-处理节点数据获取交易列表详情">#</a></h4>
+<p>这段的代码比较多,基本来说就是获取每个节点下的交易数据,然后把每条交易数据进行解析,获取需要合约地址,金额,对象,时间,这样处理后扫块的流程基本就完结</p>
 <pre tabindex="0"><code>pool_engine = create_engine(config.SQLALCHEMY_DATABASE_URI, pool_size=10, max_overflow=10, pool_timeout=180)
 PoolSession = sessionmaker(bind=pool_engine)
 
@@ -616,10 +621,8 @@ def handleThread(blocksnum, delay=0):
    block.active = active
    session.add(block)
    session.commit()
-</code></pre><ol start="5">
-<li>多线程处理 handleThread
-节点之间的数据查询并不会影响,因此在处理节点数据handleThread的时候,可增加多线程来操作,加快扫块的效率</li>
-</ol>
+</code></pre><h4 id="5-多线程处理-handlethread">5. 多线程处理 handleThread<a hidden class="anchor" aria-hidden="true" href="#5-多线程处理-handlethread">#</a></h4>
+<p>节点之间的数据查询并不会影响,因此在处理节点数据handleThread的时候,可增加多线程来操作,加快扫块的效率</p>
 <p>本文主要讲述的是扫块的模块,还有冻结能量的模块另外再展开说明</p>
 
 

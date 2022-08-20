@@ -160,6 +160,30 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Php-Swagger代码了解
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
+目标 前置条件 zircote/swagger-php document
+正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=“Fapi”, version=“0.1”,description=“antdv5的接口前缀为/api/v2
+当前版本为/api/返回列表的格式有区别外其他一致”),
+文档中的api路径 @OA\Server(url=“http://www.github.com/&#34;,description=&#34;github&#34;,),
+预先定义好返回数据的格式 @OA\Schema(
+schema=“Pagination”,
+@OA\Property(property=“current”, type=“integer”),
+@OA\Property(property=“total”, type=“integer”),
+@OA\Property(property=“pageSize”, type=“integer”),
+)
+分组每种接口的类别,如/user, /order /record 等, @OA\Tag(name=“api-tag”, description=“Tag”)
+编写接口的声明 @OA\Post( path=&#34;/api/index&#34;, summary=&#34;api name&#34;, operationId=&#34;UniqueOperationId&#34;, tags={&#34;api-tag&#34;}, @OA\Parameter(in=&#34;query&#34;, name=&#34;fIDDomainFolder&#34;, required=false,schema={&#34;type&#34;:&#34;string&#34;},description=&#34;&#34;), @OA\Parameter(in=&#34;query&#34;, name=&#34;intActive&#34;, required=false,schema={&#34;type&#34;:&#34;integer&#34;},description=&#34;&#34;), @OA\Parameter(in=&#34;query&#34;, name=&#34;timetype&#34;, required=false,schema={&#34;type&#34;:&#34;string&#34;,&#34;enum&#34;:{&#34;created_at&#34;,&#34;expired_at&#34;,&#34;update_at&#34;}},description=&#34;时间类型&#34;), @OA\Response( response=&#34;200&#34;, description=&#34;An example resource&#34;, @OA\JsonContent( @OA\Property(property=&#34;Pagination&#34;,type=&#34;object&#34;, ref=&#34;#/components/schemas/Pagination&#34;), ) ), ) 2. 将定义好的注释声明生成openapi.json $openapi = \OpenApi\Generator::scan([ path . &#39;api&#39;, path . &#39;model&#39;, ]); $openapi-&gt;toJson() 3....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:06:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Php-Swagger代码了解" href="http://www.hello-api.cn/tech/php-swagger/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Php支付接口
     </h2>
   </header>
@@ -304,23 +328,6 @@ socket1: name : &#39;local&#39; socket : &#39;/tmp/redis.sock&#39; pass : &#39;p
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:17:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to Netdata-监控redis" href="http://www.hello-api.cn/tech/netdata-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>初识SSL证书
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>SSL证书也就是支持https访问,其中具体的用处就不在此展开说了,主要介绍下个人使用中可以免费获取的证书渠道以及如何部署
-申请SSL证书,对于个人的需要列出几种免费获取证书的方式
-阿里云，腾讯云，七牛云
-注意：阿里云证书的领取限制是一个自然年内可以领取一次数量为20的云盾单域名试用证书 部署证书
-nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.pem; ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3; ssl_ciphers EECDH&#43;CHACHA20:EECDH&#43;CHACHA20-draft:EECDH&#43;AES128:RSA&#43;AES128:EECDH&#43;AES256:RSA&#43;AES256:EECDH&#43;3DES:RSA&#43;3DES:!MD5; ssl_prefer_server_ciphers on; ssl_session_cache shared:SSL:10m; ssl_session_timeout 10m; } apache流程
-&lt;VirtualHost *:443&gt; DocumentRoot &#34;project_path&#34; ServerName domain.com:443 ErrorLog error_log_ssl SSLEngine on SSLProtocol ALL -SSLv2 -SSLv3 #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4&#43;RSA:&#43;HIGH:&#43;MEDIUM:&#43;LOW:&#43;SSLv2:&#43;EXP:&#43;eNULL SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!RC4 SSLCertificateFile /etc/httpd/conf.d/tls/crt SSLCertificateKeyFile /etc/httpd/conf.d/tls/key SSLCertificateChainFile /etc/httpd/conf.d/tls/ca-bundle SSLVerifyClient none &lt;Files ~ &#34;\.(cgi|shtml|net|php?)$&#34;&gt; SSLOptions &#43;StdEnvVars &lt;/Files&gt; &lt;Directory &#34;project_path&#34;&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; &lt;/VirtualHost&gt; </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 12:15:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to 初识SSL证书" href="http://www.hello-api.cn/tech/ssl-001/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
