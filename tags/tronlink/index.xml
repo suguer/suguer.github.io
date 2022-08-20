@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>tronlink on Ken Blog</title>
-    <link>/tags/tronlink/</link>
+    <link>http://www.hello-api.cn/tags/tronlink/</link>
     <description>Recent content in tronlink on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 16 Aug 2022 10:15:00 +0800</lastBuildDate><atom:link href="/tags/tronlink/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Aug 2022 10:15:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/tronlink/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>tronlink-从0到1搭建自己的归集系统</title>
-      <link>/tech/tronlink-001/</link>
+      <link>http://www.hello-api.cn/tech/tronlink-001/</link>
       <pubDate>Tue, 16 Aug 2022 10:15:00 +0800</pubDate>
       
-      <guid>/tech/tronlink-001/</guid>
+      <guid>http://www.hello-api.cn/tech/tronlink-001/</guid>
       <description>前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
 目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
 前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
@@ -29,10 +29,10 @@
     
     <item>
       <title>python-波场区块链的扫块系统</title>
-      <link>/life/python-tronlink-scan/</link>
+      <link>http://www.hello-api.cn/life/python-tronlink-scan/</link>
       <pubDate>Mon, 15 Aug 2022 11:26:00 +0800</pubDate>
       
-      <guid>/life/python-tronlink-scan/</guid>
+      <guid>http://www.hello-api.cn/life/python-tronlink-scan/</guid>
       <description>[github]路径(https://github.com/suguer/python-tronlink-scan)
 python-tronlink-scan 波场链的扫块功能,如果对于需要获取波场链上的交易情况,又没有条件部署一台自己的节点,那么采用本文的方式是一个不错的选择,通过调用接口也能及时获取到交易信息
 安装需要的用到的插件

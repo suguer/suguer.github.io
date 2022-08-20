@@ -9,13 +9,13 @@
 <meta name="keywords" content="php">
 <meta name="description" content="trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&gt;processes[] = [ &#34;action&#34; =&gt; $action, &#34;params&#34; =&gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&gt;runningProcess) &gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&gt;runningProcess as $key =&gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &#34;child $key completed\n&#34;; unset($this-&gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&#34;could not fork&#34;); } elseif ($pid) { $this-&gt;runningProcess[$pid] = $pid; echo &#34;create child: $pid \n&#34;; } else { //执行子进程 call_user_func_array($process[&#39;action&#39;], $process[&#39;params&#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&gt;processes)) { return; } for ($i = 0; $i &lt; $this-&gt;maxFork; $i&#43;&#43;) { $this-&gt;runOne(); } $this-&gt;waitProcessRun(); } } ">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/code/php-multiprocess/">
+<link rel="canonical" href="http://www.hello-api.cn/code/php-multiprocess/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -57,12 +57,12 @@
 </noscript><meta property="og:title" content="php-MultiProcess多进程" />
 <meta property="og:description" content="trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&gt;processes[] = [ &#34;action&#34; =&gt; $action, &#34;params&#34; =&gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&gt;runningProcess) &gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&gt;runningProcess as $key =&gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &#34;child $key completed\n&#34;; unset($this-&gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&#34;could not fork&#34;); } elseif ($pid) { $this-&gt;runningProcess[$pid] = $pid; echo &#34;create child: $pid \n&#34;; } else { //执行子进程 call_user_func_array($process[&#39;action&#39;], $process[&#39;params&#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&gt;processes)) { return; } for ($i = 0; $i &lt; $this-&gt;maxFork; $i&#43;&#43;) { $this-&gt;runOne(); } $this-&gt;waitProcessRun(); } } " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/code/php-multiprocess/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="code" />
+<meta property="og:url" content="http://www.hello-api.cn/code/php-multiprocess/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="code" />
 <meta property="article:published_time" content="2022-08-19T15:38:00&#43;08:00" />
 <meta property="article:modified_time" content="2022-08-19T15:38:00&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="php-MultiProcess多进程"/>
 <meta name="twitter:description" content="trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&gt;processes[] = [ &#34;action&#34; =&gt; $action, &#34;params&#34; =&gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&gt;runningProcess) &gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&gt;runningProcess as $key =&gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &#34;child $key completed\n&#34;; unset($this-&gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&#34;could not fork&#34;); } elseif ($pid) { $this-&gt;runningProcess[$pid] = $pid; echo &#34;create child: $pid \n&#34;; } else { //执行子进程 call_user_func_array($process[&#39;action&#39;], $process[&#39;params&#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&gt;processes)) { return; } for ($i = 0; $i &lt; $this-&gt;maxFork; $i&#43;&#43;) { $this-&gt;runOne(); } $this-&gt;waitProcessRun(); } } "/>
@@ -77,13 +77,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Codes",
-      "item": "/code/"
-    }
+      "item": "http://www.hello-api.cn/code/"
+    }, 
     {
       "@type": "ListItem",
-      "position":  1 ,
+      "position":  2 ,
       "name": "php-MultiProcess多进程",
-      "item": "/code/php-multiprocess/"
+      "item": "http://www.hello-api.cn/code/php-multiprocess/"
     }
   ]
 }
@@ -109,14 +109,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/code/php-multiprocess/"
+    "@id": "http://www.hello-api.cn/code/php-multiprocess/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ken Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "/favicon.ico"
+      "url": "http://www.hello-api.cn/favicon.ico"
     }
   }
 }
@@ -140,7 +140,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -166,17 +166,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -187,7 +187,7 @@
 
 <article class="post-single">
     <header class="post-header">
-        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/code/">Codes</a></div>
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/code/">Codes</a></div>
         <h1 class="post-title">
             php-MultiProcess多进程
         </h1>
@@ -272,7 +272,7 @@
 
     <footer class="post-footer">
         <ul class="post-tags">
-            <li><a href="/tags/php/">php</a></li>
+            <li><a href="http://www.hello-api.cn/tags/php/">php</a></li>
         </ul>
 
     </footer>
@@ -296,7 +296,7 @@
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

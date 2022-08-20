@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>selenium on Ken Blog</title>
-    <link>/tags/selenium/</link>
+    <link>http://www.hello-api.cn/tags/selenium/</link>
     <description>Recent content in selenium on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 12 Aug 2022 15:10:00 +0800</lastBuildDate><atom:link href="/tags/selenium/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 12 Aug 2022 15:10:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/selenium/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>初始Python-自动化操作</title>
-      <link>/study/python-selenium/</link>
+      <link>http://www.hello-api.cn/study/python-selenium/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/study/python-selenium/</guid>
+      <guid>http://www.hello-api.cn/study/python-selenium/</guid>
       <description>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
 以下是我在实际使用中对于selenium的一些心得和用法
 implicitly_wait

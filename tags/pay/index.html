@@ -9,16 +9,16 @@
 <meta name="keywords" content="">
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/tags/pay/">
+<link rel="canonical" href="http://www.hello-api.cn/tags/pay/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="/tags/pay/index.xml">
+<link rel="alternate" type="application/rss+xml" href="http://www.hello-api.cn/tags/pay/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,10 +58,10 @@
 </noscript><meta property="og:title" content="pay" />
 <meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/pay/" /><meta property="og:image" content="/papermod-cover.png"/>
+<meta property="og:url" content="http://www.hello-api.cn/tags/pay/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="pay"/>
 <meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
@@ -85,7 +85,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -111,17 +111,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -129,7 +129,7 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tags/">Tags</a></div>
+<header class="page-header"><div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tags/">Tags</a></div>
   <h1>
     pay
     <a href="index.xml" title="RSS" aria-label="RSS">
@@ -156,12 +156,12 @@
 interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;8 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Php支付接口" href="/tech/php-pay/"></a>
+  <a class="entry-link" aria-label="post link to Php支付接口" href="http://www.hello-api.cn/tech/php-pay/"></a>
 </article>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

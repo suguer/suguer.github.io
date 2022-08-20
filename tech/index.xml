@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Teches on Ken Blog</title>
-    <link>/tech/</link>
+    <link>http://www.hello-api.cn/tech/</link>
     <description>Recent content in Teches on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 18 Aug 2022 12:18:00 +0800</lastBuildDate><atom:link href="/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Aug 2022 12:18:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tech/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>从0到1 记录搭建Hugo个人博客-04 增加评论功能</title>
-      <link>/tech/hugo-004/</link>
+      <link>http://www.hello-api.cn/tech/hugo-004/</link>
       <pubDate>Thu, 18 Aug 2022 12:18:00 +0800</pubDate>
       
-      <guid>/tech/hugo-004/</guid>
+      <guid>http://www.hello-api.cn/tech/hugo-004/</guid>
       <description>前言 搭建个人博客或者其他网站站点的时候,只有静态页面显得比较冷清,想了解自己的文章能不能帮到更多有相同疑惑的人,或者为自己的网站增添功能
 目标 扩展自己的网站支持评论功能
 前置条件 有github的账号
@@ -28,10 +28,10 @@
     
     <item>
       <title>Gitblit-如何实现自动编译发布</title>
-      <link>/tech/gitblit/</link>
+      <link>http://www.hello-api.cn/tech/gitblit/</link>
       <pubDate>Tue, 16 Aug 2022 15:50:00 +0800</pubDate>
       
-      <guid>/tech/gitblit/</guid>
+      <guid>http://www.hello-api.cn/tech/gitblit/</guid>
       <description>前言 在外网正式环境中如果配置不足,编译前端项目可能导致服务器的卡死甚至死机,因此可采取内网服务器上编译再自动发布
 目标 内网编译前端项目,分发到另一个git项目并自动提交发布
 前置条件 gitblit
@@ -40,10 +40,10 @@
     
     <item>
       <title>Github-</title>
-      <link>/tech/github-001/</link>
+      <link>http://www.hello-api.cn/tech/github-001/</link>
       <pubDate>Tue, 16 Aug 2022 15:35:00 +0800</pubDate>
       
-      <guid>/tech/github-001/</guid>
+      <guid>http://www.hello-api.cn/tech/github-001/</guid>
       <description>前言 目前github已经不允许使用账号密码上传代码,因此记录如何通过设置ssh来上传
 目标 前置条件 能运行ssh-keygen
 正式内容 ssh-keygen -t rsa -C &amp;ldquo;email&amp;rdquo;
@@ -56,10 +56,10 @@
     
     <item>
       <title>tronlink-从0到1搭建自己的归集系统</title>
-      <link>/tech/tronlink-001/</link>
+      <link>http://www.hello-api.cn/tech/tronlink-001/</link>
       <pubDate>Tue, 16 Aug 2022 10:15:00 +0800</pubDate>
       
-      <guid>/tech/tronlink-001/</guid>
+      <guid>http://www.hello-api.cn/tech/tronlink-001/</guid>
       <description>前言 对于某些网站平台如果想支持收取波场区块链,但是又不清楚完整的流程应该如何部署的话,这里可以提供一套较为完整的方案,实现如商城下支持对客户的在线支付,
 目标 实现客户在线支付,收取波场链的usdt或usdc,并且自动支付和激活订单,最后能归集到一个账户上自由使用
 前置条件 在波场链有足够的trx,数量的多少取决于你对于归集的效率的需求,如果需要归集的周期越短,效率越快,则需要的trx越多
@@ -73,10 +73,10 @@
     
     <item>
       <title>从0到1 记录搭建Hugo个人博客-03 使用Algolia搜索</title>
-      <link>/tech/hugo-003/</link>
+      <link>http://www.hello-api.cn/tech/hugo-003/</link>
       <pubDate>Mon, 15 Aug 2022 11:24:00 +0800</pubDate>
       
-      <guid>/tech/hugo-003/</guid>
+      <guid>http://www.hello-api.cn/tech/hugo-003/</guid>
       <description>Hugo添加Algolia搜索支持 本文主要介绍如何在Hugo上增加Algolia的搜索支持,Alogolia官网
 添加Algolia搜索支持主要以下步骤： ###1. 进入 Algolia 官网注册创建环境
 个人使用选择免费版即可,可以满足日常需求了
@@ -102,10 +102,10 @@ searchOnlyKey = &amp;ldquo;你的Search-Only API Key&amp;rdquo;
     
     <item>
       <title>php-分享自有系统接入OCR图片识别</title>
-      <link>/tech/php-ocr/</link>
+      <link>http://www.hello-api.cn/tech/php-ocr/</link>
       <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
       
-      <guid>/tech/php-ocr/</guid>
+      <guid>http://www.hello-api.cn/tech/php-ocr/</guid>
       <description>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
 目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
 前置条件 开发环境 PHP 百度云能企业认证
@@ -116,10 +116,10 @@ public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$thi
     
     <item>
       <title>Php邮件收取imap</title>
-      <link>/tech/php-imap/</link>
+      <link>http://www.hello-api.cn/tech/php-imap/</link>
       <pubDate>Fri, 12 Aug 2022 17:32:00 +0800</pubDate>
       
-      <guid>/tech/php-imap/</guid>
+      <guid>http://www.hello-api.cn/tech/php-imap/</guid>
       <description>前言 招商银行的收款通知可以添加邮件推送,因此利用php-imap收取邮件,可达到自动化确款的目的
 目标 前置条件 composer require php-imap/php-imap
 正式内容 php-imap 的使用 $mailbox = new Mailbox( &amp;#39;{SMTP服务器:SMTP端口号/imap}INBOX&amp;#39;, // IMAP server and mailbox folder &amp;#39;邮箱账号&amp;#39;, // Username for the before configured mailbox &amp;#39;邮箱密码&amp;#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &amp;#39;UTF-8&amp;#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&amp;gt;searchMailbox(&amp;#39;ALL&amp;#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &amp;#34;IMAP connection failed: &amp;#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&amp;gt; $item) { //循环遍历 $mail = $mailbox-&amp;gt;getMail($item); $fromAddress = $mail-&amp;gt;fromAddress; $content = $mail-&amp;gt;textHtml; if(!</description>
@@ -127,10 +127,10 @@ public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$thi
     
     <item>
       <title>从0到1 用宝塔集成虚拟主机提供商</title>
-      <link>/tech/baota/</link>
+      <link>http://www.hello-api.cn/tech/baota/</link>
       <pubDate>Fri, 12 Aug 2022 16:55:00 +0800</pubDate>
       
-      <guid>/tech/baota/</guid>
+      <guid>http://www.hello-api.cn/tech/baota/</guid>
       <description>前言 对比一般市场上的虚拟主机,宝塔都能兼容支持绝大多数的功能,并且宝塔有个比较大的特点为,页面上的接口均可以通过api请求,因此产生了这个想法定制出宝塔基础的虚拟主机
 目标 前置条件 window server的主机
 宝塔需安装在数据盘D盘上
@@ -141,10 +141,10 @@ class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use
     
     <item>
       <title>Php-编码解码punycode</title>
-      <link>/tech/php-punycode/</link>
+      <link>http://www.hello-api.cn/tech/php-punycode/</link>
       <pubDate>Fri, 12 Aug 2022 16:51:00 +0800</pubDate>
       
-      <guid>/tech/php-punycode/</guid>
+      <guid>http://www.hello-api.cn/tech/php-punycode/</guid>
       <description>前言 域名的编码解码
 什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
 在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&amp;ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
@@ -153,10 +153,10 @@ class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use
     
     <item>
       <title>Php-Swagger代码了解</title>
-      <link>/tech/php-swagger/</link>
+      <link>http://www.hello-api.cn/tech/php-swagger/</link>
       <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
       
-      <guid>/tech/php-swagger/</guid>
+      <guid>http://www.hello-api.cn/tech/php-swagger/</guid>
       <description>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
 目标 前置条件 zircote/swagger-php document
 正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=&amp;ldquo;Fapi&amp;rdquo;, version=&amp;ldquo;0.1&amp;rdquo;,description=&amp;ldquo;antdv5的接口前缀为/api/v2
@@ -174,10 +174,10 @@ schema=&amp;ldquo;Pagination&amp;rdquo;,
     
     <item>
       <title>Php支付接口</title>
-      <link>/tech/php-pay/</link>
+      <link>http://www.hello-api.cn/tech/php-pay/</link>
       <pubDate>Fri, 12 Aug 2022 15:32:00 +0800</pubDate>
       
-      <guid>/tech/php-pay/</guid>
+      <guid>http://www.hello-api.cn/tech/php-pay/</guid>
       <description>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
 目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
 前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP
@@ -187,19 +187,19 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
     
     <item>
       <title>Python-多线程</title>
-      <link>/tech/python-thread/</link>
+      <link>http://www.hello-api.cn/tech/python-thread/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/tech/python-thread/</guid>
+      <guid>http://www.hello-api.cn/tech/python-thread/</guid>
       <description>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &amp;#39;&amp;#39;&amp;#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&amp;#39;&amp;#39;&amp;#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &amp;#39;&amp;#39;&amp;#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&amp;#39;&amp;#39;&amp;#39; while True: if self._dismissed.is_set(): break try: &amp;#39;&amp;#39;&amp;#39; Queue.</description>
     </item>
     
     <item>
       <title>Https双向认证</title>
-      <link>/tech/https/</link>
+      <link>http://www.hello-api.cn/tech/https/</link>
       <pubDate>Fri, 12 Aug 2022 13:51:00 +0800</pubDate>
       
-      <guid>/tech/https/</guid>
+      <guid>http://www.hello-api.cn/tech/https/</guid>
       <description>前言 由于公司需求一些措施加强员工登录企业后台网站的验证,所以了解了一下有关https的双向认证,并部署到生产环境上,因此记录下来部署的流程分享一下遇到的问题
 目标 每个员工有各自的验证密钥,只能在自己的电脑上登录验证,防止员工之间的替名篡改或者恶意操作
 前置条件 拥有一张根证书,用于签发员工用的,如没有可参考教程创建 PHP
@@ -216,10 +216,10 @@ Country Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-St
     
     <item>
       <title>Prerender-单页面前端渲染</title>
-      <link>/tech/prerender/</link>
+      <link>http://www.hello-api.cn/tech/prerender/</link>
       <pubDate>Fri, 12 Aug 2022 13:44:00 +0800</pubDate>
       
-      <guid>/tech/prerender/</guid>
+      <guid>http://www.hello-api.cn/tech/prerender/</guid>
       <description>预渲染,用于前端单页面的项目,做到被seo收录的
 #创建用户 useradd -d /home/prerender -m prerender
 #安装nginx cd /usr/local wget http://nginx.org/download/nginx-1.16.1.tar.gz tar -xzf nginx-1.16.1.tar.gz cd nginx-1.16.1 ./configure &amp;ndash;with-http_ssl_module make make install
@@ -233,10 +233,10 @@ events { worker_connections 1024; } http { include /usr/local/nginx/conf/mime.ty
     
     <item>
       <title>Nginx-实现网站简繁体转换</title>
-      <link>/tech/nginx-002/</link>
+      <link>http://www.hello-api.cn/tech/nginx-002/</link>
       <pubDate>Fri, 12 Aug 2022 12:27:00 +0800</pubDate>
       
-      <guid>/tech/nginx-002/</guid>
+      <guid>http://www.hello-api.cn/tech/nginx-002/</guid>
       <description>这个利用nginx（openresty）+lua+opencc，写10行代码左右就可以实现的类似繁简通的功能 可充分利用nginx的快反应和可靠性
 所需插件
 https://github.com/BYVoid/OpenCC
@@ -249,10 +249,10 @@ if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_conte
     
     <item>
       <title>Nginx-了解Lua用法</title>
-      <link>/tech/nginx-001/</link>
+      <link>http://www.hello-api.cn/tech/nginx-001/</link>
       <pubDate>Fri, 12 Aug 2022 12:25:00 +0800</pubDate>
       
-      <guid>/tech/nginx-001/</guid>
+      <guid>http://www.hello-api.cn/tech/nginx-001/</guid>
       <description>用lua实现访问限制,木桶效应
 nginx.conf
 server{ location / { access_by_lua_file /usr/local/openresty/nginx/conf/lua/domain_check.lua; index index.html index.htm; } } 限制每个IP一段时间内能访问多少次
@@ -262,19 +262,19 @@ local client = require &amp;#34;resty.websocket.client&amp;#34; local limit_req 
     
     <item>
       <title>Nginx使用过程中的记录</title>
-      <link>/tech/nginx-node/</link>
+      <link>http://www.hello-api.cn/tech/nginx-node/</link>
       <pubDate>Fri, 12 Aug 2022 12:25:00 +0800</pubDate>
       
-      <guid>/tech/nginx-node/</guid>
+      <guid>http://www.hello-api.cn/tech/nginx-node/</guid>
       <description>How to format log (eg: Y-m-d.log) http { map $host $fmt_localdate { default &amp;#39;&amp;#39;;} map $host $fmt_localtime { default &amp;#39;&amp;#39;;} log_by_lua_block { ngx.var.fmt_localdate = os.date(&amp;#34;%Y-%m-%d&amp;#34;); ngx.var.fmt_localtime = os.date(&amp;#34;%Y-%m-%d %H:%M:%S&amp;#34;); } log_format main &amp;#39;[$host][$remote_addr][$fmt_localtime][$http_referer][$http_user_agent]&amp;#39;; server { access_log /var/log/nginx/access-$fmt_localdate.log main; } } </description>
     </item>
     
     <item>
       <title>Netdata-监控apache</title>
-      <link>/tech/netdata-002/</link>
+      <link>http://www.hello-api.cn/tech/netdata-002/</link>
       <pubDate>Fri, 12 Aug 2022 12:23:00 +0800</pubDate>
       
-      <guid>/tech/netdata-002/</guid>
+      <guid>http://www.hello-api.cn/tech/netdata-002/</guid>
       <description>安装好apache 确保监控模块开启 /etc/httpd/conf.modules.d/00-base.conf 查看这个文件，确保监控模块开启 LoadModule status_module modules/mod_status.so 没有被注释 一旦启用了mod_status ，接下来需要为Apache服务器状态页面创建一个server-status.conf配置文件 # vim /etc/httpd/conf.d/server-status.conf &amp;lt;Location &amp;#34;/server-status&amp;#34;&amp;gt; SetHandler server-status #Require host localhost #uncomment to only allow requests from localhost &amp;lt;/Location&amp;gt; 通过使用命令行Web浏览器 （如lynx）验证Apache服务器状态和统计信息页是否正常工作，如图所示。 yum install lynx
 lynx http://localhost/server-status
 5.创建netdata读取apache属性的配置文件
@@ -284,10 +284,10 @@ vi /etc/netdata/python.d/apache.conf
     
     <item>
       <title>Netdata-监控redis</title>
-      <link>/tech/netdata-001/</link>
+      <link>http://www.hello-api.cn/tech/netdata-001/</link>
       <pubDate>Fri, 12 Aug 2022 12:17:00 +0800</pubDate>
       
-      <guid>/tech/netdata-001/</guid>
+      <guid>http://www.hello-api.cn/tech/netdata-001/</guid>
       <description>###1. 如何用netdata监控redis,官网教程
 cd /etc/netdata # Replace this path with your Netdata config directory sudo ./edit-config go.d/redis.conf # by tcp socket redis://&amp;lt;user&amp;gt;:&amp;lt;password&amp;gt;@&amp;lt;host&amp;gt;:&amp;lt;port&amp;gt; # by unix socket unix://&amp;lt;user&amp;gt;:&amp;lt;password&amp;gt;@&amp;lt;/path/to/redis.sock 例如
 socket1: name : &amp;#39;local&amp;#39; socket : &amp;#39;/tmp/redis.sock&amp;#39; pass : &amp;#39;pass&amp;#39; socket2: name : &amp;#39;local&amp;#39; socket : &amp;#39;/var/run/redis/redis.sock&amp;#39; # pass : &amp;#39;&amp;#39; socket3: name : &amp;#39;local&amp;#39; socket : &amp;#39;/var/lib/redis/redis.sock&amp;#39; # pass : &amp;#39;&amp;#39; localhost: name : &amp;#39;local&amp;#39; host : &amp;#39;localhost&amp;#39; port : 6379 pass : &amp;#39;pass&amp;#39; localipv4: name : &amp;#39;local&amp;#39; host : &amp;#39;127.</description>
@@ -295,10 +295,10 @@ socket1: name : &amp;#39;local&amp;#39; socket : &amp;#39;/tmp/redis.sock&amp;#3
     
     <item>
       <title>初识SSL证书</title>
-      <link>/tech/ssl-001/</link>
+      <link>http://www.hello-api.cn/tech/ssl-001/</link>
       <pubDate>Fri, 12 Aug 2022 12:15:00 +0800</pubDate>
       
-      <guid>/tech/ssl-001/</guid>
+      <guid>http://www.hello-api.cn/tech/ssl-001/</guid>
       <description>SSL证书也就是支持https访问,其中具体的用处就不在此展开说了,主要介绍下个人使用中可以免费获取的证书渠道以及如何部署
 申请SSL证书,对于个人的需要列出几种免费获取证书的方式
 阿里云，腾讯云，七牛云
@@ -309,10 +309,10 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
     
     <item>
       <title>从0到1 记录搭建Hugo个人博客-02 选用模板</title>
-      <link>/tech/hugo-002/</link>
+      <link>http://www.hello-api.cn/tech/hugo-002/</link>
       <pubDate>Fri, 12 Aug 2022 10:17:00 +0800</pubDate>
       
-      <guid>/tech/hugo-002/</guid>
+      <guid>http://www.hello-api.cn/tech/hugo-002/</guid>
       <description>上文讲述了Hugo的如何搭建,这次讲述作者个人博客用的Hugo选用的模板hugo-PaperMod ，对于像我这种鉴赏能力为0的程序员，这么简单明了的风格瞬间让我沉迷了，因此也简单分享下搭建主题的过程
 git pull https://github.com/adityatelange/hugo-PaperMod.git git switch exampleSite 此时目录结构包含有 content
 assets
@@ -324,10 +324,10 @@ profileMode: enabled: true 运行hugo后首页展示就和我当前的首页类�
     
     <item>
       <title>从0到1 记录搭建Hugo个人博客-01 搭建环境</title>
-      <link>/tech/hugo-001/</link>
+      <link>http://www.hello-api.cn/tech/hugo-001/</link>
       <pubDate>Thu, 11 Aug 2022 18:09:00 +0800</pubDate>
       
-      <guid>/tech/hugo-001/</guid>
+      <guid>http://www.hello-api.cn/tech/hugo-001/</guid>
       <description>使用HUGO搭建一个自己的博客Blog 对于常在敲代码的程序员来说,有个博客能记录和分享是一个相当有意义的事情， Hugo 是一个高效的网站搭建框架,能用简单的markdown语法编辑生成出富有个性的网页,即使是刚学的小白也能很简单的入门使用
 说明：Markdown是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，同时也对图片、图表、数学公式提供了支持，可以用来书写电子书、软件文档等，同时也可以非常方便的转换为HTML页面或者是PDF文档。
 step 1:安装环境

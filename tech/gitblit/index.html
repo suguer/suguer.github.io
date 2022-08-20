@@ -12,13 +12,13 @@
 前置条件 gitblit
 正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&#34;) def rootFolder = &#39;/home/git/&#39; def bare = false def cloneAllBranches = true def cloneBranch = &#39;refs/heads/master&#39; def includeSubmodules = true def repoName = repository.">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/tech/gitblit/">
+<link rel="canonical" href="http://www.hello-api.cn/tech/gitblit/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -63,12 +63,12 @@
 前置条件 gitblit
 正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&#34;) def rootFolder = &#39;/home/git/&#39; def bare = false def cloneAllBranches = true def cloneBranch = &#39;refs/heads/master&#39; def includeSubmodules = true def repoName = repository." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/tech/gitblit/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="og:url" content="http://www.hello-api.cn/tech/gitblit/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="tech" />
 <meta property="article:published_time" content="2022-08-16T15:50:00&#43;08:00" />
 <meta property="article:modified_time" content="2022-08-16T15:50:00&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Gitblit-如何实现自动编译发布"/>
 <meta name="twitter:description" content="前言 在外网正式环境中如果配置不足,编译前端项目可能导致服务器的卡死甚至死机,因此可采取内网服务器上编译再自动发布
@@ -86,13 +86,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Teches",
-      "item": "/tech/"
-    }
+      "item": "http://www.hello-api.cn/tech/"
+    }, 
     {
       "@type": "ListItem",
-      "position":  1 ,
+      "position":  2 ,
       "name": "Gitblit-如何实现自动编译发布",
-      "item": "/tech/gitblit/"
+      "item": "http://www.hello-api.cn/tech/gitblit/"
     }
   ]
 }
@@ -118,14 +118,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/tech/gitblit/"
+    "@id": "http://www.hello-api.cn/tech/gitblit/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ken Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "/favicon.ico"
+      "url": "http://www.hello-api.cn/favicon.ico"
     }
   }
 }
@@ -149,7 +149,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -175,17 +175,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -196,7 +196,7 @@
 
 <article class="post-single">
     <header class="post-header">
-        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tech/">Teches</a></div>
         <h1 class="post-title">
             Gitblit-如何实现自动编译发布
         </h1>
@@ -328,7 +328,7 @@ for (ReceiveCommand command : commands) {
 
     <footer class="post-footer">
         <ul class="post-tags">
-            <li><a href="/tags/gitblit/">gitblit</a></li>
+            <li><a href="http://www.hello-api.cn/tags/gitblit/">gitblit</a></li>
         </ul>
 
     </footer>
@@ -352,7 +352,7 @@ for (ReceiveCommand command : commands) {
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

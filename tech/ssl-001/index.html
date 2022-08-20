@@ -14,13 +14,13 @@
 nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.pem; ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3; ssl_ciphers EECDH&#43;CHACHA20:EECDH&#43;CHACHA20-draft:EECDH&#43;AES128:RSA&#43;AES128:EECDH&#43;AES256:RSA&#43;AES256:EECDH&#43;3DES:RSA&#43;3DES:!MD5; ssl_prefer_server_ciphers on; ssl_session_cache shared:SSL:10m; ssl_session_timeout 10m; } apache流程
 &lt;VirtualHost *:443&gt; DocumentRoot &#34;project_path&#34; ServerName domain.com:443 ErrorLog error_log_ssl SSLEngine on SSLProtocol ALL -SSLv2 -SSLv3 #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4&#43;RSA:&#43;HIGH:&#43;MEDIUM:&#43;LOW:&#43;SSLv2:&#43;EXP:&#43;eNULL SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!RC4 SSLCertificateFile /etc/httpd/conf.d/tls/crt SSLCertificateKeyFile /etc/httpd/conf.d/tls/key SSLCertificateChainFile /etc/httpd/conf.d/tls/ca-bundle SSLVerifyClient none &lt;Files ~ &#34;\.(cgi|shtml|net|php?)$&#34;&gt; SSLOptions &#43;StdEnvVars &lt;/Files&gt; &lt;Directory &#34;project_path&#34;&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; &lt;/VirtualHost&gt; ">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/tech/ssl-001/">
+<link rel="canonical" href="http://www.hello-api.cn/tech/ssl-001/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -67,12 +67,12 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
 nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.pem; ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3; ssl_ciphers EECDH&#43;CHACHA20:EECDH&#43;CHACHA20-draft:EECDH&#43;AES128:RSA&#43;AES128:EECDH&#43;AES256:RSA&#43;AES256:EECDH&#43;3DES:RSA&#43;3DES:!MD5; ssl_prefer_server_ciphers on; ssl_session_cache shared:SSL:10m; ssl_session_timeout 10m; } apache流程
 &lt;VirtualHost *:443&gt; DocumentRoot &#34;project_path&#34; ServerName domain.com:443 ErrorLog error_log_ssl SSLEngine on SSLProtocol ALL -SSLv2 -SSLv3 #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4&#43;RSA:&#43;HIGH:&#43;MEDIUM:&#43;LOW:&#43;SSLv2:&#43;EXP:&#43;eNULL SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!RC4 SSLCertificateFile /etc/httpd/conf.d/tls/crt SSLCertificateKeyFile /etc/httpd/conf.d/tls/key SSLCertificateChainFile /etc/httpd/conf.d/tls/ca-bundle SSLVerifyClient none &lt;Files ~ &#34;\.(cgi|shtml|net|php?)$&#34;&gt; SSLOptions &#43;StdEnvVars &lt;/Files&gt; &lt;Directory &#34;project_path&#34;&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; &lt;/VirtualHost&gt; " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/tech/ssl-001/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="og:url" content="http://www.hello-api.cn/tech/ssl-001/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="tech" />
 <meta property="article:published_time" content="2022-08-12T12:15:00&#43;08:00" />
 <meta property="article:modified_time" content="2022-08-12T12:15:00&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="初识SSL证书"/>
 <meta name="twitter:description" content="SSL证书也就是支持https访问,其中具体的用处就不在此展开说了,主要介绍下个人使用中可以免费获取的证书渠道以及如何部署
@@ -92,13 +92,13 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
       "@type": "ListItem",
       "position":  1 ,
       "name": "Teches",
-      "item": "/tech/"
-    }
+      "item": "http://www.hello-api.cn/tech/"
+    }, 
     {
       "@type": "ListItem",
-      "position":  1 ,
+      "position":  2 ,
       "name": "初识SSL证书",
-      "item": "/tech/ssl-001/"
+      "item": "http://www.hello-api.cn/tech/ssl-001/"
     }
   ]
 }
@@ -124,14 +124,14 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/tech/ssl-001/"
+    "@id": "http://www.hello-api.cn/tech/ssl-001/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ken Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "/favicon.ico"
+      "url": "http://www.hello-api.cn/favicon.ico"
     }
   }
 }
@@ -155,7 +155,7 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -181,17 +181,17 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -202,7 +202,7 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
 
 <article class="post-single">
     <header class="post-header">
-        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tech/">Teches</a></div>
         <h1 class="post-title">
             初识SSL证书
         </h1>
@@ -288,7 +288,7 @@ Require all granted
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

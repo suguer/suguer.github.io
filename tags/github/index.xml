@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>github on Ken Blog</title>
-    <link>/tags/github/</link>
+    <link>http://www.hello-api.cn/tags/github/</link>
     <description>Recent content in github on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 16 Aug 2022 15:35:00 +0800</lastBuildDate><atom:link href="/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Aug 2022 15:35:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/github/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Github-</title>
-      <link>/tech/github-001/</link>
+      <link>http://www.hello-api.cn/tech/github-001/</link>
       <pubDate>Tue, 16 Aug 2022 15:35:00 +0800</pubDate>
       
-      <guid>/tech/github-001/</guid>
+      <guid>http://www.hello-api.cn/tech/github-001/</guid>
       <description>前言 目前github已经不允许使用账号密码上传代码,因此记录如何通过设置ssh来上传
 目标 前置条件 能运行ssh-keygen
 正式内容 ssh-keygen -t rsa -C &amp;ldquo;email&amp;rdquo;

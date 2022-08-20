@@ -9,16 +9,16 @@
 <meta name="keywords" content="">
 <meta name="description" content="Teches - Ken Blog">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/tech/">
+<link rel="canonical" href="http://www.hello-api.cn/tech/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="/tech/index.xml">
+<link rel="alternate" type="application/rss+xml" href="http://www.hello-api.cn/tech/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,10 +58,10 @@
 </noscript><meta property="og:title" content="Teches" />
 <meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/tech/" /><meta property="og:image" content="/papermod-cover.png"/>
+<meta property="og:url" content="http://www.hello-api.cn/tech/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Teches"/>
 <meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
@@ -76,7 +76,7 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Teches",
-      "item": "/tech/"
+      "item": "http://www.hello-api.cn/tech/"
     }
   ]
 }
@@ -100,7 +100,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -126,17 +126,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -144,7 +144,7 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="/">主页</a></div>
+<header class="page-header"><div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a></div>
   <h1>
     Teches
     <a href="index.xml" title="RSS" aria-label="RSS">
@@ -171,7 +171,7 @@
 interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;8 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Php支付接口" href="/tech/php-pay/"></a>
+  <a class="entry-link" aria-label="post link to Php支付接口" href="http://www.hello-api.cn/tech/php-pay/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -183,7 +183,7 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
     <p>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &#39;&#39;&#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&#39;&#39;&#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &#39;&#39;&#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&#39;&#39;&#39; while True: if self._dismissed.is_set(): break try: &#39;&#39;&#39; Queue....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Python-多线程" href="/tech/python-thread/"></a>
+  <a class="entry-link" aria-label="post link to Python-多线程" href="http://www.hello-api.cn/tech/python-thread/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -206,7 +206,7 @@ $cacert = “file://path/to/ca.crt”; 文档中此处值得ca.crt是下面所�
 Country Name (2 letter code) [AU]:cn State or Province Name (full name) [Some-State]:gd Locality Name (eg, city) []:zh Organization Name (eg, company) [Internet Widgits Pty Ltd]:company Organizational Unit Name (eg, section) []:it Common Name (e.g. server FQDN or YOUR name) []:root 创建根证书： openssl x509 -req -in root....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 13:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Https双向认证" href="/tech/https/"></a>
+  <a class="entry-link" aria-label="post link to Https双向认证" href="http://www.hello-api.cn/tech/https/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -226,7 +226,7 @@ nginx.conf
 events { worker_connections 1024; } http { include /usr/local/nginx/conf/mime.types; default_type application/octet-stream; # Change YOUR_TOKEN to your prerender token # Change example....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 13:44:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Prerender-单页面前端渲染" href="/tech/prerender/"></a>
+  <a class="entry-link" aria-label="post link to Prerender-单页面前端渲染" href="http://www.hello-api.cn/tech/prerender/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -245,7 +245,7 @@ opencc.lua
 if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_content_type, 1, 4) == &#34;text&#34;) then local data=ngx.ctx.data or &#34;&#34; local cdata=ngx.arg[1] data=data..cdata ngx.ctx.data=data if ngx.arg[2] then local opencc = require(&#34;resty.opencc&#34;) -- local o = opencc:new(&#34;zhs2zht.ini&#34;) -- opencc 0.4.x local o = opencc:new(&#34;s2hk.json&#34;) ngx....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:27:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Nginx-实现网站简繁体转换" href="/tech/nginx-002/"></a>
+  <a class="entry-link" aria-label="post link to Nginx-实现网站简繁体转换" href="http://www.hello-api.cn/tech/nginx-002/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -261,7 +261,7 @@ domain_check.lua
 local client = require &#34;resty.websocket.client&#34; local limit_req = require &#34;resty.limit.req&#34; local limit_rate = 150 local limit_burst = 50 local limit_req = require &#34;resty.limit.req&#34; local lim, err = limit_req.new(&#34;my_limit_req_store&#34;, limit_rate, limit_burst) -- 这里设置rate=2/s，漏桶桶容量设置为0，（也就是来多少水就留多少水） -- 因为resty.limit.req代码中控制粒度为毫秒级别，所以可以做到毫秒级别的平滑处理 if not lim then -- ngx.log(ngx.ERR, &#34;failed to instantiate a resty.limit.req object: &#34;, err) return ngx.exit(500) end local key = ngx.var.binary_remote_addr local delay, err = lim:incoming(key, true) if not delay then if err == &#34;rejected&#34; then return ngx....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:25:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Nginx-了解Lua用法" href="/tech/nginx-001/"></a>
+  <a class="entry-link" aria-label="post link to Nginx-了解Lua用法" href="http://www.hello-api.cn/tech/nginx-001/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -273,7 +273,7 @@ local client = require &#34;resty.websocket.client&#34; local limit_req = requir
     <p>How to format log (eg: Y-m-d.log) http { map $host $fmt_localdate { default &#39;&#39;;} map $host $fmt_localtime { default &#39;&#39;;} log_by_lua_block { ngx.var.fmt_localdate = os.date(&#34;%Y-%m-%d&#34;); ngx.var.fmt_localtime = os.date(&#34;%Y-%m-%d %H:%M:%S&#34;); } log_format main &#39;[$host][$remote_addr][$fmt_localtime][$http_referer][$http_user_agent]&#39;; server { access_log /var/log/nginx/access-$fmt_localdate.log main; } } </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:25:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Nginx使用过程中的记录" href="/tech/nginx-node/"></a>
+  <a class="entry-link" aria-label="post link to Nginx使用过程中的记录" href="http://www.hello-api.cn/tech/nginx-node/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -289,7 +289,7 @@ vi /etc/netdata/python.d/apache.conf
 # # if the URL is password protected, the following are supported: # # user:&#39;username&#39; # pass:&#39;password&#39; # ------------------------------------------------------------------- # AUTO-DETECTION JOBS # only one of them will run (they have the same name) localhost: name : &#39;local&#39; url : &#39;http://localhost/server-status?...</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:23:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Netdata-监控apache" href="/tech/netdata-002/"></a>
+  <a class="entry-link" aria-label="post link to Netdata-监控apache" href="http://www.hello-api.cn/tech/netdata-002/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -303,7 +303,7 @@ cd /etc/netdata # Replace this path with your Netdata config directory sudo ./ed
 socket1: name : &#39;local&#39; socket : &#39;/tmp/redis.sock&#39; pass : &#39;pass&#39; socket2: name : &#39;local&#39; socket : &#39;/var/run/redis/redis.sock&#39; # pass : &#39;&#39; socket3: name : &#39;local&#39; socket : &#39;/var/lib/redis/redis.sock&#39; # pass : &#39;&#39; localhost: name : &#39;local&#39; host : &#39;localhost&#39; port : 6379 pass : &#39;pass&#39; localipv4: name : &#39;local&#39; host : &#39;127....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:17:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Netdata-监控redis" href="/tech/netdata-001/"></a>
+  <a class="entry-link" aria-label="post link to Netdata-监控redis" href="http://www.hello-api.cn/tech/netdata-001/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -320,18 +320,18 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
 &lt;VirtualHost *:443&gt; DocumentRoot &#34;project_path&#34; ServerName domain.com:443 ErrorLog error_log_ssl SSLEngine on SSLProtocol ALL -SSLv2 -SSLv3 #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4&#43;RSA:&#43;HIGH:&#43;MEDIUM:&#43;LOW:&#43;SSLv2:&#43;EXP:&#43;eNULL SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!RC4 SSLCertificateFile /etc/httpd/conf.d/tls/crt SSLCertificateKeyFile /etc/httpd/conf.d/tls/key SSLCertificateChainFile /etc/httpd/conf.d/tls/ca-bundle SSLVerifyClient none &lt;Files ~ &#34;\.(cgi|shtml|net|php?)$&#34;&gt; SSLOptions &#43;StdEnvVars &lt;/Files&gt; &lt;Directory &#34;project_path&#34;&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; &lt;/VirtualHost&gt; </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:15:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to 初识SSL证书" href="/tech/ssl-001/"></a>
+  <a class="entry-link" aria-label="post link to 初识SSL证书" href="http://www.hello-api.cn/tech/ssl-001/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="prev" href="/tech/">« 上一页</a>
-    <a class="next" href="/tech/page/3/">下一页 »</a>
+    <a class="prev" href="http://www.hello-api.cn/tech/">« 上一页</a>
+    <a class="next" href="http://www.hello-api.cn/tech/page/3/">下一页 »</a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

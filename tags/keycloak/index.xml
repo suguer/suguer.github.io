@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>keycloak on Ken Blog</title>
-    <link>/tags/keycloak/</link>
+    <link>http://www.hello-api.cn/tags/keycloak/</link>
     <description>Recent content in keycloak on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:32:00 +0800</lastBuildDate><atom:link href="/tags/keycloak/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:32:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/keycloak/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>keycloak</title>
-      <link>/study/keycloak/</link>
+      <link>http://www.hello-api.cn/study/keycloak/</link>
       <pubDate>Fri, 19 Aug 2022 15:32:00 +0800</pubDate>
       
-      <guid>/study/keycloak/</guid>
+      <guid>http://www.hello-api.cn/study/keycloak/</guid>
       <description>Keycloak
 1. create realm 用于对接不同网站的登录用户,隔离区域
 2. how to use php

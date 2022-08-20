@@ -9,13 +9,13 @@
 <meta name="keywords" content="php">
 <meta name="description" content=" static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } ">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/study/php-distance/">
+<link rel="canonical" href="http://www.hello-api.cn/study/php-distance/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -57,12 +57,12 @@
 </noscript><meta property="og:title" content="Php-根据经纬度计算直线距离" />
 <meta property="og:description" content=" static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/study/php-distance/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="study" />
+<meta property="og:url" content="http://www.hello-api.cn/study/php-distance/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="study" />
 <meta property="article:published_time" content="2022-08-12T16:53:00&#43;08:00" />
 <meta property="article:modified_time" content="2022-08-12T16:53:00&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Php-根据经纬度计算直线距离"/>
 <meta name="twitter:description" content=" static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } "/>
@@ -77,13 +77,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Studies",
-      "item": "/study/"
-    }
+      "item": "http://www.hello-api.cn/study/"
+    }, 
     {
       "@type": "ListItem",
-      "position":  1 ,
+      "position":  2 ,
       "name": "Php-根据经纬度计算直线距离",
-      "item": "/study/php-distance/"
+      "item": "http://www.hello-api.cn/study/php-distance/"
     }
   ]
 }
@@ -109,14 +109,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/study/php-distance/"
+    "@id": "http://www.hello-api.cn/study/php-distance/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ken Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "/favicon.ico"
+      "url": "http://www.hello-api.cn/favicon.ico"
     }
   }
 }
@@ -140,7 +140,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -166,17 +166,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -187,7 +187,7 @@
 
 <article class="post-single">
     <header class="post-header">
-        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/study/">Studies</a></div>
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/study/">Studies</a></div>
         <h1 class="post-title">
             Php-根据经纬度计算直线距离
         </h1>
@@ -229,15 +229,15 @@
 
     <footer class="post-footer">
         <ul class="post-tags">
-            <li><a href="/tags/php/">php</a></li>
+            <li><a href="http://www.hello-api.cn/tags/php/">php</a></li>
         </ul>
 <nav class="paginav">
-  <a class="prev" href="/study/php-encrypter/">
+  <a class="prev" href="http://www.hello-api.cn/study/php-encrypter/">
     <span class="title">« 上一页</span>
     <br>
     <span>Php-自定义封装加密方法</span>
   </a>
-  <a class="next" href="/study/php-ssl/">
+  <a class="next" href="http://www.hello-api.cn/study/php-ssl/">
     <span class="title">下一页 »</span>
     <br>
     <span>Php-生成ssl证书所需的csr信息</span>
@@ -265,7 +265,7 @@
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

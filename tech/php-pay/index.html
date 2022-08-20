@@ -13,13 +13,13 @@
 正式内容 支付的需求最主要在于3个接口的实现
 interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key.">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/tech/php-pay/">
+<link rel="canonical" href="http://www.hello-api.cn/tech/php-pay/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -65,12 +65,12 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
 正式内容 支付的需求最主要在于3个接口的实现
 interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @param $total_fee * @param array $param * @return mixed */ public function pay($out_trade_no,$total_fee,$param=[]); /** * 查询支付结果 * @return mixed */ public function query($out_trade_no,$param=[]); /** * 支付回调,由于各支付平台的参数都不同,因此返回原始信息自己处理 * @param $all * @return mixed */ public function handle($all); } wechat 微信支付 public function query($out_trade_no, $param = []) { $action = &#34;/v3/pay/transactions/out-trade-no/{$out_trade_no}&#34;; $resp = $this-&gt;request($action, [], &#39;GET&#39;); return $resp; } private function sign($url, $params, $method) { $params[&#39;mchid&#39;] = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;mch_id&#39;]; $serial_no = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;serial_no&#39;]; $mch_private_key = file_get_contents(&#34;/conf/wechat_private_key." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/tech/php-pay/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="og:url" content="http://www.hello-api.cn/tech/php-pay/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="tech" />
 <meta property="article:published_time" content="2022-08-12T15:32:00&#43;08:00" />
 <meta property="article:modified_time" content="2022-08-12T15:32:00&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Php支付接口"/>
 <meta name="twitter:description" content="前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
@@ -89,13 +89,13 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
       "@type": "ListItem",
       "position":  1 ,
       "name": "Teches",
-      "item": "/tech/"
-    }
+      "item": "http://www.hello-api.cn/tech/"
+    }, 
     {
       "@type": "ListItem",
-      "position":  1 ,
+      "position":  2 ,
       "name": "Php支付接口",
-      "item": "/tech/php-pay/"
+      "item": "http://www.hello-api.cn/tech/php-pay/"
     }
   ]
 }
@@ -121,14 +121,14 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/tech/php-pay/"
+    "@id": "http://www.hello-api.cn/tech/php-pay/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ken Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "/favicon.ico"
+      "url": "http://www.hello-api.cn/favicon.ico"
     }
   }
 }
@@ -152,7 +152,7 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -178,17 +178,17 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -199,7 +199,7 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
 
 <article class="post-single">
     <header class="post-header">
-        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tech/">Teches</a></div>
         <h1 class="post-title">
             Php支付接口
         </h1>
@@ -838,8 +838,8 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
 
     <footer class="post-footer">
         <ul class="post-tags">
-            <li><a href="/tags/php/">php</a></li>
-            <li><a href="/tags/pay/">pay</a></li>
+            <li><a href="http://www.hello-api.cn/tags/php/">php</a></li>
+            <li><a href="http://www.hello-api.cn/tags/pay/">pay</a></li>
         </ul>
 
     </footer>
@@ -863,7 +863,7 @@ interface PaymentClientInterface { /** * 支付请求 * @param $order_out_no * @
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

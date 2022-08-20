@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>swagger on Ken Blog</title>
-    <link>/tags/swagger/</link>
+    <link>http://www.hello-api.cn/tags/swagger/</link>
     <description>Recent content in swagger on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 12 Aug 2022 16:06:00 +0800</lastBuildDate><atom:link href="/tags/swagger/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 12 Aug 2022 16:06:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/swagger/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Php-Swagger代码了解</title>
-      <link>/tech/php-swagger/</link>
+      <link>http://www.hello-api.cn/tech/php-swagger/</link>
       <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
       
-      <guid>/tech/php-swagger/</guid>
+      <guid>http://www.hello-api.cn/tech/php-swagger/</guid>
       <description>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
 目标 前置条件 zircote/swagger-php document
 正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=&amp;ldquo;Fapi&amp;rdquo;, version=&amp;ldquo;0.1&amp;rdquo;,description=&amp;ldquo;antdv5的接口前缀为/api/v2

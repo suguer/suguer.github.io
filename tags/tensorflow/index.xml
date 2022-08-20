@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>tensorflow on Ken Blog</title>
-    <link>/tags/tensorflow/</link>
+    <link>http://www.hello-api.cn/tags/tensorflow/</link>
     <description>Recent content in tensorflow on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 12 Aug 2022 15:18:00 +0800</lastBuildDate><atom:link href="/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 12 Aug 2022 15:18:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python-初学tensorflow第二天-学习例子</title>
-      <link>/study/python-tensorflow-002/</link>
+      <link>http://www.hello-api.cn/study/python-tensorflow-002/</link>
       <pubDate>Fri, 12 Aug 2022 15:18:00 +0800</pubDate>
       
-      <guid>/study/python-tensorflow-002/</guid>
+      <guid>http://www.hello-api.cn/study/python-tensorflow-002/</guid>
       <description>学习来源Bilibili 根据例子编写出线性回归方程
 import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.csv&amp;#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&amp;#39;adam&amp;#39;,loss=&amp;#39;mse&amp;#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
 1,10.000000 ,26.658839
@@ -47,10 +47,10 @@ import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.cs
     
     <item>
       <title>Python-初学tensorflow第一天-搭建环境</title>
-      <link>/study/python-tensorflow-001/</link>
+      <link>http://www.hello-api.cn/study/python-tensorflow-001/</link>
       <pubDate>Fri, 12 Aug 2022 15:12:00 +0800</pubDate>
       
-      <guid>/study/python-tensorflow-001/</guid>
+      <guid>http://www.hello-api.cn/study/python-tensorflow-001/</guid>
       <description>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
 打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library &amp;lsquo;cudart64_110.dll&amp;rsquo;; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
 Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed

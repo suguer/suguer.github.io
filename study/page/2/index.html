@@ -9,16 +9,16 @@
 <meta name="keywords" content="">
 <meta name="description" content="Studies - Ken Blog">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/study/">
+<link rel="canonical" href="http://www.hello-api.cn/study/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="/study/index.xml">
+<link rel="alternate" type="application/rss+xml" href="http://www.hello-api.cn/study/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,10 +58,10 @@
 </noscript><meta property="og:title" content="Studies" />
 <meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/study/" /><meta property="og:image" content="/papermod-cover.png"/>
+<meta property="og:url" content="http://www.hello-api.cn/study/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Studies"/>
 <meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
@@ -76,7 +76,7 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Studies",
-      "item": "/study/"
+      "item": "http://www.hello-api.cn/study/"
     }
   ]
 }
@@ -100,7 +100,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -126,17 +126,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -144,7 +144,7 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="/">主页</a></div>
+<header class="page-header"><div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a></div>
   <h1>
     Studies
     <a href="index.xml" title="RSS" aria-label="RSS">
@@ -167,7 +167,7 @@
     <p>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&#34;; private static $cipher = &#34;AES-256-CBC&#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &#39;iv&#39; =&gt; $iv, &#39;value&#39; =&gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&#39;iv&#39;]); $decrypted = openssl_decrypt($payload[&#39;value&#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Php-自定义封装加密方法" href="/study/php-encrypter/"></a>
+  <a class="entry-link" aria-label="post link to Php-自定义封装加密方法" href="http://www.hello-api.cn/study/php-encrypter/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -179,7 +179,7 @@
     <p> static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 16:53:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Php-根据经纬度计算直线距离" href="/study/php-distance/"></a>
+  <a class="entry-link" aria-label="post link to Php-根据经纬度计算直线距离" href="http://www.hello-api.cn/study/php-distance/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -191,7 +191,7 @@
     <p>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&gt;all(); $dn = [ &#34;countryName&#34; =&gt; trim(strtoupper($all[&#39;countryName&#39;])), //所在国家 &#34;stateOrProvinceName&#34; =&gt; trim($all[&#39;stateOrProvinceName&#39;]), //所在省份 &#34;localityName&#34; =&gt; trim($all[&#39;localityName&#39;]), //所在城市 &#34;organizationName&#34; =&gt; trim($all[&#39;organizationName&#39;]), //注册人姓名 &#34;organizationalUnitName&#34; =&gt; trim($all[&#39;organizationalUnitName&#39;]), //组织名称 &#34;commonName&#34; =&gt; trim($all[&#39;commonName&#39;]), //公共名称 ]; if (isset($all[&#39;emailAddress&#39;]) &amp;&amp; $all[&#39;emailAddress&#39;]) { $dn[&#39;emailAddress&#39;] = $all[&#39;emailAddress&#39;]; } $config = [ &#34;private_key_bits&#34; =&gt; isset($all[&#39;keysize&#39;]) &amp;&amp; $all[&#39;keysize&#39;] ? $all[&#39;keysize&#39;] : 2048, //字节数 512 1024 2048 4096 等 &#34;private_key_type&#34; =&gt; OPENSSL_KEYTYPE_RSA, //加密类型 &#39;digest_alg&#39; =&gt; &#39;sha256&#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&#39;config&#39;] = &#34;D:/phpstudy_pro/Extensions/Apache2....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 16:45:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Php-生成ssl证书所需的csr信息" href="/study/php-ssl/"></a>
+  <a class="entry-link" aria-label="post link to Php-生成ssl证书所需的csr信息" href="http://www.hello-api.cn/study/php-ssl/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -229,7 +229,7 @@ import tensorflow as tf import pandas as pd data=pd.read_csv(&#39;./demo1.csv&#3
 25,19.913043 ,76.098135...</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Python-初学tensorflow第二天-学习例子" href="/study/python-tensorflow-002/"></a>
+  <a class="entry-link" aria-label="post link to Python-初学tensorflow第二天-学习例子" href="http://www.hello-api.cn/study/python-tensorflow-002/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -246,7 +246,7 @@ Q: 安装cuda一直安装不成功,nsight visual studio edition提示安装失�
 Q: Downgrade the protobuf package to 3....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:12:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Python-初学tensorflow第一天-搭建环境" href="/study/python-tensorflow-001/"></a>
+  <a class="entry-link" aria-label="post link to Python-初学tensorflow第一天-搭建环境" href="http://www.hello-api.cn/study/python-tensorflow-001/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -264,7 +264,7 @@ click 对于按钮的点击事件,推荐用
 driver.execute_script(&#34;arguments[0].click();&#34;, nextButton) 据说.click()会导致报错,虽然我还没遇到过</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to 初始Python-自动化操作" href="/study/python-selenium/"></a>
+  <a class="entry-link" aria-label="post link to 初始Python-自动化操作" href="http://www.hello-api.cn/study/python-selenium/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -278,7 +278,7 @@ import os file_array=[] dir_array=[ os.getcwd() &#43; &#34;/directory1/&#34;, os
 wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&#39;数据明细&#39;) # print(sh.nrows) # 有效数据行数 # print(sh.ncols) # 有效数据列数 for index in range(len(sh.row_values(0))): title = sh.row_values(0)[index] </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:05:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to 初始Python-文件操作" href="/study/python-001/"></a>
+  <a class="entry-link" aria-label="post link to 初始Python-文件操作" href="http://www.hello-api.cn/study/python-001/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -293,7 +293,7 @@ RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt �
 127.0.0.1 b 8.8.8.8 b </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 13:47:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Apache" href="/study/apache/"></a>
+  <a class="entry-link" aria-label="post link to Apache" href="http://www.hello-api.cn/study/apache/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -308,7 +308,7 @@ RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt �
 05-20-00hour.log </p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 13:46:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Centos-工作中随手的记录" href="/study/centos/"></a>
+  <a class="entry-link" aria-label="post link to Centos-工作中随手的记录" href="http://www.hello-api.cn/study/centos/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -321,18 +321,18 @@ RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt �
 #!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/....</p>
   </div>
   <footer class="entry-footer"><span title='2022-08-12 12:29:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to gitfun" href="/study/gitfun/"></a>
+  <a class="entry-link" aria-label="post link to gitfun" href="http://www.hello-api.cn/study/gitfun/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="prev" href="/study/">« 上一页</a>
-    <a class="next" href="/study/page/3/">下一页 »</a>
+    <a class="prev" href="http://www.hello-api.cn/study/">« 上一页</a>
+    <a class="next" href="http://www.hello-api.cn/study/page/3/">下一页 »</a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

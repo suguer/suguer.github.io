@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Lives on Ken Blog</title>
-    <link>/life/</link>
+    <link>http://www.hello-api.cn/life/</link>
     <description>Recent content in Lives on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 15 Aug 2022 11:29:00 +0800</lastBuildDate><atom:link href="/life/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Aug 2022 11:29:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/life/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>seo</title>
-      <link>/life/seo/</link>
+      <link>http://www.hello-api.cn/life/seo/</link>
       <pubDate>Mon, 15 Aug 2022 11:29:00 +0800</pubDate>
       
-      <guid>/life/seo/</guid>
+      <guid>http://www.hello-api.cn/life/seo/</guid>
       <description>seo一般指搜索引擎优化，主要就是为了网站让更多人发现和访问，记录一下了解过程中有关的
 5118.com 一种站长工具,支持各种的关键词搜索,对于检测seo有很大的帮助 百度站长平台
 360站长平台
@@ -24,10 +24,10 @@
     
     <item>
       <title>微信小程序-云收租</title>
-      <link>/life/wechat-rent/</link>
+      <link>http://www.hello-api.cn/life/wechat-rent/</link>
       <pubDate>Mon, 15 Aug 2022 11:28:00 +0800</pubDate>
       
-      <guid>/life/wechat-rent/</guid>
+      <guid>http://www.hello-api.cn/life/wechat-rent/</guid>
       <description>实现功能模块
 房屋模块
 |-创建房子
@@ -38,10 +38,10 @@
     
     <item>
       <title>python-波场区块链的扫块系统</title>
-      <link>/life/python-tronlink-scan/</link>
+      <link>http://www.hello-api.cn/life/python-tronlink-scan/</link>
       <pubDate>Mon, 15 Aug 2022 11:26:00 +0800</pubDate>
       
-      <guid>/life/python-tronlink-scan/</guid>
+      <guid>http://www.hello-api.cn/life/python-tronlink-scan/</guid>
       <description>[github]路径(https://github.com/suguer/python-tronlink-scan)
 python-tronlink-scan 波场链的扫块功能,如果对于需要获取波场链上的交易情况,又没有条件部署一台自己的节点,那么采用本文的方式是一个不错的选择,通过调用接口也能及时获取到交易信息
 安装需要的用到的插件
@@ -57,10 +57,10 @@ hash,block,from,to,block_at,amount,contract_address,status f474e2ceb883637aae1f6
     
     <item>
       <title>php-域名竞价模块</title>
-      <link>/life/php-domain-auction/</link>
+      <link>http://www.hello-api.cn/life/php-domain-auction/</link>
       <pubDate>Mon, 15 Aug 2022 11:25:00 +0800</pubDate>
       
-      <guid>/life/php-domain-auction/</guid>
+      <guid>http://www.hello-api.cn/life/php-domain-auction/</guid>
       <description>域名竞价交易,即为域名充当交易物品进行价值交换,其中比较出名的有国内聚名 ,以及海外的GNAME, 以GNAME为例子讲述如何对接交易模块,
 Gname的API接口文档
 过期预定预定 预定结束=&amp;gt; [抢注成功直接得标, 抢注失败直接失标, 抢注失败需竞价] 竞价域名,涉及到本地多人出价的竞价已经与远端竞价的比较 [直接出价,代理出价] 竞价结束 =&amp;gt; [竞价成功,竞价失败] 简单描述竞价流程

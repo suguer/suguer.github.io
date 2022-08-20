@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>dapp on Ken Blog</title>
-    <link>/tags/dapp/</link>
+    <link>http://www.hello-api.cn/tags/dapp/</link>
     <description>Recent content in dapp on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="/tags/dapp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/dapp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>dapp</title>
-      <link>/study/dapp/</link>
+      <link>http://www.hello-api.cn/study/dapp/</link>
       <pubDate>Fri, 19 Aug 2022 15:41:00 +0800</pubDate>
       
-      <guid>/study/dapp/</guid>
+      <guid>http://www.hello-api.cn/study/dapp/</guid>
       <description>合约在线开发IDE
 solidity 中文文档
 trongrid.io

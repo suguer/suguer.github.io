@@ -11,13 +11,13 @@
 目标 前置条件 composer require php-imap/php-imap
 正式内容 php-imap 的使用 $mailbox = new Mailbox( &#39;{SMTP服务器:SMTP端口号/imap}INBOX&#39;, // IMAP server and mailbox folder &#39;邮箱账号&#39;, // Username for the before configured mailbox &#39;邮箱密码&#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &#39;UTF-8&#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&gt;searchMailbox(&#39;ALL&#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &#34;IMAP connection failed: &#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&gt; $item) { //循环遍历 $mail = $mailbox-&gt;getMail($item); $fromAddress = $mail-&gt;fromAddress; $content = $mail-&gt;textHtml; if(!">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="/tech/php-imap/">
+<link rel="canonical" href="http://www.hello-api.cn/tech/php-imap/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<link rel="icon" href="http://www.hello-api.cn/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://www.hello-api.cn/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://www.hello-api.cn/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://www.hello-api.cn/apple-touch-icon.png">
+<link rel="mask-icon" href="http://www.hello-api.cn/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <noscript>
@@ -61,12 +61,12 @@
 目标 前置条件 composer require php-imap/php-imap
 正式内容 php-imap 的使用 $mailbox = new Mailbox( &#39;{SMTP服务器:SMTP端口号/imap}INBOX&#39;, // IMAP server and mailbox folder &#39;邮箱账号&#39;, // Username for the before configured mailbox &#39;邮箱密码&#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &#39;UTF-8&#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&gt;searchMailbox(&#39;ALL&#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &#34;IMAP connection failed: &#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&gt; $item) { //循环遍历 $mail = $mailbox-&gt;getMail($item); $fromAddress = $mail-&gt;fromAddress; $content = $mail-&gt;textHtml; if(!" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/tech/php-imap/" /><meta property="og:image" content="/papermod-cover.png"/><meta property="article:section" content="tech" />
+<meta property="og:url" content="http://www.hello-api.cn/tech/php-imap/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/><meta property="article:section" content="tech" />
 <meta property="article:published_time" content="2022-08-12T17:32:00&#43;08:00" />
 <meta property="article:modified_time" content="2022-08-12T17:32:00&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/papermod-cover.png"/>
+<meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Php邮件收取imap"/>
 <meta name="twitter:description" content="前言 招商银行的收款通知可以添加邮件推送,因此利用php-imap收取邮件,可达到自动化确款的目的
@@ -83,13 +83,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Teches",
-      "item": "/tech/"
-    }
+      "item": "http://www.hello-api.cn/tech/"
+    }, 
     {
       "@type": "ListItem",
-      "position":  1 ,
+      "position":  2 ,
       "name": "Php邮件收取imap",
-      "item": "/tech/php-imap/"
+      "item": "http://www.hello-api.cn/tech/php-imap/"
     }
   ]
 }
@@ -115,14 +115,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/tech/php-imap/"
+    "@id": "http://www.hello-api.cn/tech/php-imap/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Ken Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "/favicon.ico"
+      "url": "http://www.hello-api.cn/favicon.ico"
     }
   }
 }
@@ -146,7 +146,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
+            <a href="http://www.hello-api.cn/" accesskey="h" title="Ken Blog (Alt + H)">Ken Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -172,17 +172,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="/archives" title="Archive">
+                <a href="http://www.hello-api.cn/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://www.hello-api.cn/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="/tags/" title="Tags">
+                <a href="http://www.hello-api.cn/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -193,7 +193,7 @@
 
 <article class="post-single">
     <header class="post-header">
-        <div class="breadcrumbs"><a href="/">主页</a>&nbsp;»&nbsp;<a href="/tech/">Teches</a></div>
+        <div class="breadcrumbs"><a href="http://www.hello-api.cn/">主页</a>&nbsp;»&nbsp;<a href="http://www.hello-api.cn/tech/">Teches</a></div>
         <h1 class="post-title">
             Php邮件收取imap
         </h1>
@@ -313,7 +313,7 @@
 
     <footer class="post-footer">
         <ul class="post-tags">
-            <li><a href="/tags/php/">php</a></li>
+            <li><a href="http://www.hello-api.cn/tags/php/">php</a></li>
         </ul>
 
     </footer>
@@ -337,7 +337,7 @@
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="/">Ken Blog</a></span>
+    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

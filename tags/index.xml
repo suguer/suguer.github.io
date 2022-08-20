@@ -2,317 +2,317 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Ken Blog</title>
-    <link>/tags/</link>
+    <link>http://www.hello-api.cn/tags/</link>
     <description>Recent content in Tags on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>dapp</title>
-      <link>/tags/dapp/</link>
+      <link>http://www.hello-api.cn/tags/dapp/</link>
       <pubDate>Fri, 19 Aug 2022 15:41:00 +0800</pubDate>
       
-      <guid>/tags/dapp/</guid>
+      <guid>http://www.hello-api.cn/tags/dapp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>php</title>
-      <link>/tags/php/</link>
+      <link>http://www.hello-api.cn/tags/php/</link>
       <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
       
-      <guid>/tags/php/</guid>
+      <guid>http://www.hello-api.cn/tags/php/</guid>
       <description></description>
     </item>
     
     <item>
       <title>powerdns</title>
-      <link>/tags/powerdns/</link>
+      <link>http://www.hello-api.cn/tags/powerdns/</link>
       <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
       
-      <guid>/tags/powerdns/</guid>
+      <guid>http://www.hello-api.cn/tags/powerdns/</guid>
       <description></description>
     </item>
     
     <item>
       <title>laravel</title>
-      <link>/tags/laravel/</link>
+      <link>http://www.hello-api.cn/tags/laravel/</link>
       <pubDate>Fri, 19 Aug 2022 15:35:00 +0800</pubDate>
       
-      <guid>/tags/laravel/</guid>
+      <guid>http://www.hello-api.cn/tags/laravel/</guid>
       <description></description>
     </item>
     
     <item>
       <title>keycloak</title>
-      <link>/tags/keycloak/</link>
+      <link>http://www.hello-api.cn/tags/keycloak/</link>
       <pubDate>Fri, 19 Aug 2022 15:32:00 +0800</pubDate>
       
-      <guid>/tags/keycloak/</guid>
+      <guid>http://www.hello-api.cn/tags/keycloak/</guid>
       <description></description>
     </item>
     
     <item>
       <title>mongodb</title>
-      <link>/tags/mongodb/</link>
+      <link>http://www.hello-api.cn/tags/mongodb/</link>
       <pubDate>Fri, 19 Aug 2022 15:30:00 +0800</pubDate>
       
-      <guid>/tags/mongodb/</guid>
+      <guid>http://www.hello-api.cn/tags/mongodb/</guid>
       <description></description>
     </item>
     
     <item>
       <title>python</title>
-      <link>/tags/python/</link>
+      <link>http://www.hello-api.cn/tags/python/</link>
       <pubDate>Fri, 19 Aug 2022 15:30:00 +0800</pubDate>
       
-      <guid>/tags/python/</guid>
+      <guid>http://www.hello-api.cn/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hugo-004</title>
-      <link>/tags/hugo-004/</link>
+      <link>http://www.hello-api.cn/tags/hugo-004/</link>
       <pubDate>Thu, 18 Aug 2022 12:18:00 +0800</pubDate>
       
-      <guid>/tags/hugo-004/</guid>
+      <guid>http://www.hello-api.cn/tags/hugo-004/</guid>
       <description></description>
     </item>
     
     <item>
       <title>gitblit</title>
-      <link>/tags/gitblit/</link>
+      <link>http://www.hello-api.cn/tags/gitblit/</link>
       <pubDate>Tue, 16 Aug 2022 15:50:00 +0800</pubDate>
       
-      <guid>/tags/gitblit/</guid>
+      <guid>http://www.hello-api.cn/tags/gitblit/</guid>
       <description></description>
     </item>
     
     <item>
       <title>github</title>
-      <link>/tags/github/</link>
+      <link>http://www.hello-api.cn/tags/github/</link>
       <pubDate>Tue, 16 Aug 2022 15:35:00 +0800</pubDate>
       
-      <guid>/tags/github/</guid>
+      <guid>http://www.hello-api.cn/tags/github/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tronlink</title>
-      <link>/tags/tronlink/</link>
+      <link>http://www.hello-api.cn/tags/tronlink/</link>
       <pubDate>Tue, 16 Aug 2022 10:15:00 +0800</pubDate>
       
-      <guid>/tags/tronlink/</guid>
+      <guid>http://www.hello-api.cn/tags/tronlink/</guid>
       <description></description>
     </item>
     
     <item>
       <title>wechaty</title>
-      <link>/tags/wechaty/</link>
+      <link>http://www.hello-api.cn/tags/wechaty/</link>
       <pubDate>Mon, 15 Aug 2022 11:31:00 +0800</pubDate>
       
-      <guid>/tags/wechaty/</guid>
+      <guid>http://www.hello-api.cn/tags/wechaty/</guid>
       <description></description>
     </item>
     
     <item>
       <title>seo</title>
-      <link>/tags/seo/</link>
+      <link>http://www.hello-api.cn/tags/seo/</link>
       <pubDate>Mon, 15 Aug 2022 11:29:00 +0800</pubDate>
       
-      <guid>/tags/seo/</guid>
+      <guid>http://www.hello-api.cn/tags/seo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>wechat</title>
-      <link>/tags/wechat/</link>
+      <link>http://www.hello-api.cn/tags/wechat/</link>
       <pubDate>Mon, 15 Aug 2022 11:28:00 +0800</pubDate>
       
-      <guid>/tags/wechat/</guid>
+      <guid>http://www.hello-api.cn/tags/wechat/</guid>
       <description></description>
     </item>
     
     <item>
       <title>domain</title>
-      <link>/tags/domain/</link>
+      <link>http://www.hello-api.cn/tags/domain/</link>
       <pubDate>Mon, 15 Aug 2022 11:25:00 +0800</pubDate>
       
-      <guid>/tags/domain/</guid>
+      <guid>http://www.hello-api.cn/tags/domain/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hugo</title>
-      <link>/tags/hugo/</link>
+      <link>http://www.hello-api.cn/tags/hugo/</link>
       <pubDate>Mon, 15 Aug 2022 11:24:00 +0800</pubDate>
       
-      <guid>/tags/hugo/</guid>
+      <guid>http://www.hello-api.cn/tags/hugo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ocr</title>
-      <link>/tags/ocr/</link>
+      <link>http://www.hello-api.cn/tags/ocr/</link>
       <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
       
-      <guid>/tags/ocr/</guid>
+      <guid>http://www.hello-api.cn/tags/ocr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>encrypter</title>
-      <link>/tags/encrypter/</link>
+      <link>http://www.hello-api.cn/tags/encrypter/</link>
       <pubDate>Mon, 15 Aug 2022 10:34:00 +0800</pubDate>
       
-      <guid>/tags/encrypter/</guid>
+      <guid>http://www.hello-api.cn/tags/encrypter/</guid>
       <description></description>
     </item>
     
     <item>
       <title>baota</title>
-      <link>/tags/baota/</link>
+      <link>http://www.hello-api.cn/tags/baota/</link>
       <pubDate>Fri, 12 Aug 2022 16:55:00 +0800</pubDate>
       
-      <guid>/tags/baota/</guid>
+      <guid>http://www.hello-api.cn/tags/baota/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ssl</title>
-      <link>/tags/ssl/</link>
+      <link>http://www.hello-api.cn/tags/ssl/</link>
       <pubDate>Fri, 12 Aug 2022 16:45:00 +0800</pubDate>
       
-      <guid>/tags/ssl/</guid>
+      <guid>http://www.hello-api.cn/tags/ssl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>swagger</title>
-      <link>/tags/swagger/</link>
+      <link>http://www.hello-api.cn/tags/swagger/</link>
       <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
       
-      <guid>/tags/swagger/</guid>
+      <guid>http://www.hello-api.cn/tags/swagger/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pay</title>
-      <link>/tags/pay/</link>
+      <link>http://www.hello-api.cn/tags/pay/</link>
       <pubDate>Fri, 12 Aug 2022 15:32:00 +0800</pubDate>
       
-      <guid>/tags/pay/</guid>
+      <guid>http://www.hello-api.cn/tags/pay/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tensorflow</title>
-      <link>/tags/tensorflow/</link>
+      <link>http://www.hello-api.cn/tags/tensorflow/</link>
       <pubDate>Fri, 12 Aug 2022 15:18:00 +0800</pubDate>
       
-      <guid>/tags/tensorflow/</guid>
+      <guid>http://www.hello-api.cn/tags/tensorflow/</guid>
       <description></description>
     </item>
     
     <item>
       <title>selenium</title>
-      <link>/tags/selenium/</link>
+      <link>http://www.hello-api.cn/tags/selenium/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/tags/selenium/</guid>
+      <guid>http://www.hello-api.cn/tags/selenium/</guid>
       <description></description>
     </item>
     
     <item>
       <title>thread</title>
-      <link>/tags/thread/</link>
+      <link>http://www.hello-api.cn/tags/thread/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/tags/thread/</guid>
+      <guid>http://www.hello-api.cn/tags/thread/</guid>
       <description></description>
     </item>
     
     <item>
       <title>PaperMod</title>
-      <link>/tags/papermod/</link>
+      <link>http://www.hello-api.cn/tags/papermod/</link>
       <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/papermod/</guid>
+      <guid>http://www.hello-api.cn/tags/papermod/</guid>
       <description></description>
     </item>
     
     <item>
       <title>css</title>
-      <link>/tags/css/</link>
+      <link>http://www.hello-api.cn/tags/css/</link>
       <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/css/</guid>
+      <guid>http://www.hello-api.cn/tags/css/</guid>
       <description></description>
     </item>
     
     <item>
       <title>html</title>
-      <link>/tags/html/</link>
+      <link>http://www.hello-api.cn/tags/html/</link>
       <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/html/</guid>
+      <guid>http://www.hello-api.cn/tags/html/</guid>
       <description></description>
     </item>
     
     <item>
       <title>markdown</title>
-      <link>/tags/markdown/</link>
+      <link>http://www.hello-api.cn/tags/markdown/</link>
       <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/markdown/</guid>
+      <guid>http://www.hello-api.cn/tags/markdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>themes</title>
-      <link>/tags/themes/</link>
+      <link>http://www.hello-api.cn/tags/themes/</link>
       <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/themes/</guid>
+      <guid>http://www.hello-api.cn/tags/themes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>privacy</title>
-      <link>/tags/privacy/</link>
+      <link>http://www.hello-api.cn/tags/privacy/</link>
       <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/privacy/</guid>
+      <guid>http://www.hello-api.cn/tags/privacy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>shortcodes</title>
-      <link>/tags/shortcodes/</link>
+      <link>http://www.hello-api.cn/tags/shortcodes/</link>
       <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/shortcodes/</guid>
+      <guid>http://www.hello-api.cn/tags/shortcodes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>text</title>
-      <link>/tags/text/</link>
+      <link>http://www.hello-api.cn/tags/text/</link>
       <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/text/</guid>
+      <guid>http://www.hello-api.cn/tags/text/</guid>
       <description></description>
     </item>
     
     <item>
       <title>emoji</title>
-      <link>/tags/emoji/</link>
+      <link>http://www.hello-api.cn/tags/emoji/</link>
       <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/emoji/</guid>
+      <guid>http://www.hello-api.cn/tags/emoji/</guid>
       <description></description>
     </item>
     

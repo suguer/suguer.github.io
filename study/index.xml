@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Studies on Ken Blog</title>
-    <link>/study/</link>
+    <link>http://www.hello-api.cn/study/</link>
     <description>Recent content in Studies on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="/study/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:41:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/study/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>dapp</title>
-      <link>/study/dapp/</link>
+      <link>http://www.hello-api.cn/study/dapp/</link>
       <pubDate>Fri, 19 Aug 2022 15:41:00 +0800</pubDate>
       
-      <guid>/study/dapp/</guid>
+      <guid>http://www.hello-api.cn/study/dapp/</guid>
       <description>合约在线开发IDE
 solidity 中文文档
 trongrid.io
@@ -24,10 +24,10 @@ trongrid.io
     
     <item>
       <title>php-如何使用powerdns的接口</title>
-      <link>/study/php-powerdns/</link>
+      <link>http://www.hello-api.cn/study/php-powerdns/</link>
       <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
       
-      <guid>/study/php-powerdns/</guid>
+      <guid>http://www.hello-api.cn/study/php-powerdns/</guid>
       <description>powerdns安装教程
 如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
 Swagger 生成插件
@@ -41,19 +41,19 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
     
     <item>
       <title>php-laravel自定义https端口访问异常</title>
-      <link>/study/php-laravel-003/</link>
+      <link>http://www.hello-api.cn/study/php-laravel-003/</link>
       <pubDate>Fri, 19 Aug 2022 15:35:00 +0800</pubDate>
       
-      <guid>/study/php-laravel-003/</guid>
+      <guid>http://www.hello-api.cn/study/php-laravel-003/</guid>
       <description>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&amp;gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;amp;&amp;amp; $port = $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;amp;&amp;amp; &amp;#39;https&amp;#39; === $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &amp;#39;http&amp;#39;)) { return 443; } } if ($host = $this-&amp;gt;headers-&amp;gt;get(&amp;#39;HOST&amp;#39;)) { if ($host[0] === &amp;#39;[&amp;#39;) { $pos = strpos($host, &amp;#39;:&amp;#39;, strrpos($host, &amp;#39;]&amp;#39;)); } else { $pos = strrpos($host, &amp;#39;:&amp;#39;); } if (false !== $pos) { return (int) substr($host, $pos + 1); } return &amp;#39;https&amp;#39; === $this-&amp;gt;getScheme() ?</description>
     </item>
     
     <item>
       <title>keycloak</title>
-      <link>/study/keycloak/</link>
+      <link>http://www.hello-api.cn/study/keycloak/</link>
       <pubDate>Fri, 19 Aug 2022 15:32:00 +0800</pubDate>
       
-      <guid>/study/keycloak/</guid>
+      <guid>http://www.hello-api.cn/study/keycloak/</guid>
       <description>Keycloak
 1. create realm 用于对接不同网站的登录用户,隔离区域
 2. how to use php
@@ -63,10 +63,10 @@ class SsoKeycloakClient implements SsoClientInterface { use ApiConfigTrait; use 
     
     <item>
       <title>Mongodb数据库-python有关的操作</title>
-      <link>/study/mongodb-004/</link>
+      <link>http://www.hello-api.cn/study/mongodb-004/</link>
       <pubDate>Fri, 19 Aug 2022 15:30:00 +0800</pubDate>
       
-      <guid>/study/mongodb-004/</guid>
+      <guid>http://www.hello-api.cn/study/mongodb-004/</guid>
       <description>flask
 flask-pymongo
 flask-mongoengine
@@ -79,10 +79,10 @@ User.objects(plat__wechat=openid).first() </description>
     
     <item>
       <title>powerdns-学习如何搭建个人专属DNS服务器</title>
-      <link>/study/powerdns/</link>
+      <link>http://www.hello-api.cn/study/powerdns/</link>
       <pubDate>Wed, 17 Aug 2022 17:46:00 +0800</pubDate>
       
-      <guid>/study/powerdns/</guid>
+      <guid>http://www.hello-api.cn/study/powerdns/</guid>
       <description>powerdns | powerdns_http_api | download link
 1、 环境 environment 系统 centos 7.9
 2、 安装 install powerdns yum install epel-release yum-plugin-priorities curl -o /etc/yum.repos.d/powerdns-auth-45.repo https://repo.powerdns.com/repo-files/centos-auth-45.repo
@@ -95,10 +95,10 @@ innodb_file_per_table = 1 innodb_flush_log_at_trx_commit = 0 character-set-serve
     
     <item>
       <title>wechaty-描述各方法的类型</title>
-      <link>/study/wechaty-002/</link>
+      <link>http://www.hello-api.cn/study/wechaty-002/</link>
       <pubDate>Mon, 15 Aug 2022 11:31:00 +0800</pubDate>
       
-      <guid>/study/wechaty-002/</guid>
+      <guid>http://www.hello-api.cn/study/wechaty-002/</guid>
       <description>Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网
 # 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:
 type 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片
@@ -107,10 +107,10 @@ from wechaty import (FileBox) file_box = FileBox.</description>
     
     <item>
       <title>wechaty-初识wechaty用途</title>
-      <link>/study/wechaty-001/</link>
+      <link>http://www.hello-api.cn/study/wechaty-001/</link>
       <pubDate>Mon, 15 Aug 2022 11:30:00 +0800</pubDate>
       
-      <guid>/study/wechaty-001/</guid>
+      <guid>http://www.hello-api.cn/study/wechaty-001/</guid>
       <description>wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
 其他教程 wechaty.readthedocs.io
 有关视频教程资源:
@@ -121,10 +121,10 @@ AI情话
     
     <item>
       <title>php-laravel升级注意事项</title>
-      <link>/study/php-laravel-002/</link>
+      <link>http://www.hello-api.cn/study/php-laravel-002/</link>
       <pubDate>Mon, 15 Aug 2022 11:18:00 +0800</pubDate>
       
-      <guid>/study/php-laravel-002/</guid>
+      <guid>http://www.hello-api.cn/study/php-laravel-002/</guid>
       <description>官网 现在laravel的最新版已经升级到了9.0,目前公司还在用5.x版本,因此对于升级的注意事项做个记录,当做预防以后的踩坑
 注意事项
 同一个设置成支持php7.0,php8,新的9.0仅支持php8以上,为了能平滑迁移项目,需要服务器可支持2个版本 购物车插件gloudemans/shoppingcart 不可使用 , 测试 bumbummen99/shoppingcart 是否可替代 接收参数函数 Input::get() 废弃,用request()-&amp;gt;get() 替代 $input{$i+1} 花括号不可用 $input[$i+1] Route::controller 隐式控制路由废弃, 使用lesichkovm/laravel-advanced-route 插件 AdvancedRoute::controller 替代 队列在redis上保存的值有较大变动, laravel/vendor/laravel/framework/src/Illuminate/Queue/Queue.php createPayload函数 增加部分变量 laravel/vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php createPayload函数 attempts设置默认为0 原生类的构造函数改成__construct 对于整形和字符串判断更严格了,如mktime 参数必须是int; abs(&amp;quot;&amp;quot;) 会报错 有用到的废弃函数 create_function 需要更换 ORM查询返回的数据永远是obj类型, conf/database.inc.php 设置的$ORM-&amp;gt;setFetchMode(PDO::FETCH_ASSOC); 无效,源自 https://laravel.com/docs/5.4/upgrade 以上的记录是我实际的项目产生的问题,因此不一定适合大部分人
@@ -134,47 +134,47 @@ AI情话
     
     <item>
       <title>php-总结laravel使用技巧-001</title>
-      <link>/study/php-laravel-001/</link>
+      <link>http://www.hello-api.cn/study/php-laravel-001/</link>
       <pubDate>Mon, 15 Aug 2022 11:05:00 +0800</pubDate>
       
-      <guid>/study/php-laravel-001/</guid>
+      <guid>http://www.hello-api.cn/study/php-laravel-001/</guid>
       <description>是否有人对于每次写一个laravel的控制器都要在路由上写一堆的声明路由感到麻烦,后期维护又不好处理,这里总结下如何让自己写出的接口更加规范格式化,本人在laravel项目中使用了dingo/api
 .env上配置dingo的配置信息 #Dingo API API_PREFIX=api API_VERSION=v1 API_DEBUG=true 在route.php的路由方法中添加这几行代码 $api = app(&amp;#39;Dingo\Api\Routing\Router&amp;#39;); $api-&amp;gt;version(&amp;#39;v1&amp;#39;, function ($api) { $api-&amp;gt;any(&amp;#39;{slug}&amp;#39;, &amp;#39;\App\Http\ApiRouter@route&amp;#39;)-&amp;gt;where(&amp;#39;slug&amp;#39;, &amp;#39;(.*)?&amp;#39;); }); 封装统一入口ApiRouter.php use App; use Dingo\Api\Routing\Helpers; use Illuminate\Routing\Controller; use Illuminate\Support\Str; use core\util\router\RouterHelper; class ApiRouter extends Controller { use Helpers; private $ns; const API_NS = &amp;#39;core\bapi&amp;#39;; function __construct($ns) { header(&amp;#39;Access-Control-Allow-Origin: *&amp;#39;); header(&amp;#39;Access-Control-Allow-Methods:*&amp;#39;); header(&amp;#39;Access-Control-Allow-Headers:*&amp;#39;); $this-&amp;gt;ns = $ns; } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.</description>
     </item>
     
     <item>
       <title>Php-自定义封装加密方法</title>
-      <link>/study/php-encrypter/</link>
+      <link>http://www.hello-api.cn/study/php-encrypter/</link>
       <pubDate>Mon, 15 Aug 2022 10:34:00 +0800</pubDate>
       
-      <guid>/study/php-encrypter/</guid>
+      <guid>http://www.hello-api.cn/study/php-encrypter/</guid>
       <description>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &amp;#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&amp;#34;; private static $cipher = &amp;#34;AES-256-CBC&amp;#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &amp;#39;iv&amp;#39; =&amp;gt; $iv, &amp;#39;value&amp;#39; =&amp;gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&amp;#39;iv&amp;#39;]); $decrypted = openssl_decrypt($payload[&amp;#39;value&amp;#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </description>
     </item>
     
     <item>
       <title>Php-根据经纬度计算直线距离</title>
-      <link>/study/php-distance/</link>
+      <link>http://www.hello-api.cn/study/php-distance/</link>
       <pubDate>Fri, 12 Aug 2022 16:53:00 +0800</pubDate>
       
-      <guid>/study/php-distance/</guid>
+      <guid>http://www.hello-api.cn/study/php-distance/</guid>
       <description> static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &amp;gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &amp;lt; -self::$DEF_PI) $dew = self::$DEF_2PI + $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx + $dy * $dy); return $distance; } </description>
     </item>
     
     <item>
       <title>Php-生成ssl证书所需的csr信息</title>
-      <link>/study/php-ssl/</link>
+      <link>http://www.hello-api.cn/study/php-ssl/</link>
       <pubDate>Fri, 12 Aug 2022 16:45:00 +0800</pubDate>
       
-      <guid>/study/php-ssl/</guid>
+      <guid>http://www.hello-api.cn/study/php-ssl/</guid>
       <description>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&amp;gt;all(); $dn = [ &amp;#34;countryName&amp;#34; =&amp;gt; trim(strtoupper($all[&amp;#39;countryName&amp;#39;])), //所在国家 &amp;#34;stateOrProvinceName&amp;#34; =&amp;gt; trim($all[&amp;#39;stateOrProvinceName&amp;#39;]), //所在省份 &amp;#34;localityName&amp;#34; =&amp;gt; trim($all[&amp;#39;localityName&amp;#39;]), //所在城市 &amp;#34;organizationName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationName&amp;#39;]), //注册人姓名 &amp;#34;organizationalUnitName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationalUnitName&amp;#39;]), //组织名称 &amp;#34;commonName&amp;#34; =&amp;gt; trim($all[&amp;#39;commonName&amp;#39;]), //公共名称 ]; if (isset($all[&amp;#39;emailAddress&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;emailAddress&amp;#39;]) { $dn[&amp;#39;emailAddress&amp;#39;] = $all[&amp;#39;emailAddress&amp;#39;]; } $config = [ &amp;#34;private_key_bits&amp;#34; =&amp;gt; isset($all[&amp;#39;keysize&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;keysize&amp;#39;] ? $all[&amp;#39;keysize&amp;#39;] : 2048, //字节数 512 1024 2048 4096 等 &amp;#34;private_key_type&amp;#34; =&amp;gt; OPENSSL_KEYTYPE_RSA, //加密类型 &amp;#39;digest_alg&amp;#39; =&amp;gt; &amp;#39;sha256&amp;#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&amp;#39;config&amp;#39;] = &amp;#34;D:/phpstudy_pro/Extensions/Apache2.</description>
     </item>
     
     <item>
       <title>Python-初学tensorflow第二天-学习例子</title>
-      <link>/study/python-tensorflow-002/</link>
+      <link>http://www.hello-api.cn/study/python-tensorflow-002/</link>
       <pubDate>Fri, 12 Aug 2022 15:18:00 +0800</pubDate>
       
-      <guid>/study/python-tensorflow-002/</guid>
+      <guid>http://www.hello-api.cn/study/python-tensorflow-002/</guid>
       <description>学习来源Bilibili 根据例子编写出线性回归方程
 import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.csv&amp;#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&amp;#39;adam&amp;#39;,loss=&amp;#39;mse&amp;#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
 1,10.000000 ,26.658839
@@ -206,10 +206,10 @@ import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.cs
     
     <item>
       <title>Python-初学tensorflow第一天-搭建环境</title>
-      <link>/study/python-tensorflow-001/</link>
+      <link>http://www.hello-api.cn/study/python-tensorflow-001/</link>
       <pubDate>Fri, 12 Aug 2022 15:12:00 +0800</pubDate>
       
-      <guid>/study/python-tensorflow-001/</guid>
+      <guid>http://www.hello-api.cn/study/python-tensorflow-001/</guid>
       <description>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
 打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library &amp;lsquo;cudart64_110.dll&amp;rsquo;; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
 Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
@@ -220,10 +220,10 @@ Q: Downgrade the protobuf package to 3.</description>
     
     <item>
       <title>初始Python-自动化操作</title>
-      <link>/study/python-selenium/</link>
+      <link>http://www.hello-api.cn/study/python-selenium/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/study/python-selenium/</guid>
+      <guid>http://www.hello-api.cn/study/python-selenium/</guid>
       <description>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
 以下是我在实际使用中对于selenium的一些心得和用法
 implicitly_wait
@@ -235,10 +235,10 @@ driver.execute_script(&amp;#34;arguments[0].click();&amp;#34;, nextButton) 据�
     
     <item>
       <title>初始Python-文件操作</title>
-      <link>/study/python-001/</link>
+      <link>http://www.hello-api.cn/study/python-001/</link>
       <pubDate>Fri, 12 Aug 2022 15:05:00 +0800</pubDate>
       
-      <guid>/study/python-001/</guid>
+      <guid>http://www.hello-api.cn/study/python-001/</guid>
       <description>列出指定目录下的全部文件
 import os file_array=[] dir_array=[ os.getcwd() + &amp;#34;/directory1/&amp;#34;, os.getcwd() + &amp;#34;/directory2/&amp;#34;, ] for dir in dir_array: for root, dirs, files in os.walk(dir): for filename in files: file_array.append(dir+filename) Excel操作读写
 wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&amp;#39;数据明细&amp;#39;) # print(sh.nrows) # 有效数据行数 # print(sh.ncols) # 有效数据列数 for index in range(len(sh.row_values(0))): title = sh.row_values(0)[index] </description>
@@ -246,10 +246,10 @@ wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&amp;#39;数据明细&am
     
     <item>
       <title>Apache</title>
-      <link>/study/apache/</link>
+      <link>http://www.hello-api.cn/study/apache/</link>
       <pubDate>Fri, 12 Aug 2022 13:47:00 +0800</pubDate>
       
-      <guid>/study/apache/</guid>
+      <guid>http://www.hello-api.cn/study/apache/</guid>
       <description> apacha限制某个目录的php执行 &amp;lt;Directory /public/protected/controllers&amp;gt; php_flag engine off &amp;lt;/Directory&amp;gt; 需要注意网站已经定义的路径，如果涉及到软路径，一律以已经定义的路径为准。
 apacha动态IP黑名单 能简单的设置apache黑名单,配合自己的项目能有效禁止非法IP高频的访问 http.conf &amp;lt;VirtualHost *:443&amp;gt; RewriteMap ipmap txt:ipmap.txt 项目.htaccess
 RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt 内容
@@ -258,10 +258,10 @@ RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt �
     
     <item>
       <title>Centos-工作中随手的记录</title>
-      <link>/study/centos/</link>
+      <link>http://www.hello-api.cn/study/centos/</link>
       <pubDate>Fri, 12 Aug 2022 13:46:00 +0800</pubDate>
       
-      <guid>/study/centos/</guid>
+      <guid>http://www.hello-api.cn/study/centos/</guid>
       <description> CentOS7利用yum安装node.js curl -sL https://rpm.nodesource.com/setup_16.x | bash - yum install -y nodejs node -v cnpm安装 npm install -g cnpm --registry=https://registry.npmmirror.com CentOS7 安装pip3 yum install epel-release yum install https://centos7.iuscommunity.org/ius-release.rpm 多个文件内容搜索特定关键词 grep -ln &amp;ldquo;keyword&amp;rdquo; 05-01-00hour.log &amp;hellip;(可以携带多个文件名)
 打印存在关键词的文件名
 05-19-19hour.log
@@ -270,29 +270,29 @@ RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt �
     
     <item>
       <title>gitfun</title>
-      <link>/study/gitfun/</link>
+      <link>http://www.hello-api.cn/study/gitfun/</link>
       <pubDate>Fri, 12 Aug 2022 12:29:00 +0800</pubDate>
       
-      <guid>/study/gitfun/</guid>
+      <guid>http://www.hello-api.cn/study/gitfun/</guid>
       <description>用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
 #!/bin/sh /bin/stty intr &amp;#39;&amp;#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/.</description>
     </item>
     
     <item>
       <title>Mysql数据库-使用记录</title>
-      <link>/study/mysql-note/</link>
+      <link>http://www.hello-api.cn/study/mysql-note/</link>
       <pubDate>Fri, 12 Aug 2022 12:13:00 +0800</pubDate>
       
-      <guid>/study/mysql-note/</guid>
+      <guid>http://www.hello-api.cn/study/mysql-note/</guid>
       <description>How to show binlog mysqlbinlog --no-defaults --start-datetime=&amp;#34;2021-09-30 00:00:00&amp;#34; --stop-datetime=&amp;#34;2021-09-30 23:00:00&amp;#34; -d database --base64-output=DECODE-ROWS -v /binlog/master-bin.001255 --result-file=/root/binlog/mysqllog001255.sql How to get distance ( lat and lng) lat = X lng = X select * , ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat} * PI() / 180 - lat * PI() / 180) / 2),2) + COS({$lat} * PI() / 180) * COS(lat * PI() / 180) * POW(SIN(({$lng} * PI() / 180 - lng * PI() / 180) / 2),2))), 5)*1000 AS distance from table order by distance asc </description>
     </item>
     
     <item>
       <title>Mysql数据库-日期函数</title>
-      <link>/study/mysql-001/</link>
+      <link>http://www.hello-api.cn/study/mysql-001/</link>
       <pubDate>Fri, 12 Aug 2022 11:18:00 +0800</pubDate>
       
-      <guid>/study/mysql-001/</guid>
+      <guid>http://www.hello-api.cn/study/mysql-001/</guid>
       <description>当前日期
 select curdate(); 当月最后一天
 select last_day(curdate()); 下个月的上一天,例如今天2022-06-01 ,结果为2022-06-30
@@ -302,10 +302,10 @@ select LAST_DAY(DATE_ADD(CURDATE(),INTERVAL 1 MONTH)); </description>
     
     <item>
       <title>Mysql数据库-常见问题</title>
-      <link>/study/mysql-question/</link>
+      <link>http://www.hello-api.cn/study/mysql-question/</link>
       <pubDate>Fri, 12 Aug 2022 11:10:00 +0800</pubDate>
       
-      <guid>/study/mysql-question/</guid>
+      <guid>http://www.hello-api.cn/study/mysql-question/</guid>
       <description>能说下myisam 和 innodb的区别吗
 myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
 innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
@@ -327,10 +327,10 @@ slave记录自己的binglog</description>
     
     <item>
       <title>Mongodb数据库-增删查改</title>
-      <link>/study/mongodb-003/</link>
+      <link>http://www.hello-api.cn/study/mongodb-003/</link>
       <pubDate>Fri, 12 Aug 2022 11:09:00 +0800</pubDate>
       
-      <guid>/study/mongodb-003/</guid>
+      <guid>http://www.hello-api.cn/study/mongodb-003/</guid>
       <description>find MongoDB中查询数据的基本指令,类似mysql中的select
 example:
 db.movies.find({&amp;#34;year&amp;#34;:1975}) db.movies.find({&amp;#34;year&amp;#34;:1975,&amp;#34;title&amp;#34;:&amp;#34;Kill&amp;#34;}) db.movies.find({$and:[{&amp;#34;title&amp;#34;:&amp;#34;Kill&amp;#34;},{&amp;#34;year&amp;#34;:1989}]}) db.movies.find({$or:[{&amp;#34;title&amp;#34;:&amp;#34;Kill&amp;#34;},{&amp;#34;year&amp;#34;:1989}]}) 子文档查询,如文档内容
@@ -348,10 +348,10 @@ db.fruit.updateOne({name:&amp;#34;apple&amp;#34;},{$set:{from:&amp;#34;China&amp
     
     <item>
       <title>Mongodb数据库-复制集</title>
-      <link>/study/mongodb-002/</link>
+      <link>http://www.hello-api.cn/study/mongodb-002/</link>
       <pubDate>Fri, 12 Aug 2022 11:08:00 +0800</pubDate>
       
-      <guid>/study/mongodb-002/</guid>
+      <guid>http://www.hello-api.cn/study/mongodb-002/</guid>
       <description>本地测试结果如下
 |- D:\mongodata\db1
 |&amp;mdash;&amp;mdash; mongo.conf
@@ -363,10 +363,10 @@ storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination:
     
     <item>
       <title>Mongodb数据库-初识</title>
-      <link>/study/mongodb-001/</link>
+      <link>http://www.hello-api.cn/study/mongodb-001/</link>
       <pubDate>Fri, 12 Aug 2022 10:37:00 +0800</pubDate>
       
-      <guid>/study/mongodb-001/</guid>
+      <guid>http://www.hello-api.cn/study/mongodb-001/</guid>
       <description>了解mongodb的基本情况
 数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 聚合查询 pipeline=[$stage1,$stage2,&amp;hellip;$stageN] aggregate db..aggregate(pipeline,{options})
 常见步骤

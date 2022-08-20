@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>python on Ken Blog</title>
-    <link>/tags/python/</link>
+    <link>http://www.hello-api.cn/tags/python/</link>
     <description>Recent content in python on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:30:00 +0800</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mongodb数据库-python有关的操作</title>
-      <link>/study/mongodb-004/</link>
+      <link>http://www.hello-api.cn/study/mongodb-004/</link>
       <pubDate>Fri, 19 Aug 2022 15:30:00 +0800</pubDate>
       
-      <guid>/study/mongodb-004/</guid>
+      <guid>http://www.hello-api.cn/study/mongodb-004/</guid>
       <description>flask
 flask-pymongo
 flask-mongoengine
@@ -28,20 +28,20 @@ User.objects(plat__wechat=openid).first() </description>
     
     <item>
       <title>python-自定义线程池</title>
-      <link>/code/python-threadpool/</link>
+      <link>http://www.hello-api.cn/code/python-threadpool/</link>
       <pubDate>Tue, 16 Aug 2022 15:07:00 +0800</pubDate>
       
-      <guid>/code/python-threadpool/</guid>
+      <guid>http://www.hello-api.cn/code/python-threadpool/</guid>
       <description>自定义的一个小功能,线程池处理,用法很简单
 def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread, args=[1, 2], kwds={}) main.putRequest(req) #-*-encoding:utf-8-*- &amp;#39;&amp;#39;&amp;#39; Created on 2012-3-9 @summary: 线程池 &amp;#39;&amp;#39;&amp;#39; import sys import threading import queue import traceback import statistics # 定义一些Exception，用于自定义异常处理 class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self.</description>
     </item>
     
     <item>
       <title>python-波场区块链的扫块系统</title>
-      <link>/life/python-tronlink-scan/</link>
+      <link>http://www.hello-api.cn/life/python-tronlink-scan/</link>
       <pubDate>Mon, 15 Aug 2022 11:26:00 +0800</pubDate>
       
-      <guid>/life/python-tronlink-scan/</guid>
+      <guid>http://www.hello-api.cn/life/python-tronlink-scan/</guid>
       <description>[github]路径(https://github.com/suguer/python-tronlink-scan)
 python-tronlink-scan 波场链的扫块功能,如果对于需要获取波场链上的交易情况,又没有条件部署一台自己的节点,那么采用本文的方式是一个不错的选择,通过调用接口也能及时获取到交易信息
 安装需要的用到的插件
@@ -57,10 +57,10 @@ hash,block,from,to,block_at,amount,contract_address,status f474e2ceb883637aae1f6
     
     <item>
       <title>Python-初学tensorflow第二天-学习例子</title>
-      <link>/study/python-tensorflow-002/</link>
+      <link>http://www.hello-api.cn/study/python-tensorflow-002/</link>
       <pubDate>Fri, 12 Aug 2022 15:18:00 +0800</pubDate>
       
-      <guid>/study/python-tensorflow-002/</guid>
+      <guid>http://www.hello-api.cn/study/python-tensorflow-002/</guid>
       <description>学习来源Bilibili 根据例子编写出线性回归方程
 import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.csv&amp;#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&amp;#39;adam&amp;#39;,loss=&amp;#39;mse&amp;#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
 1,10.000000 ,26.658839
@@ -92,10 +92,10 @@ import tensorflow as tf import pandas as pd data=pd.read_csv(&amp;#39;./demo1.cs
     
     <item>
       <title>Python-初学tensorflow第一天-搭建环境</title>
-      <link>/study/python-tensorflow-001/</link>
+      <link>http://www.hello-api.cn/study/python-tensorflow-001/</link>
       <pubDate>Fri, 12 Aug 2022 15:12:00 +0800</pubDate>
       
-      <guid>/study/python-tensorflow-001/</guid>
+      <guid>http://www.hello-api.cn/study/python-tensorflow-001/</guid>
       <description>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
 打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library &amp;lsquo;cudart64_110.dll&amp;rsquo;; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
 Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
@@ -106,19 +106,19 @@ Q: Downgrade the protobuf package to 3.</description>
     
     <item>
       <title>Python-多线程</title>
-      <link>/tech/python-thread/</link>
+      <link>http://www.hello-api.cn/tech/python-thread/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/tech/python-thread/</guid>
+      <guid>http://www.hello-api.cn/tech/python-thread/</guid>
       <description>import sys import threading import queue import traceback import statistics class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self._resultQueue = resultQueue self._poll_timeout = poll_timeout &amp;#39;&amp;#39;&amp;#39;设置一个flag信号，用来表示该线程是否还被dismiss,默认为false&amp;#39;&amp;#39;&amp;#39; self._dismissed = threading.Event() self.start() # self.join() def run(self): &amp;#39;&amp;#39;&amp;#39;每个线程尽可能多的执行work，所以采用loop， 只要线程可用，并且requestQueue有work未完成，则一直loop&amp;#39;&amp;#39;&amp;#39; while True: if self._dismissed.is_set(): break try: &amp;#39;&amp;#39;&amp;#39; Queue.</description>
     </item>
     
     <item>
       <title>初始Python-自动化操作</title>
-      <link>/study/python-selenium/</link>
+      <link>http://www.hello-api.cn/study/python-selenium/</link>
       <pubDate>Fri, 12 Aug 2022 15:10:00 +0800</pubDate>
       
-      <guid>/study/python-selenium/</guid>
+      <guid>http://www.hello-api.cn/study/python-selenium/</guid>
       <description>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
 以下是我在实际使用中对于selenium的一些心得和用法
 implicitly_wait
@@ -130,10 +130,10 @@ driver.execute_script(&amp;#34;arguments[0].click();&amp;#34;, nextButton) 据�
     
     <item>
       <title>初始Python-文件操作</title>
-      <link>/study/python-001/</link>
+      <link>http://www.hello-api.cn/study/python-001/</link>
       <pubDate>Fri, 12 Aug 2022 15:05:00 +0800</pubDate>
       
-      <guid>/study/python-001/</guid>
+      <guid>http://www.hello-api.cn/study/python-001/</guid>
       <description>列出指定目录下的全部文件
 import os file_array=[] dir_array=[ os.getcwd() + &amp;#34;/directory1/&amp;#34;, os.getcwd() + &amp;#34;/directory2/&amp;#34;, ] for dir in dir_array: for root, dirs, files in os.walk(dir): for filename in files: file_array.append(dir+filename) Excel操作读写
 wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&amp;#39;数据明细&amp;#39;) # print(sh.nrows) # 有效数据行数 # print(sh.ncols) # 有效数据列数 for index in range(len(sh.row_values(0))): title = sh.row_values(0)[index] </description>

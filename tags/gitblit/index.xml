@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>gitblit on Ken Blog</title>
-    <link>/tags/gitblit/</link>
+    <link>http://www.hello-api.cn/tags/gitblit/</link>
     <description>Recent content in gitblit on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 16 Aug 2022 15:50:00 +0800</lastBuildDate><atom:link href="/tags/gitblit/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Aug 2022 15:50:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/gitblit/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Gitblit-如何实现自动编译发布</title>
-      <link>/tech/gitblit/</link>
+      <link>http://www.hello-api.cn/tech/gitblit/</link>
       <pubDate>Tue, 16 Aug 2022 15:50:00 +0800</pubDate>
       
-      <guid>/tech/gitblit/</guid>
+      <guid>http://www.hello-api.cn/tech/gitblit/</guid>
       <description>前言 在外网正式环境中如果配置不足,编译前端项目可能导致服务器的卡死甚至死机,因此可采取内网服务器上编译再自动发布
 目标 内网编译前端项目,分发到另一个git项目并自动提交发布
 前置条件 gitblit

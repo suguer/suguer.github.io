@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>powerdns on Ken Blog</title>
-    <link>/tags/powerdns/</link>
+    <link>http://www.hello-api.cn/tags/powerdns/</link>
     <description>Recent content in powerdns on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:39:00 +0800</lastBuildDate><atom:link href="/tags/powerdns/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:39:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/powerdns/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>php-如何使用powerdns的接口</title>
-      <link>/study/php-powerdns/</link>
+      <link>http://www.hello-api.cn/study/php-powerdns/</link>
       <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
       
-      <guid>/study/php-powerdns/</guid>
+      <guid>http://www.hello-api.cn/study/php-powerdns/</guid>
       <description>powerdns安装教程
 如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
 Swagger 生成插件
@@ -29,10 +29,10 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
     
     <item>
       <title>powerdns-学习如何搭建个人专属DNS服务器</title>
-      <link>/study/powerdns/</link>
+      <link>http://www.hello-api.cn/study/powerdns/</link>
       <pubDate>Wed, 17 Aug 2022 17:46:00 +0800</pubDate>
       
-      <guid>/study/powerdns/</guid>
+      <guid>http://www.hello-api.cn/study/powerdns/</guid>
       <description>powerdns | powerdns_http_api | download link
 1、 环境 environment 系统 centos 7.9
 2、 安装 install powerdns yum install epel-release yum-plugin-priorities curl -o /etc/yum.repos.d/powerdns-auth-45.repo https://repo.powerdns.com/repo-files/centos-auth-45.repo

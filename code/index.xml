@@ -2,29 +2,29 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Codes on Ken Blog</title>
-    <link>/code/</link>
+    <link>http://www.hello-api.cn/code/</link>
     <description>Recent content in Codes on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:38:00 +0800</lastBuildDate><atom:link href="/code/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:38:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/code/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>php-MultiProcess多进程</title>
-      <link>/code/php-multiprocess/</link>
+      <link>http://www.hello-api.cn/code/php-multiprocess/</link>
       <pubDate>Fri, 19 Aug 2022 15:38:00 +0800</pubDate>
       
-      <guid>/code/php-multiprocess/</guid>
+      <guid>http://www.hello-api.cn/code/php-multiprocess/</guid>
       <description>trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&amp;gt;processes[] = [ &amp;#34;action&amp;#34; =&amp;gt; $action, &amp;#34;params&amp;#34; =&amp;gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&amp;gt;runningProcess) &amp;gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&amp;gt;runningProcess as $key =&amp;gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &amp;#34;child $key completed\n&amp;#34;; unset($this-&amp;gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&amp;gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&amp;gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&amp;#34;could not fork&amp;#34;); } elseif ($pid) { $this-&amp;gt;runningProcess[$pid] = $pid; echo &amp;#34;create child: $pid \n&amp;#34;; } else { //执行子进程 call_user_func_array($process[&amp;#39;action&amp;#39;], $process[&amp;#39;params&amp;#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&amp;gt;processes)) { return; } for ($i = 0; $i &amp;lt; $this-&amp;gt;maxFork; $i++) { $this-&amp;gt;runOne(); } $this-&amp;gt;waitProcessRun(); } } </description>
     </item>
     
     <item>
       <title>php-自定义统一的api入口路由</title>
-      <link>/code/php-apiroute/</link>
+      <link>http://www.hello-api.cn/code/php-apiroute/</link>
       <pubDate>Fri, 19 Aug 2022 15:34:00 +0800</pubDate>
       
-      <guid>/code/php-apiroute/</guid>
+      <guid>http://www.hello-api.cn/code/php-apiroute/</guid>
       <description>route.php
 Route::group([&amp;#39;prefix&amp;#39; =&amp;gt; &amp;#39;fapi/&amp;#39;, &amp;#39;middleware&amp;#39; =&amp;gt; [&amp;#39;web&amp;#39;]], function () { Route::any(&amp;#39;{slug}&amp;#39;, &amp;#39;Cloud\Rent\Classes\Api\ApiRouter@route&amp;#39;)-&amp;gt;where(&amp;#39;slug&amp;#39;, &amp;#39;(.*)?&amp;#39;); }); ApiRouter.php
 &amp;lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&amp;#39;Access-Control-Allow-Origin: *&amp;#39;); header(&amp;#39;Access-Control-Allow-Methods:*&amp;#39;); header(&amp;#39;Access-Control-Allow-Headers:*&amp;#39;); header(&amp;#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&amp;#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.</description>
@@ -32,10 +32,10 @@ Route::group([&amp;#39;prefix&amp;#39; =&amp;gt; &amp;#39;fapi/&amp;#39;, &amp;#
     
     <item>
       <title>python-自定义线程池</title>
-      <link>/code/python-threadpool/</link>
+      <link>http://www.hello-api.cn/code/python-threadpool/</link>
       <pubDate>Tue, 16 Aug 2022 15:07:00 +0800</pubDate>
       
-      <guid>/code/python-threadpool/</guid>
+      <guid>http://www.hello-api.cn/code/python-threadpool/</guid>
       <description>自定义的一个小功能,线程池处理,用法很简单
 def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread, args=[1, 2], kwds={}) main.putRequest(req) #-*-encoding:utf-8-*- &amp;#39;&amp;#39;&amp;#39; Created on 2012-3-9 @summary: 线程池 &amp;#39;&amp;#39;&amp;#39; import sys import threading import queue import traceback import statistics # 定义一些Exception，用于自定义异常处理 class NoResultsPending(Exception): &amp;#34;&amp;#34;&amp;#34;All works requests have been processed&amp;#34;&amp;#34;&amp;#34; pass class NoWorkersAvailable(Exception): &amp;#34;&amp;#34;&amp;#34;No worket threads available to process remaining requests.&amp;#34;&amp;#34;&amp;#34; pass def _handle_thread_exception(request, exc_info): &amp;#34;&amp;#34;&amp;#34;默认的异常处理函数，只是简单的打印&amp;#34;&amp;#34;&amp;#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &amp;#34;&amp;#34;&amp;#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&amp;#34;&amp;#34;&amp;#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &amp;#39;&amp;#39;&amp;#39;设置为守护进行&amp;#39;&amp;#39;&amp;#39; self.setDaemon(True) self._requestQueue = requestQueue self.</description>
     </item>

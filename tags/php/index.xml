@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>php on Ken Blog</title>
-    <link>/tags/php/</link>
+    <link>http://www.hello-api.cn/tags/php/</link>
     <description>Recent content in php on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 19 Aug 2022 15:39:00 +0800</lastBuildDate><atom:link href="/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Aug 2022 15:39:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/php/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>php-如何使用powerdns的接口</title>
-      <link>/study/php-powerdns/</link>
+      <link>http://www.hello-api.cn/study/php-powerdns/</link>
       <pubDate>Fri, 19 Aug 2022 15:39:00 +0800</pubDate>
       
-      <guid>/study/php-powerdns/</guid>
+      <guid>http://www.hello-api.cn/study/php-powerdns/</guid>
       <description>powerdns安装教程
 如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
 Swagger 生成插件
@@ -29,28 +29,28 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
     
     <item>
       <title>php-MultiProcess多进程</title>
-      <link>/code/php-multiprocess/</link>
+      <link>http://www.hello-api.cn/code/php-multiprocess/</link>
       <pubDate>Fri, 19 Aug 2022 15:38:00 +0800</pubDate>
       
-      <guid>/code/php-multiprocess/</guid>
+      <guid>http://www.hello-api.cn/code/php-multiprocess/</guid>
       <description>trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&amp;gt;processes[] = [ &amp;#34;action&amp;#34; =&amp;gt; $action, &amp;#34;params&amp;#34; =&amp;gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&amp;gt;runningProcess) &amp;gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&amp;gt;runningProcess as $key =&amp;gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &amp;#34;child $key completed\n&amp;#34;; unset($this-&amp;gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&amp;gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&amp;gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&amp;#34;could not fork&amp;#34;); } elseif ($pid) { $this-&amp;gt;runningProcess[$pid] = $pid; echo &amp;#34;create child: $pid \n&amp;#34;; } else { //执行子进程 call_user_func_array($process[&amp;#39;action&amp;#39;], $process[&amp;#39;params&amp;#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&amp;gt;processes)) { return; } for ($i = 0; $i &amp;lt; $this-&amp;gt;maxFork; $i++) { $this-&amp;gt;runOne(); } $this-&amp;gt;waitProcessRun(); } } </description>
     </item>
     
     <item>
       <title>php-laravel自定义https端口访问异常</title>
-      <link>/study/php-laravel-003/</link>
+      <link>http://www.hello-api.cn/study/php-laravel-003/</link>
       <pubDate>Fri, 19 Aug 2022 15:35:00 +0800</pubDate>
       
-      <guid>/study/php-laravel-003/</guid>
+      <guid>http://www.hello-api.cn/study/php-laravel-003/</guid>
       <description>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&amp;gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;amp;&amp;amp; $port = $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;amp;&amp;amp; &amp;#39;https&amp;#39; === $this-&amp;gt;headers-&amp;gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &amp;#39;http&amp;#39;)) { return 443; } } if ($host = $this-&amp;gt;headers-&amp;gt;get(&amp;#39;HOST&amp;#39;)) { if ($host[0] === &amp;#39;[&amp;#39;) { $pos = strpos($host, &amp;#39;:&amp;#39;, strrpos($host, &amp;#39;]&amp;#39;)); } else { $pos = strrpos($host, &amp;#39;:&amp;#39;); } if (false !== $pos) { return (int) substr($host, $pos + 1); } return &amp;#39;https&amp;#39; === $this-&amp;gt;getScheme() ?</description>
     </item>
     
     <item>
       <title>php-自定义统一的api入口路由</title>
-      <link>/code/php-apiroute/</link>
+      <link>http://www.hello-api.cn/code/php-apiroute/</link>
       <pubDate>Fri, 19 Aug 2022 15:34:00 +0800</pubDate>
       
-      <guid>/code/php-apiroute/</guid>
+      <guid>http://www.hello-api.cn/code/php-apiroute/</guid>
       <description>route.php
 Route::group([&amp;#39;prefix&amp;#39; =&amp;gt; &amp;#39;fapi/&amp;#39;, &amp;#39;middleware&amp;#39; =&amp;gt; [&amp;#39;web&amp;#39;]], function () { Route::any(&amp;#39;{slug}&amp;#39;, &amp;#39;Cloud\Rent\Classes\Api\ApiRouter@route&amp;#39;)-&amp;gt;where(&amp;#39;slug&amp;#39;, &amp;#39;(.*)?&amp;#39;); }); ApiRouter.php
 &amp;lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&amp;#39;Access-Control-Allow-Origin: *&amp;#39;); header(&amp;#39;Access-Control-Allow-Methods:*&amp;#39;); header(&amp;#39;Access-Control-Allow-Headers:*&amp;#39;); header(&amp;#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&amp;#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.</description>
@@ -58,10 +58,10 @@ Route::group([&amp;#39;prefix&amp;#39; =&amp;gt; &amp;#39;fapi/&amp;#39;, &amp;#
     
     <item>
       <title>php-域名竞价模块</title>
-      <link>/life/php-domain-auction/</link>
+      <link>http://www.hello-api.cn/life/php-domain-auction/</link>
       <pubDate>Mon, 15 Aug 2022 11:25:00 +0800</pubDate>
       
-      <guid>/life/php-domain-auction/</guid>
+      <guid>http://www.hello-api.cn/life/php-domain-auction/</guid>
       <description>域名竞价交易,即为域名充当交易物品进行价值交换,其中比较出名的有国内聚名 ,以及海外的GNAME, 以GNAME为例子讲述如何对接交易模块,
 Gname的API接口文档
 过期预定预定 预定结束=&amp;gt; [抢注成功直接得标, 抢注失败直接失标, 抢注失败需竞价] 竞价域名,涉及到本地多人出价的竞价已经与远端竞价的比较 [直接出价,代理出价] 竞价结束 =&amp;gt; [竞价成功,竞价失败] 简单描述竞价流程
@@ -73,10 +73,10 @@ Gname的API接口文档
     
     <item>
       <title>php-laravel升级注意事项</title>
-      <link>/study/php-laravel-002/</link>
+      <link>http://www.hello-api.cn/study/php-laravel-002/</link>
       <pubDate>Mon, 15 Aug 2022 11:18:00 +0800</pubDate>
       
-      <guid>/study/php-laravel-002/</guid>
+      <guid>http://www.hello-api.cn/study/php-laravel-002/</guid>
       <description>官网 现在laravel的最新版已经升级到了9.0,目前公司还在用5.x版本,因此对于升级的注意事项做个记录,当做预防以后的踩坑
 注意事项
 同一个设置成支持php7.0,php8,新的9.0仅支持php8以上,为了能平滑迁移项目,需要服务器可支持2个版本 购物车插件gloudemans/shoppingcart 不可使用 , 测试 bumbummen99/shoppingcart 是否可替代 接收参数函数 Input::get() 废弃,用request()-&amp;gt;get() 替代 $input{$i+1} 花括号不可用 $input[$i+1] Route::controller 隐式控制路由废弃, 使用lesichkovm/laravel-advanced-route 插件 AdvancedRoute::controller 替代 队列在redis上保存的值有较大变动, laravel/vendor/laravel/framework/src/Illuminate/Queue/Queue.php createPayload函数 增加部分变量 laravel/vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php createPayload函数 attempts设置默认为0 原生类的构造函数改成__construct 对于整形和字符串判断更严格了,如mktime 参数必须是int; abs(&amp;quot;&amp;quot;) 会报错 有用到的废弃函数 create_function 需要更换 ORM查询返回的数据永远是obj类型, conf/database.inc.php 设置的$ORM-&amp;gt;setFetchMode(PDO::FETCH_ASSOC); 无效,源自 https://laravel.com/docs/5.4/upgrade 以上的记录是我实际的项目产生的问题,因此不一定适合大部分人
@@ -86,20 +86,20 @@ Gname的API接口文档
     
     <item>
       <title>php-总结laravel使用技巧-001</title>
-      <link>/study/php-laravel-001/</link>
+      <link>http://www.hello-api.cn/study/php-laravel-001/</link>
       <pubDate>Mon, 15 Aug 2022 11:05:00 +0800</pubDate>
       
-      <guid>/study/php-laravel-001/</guid>
+      <guid>http://www.hello-api.cn/study/php-laravel-001/</guid>
       <description>是否有人对于每次写一个laravel的控制器都要在路由上写一堆的声明路由感到麻烦,后期维护又不好处理,这里总结下如何让自己写出的接口更加规范格式化,本人在laravel项目中使用了dingo/api
 .env上配置dingo的配置信息 #Dingo API API_PREFIX=api API_VERSION=v1 API_DEBUG=true 在route.php的路由方法中添加这几行代码 $api = app(&amp;#39;Dingo\Api\Routing\Router&amp;#39;); $api-&amp;gt;version(&amp;#39;v1&amp;#39;, function ($api) { $api-&amp;gt;any(&amp;#39;{slug}&amp;#39;, &amp;#39;\App\Http\ApiRouter@route&amp;#39;)-&amp;gt;where(&amp;#39;slug&amp;#39;, &amp;#39;(.*)?&amp;#39;); }); 封装统一入口ApiRouter.php use App; use Dingo\Api\Routing\Helpers; use Illuminate\Routing\Controller; use Illuminate\Support\Str; use core\util\router\RouterHelper; class ApiRouter extends Controller { use Helpers; private $ns; const API_NS = &amp;#39;core\bapi&amp;#39;; function __construct($ns) { header(&amp;#39;Access-Control-Allow-Origin: *&amp;#39;); header(&amp;#39;Access-Control-Allow-Methods:*&amp;#39;); header(&amp;#39;Access-Control-Allow-Headers:*&amp;#39;); $this-&amp;gt;ns = $ns; } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.</description>
     </item>
     
     <item>
       <title>php-分享自有系统接入OCR图片识别</title>
-      <link>/tech/php-ocr/</link>
+      <link>http://www.hello-api.cn/tech/php-ocr/</link>
       <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
       
-      <guid>/tech/php-ocr/</guid>
+      <guid>http://www.hello-api.cn/tech/php-ocr/</guid>
       <description>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
 目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
 前置条件 开发环境 PHP 百度云能企业认证
@@ -110,19 +110,19 @@ public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$thi
     
     <item>
       <title>Php-自定义封装加密方法</title>
-      <link>/study/php-encrypter/</link>
+      <link>http://www.hello-api.cn/study/php-encrypter/</link>
       <pubDate>Mon, 15 Aug 2022 10:34:00 +0800</pubDate>
       
-      <guid>/study/php-encrypter/</guid>
+      <guid>http://www.hello-api.cn/study/php-encrypter/</guid>
       <description>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &amp;#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&amp;#34;; private static $cipher = &amp;#34;AES-256-CBC&amp;#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &amp;#39;iv&amp;#39; =&amp;gt; $iv, &amp;#39;value&amp;#39; =&amp;gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&amp;#39;iv&amp;#39;]); $decrypted = openssl_decrypt($payload[&amp;#39;value&amp;#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </description>
     </item>
     
     <item>
       <title>Php邮件收取imap</title>
-      <link>/tech/php-imap/</link>
+      <link>http://www.hello-api.cn/tech/php-imap/</link>
       <pubDate>Fri, 12 Aug 2022 17:32:00 +0800</pubDate>
       
-      <guid>/tech/php-imap/</guid>
+      <guid>http://www.hello-api.cn/tech/php-imap/</guid>
       <description>前言 招商银行的收款通知可以添加邮件推送,因此利用php-imap收取邮件,可达到自动化确款的目的
 目标 前置条件 composer require php-imap/php-imap
 正式内容 php-imap 的使用 $mailbox = new Mailbox( &amp;#39;{SMTP服务器:SMTP端口号/imap}INBOX&amp;#39;, // IMAP server and mailbox folder &amp;#39;邮箱账号&amp;#39;, // Username for the before configured mailbox &amp;#39;邮箱密码&amp;#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &amp;#39;UTF-8&amp;#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&amp;gt;searchMailbox(&amp;#39;ALL&amp;#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &amp;#34;IMAP connection failed: &amp;#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&amp;gt; $item) { //循环遍历 $mail = $mailbox-&amp;gt;getMail($item); $fromAddress = $mail-&amp;gt;fromAddress; $content = $mail-&amp;gt;textHtml; if(!</description>
@@ -130,19 +130,19 @@ public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$thi
     
     <item>
       <title>Php-根据经纬度计算直线距离</title>
-      <link>/study/php-distance/</link>
+      <link>http://www.hello-api.cn/study/php-distance/</link>
       <pubDate>Fri, 12 Aug 2022 16:53:00 +0800</pubDate>
       
-      <guid>/study/php-distance/</guid>
+      <guid>http://www.hello-api.cn/study/php-distance/</guid>
       <description> static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &amp;gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &amp;lt; -self::$DEF_PI) $dew = self::$DEF_2PI + $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx + $dy * $dy); return $distance; } </description>
     </item>
     
     <item>
       <title>Php-编码解码punycode</title>
-      <link>/tech/php-punycode/</link>
+      <link>http://www.hello-api.cn/tech/php-punycode/</link>
       <pubDate>Fri, 12 Aug 2022 16:51:00 +0800</pubDate>
       
-      <guid>/tech/php-punycode/</guid>
+      <guid>http://www.hello-api.cn/tech/php-punycode/</guid>
       <description>前言 域名的编码解码
 什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
 在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn&amp;ndash;fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
@@ -151,19 +151,19 @@ public function getToken() { $filename = &amp;#34;/data/baidu_access_token.{$thi
     
     <item>
       <title>Php-生成ssl证书所需的csr信息</title>
-      <link>/study/php-ssl/</link>
+      <link>http://www.hello-api.cn/study/php-ssl/</link>
       <pubDate>Fri, 12 Aug 2022 16:45:00 +0800</pubDate>
       
-      <guid>/study/php-ssl/</guid>
+      <guid>http://www.hello-api.cn/study/php-ssl/</guid>
       <description>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&amp;gt;all(); $dn = [ &amp;#34;countryName&amp;#34; =&amp;gt; trim(strtoupper($all[&amp;#39;countryName&amp;#39;])), //所在国家 &amp;#34;stateOrProvinceName&amp;#34; =&amp;gt; trim($all[&amp;#39;stateOrProvinceName&amp;#39;]), //所在省份 &amp;#34;localityName&amp;#34; =&amp;gt; trim($all[&amp;#39;localityName&amp;#39;]), //所在城市 &amp;#34;organizationName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationName&amp;#39;]), //注册人姓名 &amp;#34;organizationalUnitName&amp;#34; =&amp;gt; trim($all[&amp;#39;organizationalUnitName&amp;#39;]), //组织名称 &amp;#34;commonName&amp;#34; =&amp;gt; trim($all[&amp;#39;commonName&amp;#39;]), //公共名称 ]; if (isset($all[&amp;#39;emailAddress&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;emailAddress&amp;#39;]) { $dn[&amp;#39;emailAddress&amp;#39;] = $all[&amp;#39;emailAddress&amp;#39;]; } $config = [ &amp;#34;private_key_bits&amp;#34; =&amp;gt; isset($all[&amp;#39;keysize&amp;#39;]) &amp;amp;&amp;amp; $all[&amp;#39;keysize&amp;#39;] ? $all[&amp;#39;keysize&amp;#39;] : 2048, //字节数 512 1024 2048 4096 等 &amp;#34;private_key_type&amp;#34; =&amp;gt; OPENSSL_KEYTYPE_RSA, //加密类型 &amp;#39;digest_alg&amp;#39; =&amp;gt; &amp;#39;sha256&amp;#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&amp;#39;config&amp;#39;] = &amp;#34;D:/phpstudy_pro/Extensions/Apache2.</description>
     </item>
     
     <item>
       <title>Php-Swagger代码了解</title>
-      <link>/tech/php-swagger/</link>
+      <link>http://www.hello-api.cn/tech/php-swagger/</link>
       <pubDate>Fri, 12 Aug 2022 16:06:00 +0800</pubDate>
       
-      <guid>/tech/php-swagger/</guid>
+      <guid>http://www.hello-api.cn/tech/php-swagger/</guid>
       <description>前言 良好的文档规范,对于前后端的沟通是很有必要的,减少没必要的误解和争执,前端也可以根据文档的格式先制定出页面的流程和提前mock数据开发
 目标 前置条件 zircote/swagger-php document
 正式内容 1. 基础了解定义文档的语法 文档描述 @OA\Info(title=&amp;ldquo;Fapi&amp;rdquo;, version=&amp;ldquo;0.1&amp;rdquo;,description=&amp;ldquo;antdv5的接口前缀为/api/v2
@@ -181,10 +181,10 @@ schema=&amp;ldquo;Pagination&amp;rdquo;,
     
     <item>
       <title>Php支付接口</title>
-      <link>/tech/php-pay/</link>
+      <link>http://www.hello-api.cn/tech/php-pay/</link>
       <pubDate>Fri, 12 Aug 2022 15:32:00 +0800</pubDate>
       
-      <guid>/tech/php-pay/</guid>
+      <guid>http://www.hello-api.cn/tech/php-pay/</guid>
       <description>前言 项目上需要接触到不同种类的支付平台,有一些其他第三方平台的支付也是为了企业没资质或为了得到更好的费率原因,因此也总结一下个人在开发中的使用记录
 目标 通过合并支付的接口,让用户在选择支付上能更简单快捷
 前置条件 相关支付平台都有自己的支付申请条件,因此根据需求自行了解注册 环境 PHP

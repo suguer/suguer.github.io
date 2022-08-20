@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>seo on Ken Blog</title>
-    <link>/tags/seo/</link>
+    <link>http://www.hello-api.cn/tags/seo/</link>
     <description>Recent content in seo on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 15 Aug 2022 11:29:00 +0800</lastBuildDate><atom:link href="/tags/seo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Aug 2022 11:29:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/seo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>seo</title>
-      <link>/life/seo/</link>
+      <link>http://www.hello-api.cn/life/seo/</link>
       <pubDate>Mon, 15 Aug 2022 11:29:00 +0800</pubDate>
       
-      <guid>/life/seo/</guid>
+      <guid>http://www.hello-api.cn/life/seo/</guid>
       <description>seo一般指搜索引擎优化，主要就是为了网站让更多人发现和访问，记录一下了解过程中有关的
 5118.com 一种站长工具,支持各种的关键词搜索,对于检测seo有很大的帮助 百度站长平台
 360站长平台

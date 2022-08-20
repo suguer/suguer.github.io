@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>ocr on Ken Blog</title>
-    <link>/tags/ocr/</link>
+    <link>http://www.hello-api.cn/tags/ocr/</link>
     <description>Recent content in ocr on Ken Blog</description>
     <image>
-      <url>/papermod-cover.png</url>
-      <link>/papermod-cover.png</link>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 15 Aug 2022 10:35:00 +0800</lastBuildDate><atom:link href="/tags/ocr/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Aug 2022 10:35:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/ocr/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>php-分享自有系统接入OCR图片识别</title>
-      <link>/tech/php-ocr/</link>
+      <link>http://www.hello-api.cn/tech/php-ocr/</link>
       <pubDate>Mon, 15 Aug 2022 10:35:00 +0800</pubDate>
       
-      <guid>/tech/php-ocr/</guid>
+      <guid>http://www.hello-api.cn/tech/php-ocr/</guid>
       <description>前言 最近比较了几家大的云平台产品,发现百度云的ocr识别,只要通过了企业认证的话,可以每天免费获取一定额度的使用,因此在这里分享下如何使用ocr识别api
 目标 可用在实现内部员工系统的快速身份认证,或者部分客户的营业执照和个人认证,注意仅限小量内部使用,如需用在正式环境中建议购买足够的流量包
 前置条件 开发环境 PHP 百度云能企业认证
