@@ -7,8 +7,8 @@
 <meta name="robots" content="index, follow">
 <title>tronlink | Ken Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="Theme PaperMod">
+<meta name="description" content="Ken blog">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tags/tronlink/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="tronlink" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/tags/tronlink/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="tronlink"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 <meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
 <meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
 
@@ -157,7 +157,7 @@
 获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
 def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to tronlink-归集系统" href="http://www.hello-api.cn/tech/tronlink-002/"></a>
 </article>
 
@@ -177,7 +177,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
 数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet
 数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to tronlink-扫块系统" href="http://www.hello-api.cn/tech/tronlink-001/"></a>
 </article>
 
@@ -199,7 +199,7 @@ address,private_key TSRg164MqUKMxDn2eQYvAg9iFNhQYXAFa8, TNV2h4c2ibuQKes5XTgwuuP9
 hash|区块|发出地址|接收地址|区块时间|数额|合约地址|状态
 hash,block,from,to,block_at,amount,contract_address,status f474e2ceb883637aae1f666adc7714309bf933cfd956173c68bd0512e2190f34,40967609,TPJA5T1QaJEZnCgujC36GpX2wGLYsYnqAh,TNV2h4c2ibuQKes5XTgwuuP9mdfQiAHxpL,2022-05-25 13:32:27,28.29,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,success fbd03d69af7ba8e1f7c56dd11738c8d6269497193daf0efa23eff3ed477e6f12,40969058,TJDFLrCiKneK2rXjCudn4gGMcYhVeqB8ru,TGn37A4yEjVBCXojhFNpZvovWvfNdzwC3x,2022-05-25 14:45:06,7229.02,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,success </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:26:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:26:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to python-波场区块链的扫块系统" href="http://www.hello-api.cn/life/python-tronlink-scan/"></a>
 </article>
     </main>

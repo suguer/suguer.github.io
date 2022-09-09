@@ -12,7 +12,7 @@ nginx.conf
 server{ location / { access_by_lua_file /usr/local/openresty/nginx/conf/lua/domain_check.lua; index index.html index.htm; } } 限制每个IP一段时间内能访问多少次
 domain_check.lua
 local client = require &#34;resty.websocket.client&#34; local limit_req = require &#34;resty.limit.req&#34; local limit_rate = 150 local limit_burst = 50 local limit_req = require &#34;resty.limit.req&#34; local lim, err = limit_req.new(&#34;my_limit_req_store&#34;, limit_rate, limit_burst) -- 这里设置rate=2/s，漏桶桶容量设置为0，（也就是来多少水就留多少水） -- 因为resty.limit.req代码中控制粒度为毫秒级别，所以可以做到毫秒级别的平滑处理 if not lim then -- ngx.log(ngx.ERR, &#34;failed to instantiate a resty.limit.req object: &#34;, err) return ngx.exit(500) end local key = ngx.var.binary_remote_addr local delay, err = lim:incoming(key, true) if not delay then if err == &#34;rejected&#34; then return ngx.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/nginx-001/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -117,7 +117,7 @@ local client = require &#34;resty.websocket.client&#34; local limit_req = requir
   "dateModified": "2022-08-12T12:25:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -203,7 +203,7 @@ local client = require &#34;resty.websocket.client&#34; local limit_req = requir
         <h1 class="post-title">
             Nginx-了解Lua用法
         </h1>
-        <div class="post-meta"><span title='2022-08-12 12:25:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/nginx-001.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-12 12:25:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

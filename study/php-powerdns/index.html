@@ -16,7 +16,7 @@ Create New -&gt; Create New API
 右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
 { &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
 use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/study/php-powerdns/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -129,7 +129,7 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
   "dateModified": "2022-08-19T15:39:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -215,7 +215,7 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
         <h1 class="post-title">
             php-如何使用powerdns的接口
         </h1>
-        <div class="post-meta"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/php-powerdns.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> <div class="toc">

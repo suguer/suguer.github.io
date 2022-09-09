@@ -8,7 +8,7 @@
 <title>Php-根据经纬度计算直线距离 | Ken Blog</title>
 <meta name="keywords" content="php">
 <meta name="description" content=" static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } ">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/study/php-distance/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -105,7 +105,7 @@
   "dateModified": "2022-08-12T16:53:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -191,7 +191,7 @@
         <h1 class="post-title">
             Php-根据经纬度计算直线距离
         </h1>
-        <div class="post-meta"><span title='2022-08-12 16:53:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/php-distance.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-12 16:53:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

@@ -10,7 +10,7 @@
 <meta name="description" content="route.php
 Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt; [&#39;web&#39;]], function () { Route::any(&#39;{slug}&#39;, &#39;Cloud\Rent\Classes\Api\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); ApiRouter.php
 &lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); header(&#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/code/php-apiroute/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -111,7 +111,7 @@ Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt;
   "dateModified": "2022-08-19T15:34:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -197,7 +197,7 @@ Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt;
         <h1 class="post-title">
             php-自定义统一的api入口路由
         </h1>
-        <div class="post-meta"><span title='2022-08-19 15:34:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/code/php-ApiRoute.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-19 15:34:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

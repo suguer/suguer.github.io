@@ -11,7 +11,7 @@
 目标 内网编译前端项目,分发到另一个git项目并自动提交发布
 前置条件 gitblit
 正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&#34;) def rootFolder = &#39;/home/git/&#39; def bare = false def cloneAllBranches = true def cloneBranch = &#39;refs/heads/master&#39; def includeSubmodules = true def repoName = repository.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/gitblit/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -114,7 +114,7 @@
   "dateModified": "2022-08-16T15:50:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -200,7 +200,7 @@
         <h1 class="post-title">
             Gitblit-如何实现自动编译发布
         </h1>
-        <div class="post-meta"><span title='2022-08-16 15:50:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/gitblit.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-16 15:50:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> <div class="toc">

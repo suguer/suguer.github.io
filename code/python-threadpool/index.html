@@ -9,7 +9,7 @@
 <meta name="keywords" content="python">
 <meta name="description" content="自定义的一个小功能,线程池处理,用法很简单
 def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread, args=[1, 2], kwds={}) main.putRequest(req) #-*-encoding:utf-8-*- &#39;&#39;&#39; Created on 2012-3-9 @summary: 线程池 &#39;&#39;&#39; import sys import threading import queue import traceback import statistics # 定义一些Exception，用于自定义异常处理 class NoResultsPending(Exception): &#34;&#34;&#34;All works requests have been processed&#34;&#34;&#34; pass class NoWorkersAvailable(Exception): &#34;&#34;&#34;No worket threads available to process remaining requests.&#34;&#34;&#34; pass def _handle_thread_exception(request, exc_info): &#34;&#34;&#34;默认的异常处理函数，只是简单的打印&#34;&#34;&#34; traceback.print_exception(*exc_info) #classes class WorkerThread(threading.Thread): &#34;&#34;&#34;后台线程，真正的工作线程，从请求队列(requestQueue)中获取work， 并将执行后的结果添加到结果队列(resultQueue)&#34;&#34;&#34; def __init__(self,requestQueue,resultQueue,poll_timeout=5,**kwds): threading.Thread.__init__(self,**kwds) &#39;&#39;&#39;设置为守护进行&#39;&#39;&#39; self.setDaemon(True) self._requestQueue = requestQueue self.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/code/python-threadpool/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -108,7 +108,7 @@ def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread,
   "dateModified": "2022-08-16T15:07:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -194,7 +194,7 @@ def handleThread(a,b): pass main = ThreadPool(5) req = WorkRequest(handleThread,
         <h1 class="post-title">
             python-自定义线程池
         </h1>
-        <div class="post-meta"><span title='2022-08-16 15:07:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/code/python-ThreadPool.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-16 15:07:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

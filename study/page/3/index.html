@@ -8,7 +8,7 @@
 <title>Studies | Ken Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Studies - Ken Blog">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/study/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="Studies" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/study/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Studies"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 
 
 <script type="application/ld+json">
@@ -160,13 +160,88 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>初始Python-自动化操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
+以下是我在实际使用中对于selenium的一些心得和用法
+implicitly_wait
+等待浏览器的相应时间,与sleep的区别在于implicitly_wait是设置的值或页面超时优先,而sleep则是固定睡眠时间,我在用的时候则是2个都同时使用.确保页面能顺利加载到需要的数据
+xpath 如果需要用selenium进行简单的爬虫和模拟浏览,那么xpath的语法是必须要了解明白的,html语言中比起正则,xpath的代码更加清晰和直观
+click 对于按钮的点击事件,推荐用
+driver.execute_script(&#34;arguments[0].click();&#34;, nextButton) 据说.click()会导致报错,虽然我还没遇到过</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to 初始Python-自动化操作" href="http://www.hello-api.cn/study/python-selenium/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>初始Python-文件操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>列出指定目录下的全部文件
+import os file_array=[] dir_array=[ os.getcwd() &#43; &#34;/directory1/&#34;, os.getcwd() &#43; &#34;/directory2/&#34;, ] for dir in dir_array: for root, dirs, files in os.walk(dir): for filename in files: file_array.append(dir&#43;filename) Excel操作读写
+wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&#39;数据明细&#39;) # print(sh.nrows) # 有效数据行数 # print(sh.ncols) # 有效数据列数 for index in range(len(sh.row_values(0))): title = sh.row_values(0)[index] </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:05:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to 初始Python-文件操作" href="http://www.hello-api.cn/study/python-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Apache
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> apacha限制某个目录的php执行 &lt;Directory /public/protected/controllers&gt; php_flag engine off &lt;/Directory&gt; 需要注意网站已经定义的路径，如果涉及到软路径，一律以已经定义的路径为准。
+apacha动态IP黑名单 能简单的设置apache黑名单,配合自己的项目能有效禁止非法IP高频的访问 http.conf &lt;VirtualHost *:443&gt; RewriteMap ipmap txt:ipmap.txt 项目.htaccess
+RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt 内容
+127.0.0.1 b 8.8.8.8 b </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 13:47:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Apache" href="http://www.hello-api.cn/study/apache/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Centos-工作中随手的记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> CentOS7利用yum安装node.js curl -sL https://rpm.nodesource.com/setup_16.x | bash - yum install -y nodejs node -v cnpm安装 npm install -g cnpm --registry=https://registry.npmmirror.com CentOS7 安装pip3 yum install epel-release yum install https://centos7.iuscommunity.org/ius-release.rpm 多个文件内容搜索特定关键词 grep -ln “keyword” 05-01-00hour.log …(可以携带多个文件名)
+打印存在关键词的文件名
+05-19-19hour.log
+05-20-00hour.log </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 13:46:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Centos-工作中随手的记录" href="http://www.hello-api.cn/study/centos/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>gitfun
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
+#!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 12:29:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to gitfun" href="http://www.hello-api.cn/study/gitfun/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Mysql数据库-使用记录
     </h2>
   </header>
   <div class="entry-content">
     <p>How to show binlog mysqlbinlog --no-defaults --start-datetime=&#34;2021-09-30 00:00:00&#34; --stop-datetime=&#34;2021-09-30 23:00:00&#34; -d database --base64-output=DECODE-ROWS -v /binlog/master-bin.001255 --result-file=/root/binlog/mysqllog001255.sql How to get distance ( lat and lng) lat = X lng = X select * , ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat} * PI() / 180 - lat * PI() / 180) / 2),2) &#43; COS({$lat} * PI() / 180) * COS(lat * PI() / 180) * POW(SIN(({$lng} * PI() / 180 - lng * PI() / 180) / 2),2))), 5)*1000 AS distance from table order by distance asc </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 12:13:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 12:13:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Mysql数据库-使用记录" href="http://www.hello-api.cn/study/mysql-note/"></a>
 </article>
 
@@ -182,7 +257,7 @@ select last_day(curdate()); 下个月的上一天,例如今天2022-06-01 ,结果
 select DATE_SUB(DATE_ADD(CURDATE(),INTERVAL 1 MONTH),INTERVAL 1 DAY) 下个月的最后一天
 select LAST_DAY(DATE_ADD(CURDATE(),INTERVAL 1 MONTH)); </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 11:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Mysql数据库-日期函数" href="http://www.hello-api.cn/study/mysql-001/"></a>
 </article>
 
@@ -210,7 +285,7 @@ slave启动一个IO线程读取同步过来的master的binlog，记录到relay l
 slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
 slave记录自己的binglog</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Mysql数据库-常见问题" href="http://www.hello-api.cn/study/mysql-question/"></a>
 </article>
 
@@ -234,7 +309,7 @@ $pull 如果匹配指定的值,从数组中删除对应的对象 $pullAll 如果
 $addToSet 如果不存在则增加一个值到数组
 db.fruit.updateOne({name:&#34;apple&#34;},{$set:{from:&#34;China&#34;}}) drop 删除集合 </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:09:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 11:09:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Mongodb数据库-增删查改" href="http://www.hello-api.cn/study/mongodb-003/"></a>
 </article>
 
@@ -252,27 +327,13 @@ db.fruit.updateOne({name:&#34;apple&#34;},{$set:{from:&#34;China&#34;}}) drop �
 mongo.conf
 storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination: file logAppend: true path: D:\mongodata\db1\mongod.log net: port: 28017 bindIp: 127.0.0.1 replication: replSetName: rs0 </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:08:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 11:08:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Mongodb数据库-复制集" href="http://www.hello-api.cn/study/mongodb-002/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-初识
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>了解mongodb的基本情况
-数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 聚合查询 pipeline=[$stage1,$stage2,…$stageN] aggregate db..aggregate(pipeline,{options})
-常见步骤
-步骤 作用 SQL等价运算法 $match 过滤 where $project 投影 as $sort 排序 order by $group 分组 group by $skip/$limit 结果限制,分页 offset/limit $lookup 左外连接 left outer join 完整的分片集群 应用全透明,无特殊处理 数据自动均衡 动态扩容,无需下线 提供三种分片方式 性能监控 MongoDB Ops Manager Percona 通用监控平台 程序脚本 db....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 10:37:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-初识" href="http://www.hello-api.cn/study/mongodb-001/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="http://www.hello-api.cn/study/page/2/">« 上一页</a>
+    <a class="next" href="http://www.hello-api.cn/study/page/4/">下一页 »</a>
   </nav>
 </footer>
     </main>

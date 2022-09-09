@@ -7,8 +7,8 @@
 <meta name="robots" content="index, follow">
 <title>ocr | Ken Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="Theme PaperMod">
+<meta name="description" content="Ken blog">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tags/ocr/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="ocr" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/tags/ocr/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="ocr"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 <meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
 <meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
 
@@ -156,7 +156,7 @@
 function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
 public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-分享自有系统接入OCR图片识别" href="http://www.hello-api.cn/tech/php-ocr/"></a>
 </article>
     </main>

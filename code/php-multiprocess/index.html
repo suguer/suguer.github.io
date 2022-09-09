@@ -8,7 +8,7 @@
 <title>php-MultiProcess多进程 | Ken Blog</title>
 <meta name="keywords" content="php">
 <meta name="description" content="trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&gt;processes[] = [ &#34;action&#34; =&gt; $action, &#34;params&#34; =&gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&gt;runningProcess) &gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&gt;runningProcess as $key =&gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &#34;child $key completed\n&#34;; unset($this-&gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&#34;could not fork&#34;); } elseif ($pid) { $this-&gt;runningProcess[$pid] = $pid; echo &#34;create child: $pid \n&#34;; } else { //执行子进程 call_user_func_array($process[&#39;action&#39;], $process[&#39;params&#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&gt;processes)) { return; } for ($i = 0; $i &lt; $this-&gt;maxFork; $i&#43;&#43;) { $this-&gt;runOne(); } $this-&gt;waitProcessRun(); } } ">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/code/php-multiprocess/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -105,7 +105,7 @@
   "dateModified": "2022-08-19T15:38:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -191,7 +191,7 @@
         <h1 class="post-title">
             php-MultiProcess多进程
         </h1>
-        <div class="post-meta"><span title='2022-08-19 15:38:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/code/php-MultiProcess.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-19 15:38:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

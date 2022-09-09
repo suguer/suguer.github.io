@@ -7,8 +7,8 @@
 <meta name="robots" content="index, follow">
 <title>php | Ken Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="Theme PaperMod">
+<meta name="description" content="Ken blog">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tags/php/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="php" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/tags/php/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="php"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 <meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
 <meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
 
@@ -159,7 +159,7 @@ Create New -&gt; Create New API
 { &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
 use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-如何使用powerdns的接口" href="http://www.hello-api.cn/study/php-powerdns/"></a>
 </article>
 
@@ -171,7 +171,7 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
   <div class="entry-content">
     <p>trait MultiProcessTrait { protected $processes = []; protected $maxFork = 14; /** * @param $action \Closure * @param array $params */ public function fork($action, $params = []) { $this-&gt;processes[] = [ &#34;action&#34; =&gt; $action, &#34;params&#34; =&gt; $params ]; } protected $runningProcess = []; public function waitProcessRun() { while (count($this-&gt;runningProcess) &gt; 0) { $mypid = pcntl_waitpid(-1, $status, WNOHANG); foreach ($this-&gt;runningProcess as $key =&gt; $pid) { if ($mypid == $pid || $mypid == -1) { echo &#34;child $key completed\n&#34;; unset($this-&gt;runningProcess[$key]); //判断是否还有未fork进程 $this-&gt;runOne(); } } } } public function runOne() { $process = array_shift($this-&gt;processes); if ($process) { $pid = pcntl_fork(); if ($pid == -1) { die(&#34;could not fork&#34;); } elseif ($pid) { $this-&gt;runningProcess[$pid] = $pid; echo &#34;create child: $pid \n&#34;; } else { //执行子进程 call_user_func_array($process[&#39;action&#39;], $process[&#39;params&#39;]); exit;// 一定要注意退出子进程,否则pcntl_fork() 会被子进程再fork,带来处理上的影响。 } } } public function runProcess() { if (empty($this-&gt;processes)) { return; } for ($i = 0; $i &lt; $this-&gt;maxFork; $i&#43;&#43;) { $this-&gt;runOne(); } $this-&gt;waitProcessRun(); } } </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:38:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-19 15:38:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-MultiProcess多进程" href="http://www.hello-api.cn/code/php-multiprocess/"></a>
 </article>
 
@@ -183,7 +183,7 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
   <div class="entry-content">
     <p>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;&amp; $port = $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;&amp; &#39;https&#39; === $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &#39;http&#39;)) { return 443; } } if ($host = $this-&gt;headers-&gt;get(&#39;HOST&#39;)) { if ($host[0] === &#39;[&#39;) { $pos = strpos($host, &#39;:&#39;, strrpos($host, &#39;]&#39;)); } else { $pos = strrpos($host, &#39;:&#39;); } if (false !== $pos) { return (int) substr($host, $pos &#43; 1); } return &#39;https&#39; === $this-&gt;getScheme() ?...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-laravel自定义https端口访问异常" href="http://www.hello-api.cn/study/php-laravel-003/"></a>
 </article>
 
@@ -197,7 +197,7 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
 Route::group([&#39;prefix&#39; =&gt; &#39;fapi/&#39;, &#39;middleware&#39; =&gt; [&#39;web&#39;]], function () { Route::any(&#39;{slug}&#39;, &#39;Cloud\Rent\Classes\Api\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); ApiRouter.php
 &lt;?php namespace Cloud\Rent\Classes\Api; use App; use Illuminate\Routing\Controller as ControllerBase; use October\Rain\Router\Helper as RouterHelper; use Illuminate\Support\Str; /** * Class ApiRouter * API例子：在Now\Youpin\Api下建类Auth，里面有public function hello()，可以通过http://host/api/auth/hello * @package Now\Youpin\Classes\Api */ class ApiRouter extends ControllerBase { public function __construct() { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); header(&#34;Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding&#34;); } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:34:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-19 15:34:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-自定义统一的api入口路由" href="http://www.hello-api.cn/code/php-apiroute/"></a>
 </article>
 
@@ -215,7 +215,7 @@ Gname的API接口文档
 参数 Domain 域名 , Price 价格
 同步远端竞价详情,根据实际情况是否更新本地的出价进度 判断是否需要闯入竞价 判断余额是否足够支付提交的冻结金 判断本地是否存在代理出价 有其他用户的代理出价,并且当前出价高于Price,直接出局 该用户的代理出价则比较金额大小 大于单次最低出价就要生成代理出价 提交请求远端的出价记录 </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:25:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:25:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-域名竞价模块" href="http://www.hello-api.cn/life/php-domain-auction/"></a>
 </article>
 
@@ -231,7 +231,7 @@ Gname的API接口文档
 正则表达式替换php7的语法警告
 (\$[a-zA-Z\_]&#43;)\[([a-zA-Z]&#43;[a-zA-Z\_\d]*)\] $1[&#39;$2&#39;] </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-laravel升级注意事项" href="http://www.hello-api.cn/study/php-laravel-002/"></a>
 </article>
 
@@ -244,7 +244,7 @@ Gname的API接口文档
     <p>是否有人对于每次写一个laravel的控制器都要在路由上写一堆的声明路由感到麻烦,后期维护又不好处理,这里总结下如何让自己写出的接口更加规范格式化,本人在laravel项目中使用了dingo/api
 .env上配置dingo的配置信息 #Dingo API API_PREFIX=api API_VERSION=v1 API_DEBUG=true 在route.php的路由方法中添加这几行代码 $api = app(&#39;Dingo\Api\Routing\Router&#39;); $api-&gt;version(&#39;v1&#39;, function ($api) { $api-&gt;any(&#39;{slug}&#39;, &#39;\App\Http\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); 封装统一入口ApiRouter.php use App; use Dingo\Api\Routing\Helpers; use Illuminate\Routing\Controller; use Illuminate\Support\Str; use core\util\router\RouterHelper; class ApiRouter extends Controller { use Helpers; private $ns; const API_NS = &#39;core\bapi&#39;; function __construct($ns) { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); $this-&gt;ns = $ns; } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:05:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:05:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-总结laravel使用技巧-001" href="http://www.hello-api.cn/study/php-laravel-001/"></a>
 </article>
 
@@ -261,7 +261,7 @@ Gname的API接口文档
 function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
 public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-分享自有系统接入OCR图片识别" href="http://www.hello-api.cn/tech/php-ocr/"></a>
 </article>
 
@@ -273,7 +273,7 @@ public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&g
   <div class="entry-content">
     <p>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&#34;; private static $cipher = &#34;AES-256-CBC&#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &#39;iv&#39; =&gt; $iv, &#39;value&#39; =&gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&#39;iv&#39;]); $decrypted = openssl_decrypt($payload[&#39;value&#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Php-自定义封装加密方法" href="http://www.hello-api.cn/study/php-encrypter/"></a>
 </article>
 
@@ -287,7 +287,7 @@ public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&g
 目标 前置条件 composer require php-imap/php-imap
 正式内容 php-imap 的使用 $mailbox = new Mailbox( &#39;{SMTP服务器:SMTP端口号/imap}INBOX&#39;, // IMAP server and mailbox folder &#39;邮箱账号&#39;, // Username for the before configured mailbox &#39;邮箱密码&#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &#39;UTF-8&#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&gt;searchMailbox(&#39;ALL&#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &#34;IMAP connection failed: &#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&gt; $item) { //循环遍历 $mail = $mailbox-&gt;getMail($item); $fromAddress = $mail-&gt;fromAddress; $content = $mail-&gt;textHtml; if(!...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 17:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 17:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Php邮件收取imap" href="http://www.hello-api.cn/tech/php-imap/"></a>
 </article>
 <footer class="page-footer">

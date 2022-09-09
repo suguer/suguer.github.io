@@ -7,8 +7,8 @@
 <meta name="robots" content="index, follow">
 <title>laravel | Ken Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="Theme PaperMod">
+<meta name="description" content="Ken blog">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tags/laravel/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="laravel" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/tags/laravel/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="laravel"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 <meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
 <meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
 
@@ -151,7 +151,7 @@
   <div class="entry-content">
     <p>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;&amp; $port = $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;&amp; &#39;https&#39; === $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &#39;http&#39;)) { return 443; } } if ($host = $this-&gt;headers-&gt;get(&#39;HOST&#39;)) { if ($host[0] === &#39;[&#39;) { $pos = strpos($host, &#39;:&#39;, strrpos($host, &#39;]&#39;)); } else { $pos = strrpos($host, &#39;:&#39;); } if (false !== $pos) { return (int) substr($host, $pos &#43; 1); } return &#39;https&#39; === $this-&gt;getScheme() ?...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-laravel自定义https端口访问异常" href="http://www.hello-api.cn/study/php-laravel-003/"></a>
 </article>
 
@@ -167,7 +167,7 @@
 正则表达式替换php7的语法警告
 (\$[a-zA-Z\_]&#43;)\[([a-zA-Z]&#43;[a-zA-Z\_\d]*)\] $1[&#39;$2&#39;] </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-laravel升级注意事项" href="http://www.hello-api.cn/study/php-laravel-002/"></a>
 </article>
 
@@ -180,7 +180,7 @@
     <p>是否有人对于每次写一个laravel的控制器都要在路由上写一堆的声明路由感到麻烦,后期维护又不好处理,这里总结下如何让自己写出的接口更加规范格式化,本人在laravel项目中使用了dingo/api
 .env上配置dingo的配置信息 #Dingo API API_PREFIX=api API_VERSION=v1 API_DEBUG=true 在route.php的路由方法中添加这几行代码 $api = app(&#39;Dingo\Api\Routing\Router&#39;); $api-&gt;version(&#39;v1&#39;, function ($api) { $api-&gt;any(&#39;{slug}&#39;, &#39;\App\Http\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); 封装统一入口ApiRouter.php use App; use Dingo\Api\Routing\Helpers; use Illuminate\Routing\Controller; use Illuminate\Support\Str; use core\util\router\RouterHelper; class ApiRouter extends Controller { use Helpers; private $ns; const API_NS = &#39;core\bapi&#39;; function __construct($ns) { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); $this-&gt;ns = $ns; } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:05:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:05:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-总结laravel使用技巧-001" href="http://www.hello-api.cn/study/php-laravel-001/"></a>
 </article>
     </main>

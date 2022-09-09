@@ -8,11 +8,38 @@
     <loc>http://www.hello-api.cn/posts/papermod/papermod-features/</loc>
     <lastmod>2021-01-20T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://www.hello-api.cn/tags/gin/</loc>
+    <lastmod>2022-09-02T17:30:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/tags/go/</loc>
+    <lastmod>2022-09-02T17:30:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/study/go-gin-002/</loc>
+    <lastmod>2022-09-02T17:30:00+08:00</lastmod>
+  </url><url>
     <loc>http://www.hello-api.cn/</loc>
-    <lastmod>2022-08-20T10:32:00+08:00</lastmod>
+    <lastmod>2022-09-02T17:30:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/study/</loc>
+    <lastmod>2022-09-02T17:30:00+08:00</lastmod>
   </url><url>
     <loc>http://www.hello-api.cn/tags/</loc>
-    <lastmod>2022-08-20T10:32:00+08:00</lastmod>
+    <lastmod>2022-09-02T17:30:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/study/go-mysql/</loc>
+    <lastmod>2022-09-02T17:21:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/tags/mysql/</loc>
+    <lastmod>2022-09-02T17:21:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/study/go-gin-001/</loc>
+    <lastmod>2022-09-01T14:46:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/study/go-002/</loc>
+    <lastmod>2022-09-01T09:54:00+08:00</lastmod>
+  </url><url>
+    <loc>http://www.hello-api.cn/study/go-001/</loc>
+    <lastmod>2022-09-01T09:18:00+08:00</lastmod>
   </url><url>
     <loc>http://www.hello-api.cn/tech/</loc>
     <lastmod>2022-08-20T10:32:00+08:00</lastmod>
@@ -27,9 +54,6 @@
     <lastmod>2022-08-19T15:41:00+08:00</lastmod>
   </url><url>
     <loc>http://www.hello-api.cn/study/dapp/</loc>
-    <lastmod>2022-08-19T15:41:00+08:00</lastmod>
-  </url><url>
-    <loc>http://www.hello-api.cn/study/</loc>
     <lastmod>2022-08-19T15:41:00+08:00</lastmod>
   </url><url>
     <loc>http://www.hello-api.cn/tags/php/</loc>

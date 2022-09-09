@@ -14,7 +14,7 @@
 正式内容 下面会细分说明下每个def的方法用途,以及总的冻结流程如何处理
 获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
 def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/tronlink-002/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -123,7 +123,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
   "dateModified": "2022-08-20T10:32:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -209,7 +209,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
         <h1 class="post-title">
             tronlink-归集系统
         </h1>
-        <div class="post-meta"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/tronlink-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> <div class="toc">

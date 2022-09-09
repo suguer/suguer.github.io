@@ -13,7 +13,7 @@
 注意：阿里云证书的领取限制是一个自然年内可以领取一次数量为20的云盾单域名试用证书 部署证书
 nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.pem; ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3; ssl_ciphers EECDH&#43;CHACHA20:EECDH&#43;CHACHA20-draft:EECDH&#43;AES128:RSA&#43;AES128:EECDH&#43;AES256:RSA&#43;AES256:EECDH&#43;3DES:RSA&#43;3DES:!MD5; ssl_prefer_server_ciphers on; ssl_session_cache shared:SSL:10m; ssl_session_timeout 10m; } apache流程
 &lt;VirtualHost *:443&gt; DocumentRoot &#34;project_path&#34; ServerName domain.com:443 ErrorLog error_log_ssl SSLEngine on SSLProtocol ALL -SSLv2 -SSLv3 #SSLCipherSuite ALL:!ADH:!EXPORT56:RC4&#43;RSA:&#43;HIGH:&#43;MEDIUM:&#43;LOW:&#43;SSLv2:&#43;EXP:&#43;eNULL SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!RC4 SSLCertificateFile /etc/httpd/conf.d/tls/crt SSLCertificateKeyFile /etc/httpd/conf.d/tls/key SSLCertificateChainFile /etc/httpd/conf.d/tls/ca-bundle SSLVerifyClient none &lt;Files ~ &#34;\.(cgi|shtml|net|php?)$&#34;&gt; SSLOptions &#43;StdEnvVars &lt;/Files&gt; &lt;Directory &#34;project_path&#34;&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; &lt;/VirtualHost&gt; ">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/ssl-001/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -120,7 +120,7 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
   "dateModified": "2022-08-12T12:15:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -206,7 +206,7 @@ nginx流程 server { ssl_certificate fullchain.pem; ssl_certificate_key privkey.
         <h1 class="post-title">
             初识SSL证书
         </h1>
-        <div class="post-meta"><span title='2022-08-12 12:15:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/ssl-001.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-12 12:15:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

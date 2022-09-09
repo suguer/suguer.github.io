@@ -9,7 +9,7 @@
       <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 20 Aug 2022 10:32:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Sep 2022 17:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Installation | Update</title>
       <link>http://www.hello-api.cn/posts/papermod/papermod-installation/</link>
@@ -26,6 +26,74 @@
       
       <guid>http://www.hello-api.cn/posts/papermod/papermod-features/</guid>
       <description>Learn About All Features in PaperMod</description>
+    </item>
+    
+    <item>
+      <title>go-gin连接gorm</title>
+      <link>http://www.hello-api.cn/study/go-gin-002/</link>
+      <pubDate>Fri, 02 Sep 2022 17:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-gin-002/</guid>
+      <description>本次记录如何在gin中简单的使用和封装gorm
+创建database.go,用于定义gorm连接数据库的配置和DB的统一引用 database.go
+package common import ( &amp;#34;fmt&amp;#34; &amp;#34;note.hello-api.cn/model&amp;#34; &amp;#34;gorm.io/driver/mysql&amp;#34; &amp;#34;gorm.io/gorm&amp;#34; ) var DB *gorm.DB func InitDB() *gorm.DB { host := &amp;#34;localhost&amp;#34; port := &amp;#34;3306&amp;#34; username := &amp;#34;gin&amp;#34; database := &amp;#34;gin&amp;#34; password := &amp;#34;gingin&amp;#34; charset := &amp;#34;utf8mb4&amp;#34; arg := fmt.Sprintf(&amp;#34;%s:%s@tcp(%s:%s)/%s?charset=%s&amp;amp;parseTime=true&amp;#34;, username, password, host, port, database, charset) db, err := gorm.Open(mysql.Open(arg)) if err != nil { panic(err.Error()) } db.AutoMigrate(&amp;amp;model.User{}) db.AutoMigrate(&amp;amp;model.Note{}) DB = db return db } func GetDB() *gorm.DB { return DB } 在gin的入口main.</description>
+    </item>
+    
+    <item>
+      <title>go-Mysql入门操作</title>
+      <link>http://www.hello-api.cn/study/go-mysql/</link>
+      <pubDate>Fri, 02 Sep 2022 17:21:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-mysql/</guid>
+      <description>选用扩展 gorm.io
+Install go get -u gorm.io/gorm go get -u gorm.io/driver/sqlite
+Test models.go package models import ( &amp;#34;fmt&amp;#34; &amp;#34;gorm.io/driver/mysql&amp;#34; &amp;#34;gorm.io/gorm&amp;#34; &amp;#34;gorm.io/gorm/schema&amp;#34; ) var ( dsn string = &amp;#34;gin:gingin@tcp(127.0.0.1:3306)/gin?charset=utf8mb4&amp;#34; // 数据库配置 root账号 0000密码 shop数据库 utf8mb4编码 ) //实现orm func DB() *gorm.DB { // 连接mysql数据库， gorm.Config有很多配置 例如前缀 后准 等等 db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config{ NamingStrategy: schema.NamingStrategy{ TablePrefix: &amp;#34;tp_&amp;#34;, SingularTable: true, }, }) // 数据库连接出错 退出 if err != nil { fmt.Println(&amp;#34;数据库连接失败&amp;#34;, err) panic(1) } // 返回数据库实例 db.</description>
+    </item>
+    
+    <item>
+      <title>go-第一个Gin程序</title>
+      <link>http://www.hello-api.cn/study/go-gin-001/</link>
+      <pubDate>Thu, 01 Sep 2022 14:46:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-gin-001/</guid>
+      <description>第一个Gin程序 安装环境 go 下载对应系统的安装包 安装完毕后敲出
+go version
+显示 go version go1.18.3 windows/amd64 表示安装成功了
+vscode 安装软件后还需安装go扩展
+vscode打开项目所在的文件夹目录
+go mod init demo go get -u -v github.com/gin-gonic/gin
+创建文件 main.go package main import &amp;#34;github.com/gin-gonic/gin&amp;#34; func main() { r := gin.Default() r.GET(&amp;#34;/&amp;#34;, func(c *gin.Context) { c.String(200, &amp;#34;Hello World&amp;#34;) }) r.Run() // listen and serve on 0.0.0.0:8080 } 页面访问 http://localhost:8080/ 打印 Hello World ,表示gin框架也安装成功了</description>
+    </item>
+    
+    <item>
+      <title>go-了解数组和切片的基础用法</title>
+      <link>http://www.hello-api.cn/study/go-002/</link>
+      <pubDate>Thu, 01 Sep 2022 09:54:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-002/</guid>
+      <description>var splice1 []int fmt.Printf(&amp;#34;splice1: len:%d,cap:%d,%T&amp;#34;, len(splice1), cap(splice1), splice1) 结果
+splice1: len:1,cap:1,[]int var splice1 []int = make([]int, 1, 3) fmt.Printf(&amp;#34;splice1: len:%d,cap:%d,%T\n&amp;#34;, len(splice1), cap(splice1), splice1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) // 超出当前数组的长度后,会以cap=3的进行对数组扩容 fmt.Printf(&amp;#34;splice1: len:%d,cap:%d,%T\n&amp;#34;, len(splice1), cap(splice1), splice1) 结果
+splice1: len:1,cap:3,[]int splice1: len:5,cap:6,[]int splice2 := []int{1, 2, 3,4} fmt.Printf(&amp;#34;splice2: len:%d,cap:%d,%T\n&amp;#34;, len(splice2), cap(splice2), splice2) splice2 = append(splice2, 1) fmt.Printf(&amp;#34;splice2: len:%d,cap:%d,%T\n&amp;#34;, len(splice2), cap(splice2), splice2) 当没有设置cap后,append后的容量会以初始的数组len来进行新的扩容 结果</description>
+    </item>
+    
+    <item>
+      <title>go-了解Printf输出的用法</title>
+      <link>http://www.hello-api.cn/study/go-001/</link>
+      <pubDate>Thu, 01 Sep 2022 09:18:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-001/</guid>
+      <description>var splice1 []int //打印切片长度和切片类型 fmt.Printf(&amp;#34;splice1: len:%d,%T&amp;#34;, len(splice1), splice1) 结果
+splice1: len:1,[]int fmt.Printf 一般可支持的输出流为:
+%v 以默认的方式打印变量的值
+%+v 带字段名称
+%T 打印变量的类型
+%+d 带符号的整型
+%d 整型
+%5d 表示该整型最大长度是5
+%05d 会在数字前面补零
+%s 正常输出字符串
+%t 打印true或false
+%b 打印整型的二进制</description>
     </item>
     
     <item>

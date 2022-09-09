@@ -15,7 +15,7 @@ opencc在centos7可以用yum安装，但版本很旧 yum install doxygen opencc 
 安装openresty后opencc.lua放到/usr/local/openresty/lualib/resty/
 opencc.lua
 if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_content_type, 1, 4) == &#34;text&#34;) then local data=ngx.ctx.data or &#34;&#34; local cdata=ngx.arg[1] data=data..cdata ngx.ctx.data=data if ngx.arg[2] then local opencc = require(&#34;resty.opencc&#34;) -- local o = opencc:new(&#34;zhs2zht.ini&#34;) -- opencc 0.4.x local o = opencc:new(&#34;s2hk.json&#34;) ngx.">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/nginx-002/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -126,7 +126,7 @@ if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_conte
   "dateModified": "2022-08-12T12:27:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -212,7 +212,7 @@ if (ngx.var.sent_http_content_type ~= nil and string.sub(ngx.var.sent_http_conte
         <h1 class="post-title">
             Nginx-实现网站简繁体转换
         </h1>
-        <div class="post-meta"><span title='2022-08-12 12:27:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/nginx-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-12 12:27:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

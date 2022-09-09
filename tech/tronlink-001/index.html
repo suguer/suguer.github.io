@@ -16,7 +16,7 @@
 主要数据结构 节点数据 block_chain_block
 数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet
 数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/tronlink-001/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -129,7 +129,7 @@
   "dateModified": "2022-08-16T10:15:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -215,7 +215,7 @@
         <h1 class="post-title">
             tronlink-扫块系统
         </h1>
-        <div class="post-meta"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/tech/tronlink-001.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> <div class="toc">

@@ -8,7 +8,7 @@
 <title>Teches | Ken Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="Teches - Ken Blog">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tech/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="Teches" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/tech/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="Teches"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 
 
 <script type="application/ld+json">
@@ -172,7 +172,7 @@
 获取当次可冻结的钱包数 每完成一次流程,需要执行(解冻-&gt;质押)*n-&gt;投票,计算大概需要的能量判断该次可操作多少个,基础操作目前发现大约300带宽一次
 def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccountresource() freeNetUsed = getaccountnet[&#39;freeNetUsed&#39;] if &#39;freeNetUsed&#39; in getaccountnet else 0 freeNetLimit = getaccountnet[&#39;freeNetLimit&#39;] if &#39;freeNetLimit&#39; in getaccountnet else 0 NetUsed = getaccountnet[&#39;NetUsed&#39;] if &#39;NetUsed&#39; in getaccountnet else 0 NetLimit = getaccountnet[&#39;NetLimit&#39;] if &#39;NetLimit&#39; in getaccountnet else 0 bandwidth = NetLimit &#43; freeNetLimit - NetUsed - freeNetUsed # 质押-&gt;投票 固定操作两次 counts=math.floor((bandwidth-once) / (2 * once)) print(&#34;[%s]:当前带宽:%s 可操作:%s个地址&#34; % (datetime....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-20 10:32:00 +0800 CST'>八月 20, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to tronlink-归集系统" href="http://www.hello-api.cn/tech/tronlink-002/"></a>
 </article>
 
@@ -191,7 +191,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
 此仓库是公开的，否则访客将无法查看 discussion。 giscus app 已安装否则访客将无法评论和回应。 指导入口 Discussions功能已在你的仓库中启用。指导 选择配置 创建完仓库后,在giscus的配置栏中选择自己需要的配置 如本文的配置为
 &lt;script src=&#34;https://giscus.app/client.js&#34; data-repo=&#34;suguer/giscus.github.io&#34; data-repo-id=&#34;R_kgDOH08FpA&#34; data-category=&#34;Announcements&#34; data-category-id=&#34;DIC_kwDOH08FpM4CQ2jj&#34; data-mapping=&#34;title&#34; data-strict=&#34;0&#34; data-reactions-enabled=&#34;1&#34; data-emit-metadata=&#34;0&#34; data-input-position=&#34;top&#34; data-theme=&#34;preferred_color_scheme&#34; data-lang=&#34;zh-CN&#34; data-loading=&#34;lazy&#34; crossorigin=&#34;anonymous&#34; async&gt; &lt;/script&gt; 嵌入js代码 hugo的详情文章路径一般在主题下的layouts/_default/single.html，建议不要在主题下theme直接修改文件，避免后续升级覆盖没了，可在根目录下相同创建出layouts/_default/single.html，接着在代码最后粘贴giscus的那段js代码即可</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-18 12:18:00 +0800 CST'>八月 18, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-18 12:18:00 +0800 CST'>八月 18, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to 从0到1 记录搭建Hugo个人博客-04 增加评论功能" href="http://www.hello-api.cn/tech/hugo-004/"></a>
 </article>
 
@@ -206,7 +206,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
 前置条件 gitblit
 正式内容 1. 创建 append-auto-compile.groovy import com.gitblit.GitBlit import com.gitblit.Keys import com.gitblit.models.RepositoryModel import com.gitblit.models.TeamModel import com.gitblit.models.UserModel import com.gitblit.utils.JGitUtils import com.gitblit.utils.StringUtils import java.text.SimpleDateFormat import org.eclipse.jgit.api.CloneCommand import org.eclipse.jgit.api.PullCommand import org.eclipse.jgit.api.Git import org.eclipse.jgit.lib.Repository import org.eclipse.jgit.lib.Config import org.eclipse.jgit.revwalk.RevCommit import org.eclipse.jgit.transport.ReceiveCommand import org.eclipse.jgit.transport.ReceiveCommand.Result import org.eclipse.jgit.util.FileUtils import org.slf4j.Logger logger.info(&#34;append-auto-compile hook triggered by ${user.username} for ${repository.name} l&#34;) def rootFolder = &#39;/home/git/&#39; def bare = false def cloneAllBranches = true def cloneBranch = &#39;refs/heads/master&#39; def includeSubmodules = true def repoName = repository....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-16 15:50:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-16 15:50:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Gitblit-如何实现自动编译发布" href="http://www.hello-api.cn/tech/gitblit/"></a>
 </article>
 
@@ -225,7 +225,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
 如果想要免密码上传代码
 可输入 http://账号:密码@url.gt</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-16 15:35:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-16 15:35:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Github-" href="http://www.hello-api.cn/tech/github-001/"></a>
 </article>
 
@@ -245,7 +245,7 @@ def get_max_unfreeze_count(tronapi): once = 300 getaccountnet = tronapi.getaccou
 数据类型 类型 描述 id bigint 区块节点 total int 总交易数 active int 已激活交易数 created_at timestamp 创建时间 updated_at timestamp 更新时间 started_at timestamp 开始执行时间 ended_at timestamp 结束执行时间 block_at timestamp 节点时间 error timestamp 节点错误信息 钱包数据 block_chain_wallet
 数据类型 类型 描述 id int 自增id address varchar(255) 地址 private_key varchar(1024) 地址密钥(建议保存到数据库时加密) user_id int 客户用户ID created_at timestamp 创建时间 updated_at timestamp 更新时间 deposit decimal(30,6) 余额 status varchar(16) 状态 扫块系统 想要获取到链上所有的交易信息,主要有两种方式,第一自建超级节点服务器,这样就可以频繁获取数据而不受限制,但是对于一般的网站平台来说,搭建一台波场链节点服务器浪费了资金,因此这里采用第二种方式,通过官网提供的接口进行查询同步,需注意本文涉及用到的接口均是固块化API...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-16 10:15:00 +0800 CST'>八月 16, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to tronlink-扫块系统" href="http://www.hello-api.cn/tech/tronlink-001/"></a>
 </article>
 
@@ -277,7 +277,7 @@ searchOnlyKey = “你的Search-Only API Key”
 根目录下 layouts/_default (没有就新建) 文件夹中新建 list.algolia.json 文件，内容如下: {{/* 生成Algolia搜索索引文件 /}}
 {{- $.Scratch.Add “index” slice -}}...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:24:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 11:24:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to 从0到1 记录搭建Hugo个人博客-03 使用Algolia搜索" href="http://www.hello-api.cn/tech/hugo-003/"></a>
 </article>
 
@@ -294,7 +294,7 @@ searchOnlyKey = “你的Search-Only API Key”
 function getToken 封装下获取Token的方式,避免重复请求次数过于频繁
 public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&gt;access_key}.json&#34;; if (file_exists($filename)) { $content = file_get_contents($filename); if ($content) { $json = json_decode($content, 1); if (strtotime($json[&#39;expires_in&#39;]) &gt; time()) { return $json[&#39;access_token&#39;]; } } } $resp = json_decode($this-&gt;client-&gt;request(&#34;POST&#34;, &#34;https://aip.baidubce.com/oauth/2.0/token&#34;, [ &#39;form_params&#39; =&gt; [ &#39;grant_type&#39; =&gt; &#39;client_credentials&#39;, &#39;client_id&#39; =&gt; $this-&gt;access_key, &#39;client_secret&#39; =&gt; $this-&gt;secret_key, ] ])-&gt;getBody()-&gt;getContents(), 1); $data = [ &#39;access_token&#39; =&gt; $resp[&#39;access_token&#39;], &#39;expires_in&#39; =&gt; date(&#34;Y-m-d H:i:s&#34;, strtotime(&#34;&#43;29 day&#34;)), ]; file_put_contents($filename, json_encode($data, JSON_UNESCAPED_UNICODE)); return $resp[&#39;access_token&#39;]; } private function request($action, $p) { $option = [ &#39;query&#39; =&gt; [ &#39;access_token&#39; =&gt; $this-&gt;getToken(), ], ]; if ($this-&gt;target == &#39;face&#39;) { $option[&#39;json&#39;] = $p; } else { $option[&#39;form_params&#39;] = $p; } $resp = $this-&gt;client-&gt;request(&#34;POST&#34;, &#34;{$api_url}/{$action}&#34;, $option) -&gt;getBody() -&gt;getContents(); return json_decode($resp, true); } 身份证识别 function OcrIdcard 先展示官方文档,文档中可看出ocr的识别支持两种提交方式,图片的base64或者图片url,因此这里稍微封装一下...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 10:35:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-分享自有系统接入OCR图片识别" href="http://www.hello-api.cn/tech/php-ocr/"></a>
 </article>
 
@@ -308,7 +308,7 @@ public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&g
 目标 前置条件 composer require php-imap/php-imap
 正式内容 php-imap 的使用 $mailbox = new Mailbox( &#39;{SMTP服务器:SMTP端口号/imap}INBOX&#39;, // IMAP server and mailbox folder &#39;邮箱账号&#39;, // Username for the before configured mailbox &#39;邮箱密码&#39;, // Password for the before configured username null, // Directory, where attachments will be saved (optional) &#39;UTF-8&#39; // Server encoding (optional) ); try { $mailsIds = $mailbox-&gt;searchMailbox(&#39;ALL&#39;); } catch (PhpImap\Exceptions\ConnectionException $ex) { echo &#34;IMAP connection failed: &#34; . $ex; die(); } rsort($mailsIds); foreach ($mailsIds as $key =&gt; $item) { //循环遍历 $mail = $mailbox-&gt;getMail($item); $fromAddress = $mail-&gt;fromAddress; $content = $mail-&gt;textHtml; if(!...</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 17:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 17:32:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Php邮件收取imap" href="http://www.hello-api.cn/tech/php-imap/"></a>
 </article>
 
@@ -325,7 +325,7 @@ public function getToken() { $filename = &#34;/data/baidu_access_token.{$this-&g
 [ { &#34;fchrServer&#34;:&#34;flage&#34;, &#34;host&#34;:&#34;127.0.0.1&#34;, &#34;key&#34;:&#34;bt_api_key&#34;, &#34;port&#34;:&#34;8888&#34;, &#34;mysql&#34;:&#34;mysql_password&#34;, &#34;sqlserver&#34;:&#34;mssql_password&#34;, &#34;region_id&#34;:&#34;hk&#34;, &#34;zone_id&#34;:&#34;hk-02&#34;, &#34;network&#34;:&#34;bgp&#34; } ] 封装好的交互php函数方法
 class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use ApiLoggerTrait; private $client; private $key = &#34;&#34;; public $host = &#34;&#34;; private $port = &#34;8888&#34;; private $mssql_password = &#34;&#34;; /** * @var array 远端主机的状态转换 */ public $RemoteStatus = [ &#39;1&#39; =&gt; &#39;Running&#39;, &#39;0&#39; =&gt; &#39;Stopped&#39;, ]; public $IISRemoteStatus = [ &#39;Started&#39; =&gt; &#39;Running&#39;, &#39;Stopped&#39; =&gt; &#39;Stopped&#39;, ]; public static function getConfig() { return json_decode(file_get_contents(&#39;/data/vhost/baota....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 16:55:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;15 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 16:55:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;15 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to 从0到1 用宝塔集成虚拟主机提供商" href="http://www.hello-api.cn/tech/baota/"></a>
 </article>
 
@@ -340,7 +340,7 @@ class VhostBaotaClient implements VhostClientInterface { use ApiConfigTrait; use
 在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn–fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
 目标 前置条件 正式内容 &lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &#39;-&#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格....</p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-12 16:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-12 16:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Php-编码解码punycode" href="http://www.hello-api.cn/tech/php-punycode/"></a>
 </article>
 <footer class="page-footer">

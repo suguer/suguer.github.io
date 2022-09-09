@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>gin on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/gin/</link>
+    <description>Recent content in gin on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 02 Sep 2022 17:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/gin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-gin连接gorm</title>
+      <link>http://www.hello-api.cn/study/go-gin-002/</link>
+      <pubDate>Fri, 02 Sep 2022 17:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-gin-002/</guid>
+      <description>本次记录如何在gin中简单的使用和封装gorm
+创建database.go,用于定义gorm连接数据库的配置和DB的统一引用 database.go
+package common import ( &amp;#34;fmt&amp;#34; &amp;#34;note.hello-api.cn/model&amp;#34; &amp;#34;gorm.io/driver/mysql&amp;#34; &amp;#34;gorm.io/gorm&amp;#34; ) var DB *gorm.DB func InitDB() *gorm.DB { host := &amp;#34;localhost&amp;#34; port := &amp;#34;3306&amp;#34; username := &amp;#34;gin&amp;#34; database := &amp;#34;gin&amp;#34; password := &amp;#34;gingin&amp;#34; charset := &amp;#34;utf8mb4&amp;#34; arg := fmt.Sprintf(&amp;#34;%s:%s@tcp(%s:%s)/%s?charset=%s&amp;amp;parseTime=true&amp;#34;, username, password, host, port, database, charset) db, err := gorm.Open(mysql.Open(arg)) if err != nil { panic(err.Error()) } db.AutoMigrate(&amp;amp;model.User{}) db.AutoMigrate(&amp;amp;model.Note{}) DB = db return db } func GetDB() *gorm.DB { return DB } 在gin的入口main.</description>
+    </item>
+    
+    <item>
+      <title>go-第一个Gin程序</title>
+      <link>http://www.hello-api.cn/study/go-gin-001/</link>
+      <pubDate>Thu, 01 Sep 2022 14:46:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-gin-001/</guid>
+      <description>第一个Gin程序 安装环境 go 下载对应系统的安装包 安装完毕后敲出
+go version
+显示 go version go1.18.3 windows/amd64 表示安装成功了
+vscode 安装软件后还需安装go扩展
+vscode打开项目所在的文件夹目录
+go mod init demo go get -u -v github.com/gin-gonic/gin
+创建文件 main.go package main import &amp;#34;github.com/gin-gonic/gin&amp;#34; func main() { r := gin.Default() r.GET(&amp;#34;/&amp;#34;, func(c *gin.Context) { c.String(200, &amp;#34;Hello World&amp;#34;) }) r.Run() // listen and serve on 0.0.0.0:8080 } 页面访问 http://localhost:8080/ 打印 Hello World ,表示gin框架也安装成功了</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>mysql on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/mysql/</link>
+    <description>Recent content in mysql on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 02 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-Mysql入门操作</title>
+      <link>http://www.hello-api.cn/study/go-mysql/</link>
+      <pubDate>Fri, 02 Sep 2022 17:21:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-mysql/</guid>
+      <description>选用扩展 gorm.io
+Install go get -u gorm.io/gorm go get -u gorm.io/driver/sqlite
+Test models.go package models import ( &amp;#34;fmt&amp;#34; &amp;#34;gorm.io/driver/mysql&amp;#34; &amp;#34;gorm.io/gorm&amp;#34; &amp;#34;gorm.io/gorm/schema&amp;#34; ) var ( dsn string = &amp;#34;gin:gingin@tcp(127.0.0.1:3306)/gin?charset=utf8mb4&amp;#34; // 数据库配置 root账号 0000密码 shop数据库 utf8mb4编码 ) //实现orm func DB() *gorm.DB { // 连接mysql数据库， gorm.Config有很多配置 例如前缀 后准 等等 db, err := gorm.Open(mysql.Open(dsn), &amp;amp;gorm.Config{ NamingStrategy: schema.NamingStrategy{ TablePrefix: &amp;#34;tp_&amp;#34;, SingularTable: true, }, }) // 数据库连接出错 退出 if err != nil { fmt.Println(&amp;#34;数据库连接失败&amp;#34;, err) panic(1) } // 返回数据库实例 db.</description>
+    </item>
+    
+  </channel>
+</rss>

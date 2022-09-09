@@ -12,7 +12,7 @@
 同一个设置成支持php7.0,php8,新的9.0仅支持php8以上,为了能平滑迁移项目,需要服务器可支持2个版本 购物车插件gloudemans/shoppingcart 不可使用 , 测试 bumbummen99/shoppingcart 是否可替代 接收参数函数 Input::get() 废弃,用request()-&gt;get() 替代 $input{$i&#43;1} 花括号不可用 $input[$i&#43;1] Route::controller 隐式控制路由废弃, 使用lesichkovm/laravel-advanced-route 插件 AdvancedRoute::controller 替代 队列在redis上保存的值有较大变动, laravel/vendor/laravel/framework/src/Illuminate/Queue/Queue.php createPayload函数 增加部分变量 laravel/vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php createPayload函数 attempts设置默认为0 原生类的构造函数改成__construct 对于整形和字符串判断更严格了,如mktime 参数必须是int; abs(&quot;&quot;) 会报错 有用到的废弃函数 create_function 需要更换 ORM查询返回的数据永远是obj类型, conf/database.inc.php 设置的$ORM-&gt;setFetchMode(PDO::FETCH_ASSOC); 无效,源自 https://laravel.com/docs/5.4/upgrade 以上的记录是我实际的项目产生的问题,因此不一定适合大部分人
 正则表达式替换php7的语法警告
 (\$[a-zA-Z\_]&#43;)\[([a-zA-Z]&#43;[a-zA-Z\_\d]*)\] $1[&#39;$2&#39;] ">
-<meta name="author" content="Theme PaperMod">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/study/php-laravel-002/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -117,7 +117,7 @@
   "dateModified": "2022-08-15T11:18:00+08:00",
   "author":{
     "@type": "Person",
-    "name": "Theme PaperMod"
+    "name": "Ken"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -203,7 +203,7 @@
         <h1 class="post-title">
             php-laravel升级注意事项
         </h1>
-        <div class="post-meta"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content/study/php-laravel-002.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+        <div class="post-meta"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken&nbsp;|&nbsp;<a href="https://github.com/suguer/suguer.github.io" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
     </header> 

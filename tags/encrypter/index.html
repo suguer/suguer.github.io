@@ -7,8 +7,8 @@
 <meta name="robots" content="index, follow">
 <title>encrypter | Ken Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
-<meta name="author" content="Theme PaperMod">
+<meta name="description" content="Ken blog">
+<meta name="author" content="Ken">
 <link rel="canonical" href="http://www.hello-api.cn/tags/encrypter/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.4398b09e795c3aac93a04f4160281925a588bcdf14941ead87ab7bfe555ba854.css" integrity="sha256-Q5iwnnlcOqyToE9BYCgZJaWIvN8UlB6th6t7/lVbqFQ=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://www.hello-api.cn/favicon.ico">
@@ -56,7 +56,7 @@
 
     </style>
 </noscript><meta property="og:title" content="encrypter" />
-<meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
+<meta property="og:description" content="Ken blog" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://www.hello-api.cn/tags/encrypter/" /><meta property="og:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
@@ -64,7 +64,7 @@
 <meta name="twitter:image" content="http://www.hello-api.cn/papermod-cover.png"/>
 
 <meta name="twitter:title" content="encrypter"/>
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"/>
+<meta name="twitter:description" content="Ken blog"/>
 <meta name="shenma-site-verification" content="fa86e3feb16384882d9270489eab2715_1660870831">
 <meta name="360-site-verification" content="fd75df938cdcbc7973283e01cd15fecb" />
 
@@ -151,7 +151,7 @@
   <div class="entry-content">
     <p>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&#34;; private static $cipher = &#34;AES-256-CBC&#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &#39;iv&#39; =&gt; $iv, &#39;value&#39; =&gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&#39;iv&#39;]); $decrypted = openssl_decrypt($payload[&#39;value&#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </p>
   </div>
-  <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Theme PaperMod</footer>
+  <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Php-自定义封装加密方法" href="http://www.hello-api.cn/study/php-encrypter/"></a>
 </article>
     </main>
