@@ -9,7 +9,27 @@
       <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 02 Sep 2022 17:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Sep 2022 11:34:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-平常使用中的一些小技巧</title>
+      <link>http://www.hello-api.cn/study/go-skill/</link>
+      <pubDate>Wed, 28 Sep 2022 11:34:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-skill/</guid>
+      <description>######打乱数组中的顺序
+data := make([]uint, 10) rand.Seed(time.Now().Unix()) length := len(data) for i := 0; i &amp;lt; length; i++ { data[rand.Intn(length)] ,data[i] = data[i],data[rand.Intn(length)] } </description>
+    </item>
+    
+    <item>
+      <title>go-Gin中间件</title>
+      <link>http://www.hello-api.cn/study/go-gin-middleware/</link>
+      <pubDate>Wed, 14 Sep 2022 13:47:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-gin-middleware/</guid>
+      <description>func LoginMiddleware(ctx *gin.Context) { var UserId uint UserId = 2 //example fmt.Printf(&amp;#34;LoginMiddleware UserId: %v\n&amp;#34;, UserId) ctx.Set(&amp;#34;UserId&amp;#34;, UserId) ctx.Next() } 在入口函数上添加中间件
+group := r.Group(&amp;#34;/api/group&amp;#34;).Use(LoginMiddleware) { group.POST(&amp;#34;/create&amp;#34;, GroupController{}.Create) } </description>
+    </item>
+    
     <item>
       <title>go-gin连接gorm</title>
       <link>http://www.hello-api.cn/study/go-gin-002/</link>

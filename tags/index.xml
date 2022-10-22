@@ -9,22 +9,40 @@
       <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 02 Sep 2022 17:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Oct 2022 15:58:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>gin</title>
-      <link>http://www.hello-api.cn/tags/gin/</link>
-      <pubDate>Fri, 02 Sep 2022 17:30:00 +0800</pubDate>
+      <title>gateway</title>
+      <link>http://www.hello-api.cn/tags/gateway/</link>
+      <pubDate>Sat, 22 Oct 2022 15:58:00 +0800</pubDate>
       
-      <guid>http://www.hello-api.cn/tags/gin/</guid>
+      <guid>http://www.hello-api.cn/tags/gateway/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sms</title>
+      <link>http://www.hello-api.cn/tags/sms/</link>
+      <pubDate>Sat, 22 Oct 2022 15:58:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/tags/sms/</guid>
       <description></description>
     </item>
     
     <item>
       <title>go</title>
       <link>http://www.hello-api.cn/tags/go/</link>
-      <pubDate>Fri, 02 Sep 2022 17:30:00 +0800</pubDate>
+      <pubDate>Wed, 28 Sep 2022 11:34:00 +0800</pubDate>
       
       <guid>http://www.hello-api.cn/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gin</title>
+      <link>http://www.hello-api.cn/tags/gin/</link>
+      <pubDate>Wed, 14 Sep 2022 13:47:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/tags/gin/</guid>
       <description></description>
     </item>
     

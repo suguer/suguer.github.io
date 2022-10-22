@@ -145,6 +145,19 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>go-Gin中间件
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>func LoginMiddleware(ctx *gin.Context) { var UserId uint UserId = 2 //example fmt.Printf(&#34;LoginMiddleware UserId: %v\n&#34;, UserId) ctx.Set(&#34;UserId&#34;, UserId) ctx.Next() } 在入口函数上添加中间件
+group := r.Group(&#34;/api/group&#34;).Use(LoginMiddleware) { group.POST(&#34;/create&#34;, GroupController{}.Create) } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-14 13:47:00 +0800 CST'>九月 14, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-Gin中间件" href="http://www.hello-api.cn/study/go-gin-middleware/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>go-gin连接gorm
     </h2>
   </header>

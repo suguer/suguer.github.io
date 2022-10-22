@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>gateway on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/gateway/</link>
+    <description>Recent content in gateway on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 22 Oct 2022 15:58:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/gateway/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SmsGateway-短信网关平台</title>
+      <link>http://www.hello-api.cn/life/smsgateway/</link>
+      <pubDate>Sat, 22 Oct 2022 15:58:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/life/smsgateway/</guid>
+      <description>Github
+特点 暂时支持目前市面主流服务商,逐步完善中 统一的返回值格式，方便排查和记录 平台支持 腾讯云 Ucloud 阿里云 百度云 七牛云 互亿无线 聚合数据 时代互联 SUBMAIL 示例使用代码 直接使用
+gateway := gateway.NewGatewayInterface(&amp;#34;aliyun&amp;#34;, &amp;amp;model.Config{ AppID: &amp;#34;AppID&amp;#34;, AppSecret: &amp;#34;AppSecret&amp;#34;, }) Param := map[string]string{&amp;#34;0&amp;#34;: &amp;#34;1234&amp;#34;, &amp;#34;1&amp;#34;: &amp;#34;1234&amp;#34;, &amp;#34;2&amp;#34;: &amp;#34;1234&amp;#34;} message := model.NewMessage(&amp;#34;您正在申请手机注册，验证码为：1234，5分钟内有效！&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;, Param) Message, err := api.SendMessage(model.NewPhone(&amp;#34;150xxxxxxxx&amp;#34;), message) fmt.Printf(&amp;#34;Message: %v\n&amp;#34;, Message) fmt.Printf(&amp;#34;err: %v\n&amp;#34;, err) 开启Grpc微服务
+s := server.NewGrpcServer() s.Start(50051) 预期功能 接入多家短信平台后, 能够免接口加签的困扰, 请求后能统一返回的格式, 可做到直接使用或用grpc实现微服务接收
+可使用功能 方法 描述 SendMessage 发送短信 CreateSmsTemplate 创建模板 QuerySmsTemplate 查询模板 发送格式 总结各大短信平台是有两种发送方式</description>
+    </item>
+    
+  </channel>
+</rss>

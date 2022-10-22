@@ -160,6 +160,22 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>SmsGateway-短信网关平台
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Github
+特点 暂时支持目前市面主流服务商,逐步完善中 统一的返回值格式，方便排查和记录 平台支持 腾讯云 Ucloud 阿里云 百度云 七牛云 互亿无线 聚合数据 时代互联 SUBMAIL 示例使用代码 直接使用
+gateway := gateway.NewGatewayInterface(&#34;aliyun&#34;, &amp;model.Config{ AppID: &#34;AppID&#34;, AppSecret: &#34;AppSecret&#34;, }) Param := map[string]string{&#34;0&#34;: &#34;1234&#34;, &#34;1&#34;: &#34;1234&#34;, &#34;2&#34;: &#34;1234&#34;} message := model.NewMessage(&#34;您正在申请手机注册，验证码为：1234，5分钟内有效！&#34;, &#34;&#34;, &#34;&#34;, Param) Message, err := api.SendMessage(model.NewPhone(&#34;150xxxxxxxx&#34;), message) fmt.Printf(&#34;Message: %v\n&#34;, Message) fmt.Printf(&#34;err: %v\n&#34;, err) 开启Grpc微服务
+s := server.NewGrpcServer() s.Start(50051) 预期功能 接入多家短信平台后, 能够免接口加签的困扰, 请求后能统一返回的格式, 可做到直接使用或用grpc实现微服务接收
+可使用功能 方法 描述 SendMessage 发送短信 CreateSmsTemplate 创建模板 QuerySmsTemplate 查询模板 发送格式 总结各大短信平台是有两种发送方式...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-10-22 15:58:00 +0800 CST'>十月 22, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to SmsGateway-短信网关平台" href="http://www.hello-api.cn/life/smsgateway/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>seo
     </h2>
   </header>

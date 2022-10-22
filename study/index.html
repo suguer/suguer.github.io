@@ -160,6 +160,32 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>go-平常使用中的一些小技巧
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>######打乱数组中的顺序
+data := make([]uint, 10) rand.Seed(time.Now().Unix()) length := len(data) for i := 0; i &lt; length; i&#43;&#43; { data[rand.Intn(length)] ,data[i] = data[i],data[rand.Intn(length)] } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-28 11:34:00 +0800 CST'>九月 28, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-平常使用中的一些小技巧" href="http://www.hello-api.cn/study/go-skill/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-Gin中间件
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>func LoginMiddleware(ctx *gin.Context) { var UserId uint UserId = 2 //example fmt.Printf(&#34;LoginMiddleware UserId: %v\n&#34;, UserId) ctx.Set(&#34;UserId&#34;, UserId) ctx.Next() } 在入口函数上添加中间件
+group := r.Group(&#34;/api/group&#34;).Use(LoginMiddleware) { group.POST(&#34;/create&#34;, GroupController{}.Create) } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-14 13:47:00 +0800 CST'>九月 14, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-Gin中间件" href="http://www.hello-api.cn/study/go-gin-middleware/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>go-gin连接gorm
     </h2>
   </header>
@@ -286,41 +312,6 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
   </div>
   <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-laravel自定义https端口访问异常" href="http://www.hello-api.cn/study/php-laravel-003/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>keycloak
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Keycloak
-1. create realm 用于对接不同网站的登录用户,隔离区域
-2. how to use php
-composer require stevenmaguire/oauth2-keycloak SsoKeycloakClient.php
-class SsoKeycloakClient implements SsoClientInterface { use ApiConfigTrait; use ApiLoggerTrait; const API_NAME = &#34;keycloak&#34;; private $server_access_token_path = &#34;/data/keycloak_server_access_token.log&#34;; /** * @var Keycloak */ protected $provider; /** * @var GuzzleHttp\Client */ private $client; public function __construct() { $this-&gt;initLogger(-3, 2); $this-&gt;loadApiConfig(self::API_NAME); try { $redirectUri = ShareSession::get(&#39;redirect_uri&#39;) ? ShareSession::get(&#39;redirect_uri&#39;) : $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; } catch (\Throwable $e) { $redirectUri = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; } $redirectUri = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; $this-&gt;provider = new Keycloak([ &#39;authServerUrl&#39; =&gt; $this-&gt;apiConfig-&gt;Host, &#39;realm&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;realm&#39;], &#39;clientId&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;login_client_id&#39;], &#39;clientSecret&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;login_client_secret&#39;], &#39;redirectUri&#39; =&gt; $redirectUri, ]); $this-&gt;client = new GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 30....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:32:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to keycloak" href="http://www.hello-api.cn/study/keycloak/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-python有关的操作
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>flask
-flask-pymongo
-flask-mongoengine
-数据内容
-[{ &#34;_id&#34;: { &#34;$oid&#34;: &#34;62e3525f18909374eb4de53f&#34; }, &#34;plat&#34;: { &#34;wechat&#34;: &#34;bc61736d-7ed0-47bb-ba1b-33474fecde23&#34;, &#34;alipay&#34;: &#34;random&#34; }, &#34;created_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;updated_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;nickname&#34;: &#34;su&#34; }] 根据 plat.wechat中来搜索用户
-pymongo语法:
-mongo.db.user.find_one(filter={&#34;plat.wechat&#34;:openid}) mongoengine语法:
-User.objects(plat__wechat=openid).first() </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:30:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-python有关的操作" href="http://www.hello-api.cn/study/mongodb-004/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

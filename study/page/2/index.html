@@ -160,6 +160,41 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>keycloak
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Keycloak
+1. create realm 用于对接不同网站的登录用户,隔离区域
+2. how to use php
+composer require stevenmaguire/oauth2-keycloak SsoKeycloakClient.php
+class SsoKeycloakClient implements SsoClientInterface { use ApiConfigTrait; use ApiLoggerTrait; const API_NAME = &#34;keycloak&#34;; private $server_access_token_path = &#34;/data/keycloak_server_access_token.log&#34;; /** * @var Keycloak */ protected $provider; /** * @var GuzzleHttp\Client */ private $client; public function __construct() { $this-&gt;initLogger(-3, 2); $this-&gt;loadApiConfig(self::API_NAME); try { $redirectUri = ShareSession::get(&#39;redirect_uri&#39;) ? ShareSession::get(&#39;redirect_uri&#39;) : $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; } catch (\Throwable $e) { $redirectUri = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; } $redirectUri = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; $this-&gt;provider = new Keycloak([ &#39;authServerUrl&#39; =&gt; $this-&gt;apiConfig-&gt;Host, &#39;realm&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;realm&#39;], &#39;clientId&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;login_client_id&#39;], &#39;clientSecret&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;login_client_secret&#39;], &#39;redirectUri&#39; =&gt; $redirectUri, ]); $this-&gt;client = new GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 30....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-19 15:32:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to keycloak" href="http://www.hello-api.cn/study/keycloak/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mongodb数据库-python有关的操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>flask
+flask-pymongo
+flask-mongoengine
+数据内容
+[{ &#34;_id&#34;: { &#34;$oid&#34;: &#34;62e3525f18909374eb4de53f&#34; }, &#34;plat&#34;: { &#34;wechat&#34;: &#34;bc61736d-7ed0-47bb-ba1b-33474fecde23&#34;, &#34;alipay&#34;: &#34;random&#34; }, &#34;created_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;updated_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;nickname&#34;: &#34;su&#34; }] 根据 plat.wechat中来搜索用户
+pymongo语法:
+mongo.db.user.find_one(filter={&#34;plat.wechat&#34;:openid}) mongoengine语法:
+User.objects(plat__wechat=openid).first() </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-19 15:30:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Mongodb数据库-python有关的操作" href="http://www.hello-api.cn/study/mongodb-004/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>powerdns-学习如何搭建个人专属DNS服务器
     </h2>
   </header>
@@ -272,61 +307,6 @@ AI情话
   </div>
   <footer class="entry-footer"><span title='2022-08-12 16:45:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Php-生成ssl证书所需的csr信息" href="http://www.hello-api.cn/study/php-ssl/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Python-初学tensorflow第二天-学习例子
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>学习来源Bilibili 根据例子编写出线性回归方程
-import tensorflow as tf import pandas as pd data=pd.read_csv(&#39;./demo1.csv&#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&#39;adam&#39;,loss=&#39;mse&#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
-1,10.000000 ,26.658839
-2,10.401338 ,27.306435
-3,10.842809 ,22.132410
-4,11.244147 ,21.169841
-5,11.645449 ,15.192634
-6,12.086957 ,26.398951
-7,12.048829 ,17.435307
-8,12.889632 ,25.507885
-9,13.290970 ,36.884595
-10,13.732441 ,39.666109
-11,14.133779 ,34.396281
-12,14.635117 ,41.497994
-13,14.978589 ,44.981575
-14,15.377926 ,47.039595
-15,15.779264 ,48.252578
-16,16.220736 ,57.034251
-17,16.622074 ,51.490919
-18,17.023411 ,51.336621
-19,17.464883 ,57.681998
-20,17.866221 ,68.553714
-21,18.267559 ,64.310925
-22,18.709030 ,68.959009
-23,19.110368 ,74.614639
-24,19.511706 ,71.867195
-25,19.913043 ,76.098135...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 15:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Python-初学tensorflow第二天-学习例子" href="http://www.hello-api.cn/study/python-tensorflow-002/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Python-初学tensorflow第一天-搭建环境
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
-打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library ‘cudart64_110.dll’; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
-Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
-A: 找到C:\Program Files\NVIDIA Corporation\FrameViewSDK文件夹进行卸载
-Q: 安装cuda一直安装不成功,nsight visual studio edition提示安装失败 A: 尝试卸载电脑的Visual Studio Community
-Q: Downgrade the protobuf package to 3....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 15:12:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Python-初学tensorflow第一天-搭建环境" href="http://www.hello-api.cn/study/python-tensorflow-001/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
