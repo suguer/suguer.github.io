@@ -160,6 +160,105 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Apache
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> apacha限制某个目录的php执行 &lt;Directory /public/protected/controllers&gt; php_flag engine off &lt;/Directory&gt; 需要注意网站已经定义的路径，如果涉及到软路径，一律以已经定义的路径为准。
+apacha动态IP黑名单 能简单的设置apache黑名单,配合自己的项目能有效禁止非法IP高频的访问 http.conf &lt;VirtualHost *:443&gt; RewriteMap ipmap txt:ipmap.txt 项目.htaccess
+RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt 内容
+127.0.0.1 b 8.8.8.8 b </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 13:47:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Apache" href="http://www.hello-api.cn/study/apache/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Centos-工作中随手的记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> CentOS7利用yum安装node.js curl -sL https://rpm.nodesource.com/setup_16.x | bash - yum install -y nodejs node -v cnpm安装 npm install -g cnpm --registry=https://registry.npmmirror.com CentOS7 安装pip3 yum install epel-release yum install https://centos7.iuscommunity.org/ius-release.rpm 多个文件内容搜索特定关键词 grep -ln “keyword” 05-01-00hour.log …(可以携带多个文件名)
+打印存在关键词的文件名
+05-19-19hour.log
+05-20-00hour.log </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 13:46:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Centos-工作中随手的记录" href="http://www.hello-api.cn/study/centos/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>gitfun
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
+#!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 12:29:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to gitfun" href="http://www.hello-api.cn/study/gitfun/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mysql数据库-使用记录
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>How to show binlog mysqlbinlog --no-defaults --start-datetime=&#34;2021-09-30 00:00:00&#34; --stop-datetime=&#34;2021-09-30 23:00:00&#34; -d database --base64-output=DECODE-ROWS -v /binlog/master-bin.001255 --result-file=/root/binlog/mysqllog001255.sql How to get distance ( lat and lng) lat = X lng = X select * , ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat} * PI() / 180 - lat * PI() / 180) / 2),2) &#43; COS({$lat} * PI() / 180) * COS(lat * PI() / 180) * POW(SIN(({$lng} * PI() / 180 - lng * PI() / 180) / 2),2))), 5)*1000 AS distance from table order by distance asc </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 12:13:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Mysql数据库-使用记录" href="http://www.hello-api.cn/study/mysql-note/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mysql数据库-日期函数
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>当前日期
+select curdate(); 当月最后一天
+select last_day(curdate()); 下个月的上一天,例如今天2022-06-01 ,结果为2022-06-30
+select DATE_SUB(DATE_ADD(CURDATE(),INTERVAL 1 MONTH),INTERVAL 1 DAY) 下个月的最后一天
+select LAST_DAY(DATE_ADD(CURDATE(),INTERVAL 1 MONTH)); </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Mysql数据库-日期函数" href="http://www.hello-api.cn/study/mysql-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Mysql数据库-常见问题
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>能说下myisam 和 innodb的区别吗
+myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
+innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
+说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
+create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
+事务的基本特性
+原子性指的是一个事务中的操作要么全部成功，要么全部失败。
+一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
+隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
+持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
+主从同步
+首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
+slave连接到master，获取binlog
+master创建dump线程，推送binglog到slave
+slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
+slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
+slave记录自己的binglog</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Mysql数据库-常见问题" href="http://www.hello-api.cn/study/mysql-question/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Mongodb数据库-增删查改
     </h2>
   </header>

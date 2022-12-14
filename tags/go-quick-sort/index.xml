@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>go-quick-sort on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/go-quick-sort/</link>
+    <description>Recent content in go-quick-sort on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 14 Dec 2022 09:51:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/go-quick-sort/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-快速排序</title>
+      <link>http://www.hello-api.cn/study/go-quick-sort/</link>
+      <pubDate>Wed, 14 Dec 2022 09:51:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-quick-sort/</guid>
+      <description>package main import &amp;#34;fmt&amp;#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3, 0} fmt.Printf(&amp;#34;arr: %v\n&amp;#34;, arr) sort(arr, 0, len(arr)-1) fmt.Printf(&amp;#34;arr: %v\n&amp;#34;, arr) } func sort(arr []int, leftBound int, rightBound int) { if leftBound &amp;gt; rightBound { return } var left = AdjustArray(arr, leftBound, rightBound) fmt.Printf(&amp;#34;arr: %v\n&amp;#34;, arr) sort(arr, leftBound, left-1) sort(arr, left+1, rightBound) } func AdjustArray(arr []int, leftBound int, rightBound int) int { var mid = arr[rightBound] var left = leftBound var right = rightBound - 1 for { if left &amp;gt;= right { break } for { if arr[left] &amp;gt; mid || left &amp;gt;= rightBound { break } left++ } for { if arr[right] &amp;lt; mid || right &amp;lt;= leftBound { break } right-- } if left &amp;lt; right { swap(arr, left, right) } } swap(arr, left, rightBound) return left } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出</description>
+    </item>
+    
+  </channel>
+</rss>

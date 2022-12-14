@@ -145,6 +145,55 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>go-希尔排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3} fmt.Printf(&#34;arr: %v\n&#34;, arr) var gap = 1 for { if gap &gt;= (len(arr))/3 { break } gap = gap*3 &#43; 1 } fmt.Printf(&#34;gap: %v\n&#34;, gap) for gap := gap; gap &gt; 0; gap = (gap - 1) / 3 { for i := gap; i &lt; len(arr); i&#43;&#43; { for j := i; j &gt; gap-1 &amp;&amp; arr[j] &lt; arr[j-gap]; j -= gap { swap(arr, j, j-gap) } } fmt....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-10 12:04:00 +0800 CST'>十二月 10, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-希尔排序算法" href="http://www.hello-api.cn/study/go-shell-sort/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>go-插入排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3} for i := 1; i &lt; len(arr); i&#43;&#43; { for j := i; j &gt; 0; j-- { if arr[j] &lt; arr[j-1] { swap(arr, j, j-1) } } fmt.Printf(&#34;arr: %v\n&#34;, arr) } } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-10 11:22:00 +0800 CST'>十二月 10, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-插入排序算法" href="http://www.hello-api.cn/study/go-insertion-sort/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>go-冒泡排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3} for i := len(arr) - 1; i &gt; 0; i-- { for j := 0; j &lt; len(arr)-1; j&#43;&#43; { if arr[j] &gt; arr[j&#43;1] { swap(arr, j, j&#43;1) } } fmt.Printf(&#34;arr: %v\n&#34;, arr) } } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-08 15:44:00 +0800 CST'>十二月 8, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-冒泡排序算法" href="http://www.hello-api.cn/study/go-buddle-sort/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Go-选择排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>正常版 每次寻找一个最小值并交换
+package main import &#34;fmt&#34; func main() { var arr = []int{5, 3, 8, 6, 1, 8, 6, 1, 7} fmt.Printf(&#34;arr: %v\n&#34;, arr) for i := 0; i &lt; len(arr)-1; i&#43;&#43; { var minPos = i for j := i &#43; 1; j &lt; len(arr); j&#43;&#43; { if arr[j] &lt; arr[minPos] { minPos = j } } swap(arr, i, minPos) fmt.Printf(&#34;arr: %v\n&#34;, arr) } } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出结果...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-06 23:10:00 +0800 CST'>十二月 6, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Go-选择排序算法" href="http://www.hello-api.cn/study/go-selection-sort/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>go-平常使用中的一些小技巧
     </h2>
   </header>
@@ -228,29 +277,11 @@ splice1: len:1,cap:3,[]int splice1: len:5,cap:6,[]int splice2 := []int{1, 2, 3,4
   <footer class="entry-footer"><span title='2022-09-01 09:54:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to go-了解数组和切片的基础用法" href="http://www.hello-api.cn/study/go-002/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>go-了解Printf输出的用法
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>var splice1 []int //打印切片长度和切片类型 fmt.Printf(&#34;splice1: len:%d,%T&#34;, len(splice1), splice1) 结果
-splice1: len:1,[]int fmt.Printf 一般可支持的输出流为:
-%v 以默认的方式打印变量的值
-%&#43;v 带字段名称
-%T 打印变量的类型
-%&#43;d 带符号的整型
-%d 整型
-%5d 表示该整型最大长度是5
-%05d 会在数字前面补零
-%s 正常输出字符串
-%t 打印true或false
-%b 打印整型的二进制</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-01 09:18:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-了解Printf输出的用法" href="http://www.hello-api.cn/study/go-001/"></a>
-</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="http://www.hello-api.cn/tags/go/page/2/">下一页 »</a>
+  </nav>
+</footer>
     </main>
     
 <footer class="footer">

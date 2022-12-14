@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>docker-setup on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/docker-setup/</link>
+    <description>Recent content in docker-setup on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 08 Dec 2022 14:36:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/docker-setup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>docker-安装教程</title>
+      <link>http://www.hello-api.cn/study/docker-setup/</link>
+      <pubDate>Thu, 08 Dec 2022 14:36:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/docker-setup/</guid>
+      <description>Centos7 # step 1: 安装必要的一些系统工具 sudo yum install -y yum-utils device-mapper-persistent-data lvm2 # Step 2: 添加软件源信息 sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # Step 3 sudo sed -i &amp;#39;s+download.docker.com+mirrors.aliyun.com/docker-ce+&amp;#39; /etc/yum.repos.d/docker-ce.repo # Step 4: 更新并安装Docker-CE sudo yum makecache fast sudo yum -y install docker-ce # Step 4: 开启Docker服务 sudo service docker start </description>
+    </item>
+    
+  </channel>
+</rss>

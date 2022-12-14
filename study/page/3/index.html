@@ -160,6 +160,88 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>wechaty-初识wechaty用途
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>wechaty能做到什么 能自定制微信机器人服务,为你订造专属智能客服 能利用微信强大的社交机制带来潜在利益 github | 官网教程
+其他教程 wechaty.readthedocs.io
+有关视频教程资源:
+live-coding
+AI情话
+准备阶段，有条件的小伙伴可以自己搭建一个服务端，好处就在于免费，或者可以使用网上其他提供协议,可参考 Padlocal协议 和 Paimon协议, 本教程主要以自搭建为主</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 11:30:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to wechaty-初识wechaty用途" href="http://www.hello-api.cn/study/wechaty-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>php-laravel升级注意事项
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>官网 现在laravel的最新版已经升级到了9.0,目前公司还在用5.x版本,因此对于升级的注意事项做个记录,当做预防以后的踩坑
+注意事项
+同一个设置成支持php7.0,php8,新的9.0仅支持php8以上,为了能平滑迁移项目,需要服务器可支持2个版本 购物车插件gloudemans/shoppingcart 不可使用 , 测试 bumbummen99/shoppingcart 是否可替代 接收参数函数 Input::get() 废弃,用request()-&gt;get() 替代 $input{$i&#43;1} 花括号不可用 $input[$i&#43;1] Route::controller 隐式控制路由废弃, 使用lesichkovm/laravel-advanced-route 插件 AdvancedRoute::controller 替代 队列在redis上保存的值有较大变动, laravel/vendor/laravel/framework/src/Illuminate/Queue/Queue.php createPayload函数 增加部分变量 laravel/vendor/laravel/framework/src/Illuminate/Queue/RedisQueue.php createPayload函数 attempts设置默认为0 原生类的构造函数改成__construct 对于整形和字符串判断更严格了,如mktime 参数必须是int; abs(&#34;&#34;) 会报错 有用到的废弃函数 create_function 需要更换 ORM查询返回的数据永远是obj类型, conf/database.inc.php 设置的$ORM-&gt;setFetchMode(PDO::FETCH_ASSOC); 无效,源自 https://laravel.com/docs/5.4/upgrade 以上的记录是我实际的项目产生的问题,因此不一定适合大部分人
+正则表达式替换php7的语法警告
+(\$[a-zA-Z\_]&#43;)\[([a-zA-Z]&#43;[a-zA-Z\_\d]*)\] $1[&#39;$2&#39;] </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 11:18:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to php-laravel升级注意事项" href="http://www.hello-api.cn/study/php-laravel-002/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>php-总结laravel使用技巧-001
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>是否有人对于每次写一个laravel的控制器都要在路由上写一堆的声明路由感到麻烦,后期维护又不好处理,这里总结下如何让自己写出的接口更加规范格式化,本人在laravel项目中使用了dingo/api
+.env上配置dingo的配置信息 #Dingo API API_PREFIX=api API_VERSION=v1 API_DEBUG=true 在route.php的路由方法中添加这几行代码 $api = app(&#39;Dingo\Api\Routing\Router&#39;); $api-&gt;version(&#39;v1&#39;, function ($api) { $api-&gt;any(&#39;{slug}&#39;, &#39;\App\Http\ApiRouter@route&#39;)-&gt;where(&#39;slug&#39;, &#39;(.*)?&#39;); }); 封装统一入口ApiRouter.php use App; use Dingo\Api\Routing\Helpers; use Illuminate\Routing\Controller; use Illuminate\Support\Str; use core\util\router\RouterHelper; class ApiRouter extends Controller { use Helpers; private $ns; const API_NS = &#39;core\bapi&#39;; function __construct($ns) { header(&#39;Access-Control-Allow-Origin: *&#39;); header(&#39;Access-Control-Allow-Methods:*&#39;); header(&#39;Access-Control-Allow-Headers:*&#39;); $this-&gt;ns = $ns; } /** * @var string Allows early access to page action. */ public static $action; /** * @var array Allows early access to page parameters....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 11:05:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to php-总结laravel使用技巧-001" href="http://www.hello-api.cn/study/php-laravel-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-自定义封装加密方法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>/** * 自定义的一个加解密插件 * User: staff * Date: 2019/3/27 * Time: 16:13 */ class Encrypter { private static $key = &#34;ZmUbqPipJ0Pr7tGmkHDBazjpbKjFZc7S&#34;; private static $cipher = &#34;AES-256-CBC&#34;; public static function encrypt($str) { $ivlen = openssl_cipher_iv_length(self::$cipher); $iv = openssl_random_pseudo_bytes($ivlen); $value = openssl_encrypt($str, self::$cipher, self::$key, 0, $iv); $iv = base64_encode($iv); $param = [ &#39;iv&#39; =&gt; $iv, &#39;value&#39; =&gt; $value ]; return base64_encode(json_encode($param)); } public static function decrypt($str) { $payload = self::getJsonPayload($str); $iv = base64_decode($payload[&#39;iv&#39;]); $decrypted = openssl_decrypt($payload[&#39;value&#39;], self::$cipher, self::$key, 0, $iv); return $decrypted; } /** * @param $payload * @return array */ static function getJsonPayload($payload) { $payload = json_decode(base64_decode($payload), true); return $payload; } } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-15 10:34:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Php-自定义封装加密方法" href="http://www.hello-api.cn/study/php-encrypter/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-根据经纬度计算直线距离
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> static public $DEF_PI = 3.14159265359; // PI static public $DEF_2PI= 6.28318530712; // 2*PI static public $DEF_PI180= 0.01745329252; // PI/180.0 static public $DEF_R =6370693.5; // radius of earth /** * 适用于近距离测直线距离 */ public static function GetShortDistance($lon1, $lat1, $lon2, $lat2) { // 角度转换为弧度 $ew1 = $lon1 * self::$DEF_PI180; $ns1 = $lat1 * self::$DEF_PI180; $ew2 = $lon2 * self::$DEF_PI180; $ns2 = $lat2 * self::$DEF_PI180; // 经度差 $dew = $ew1 - $ew2; // 若跨东经和西经180 度，进行调整 if ($dew &gt; self::$DEF_PI) $dew = self::$DEF_2PI - $dew; else if ($dew &lt; -self::$DEF_PI) $dew = self::$DEF_2PI &#43; $dew; $dx = self::$DEF_R * cos($ns1) * $dew; // 东西方向长度(在纬度圈上的投影长度) $dy = self::$DEF_R * ($ns1 - $ns2); // 南北方向长度(在经度圈上的投影长度) // 勾股定理求斜边长 $distance = sqrt($dx * $dx &#43; $dy * $dy); return $distance; } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:53:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Php-根据经纬度计算直线距离" href="http://www.hello-api.cn/study/php-distance/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Php-生成ssl证书所需的csr信息
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>/** * 生成CSR和KEY */ public function CreateCsr() { $all = request()-&gt;all(); $dn = [ &#34;countryName&#34; =&gt; trim(strtoupper($all[&#39;countryName&#39;])), //所在国家 &#34;stateOrProvinceName&#34; =&gt; trim($all[&#39;stateOrProvinceName&#39;]), //所在省份 &#34;localityName&#34; =&gt; trim($all[&#39;localityName&#39;]), //所在城市 &#34;organizationName&#34; =&gt; trim($all[&#39;organizationName&#39;]), //注册人姓名 &#34;organizationalUnitName&#34; =&gt; trim($all[&#39;organizationalUnitName&#39;]), //组织名称 &#34;commonName&#34; =&gt; trim($all[&#39;commonName&#39;]), //公共名称 ]; if (isset($all[&#39;emailAddress&#39;]) &amp;&amp; $all[&#39;emailAddress&#39;]) { $dn[&#39;emailAddress&#39;] = $all[&#39;emailAddress&#39;]; } $config = [ &#34;private_key_bits&#34; =&gt; isset($all[&#39;keysize&#39;]) &amp;&amp; $all[&#39;keysize&#39;] ? $all[&#39;keysize&#39;] : 2048, //字节数 512 1024 2048 4096 等 &#34;private_key_type&#34; =&gt; OPENSSL_KEYTYPE_RSA, //加密类型 &#39;digest_alg&#39; =&gt; &#39;sha256&#39;, ]; $privkey = openssl_pkey_new($config); if ($privkey === false) { $config[&#39;config&#39;] = &#34;D:/phpstudy_pro/Extensions/Apache2....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:45:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Php-生成ssl证书所需的csr信息" href="http://www.hello-api.cn/study/php-ssl/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Python-初学tensorflow第二天-学习例子
     </h2>
   </header>
@@ -243,105 +325,6 @@ wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&#39;数据明细&#39;) 
   </div>
   <footer class="entry-footer"><span title='2022-08-12 15:05:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to 初始Python-文件操作" href="http://www.hello-api.cn/study/python-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Apache
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p> apacha限制某个目录的php执行 &lt;Directory /public/protected/controllers&gt; php_flag engine off &lt;/Directory&gt; 需要注意网站已经定义的路径，如果涉及到软路径，一律以已经定义的路径为准。
-apacha动态IP黑名单 能简单的设置apache黑名单,配合自己的项目能有效禁止非法IP高频的访问 http.conf &lt;VirtualHost *:443&gt; RewriteMap ipmap txt:ipmap.txt 项目.htaccess
-RewriteCond ${ipmap:%{REMOTE_ADDR}} ^b$ [NC] RewriteRule .* - [F,L] ipmap.txt 内容
-127.0.0.1 b 8.8.8.8 b </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 13:47:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Apache" href="http://www.hello-api.cn/study/apache/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Centos-工作中随手的记录
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p> CentOS7利用yum安装node.js curl -sL https://rpm.nodesource.com/setup_16.x | bash - yum install -y nodejs node -v cnpm安装 npm install -g cnpm --registry=https://registry.npmmirror.com CentOS7 安装pip3 yum install epel-release yum install https://centos7.iuscommunity.org/ius-release.rpm 多个文件内容搜索特定关键词 grep -ln “keyword” 05-01-00hour.log …(可以携带多个文件名)
-打印存在关键词的文件名
-05-19-19hour.log
-05-20-00hour.log </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 13:46:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Centos-工作中随手的记录" href="http://www.hello-api.cn/study/centos/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>gitfun
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>用于git角色登录服务器,触发版本pull和同步 /home/git/gitfun.inc.sh
-#!/bin/sh /bin/stty intr &#39;&#39; function git_checkout() { if [ -d $checkout_path/.git ];then cd $checkout_path git pull $git_url #git pull $git_url $branch #checkout a branch chmod 700 $checkout_path/.git echo $git_url update finish! else mkdir -p $checkout_path if [ ! -d $checkout_path ];then exit fi cd $checkout_path/../ git clone $git_url #git checkout $branch #switch to branch chmod 700 $checkout_path/.git if [ -d $checkout_path/.git ];then echo $git_url has checkout successfully! fi fi } function git_checkout_branch() { if [ -d $checkout_path/....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 12:29:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to gitfun" href="http://www.hello-api.cn/study/gitfun/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mysql数据库-使用记录
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>How to show binlog mysqlbinlog --no-defaults --start-datetime=&#34;2021-09-30 00:00:00&#34; --stop-datetime=&#34;2021-09-30 23:00:00&#34; -d database --base64-output=DECODE-ROWS -v /binlog/master-bin.001255 --result-file=/root/binlog/mysqllog001255.sql How to get distance ( lat and lng) lat = X lng = X select * , ROUND(6378.138 * 2 * ASIN(SQRT(POW(SIN(({$lat} * PI() / 180 - lat * PI() / 180) / 2),2) &#43; COS({$lat} * PI() / 180) * COS(lat * PI() / 180) * POW(SIN(({$lng} * PI() / 180 - lng * PI() / 180) / 2),2))), 5)*1000 AS distance from table order by distance asc </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 12:13:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mysql数据库-使用记录" href="http://www.hello-api.cn/study/mysql-note/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mysql数据库-日期函数
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>当前日期
-select curdate(); 当月最后一天
-select last_day(curdate()); 下个月的上一天,例如今天2022-06-01 ,结果为2022-06-30
-select DATE_SUB(DATE_ADD(CURDATE(),INTERVAL 1 MONTH),INTERVAL 1 DAY) 下个月的最后一天
-select LAST_DAY(DATE_ADD(CURDATE(),INTERVAL 1 MONTH)); </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mysql数据库-日期函数" href="http://www.hello-api.cn/study/mysql-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mysql数据库-常见问题
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>能说下myisam 和 innodb的区别吗
-myisam引擎是5.1版本之前的默认引擎，支持全文检索、压缩、空间函数等，但是不支持事务和行级锁，所以一般用于有大量查询少量插入的场景来使用，而且myisam不支持外键，并且索引和数据是分开存储的。
-innodb是基于聚簇索引建立的，和myisam相反它支持事务、外键，并且通过MVCC来支持高并发，索引和数据存储在一起。
-说下mysql的索引有哪些吧，聚簇和非聚簇索引又是什么？
-create table user( id int(11) not null, age int(11) not null, primary key(id), key(age) ); B&#43;树是左小右大的顺序存储结构，节点只包含id索引列，而叶子节点包含索引列和数据，这种数据和索引在一起存储的索引方式叫做聚簇索引，一张表只能有一个聚簇索引。假设没有定义主键，InnoDB会选择一个唯一的非空索引代替，如果没有的话则会隐式定义一个主键作为聚簇索引。
-事务的基本特性
-原子性指的是一个事务中的操作要么全部成功，要么全部失败。
-一致性指的是数据库总是从一个一致性的状态转换到另外一个一致性的状态。比如A转账给B100块钱，假设中间sql执行过程中系统崩溃A也不会损失100块，因为事务没有提交，修改也就不会保存到数据库。
-隔离性指的是一个事务的修改在最终提交前，对其他事务是不可见的。
-持久性指的是一旦事务提交，所做的修改就会永久保存到数据库中。
-主从同步
-首先先了解mysql主从同步的原理 master提交完事务后，写入binlog
-slave连接到master，获取binlog
-master创建dump线程，推送binglog到slave
-slave启动一个IO线程读取同步过来的master的binlog，记录到relay log中继日志中
-slave再开启一个sql线程读取relay log事件并在slave执行，完成同步
-slave记录自己的binglog</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mysql数据库-常见问题" href="http://www.hello-api.cn/study/mysql-question/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

@@ -160,6 +160,79 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>go-快速排序
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3, 0} fmt.Printf(&#34;arr: %v\n&#34;, arr) sort(arr, 0, len(arr)-1) fmt.Printf(&#34;arr: %v\n&#34;, arr) } func sort(arr []int, leftBound int, rightBound int) { if leftBound &gt; rightBound { return } var left = AdjustArray(arr, leftBound, rightBound) fmt.Printf(&#34;arr: %v\n&#34;, arr) sort(arr, leftBound, left-1) sort(arr, left&#43;1, rightBound) } func AdjustArray(arr []int, leftBound int, rightBound int) int { var mid = arr[rightBound] var left = leftBound var right = rightBound - 1 for { if left &gt;= right { break } for { if arr[left] &gt; mid || left &gt;= rightBound { break } left&#43;&#43; } for { if arr[right] &lt; mid || right &lt;= leftBound { break } right-- } if left &lt; right { swap(arr, left, right) } } swap(arr, left, rightBound) return left } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-14 09:51:00 +0800 CST'>十二月 14, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-快速排序" href="http://www.hello-api.cn/study/go-quick-sort/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-希尔排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3} fmt.Printf(&#34;arr: %v\n&#34;, arr) var gap = 1 for { if gap &gt;= (len(arr))/3 { break } gap = gap*3 &#43; 1 } fmt.Printf(&#34;gap: %v\n&#34;, gap) for gap := gap; gap &gt; 0; gap = (gap - 1) / 3 { for i := gap; i &lt; len(arr); i&#43;&#43; { for j := i; j &gt; gap-1 &amp;&amp; arr[j] &lt; arr[j-gap]; j -= gap { swap(arr, j, j-gap) } } fmt....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-10 12:04:00 +0800 CST'>十二月 10, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-希尔排序算法" href="http://www.hello-api.cn/study/go-shell-sort/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-插入排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3} for i := 1; i &lt; len(arr); i&#43;&#43; { for j := i; j &gt; 0; j-- { if arr[j] &lt; arr[j-1] { swap(arr, j, j-1) } } fmt.Printf(&#34;arr: %v\n&#34;, arr) } } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-10 11:22:00 +0800 CST'>十二月 10, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-插入排序算法" href="http://www.hello-api.cn/study/go-insertion-sort/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-冒泡排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>package main import &#34;fmt&#34; func main() { var arr = []int{9, 7, 6, 8, 4, 1, 5, 2, 3} for i := len(arr) - 1; i &gt; 0; i-- { for j := 0; j &lt; len(arr)-1; j&#43;&#43; { if arr[j] &gt; arr[j&#43;1] { swap(arr, j, j&#43;1) } } fmt.Printf(&#34;arr: %v\n&#34;, arr) } } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-08 15:44:00 +0800 CST'>十二月 8, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-冒泡排序算法" href="http://www.hello-api.cn/study/go-buddle-sort/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>docker-安装教程
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Centos7 # step 1: 安装必要的一些系统工具 sudo yum install -y yum-utils device-mapper-persistent-data lvm2 # Step 2: 添加软件源信息 sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # Step 3 sudo sed -i &#39;s&#43;download.docker.com&#43;mirrors.aliyun.com/docker-ce&#43;&#39; /etc/yum.repos.d/docker-ce.repo # Step 4: 更新并安装Docker-CE sudo yum makecache fast sudo yum -y install docker-ce # Step 4: 开启Docker服务 sudo service docker start </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-08 14:36:00 +0800 CST'>十二月 8, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to docker-安装教程" href="http://www.hello-api.cn/study/docker-setup/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Go-选择排序算法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>正常版 每次寻找一个最小值并交换
+package main import &#34;fmt&#34; func main() { var arr = []int{5, 3, 8, 6, 1, 8, 6, 1, 7} fmt.Printf(&#34;arr: %v\n&#34;, arr) for i := 0; i &lt; len(arr)-1; i&#43;&#43; { var minPos = i for j := i &#43; 1; j &lt; len(arr); j&#43;&#43; { if arr[j] &lt; arr[minPos] { minPos = j } } swap(arr, i, minPos) fmt.Printf(&#34;arr: %v\n&#34;, arr) } } func swap(arr []int, a, b int) { var temp = arr[a] arr[a] = arr[b] arr[b] = temp } 输出结果...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-06 23:10:00 +0800 CST'>十二月 6, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Go-选择排序算法" href="http://www.hello-api.cn/study/go-selection-sort/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>go-平常使用中的一些小技巧
     </h2>
   </header>
@@ -210,108 +283,6 @@ Test models.go package models import ( &#34;fmt&#34; &#34;gorm.io/driver/mysql&#
   </div>
   <footer class="entry-footer"><span title='2022-09-02 17:21:00 +0800 CST'>九月 2, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to go-Mysql入门操作" href="http://www.hello-api.cn/study/go-mysql/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>go-第一个Gin程序
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>第一个Gin程序 安装环境 go 下载对应系统的安装包 安装完毕后敲出
-go version
-显示 go version go1.18.3 windows/amd64 表示安装成功了
-vscode 安装软件后还需安装go扩展
-vscode打开项目所在的文件夹目录
-go mod init demo go get -u -v github.com/gin-gonic/gin
-创建文件 main.go package main import &#34;github.com/gin-gonic/gin&#34; func main() { r := gin.Default() r.GET(&#34;/&#34;, func(c *gin.Context) { c.String(200, &#34;Hello World&#34;) }) r.Run() // listen and serve on 0.0.0.0:8080 } 页面访问 http://localhost:8080/ 打印 Hello World ,表示gin框架也安装成功了</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-01 14:46:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-第一个Gin程序" href="http://www.hello-api.cn/study/go-gin-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>go-了解数组和切片的基础用法
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>var splice1 []int fmt.Printf(&#34;splice1: len:%d,cap:%d,%T&#34;, len(splice1), cap(splice1), splice1) 结果
-splice1: len:1,cap:1,[]int var splice1 []int = make([]int, 1, 3) fmt.Printf(&#34;splice1: len:%d,cap:%d,%T\n&#34;, len(splice1), cap(splice1), splice1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) // 超出当前数组的长度后,会以cap=3的进行对数组扩容 fmt.Printf(&#34;splice1: len:%d,cap:%d,%T\n&#34;, len(splice1), cap(splice1), splice1) 结果
-splice1: len:1,cap:3,[]int splice1: len:5,cap:6,[]int splice2 := []int{1, 2, 3,4} fmt.Printf(&#34;splice2: len:%d,cap:%d,%T\n&#34;, len(splice2), cap(splice2), splice2) splice2 = append(splice2, 1) fmt.Printf(&#34;splice2: len:%d,cap:%d,%T\n&#34;, len(splice2), cap(splice2), splice2) 当没有设置cap后,append后的容量会以初始的数组len来进行新的扩容 结果...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-01 09:54:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-了解数组和切片的基础用法" href="http://www.hello-api.cn/study/go-002/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>go-了解Printf输出的用法
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>var splice1 []int //打印切片长度和切片类型 fmt.Printf(&#34;splice1: len:%d,%T&#34;, len(splice1), splice1) 结果
-splice1: len:1,[]int fmt.Printf 一般可支持的输出流为:
-%v 以默认的方式打印变量的值
-%&#43;v 带字段名称
-%T 打印变量的类型
-%&#43;d 带符号的整型
-%d 整型
-%5d 表示该整型最大长度是5
-%05d 会在数字前面补零
-%s 正常输出字符串
-%t 打印true或false
-%b 打印整型的二进制</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-01 09:18:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-了解Printf输出的用法" href="http://www.hello-api.cn/study/go-001/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>dapp
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>合约在线开发IDE
-solidity 中文文档
-trongrid.io
-&lt;!DOCTYPE html&gt; &lt;html lang=&#34;en&#34;&gt; &lt;head&gt; &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1&#34;&gt; &lt;meta charset=&#34;UTF-8&#34;&gt; &lt;title&gt;dapp&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&#34;vue&#34;&gt; 目标地址:&lt;input v-model=&#34;to_address&#34; style=&#34;width: 100%&#34;&gt; 订单编号:&lt;input v-model=&#34;transaction&#34; style=&#34;width: 100%&#34;&gt; &lt;br/&gt; &lt;br/&gt; &lt;button @click=&#34;init_tronWeb&#34;&gt; 登录tronlink &lt;/button&gt; &lt;button @click=&#34;transferTrx&#34;&gt; transferTrx &lt;/button&gt; &lt;button @click=&#34;getBalance&#34;&gt; 获取trx余额 &lt;/button&gt; &lt;button @click=&#34;getUSDTBalance&#34;&gt; 获取usdt余额 &lt;/button&gt; &lt;button @click=&#34;transferUSDT&#34;&gt; 转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;transferUSDTRemark&#34;&gt; 带备注的转账0.001usdt &lt;/button&gt; &lt;button @click=&#34;getTransaction&#34;&gt; 获取交易详情 &lt;/button&gt; &lt;p v-show=&#34;result.length&#34; v-html=&#34;result.join(&#39;&lt;br/&gt;&#39;)&#34;&gt;&lt;/p&gt; &lt;/div&gt; &lt;script src=&#34;./js/tronweb.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/trongrid.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;./js/vue.min.js&#34;&gt;&lt;/script&gt; &lt;script src=&#34;....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:41:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to dapp" href="http://www.hello-api.cn/study/dapp/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>php-如何使用powerdns的接口
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>powerdns安装教程
-如何使用powerdns的http-api ? 文档需知 powerdns文档 Swagger接入开发 powerdns的yaml配置文件 | swagger官网
-Swagger 生成插件
-Sign in 登录 (没有账号的免费注册一个)
-Create New -&gt; Create New API
-创建完毕将powerdns的yaml配置文件粘贴到代码框中
-右上角 -&gt; Export -&gt; Client SDK -&gt; 指定的开发语言,像我就用PHP github创建一个新的 repository , 将导出来的文件上传上去 修改composer.json
-{ &#34;repositories&#34;: [ { &#34;type&#34;: &#34;git&#34;, &#34;url&#34;: &#34;https://github.com/suguer/powerdns.git&#34; } ], &#34;require&#34;: { &#34;suguer/powerdns&#34;: &#34;*@dev&#34; } } 开始使用 DnsPowerDnsClient.php
-use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Client\Model\RRSet; use Swagger\Client\Model\Zone; use Swagger\Client\Configuration; class DnsPowerDnsClient { private $server_id = &#34;localhost&#34;; /** * @var \GuzzleHttp\Client */ private $client; /** * @var ZonesApi */ private $zoneApi; private $currentNsList = [&#39;ns1&#39;,&#39;ns2&#39;]; public function __construct() { $config=[ &#34;ip&#34; =&gt; &#34;&#34;, &#34;api_key&#34; =&gt; &#34;&#34;, ]; $this-&gt;client = new \GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 40....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:39:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;7 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to php-如何使用powerdns的接口" href="http://www.hello-api.cn/study/php-powerdns/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>php-laravel自定义https端口访问异常
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>最近项目上需要吧后台的链接升级,开启https并且设置到8443端口,在laravel的翻页以及跳转的页面上,会把端口号给隐藏了, 原因在于laravel/vendor/symfony/http-foundation/Request.php public function getPort() { if ($this-&gt;isFromTrustedProxy()) { if (self::$trustedHeaders[self::HEADER_CLIENT_PORT] &amp;&amp; $port = $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PORT])) { return $port; } if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &amp;&amp; &#39;https&#39; === $this-&gt;headers-&gt;get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO], &#39;http&#39;)) { return 443; } } if ($host = $this-&gt;headers-&gt;get(&#39;HOST&#39;)) { if ($host[0] === &#39;[&#39;) { $pos = strpos($host, &#39;:&#39;, strrpos($host, &#39;]&#39;)); } else { $pos = strrpos($host, &#39;:&#39;); } if (false !== $pos) { return (int) substr($host, $pos &#43; 1); } return &#39;https&#39; === $this-&gt;getScheme() ?...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to php-laravel自定义https端口访问异常" href="http://www.hello-api.cn/study/php-laravel-003/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
