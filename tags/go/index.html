@@ -145,6 +145,45 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>rabbitmq-生产者
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>1. go get安装amqp go get github.com/streadway/amqp 2. 创建连接RabbitMQ // 1. conn, err := amqp.Dial(&#34;amqp://guest:guest@localhost:5672/&#34;) defer conn.Close() 3. 创建一个通道，队列和消息发布和接受都从这里操作 ch, err := conn.Channel() defer ch.Close() 4. 声明消息要发送到的队列 q, err := ch.QueueDeclare( &#34;hello&#34;, // 队列名称 false, // 声明为持久队列 false, // 使用完毕自动删除队列 false, // exclusive false, // no-wait nil, // arguments ) 5. 发布消息到队列中 rand.Seed(time.Now().UnixNano()) // 4.将消息发布到声明的队列 for { count := rand.Intn(5) body := strconv.Itoa(count) err = ch.Publish( &#34;&#34;, // exchange q.Name, // routing key false, // mandatory false, // immediate amqp....</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-01-24 12:30:00 +0800 CST'>一月 24, 2023</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to rabbitmq-生产者" href="http://www.hello-api.cn/study/rabbitmq-002/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>go-初识chan
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>代码参考至 《Go语言精进之路》
+例子1
+package main import ( &#34;fmt&#34; &#34;sync&#34; &#34;time&#34; ) type signal struct{} func worker(i int) { fmt.Printf(&#34;worker %d :is working... \n&#34;, i) time.Sleep(time.Duration(i) * time.Second) fmt.Printf(&#34;worker %d :is done... \n&#34;, i) } func spawnGroup(f func(i int), num int, groupSignal &lt;-chan signal) &lt;-chan signal { c := make(chan signal) var wg sync.WaitGroup for i := 0; i &lt; num; i&#43;&#43; { time.Sleep(1 * time.Second) wg.Add(1) go func(i int) { &lt;-groupSignal fmt....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-17 11:22:00 +0800 CST'>十二月 17, 2022</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-初识chan" href="http://www.hello-api.cn/study/go-chan/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>go-素数筛
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>问题描述: 素数是一个自然数,它具有两个截然不同的自然数除数:1和它本身,
+package main func Generate(ch chan&lt;- int) { for i := 2; ; i&#43;&#43; { ch &lt;- i } } func Filter(in &lt;-chan int, out chan&lt;- int, prime int) { for { i := &lt;-in if i%prime != 0 { out &lt;- i } } } func main() { ch := make(chan int) go Generate(ch) for i := 0; i &lt; 1; i&#43;&#43; { prime := &lt;-ch print(prime, &#34;\n&#34;) ch1 := make(chan int) go Filter(ch, ch1, prime) ch = ch1 } } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-12-17 11:22:00 +0800 CST'>十二月 17, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-素数筛" href="http://www.hello-api.cn/study/go-sushu/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>go-希尔排序算法
     </h2>
   </header>
@@ -231,52 +270,6 @@ package common import ( &#34;fmt&#34; &#34;note.hello-api.cn/model&#34; &#34;gor
   <footer class="entry-footer"><span title='2022-09-02 17:30:00 +0800 CST'>九月 2, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to go-gin连接gorm" href="http://www.hello-api.cn/study/go-gin-002/"></a>
 </article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>go-Mysql入门操作
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>选用扩展 gorm.io
-Install go get -u gorm.io/gorm go get -u gorm.io/driver/sqlite
-Test models.go package models import ( &#34;fmt&#34; &#34;gorm.io/driver/mysql&#34; &#34;gorm.io/gorm&#34; &#34;gorm.io/gorm/schema&#34; ) var ( dsn string = &#34;gin:gingin@tcp(127.0.0.1:3306)/gin?charset=utf8mb4&#34; // 数据库配置 root账号 0000密码 shop数据库 utf8mb4编码 ) //实现orm func DB() *gorm.DB { // 连接mysql数据库， gorm.Config有很多配置 例如前缀 后准 等等 db, err := gorm.Open(mysql.Open(dsn), &amp;gorm.Config{ NamingStrategy: schema.NamingStrategy{ TablePrefix: &#34;tp_&#34;, SingularTable: true, }, }) // 数据库连接出错 退出 if err != nil { fmt.Println(&#34;数据库连接失败&#34;, err) panic(1) } // 返回数据库实例 db....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-02 17:21:00 +0800 CST'>九月 2, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-Mysql入门操作" href="http://www.hello-api.cn/study/go-mysql/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>go-第一个Gin程序
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>第一个Gin程序 安装环境 go 下载对应系统的安装包 安装完毕后敲出
-go version
-显示 go version go1.18.3 windows/amd64 表示安装成功了
-vscode 安装软件后还需安装go扩展
-vscode打开项目所在的文件夹目录
-go mod init demo go get -u -v github.com/gin-gonic/gin
-创建文件 main.go package main import &#34;github.com/gin-gonic/gin&#34; func main() { r := gin.Default() r.GET(&#34;/&#34;, func(c *gin.Context) { c.String(200, &#34;Hello World&#34;) }) r.Run() // listen and serve on 0.0.0.0:8080 } 页面访问 http://localhost:8080/ 打印 Hello World ,表示gin框架也安装成功了</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-01 14:46:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-第一个Gin程序" href="http://www.hello-api.cn/study/go-gin-001/"></a>
-</article>
-
-<article class="post-entry tag-entry"> 
-  <header class="entry-header">
-    <h2>go-了解数组和切片的基础用法
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>var splice1 []int fmt.Printf(&#34;splice1: len:%d,cap:%d,%T&#34;, len(splice1), cap(splice1), splice1) 结果
-splice1: len:1,cap:1,[]int var splice1 []int = make([]int, 1, 3) fmt.Printf(&#34;splice1: len:%d,cap:%d,%T\n&#34;, len(splice1), cap(splice1), splice1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) splice1 = append(splice1, 1) // 超出当前数组的长度后,会以cap=3的进行对数组扩容 fmt.Printf(&#34;splice1: len:%d,cap:%d,%T\n&#34;, len(splice1), cap(splice1), splice1) 结果
-splice1: len:1,cap:3,[]int splice1: len:5,cap:6,[]int splice2 := []int{1, 2, 3,4} fmt.Printf(&#34;splice2: len:%d,cap:%d,%T\n&#34;, len(splice2), cap(splice2), splice2) splice2 = append(splice2, 1) fmt.Printf(&#34;splice2: len:%d,cap:%d,%T\n&#34;, len(splice2), cap(splice2), splice2) 当没有设置cap后,append后的容量会以初始的数组len来进行新的扩容 结果...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-09-01 09:54:00 +0800 CST'>九月 1, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to go-了解数组和切片的基础用法" href="http://www.hello-api.cn/study/go-002/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="next" href="http://www.hello-api.cn/tags/go/page/2/">下一页 »</a>
@@ -285,7 +278,7 @@ splice1: len:1,cap:3,[]int splice1: len:5,cap:6,[]int splice2 := []int{1, 2, 3,4
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
+    <span>&copy; 2023 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

@@ -160,6 +160,93 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Python-初学tensorflow第二天-学习例子
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>学习来源Bilibili 根据例子编写出线性回归方程
+import tensorflow as tf import pandas as pd data=pd.read_csv(&#39;./demo1.csv&#39;) x=data.Education y=data.Income model=tf.keras.Sequential(()) model.add(tf.keras.layers.Dense(1,input_shape=(1,))) model.compile(optimizer=&#39;adam&#39;,loss=&#39;mse&#39;) history=model.fit(x,y,epochs=10000) res=model.predict(pd.Series([20])) print(res) ,Education,Income
+1,10.000000 ,26.658839
+2,10.401338 ,27.306435
+3,10.842809 ,22.132410
+4,11.244147 ,21.169841
+5,11.645449 ,15.192634
+6,12.086957 ,26.398951
+7,12.048829 ,17.435307
+8,12.889632 ,25.507885
+9,13.290970 ,36.884595
+10,13.732441 ,39.666109
+11,14.133779 ,34.396281
+12,14.635117 ,41.497994
+13,14.978589 ,44.981575
+14,15.377926 ,47.039595
+15,15.779264 ,48.252578
+16,16.220736 ,57.034251
+17,16.622074 ,51.490919
+18,17.023411 ,51.336621
+19,17.464883 ,57.681998
+20,17.866221 ,68.553714
+21,18.267559 ,64.310925
+22,18.709030 ,68.959009
+23,19.110368 ,74.614639
+24,19.511706 ,71.867195
+25,19.913043 ,76.098135...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:18:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Python-初学tensorflow第二天-学习例子" href="http://www.hello-api.cn/study/python-tensorflow-002/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Python-初学tensorflow第一天-搭建环境
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>初学第一天主要学习如果搭建环境和快捷安装TensorFlow的扩展
+打开miniconda官网 选择合适自己的系统来安装python环境 安装TensorFlow扩展 : pip install tensorflow==2.8.0 可能pip版本不够导致安装失败 easy_install -U pip 安装其他所需的包: pip install pandas matplotlib nodebook pandas 数据分析库 matplotlib python绘图库 nodebook 基于web的开发环境 安装cuda 安装pytorch Q: 运行失败时返回 Could not load dynamic library ‘cudart64_110.dll’; dlerror: cudart64_110.dll not found A: 在截图中找到相应的版本后,打开 nvidia
+Q: 安装cuda失败时返回 you already have a newer version of the nvdia frameview sdk installed
+A: 找到C:\Program Files\NVIDIA Corporation\FrameViewSDK文件夹进行卸载
+Q: 安装cuda一直安装不成功,nsight visual studio edition提示安装失败 A: 尝试卸载电脑的Visual Studio Community
+Q: Downgrade the protobuf package to 3....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:12:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Python-初学tensorflow第一天-搭建环境" href="http://www.hello-api.cn/study/python-tensorflow-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>初始Python-自动化操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Selenium是一个用于测试网站的自动化测试工具，支持各种浏览器包括Chrome、Firefox、Safari等主流界面浏览器，同时也支持phantomJS无界面浏览器。
+以下是我在实际使用中对于selenium的一些心得和用法
+implicitly_wait
+等待浏览器的相应时间,与sleep的区别在于implicitly_wait是设置的值或页面超时优先,而sleep则是固定睡眠时间,我在用的时候则是2个都同时使用.确保页面能顺利加载到需要的数据
+xpath 如果需要用selenium进行简单的爬虫和模拟浏览,那么xpath的语法是必须要了解明白的,html语言中比起正则,xpath的代码更加清晰和直观
+click 对于按钮的点击事件,推荐用
+driver.execute_script(&#34;arguments[0].click();&#34;, nextButton) 据说.click()会导致报错,虽然我还没遇到过</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to 初始Python-自动化操作" href="http://www.hello-api.cn/study/python-selenium/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>初始Python-文件操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>列出指定目录下的全部文件
+import os file_array=[] dir_array=[ os.getcwd() &#43; &#34;/directory1/&#34;, os.getcwd() &#43; &#34;/directory2/&#34;, ] for dir in dir_array: for root, dirs, files in os.walk(dir): for filename in files: file_array.append(dir&#43;filename) Excel操作读写
+wb = xlrd.open_workbook(filepath) sh = wb.sheet_by_name(&#39;数据明细&#39;) # print(sh.nrows) # 有效数据行数 # print(sh.ncols) # 有效数据列数 for index in range(len(sh.row_values(0))): title = sh.row_values(0)[index] </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 15:05:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to 初始Python-文件操作" href="http://www.hello-api.cn/study/python-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Apache
     </h2>
   </header>
@@ -256,72 +343,16 @@ slave记录自己的binglog</p>
   <footer class="entry-footer"><span title='2022-08-12 11:10:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Mysql数据库-常见问题" href="http://www.hello-api.cn/study/mysql-question/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-增删查改
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>find MongoDB中查询数据的基本指令,类似mysql中的select
-example:
-db.movies.find({&#34;year&#34;:1975}) db.movies.find({&#34;year&#34;:1975,&#34;title&#34;:&#34;Kill&#34;}) db.movies.find({$and:[{&#34;title&#34;:&#34;Kill&#34;},{&#34;year&#34;:1989}]}) db.movies.find({$or:[{&#34;title&#34;:&#34;Kill&#34;},{&#34;year&#34;:1989}]}) 子文档查询,如文档内容
-{&#34;name&#34;:&#34;apple&#34;,&#34;from&#34;:{country:&#34;China&#34;,province:&#34;Guangdong&#34;}} db.fruit.find({&#34;from.country&#34;:&#34;China&#34;}) 条件语法
-&lt;&gt; $ne &gt; $gt &gt;= $gte &lt; $gt &lt;= $lte is null {$exists:false} in {$in:[]} not in {$nin:[]} or $or and $and ##remove 删除文档
-update updateOne 表示无论条件匹配多少条,只更新第一条
-updateMany 匹配多少就更新多少
-$push 增加一个对象到数组底部
-$pushAll 增加多个对象到数组底部
-$pop 从数组底部删除一个对象
-$pull 如果匹配指定的值,从数组中删除对应的对象 $pullAll 如果匹配任意的值,从数据中删除对应的对象
-$addToSet 如果不存在则增加一个值到数组
-db.fruit.updateOne({name:&#34;apple&#34;},{$set:{from:&#34;China&#34;}}) drop 删除集合 </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:09:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-增删查改" href="http://www.hello-api.cn/study/mongodb-003/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-复制集
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>本地测试结果如下
-|- D:\mongodata\db1
-|—— mongo.conf
-|- D:\mongodata\db2
-|—— mongo.conf
-mongo.conf
-storage: dbPath: D:\mongodata\db1 journal: enabled: true systemLog: destination: file logAppend: true path: D:\mongodata\db1\mongod.log net: port: 28017 bindIp: 127.0.0.1 replication: replSetName: rs0 </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 11:08:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-复制集" href="http://www.hello-api.cn/study/mongodb-002/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-初识
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>了解mongodb的基本情况
-数据类型 描述 String 字符串。存储数据常用的数据类型。在 MongoDB 中，UTF-8 编码的字符串才是合法的。 Integer 整型数值。用于存储数值。根据你所采用的服务器，可分为 32 位或 64 位。 Boolean 布尔值。用于存储布尔值（真/假） Double 双精度浮点值。用于存储浮点值。 Min/Max keys 将一个值与 BSON（二进制的 JSON）元素的最低值和最高值相对比。 Array 用于将数组或列表或多个值存储为一个键。 Timestamp 时间戳。记录文档修改或添加的具体时间。 Object 用于内嵌文档 Null 用于创建空值 Symbol 符号。该数据类型基本上等同于字符串类型，但不同的是，它一般用于采用特殊符号类型的语言 Date 日期时间。用 UNIX 时间格式来存储当前日期或时间。你可以指定自己的日期时间：创建 Date 对象，传入年月日信息 Object ID 对象 ID。用于创建文档的 ID。　(每个文档都有) Binary Data 二进制数据。用于存储二进制数据 Code 代码类型。用于在文档中存储 JavaScript 代码 Regular expression 正则表达式 聚合查询 pipeline=[$stage1,$stage2,…$stageN] aggregate db..aggregate(pipeline,{options})
-常见步骤
-步骤 作用 SQL等价运算法 $match 过滤 where $project 投影 as $sort 排序 order by $group 分组 group by $skip/$limit 结果限制,分页 offset/limit $lookup 左外连接 left outer join 完整的分片集群 应用全透明,无特殊处理 数据自动均衡 动态扩容,无需下线 提供三种分片方式 性能监控 MongoDB Ops Manager Percona 通用监控平台 程序脚本 db....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 10:37:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-初识" href="http://www.hello-api.cn/study/mongodb-001/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="http://www.hello-api.cn/study/page/3/">« 上一页</a>
+    <a class="next" href="http://www.hello-api.cn/study/page/5/">下一页 »</a>
   </nav>
 </footer>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
+    <span>&copy; 2023 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

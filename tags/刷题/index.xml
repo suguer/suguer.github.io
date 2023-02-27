@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>刷题 on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/%E5%88%B7%E9%A2%98/</link>
+    <description>Recent content in 刷题 on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 22 Jan 2023 15:32:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/%E5%88%B7%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>http://www.hello-api.cn/question/20230122/</link>
+      <pubDate>Sun, 22 Jan 2023 15:32:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/question/20230122/</guid>
+      <description>问题:
+go语言开启3个协程,分别按顺序打印出100次的cat,dog,mouse,如结果为
+dog cat mouse dog cat mouse package main import &amp;#34;fmt&amp;#34; var quit chan int func main() { var chDog chan int var chCat chan int var chMouse chan int quit = make(chan int) chDog = make(chan int) chCat = make(chan int) chMouse = make(chan int) go showDog(chDog, chCat) go showCat(chCat, chMouse) go showMouse(chMouse, chDog) chDog &amp;lt;- 1 &amp;lt;-quit } func showDog(now chan int, next chan int) { count := 0 for { if count &amp;gt;= 100 { quit &amp;lt;- 1 return } &amp;lt;-now fmt.</description>
+    </item>
+    
+  </channel>
+</rss>

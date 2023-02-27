@@ -160,6 +160,20 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Netdata-监控redis
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>###1. 如何用netdata监控redis,官网教程
+cd /etc/netdata # Replace this path with your Netdata config directory sudo ./edit-config go.d/redis.conf # by tcp socket redis://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt; # by unix socket unix://&lt;user&gt;:&lt;password&gt;@&lt;/path/to/redis.sock 例如
+socket1: name : &#39;local&#39; socket : &#39;/tmp/redis.sock&#39; pass : &#39;pass&#39; socket2: name : &#39;local&#39; socket : &#39;/var/run/redis/redis.sock&#39; # pass : &#39;&#39; socket3: name : &#39;local&#39; socket : &#39;/var/lib/redis/redis.sock&#39; # pass : &#39;&#39; localhost: name : &#39;local&#39; host : &#39;localhost&#39; port : 6379 pass : &#39;pass&#39; localipv4: name : &#39;local&#39; host : &#39;127....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 12:17:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Netdata-监控redis" href="http://www.hello-api.cn/tech/netdata-001/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>初识SSL证书
     </h2>
   </header>
@@ -222,7 +236,7 @@ hugo step 5:完成
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
+    <span>&copy; 2023 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

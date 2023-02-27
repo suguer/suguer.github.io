@@ -9,7 +9,46 @@
       <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 14 Dec 2022 09:51:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/study/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 Jan 2023 12:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/study/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rabbitmq-生产者</title>
+      <link>http://www.hello-api.cn/study/rabbitmq-002/</link>
+      <pubDate>Tue, 24 Jan 2023 12:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/rabbitmq-002/</guid>
+      <description>rabbitmq</description>
+    </item>
+    
+    <item>
+      <title>rabbitmq-初识</title>
+      <link>http://www.hello-api.cn/study/rabbitmq-001/</link>
+      <pubDate>Tue, 24 Jan 2023 11:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/rabbitmq-001/</guid>
+      <description>rabbitmq</description>
+    </item>
+    
+    <item>
+      <title>go-初识chan</title>
+      <link>http://www.hello-api.cn/study/go-chan/</link>
+      <pubDate>Sat, 17 Dec 2022 11:22:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-chan/</guid>
+      <description>代码参考至 《Go语言精进之路》
+例子1
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sync&amp;#34; &amp;#34;time&amp;#34; ) type signal struct{} func worker(i int) { fmt.Printf(&amp;#34;worker %d :is working... \n&amp;#34;, i) time.Sleep(time.Duration(i) * time.Second) fmt.Printf(&amp;#34;worker %d :is done... \n&amp;#34;, i) } func spawnGroup(f func(i int), num int, groupSignal &amp;lt;-chan signal) &amp;lt;-chan signal { c := make(chan signal) var wg sync.WaitGroup for i := 0; i &amp;lt; num; i++ { time.Sleep(1 * time.Second) wg.Add(1) go func(i int) { &amp;lt;-groupSignal fmt.</description>
+    </item>
+    
+    <item>
+      <title>go-素数筛</title>
+      <link>http://www.hello-api.cn/study/go-sushu/</link>
+      <pubDate>Sat, 17 Dec 2022 11:22:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-sushu/</guid>
+      <description>问题描述: 素数是一个自然数,它具有两个截然不同的自然数除数:1和它本身,
+package main func Generate(ch chan&amp;lt;- int) { for i := 2; ; i++ { ch &amp;lt;- i } } func Filter(in &amp;lt;-chan int, out chan&amp;lt;- int, prime int) { for { i := &amp;lt;-in if i%prime != 0 { out &amp;lt;- i } } } func main() { ch := make(chan int) go Generate(ch) for i := 0; i &amp;lt; 1; i++ { prime := &amp;lt;-ch print(prime, &amp;#34;\n&amp;#34;) ch1 := make(chan int) go Filter(ch, ch1, prime) ch = ch1 } } </description>
+    </item>
+    
     <item>
       <title>go-快速排序</title>
       <link>http://www.hello-api.cn/study/go-quick-sort/</link>

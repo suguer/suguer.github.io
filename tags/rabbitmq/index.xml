@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>rabbitmq on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/rabbitmq/</link>
+    <description>Recent content in rabbitmq on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 24 Jan 2023 12:30:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/rabbitmq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rabbitmq-生产者</title>
+      <link>http://www.hello-api.cn/study/rabbitmq-002/</link>
+      <pubDate>Tue, 24 Jan 2023 12:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/rabbitmq-002/</guid>
+      <description>rabbitmq</description>
+    </item>
+    
+    <item>
+      <title>rabbitmq-初识</title>
+      <link>http://www.hello-api.cn/study/rabbitmq-001/</link>
+      <pubDate>Tue, 24 Jan 2023 11:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/rabbitmq-001/</guid>
+      <description>rabbitmq</description>
+    </item>
+    
+  </channel>
+</rss>

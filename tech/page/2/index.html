@@ -160,6 +160,21 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Php-编码解码punycode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前言 域名的编码解码
+什么是PunyCode 英文域名在IIS或Apache中的虚拟主机设置，可以直接使用英文域名，如webmasterhome.cn。 中文域名在IIS或Apache中应如何设置主机头呢
+在进行设置之前要先把中文域名转化成为PunyCode编码，然后在主机头设置里面填上中文域名所对应的PunyCode编码(xn–fiqsC146Ah4ex80Cro7A.com)便可。 新的国际化域名的标准在网域名称编码上，为了保留向下兼容性及不影响现有的应用程序协议，因此将多国语言域名转成ASCII编码
+目标 前置条件 正式内容 &lt;?php class Punycode { const TMIN=1; const TMAX=26; const BASE = 36; const INITIAL_N = 128; const INITIAL_BIAS = 72; const DAMP = 700; const SKEW = 38; const DELIMITER = &#39;-&#39;; const MAXINT = 2147483647; //encode编码时候的错误返回值 const ERROR_BAD_INPUT = -1; const ERROR_BIG_OUTPUT = -2; const ERROR_OVERFLOW = -3; /** * 配置 * 1: 使用iconv * 2: iconv Unicode-1-1 * 3: 使用mb_convert_encoding(较通用，需mb_string支持) */ const CHARSET_MODE = 3; /** * punycode编码 * @param string $input * 输入的字符传不能有空格....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-08-12 16:51:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;4 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to Php-编码解码punycode" href="http://www.hello-api.cn/tech/php-punycode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Php-Swagger代码了解
     </h2>
   </header>
@@ -315,20 +330,6 @@ vi /etc/netdata/python.d/apache.conf
   <footer class="entry-footer"><span title='2022-08-12 12:23:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to Netdata-监控apache" href="http://www.hello-api.cn/tech/netdata-002/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Netdata-监控redis
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>###1. 如何用netdata监控redis,官网教程
-cd /etc/netdata # Replace this path with your Netdata config directory sudo ./edit-config go.d/redis.conf # by tcp socket redis://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt; # by unix socket unix://&lt;user&gt;:&lt;password&gt;@&lt;/path/to/redis.sock 例如
-socket1: name : &#39;local&#39; socket : &#39;/tmp/redis.sock&#39; pass : &#39;pass&#39; socket2: name : &#39;local&#39; socket : &#39;/var/run/redis/redis.sock&#39; # pass : &#39;&#39; socket3: name : &#39;local&#39; socket : &#39;/var/lib/redis/redis.sock&#39; # pass : &#39;&#39; localhost: name : &#39;local&#39; host : &#39;localhost&#39; port : 6379 pass : &#39;pass&#39; localipv4: name : &#39;local&#39; host : &#39;127....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-12 12:17:00 +0800 CST'>八月 12, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Netdata-监控redis" href="http://www.hello-api.cn/tech/netdata-001/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="http://www.hello-api.cn/tech/">« 上一页</a>
@@ -338,7 +339,7 @@ socket1: name : &#39;local&#39; socket : &#39;/tmp/redis.sock&#39; pass : &#39;p
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
+    <span>&copy; 2023 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

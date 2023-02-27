@@ -160,6 +160,60 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>go-平常使用中的一些小技巧
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>######打乱数组中的顺序
+data := make([]uint, 10) rand.Seed(time.Now().Unix()) length := len(data) for i := 0; i &lt; length; i&#43;&#43; { data[rand.Intn(length)] ,data[i] = data[i],data[rand.Intn(length)] } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-28 11:34:00 +0800 CST'>九月 28, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-平常使用中的一些小技巧" href="http://www.hello-api.cn/study/go-skill/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-Gin中间件
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>func LoginMiddleware(ctx *gin.Context) { var UserId uint UserId = 2 //example fmt.Printf(&#34;LoginMiddleware UserId: %v\n&#34;, UserId) ctx.Set(&#34;UserId&#34;, UserId) ctx.Next() } 在入口函数上添加中间件
+group := r.Group(&#34;/api/group&#34;).Use(LoginMiddleware) { group.POST(&#34;/create&#34;, GroupController{}.Create) } </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-14 13:47:00 +0800 CST'>九月 14, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-Gin中间件" href="http://www.hello-api.cn/study/go-gin-middleware/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-gin连接gorm
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本次记录如何在gin中简单的使用和封装gorm
+创建database.go,用于定义gorm连接数据库的配置和DB的统一引用 database.go
+package common import ( &#34;fmt&#34; &#34;note.hello-api.cn/model&#34; &#34;gorm.io/driver/mysql&#34; &#34;gorm.io/gorm&#34; ) var DB *gorm.DB func InitDB() *gorm.DB { host := &#34;localhost&#34; port := &#34;3306&#34; username := &#34;gin&#34; database := &#34;gin&#34; password := &#34;gingin&#34; charset := &#34;utf8mb4&#34; arg := fmt.Sprintf(&#34;%s:%s@tcp(%s:%s)/%s?charset=%s&amp;parseTime=true&#34;, username, password, host, port, database, charset) db, err := gorm.Open(mysql.Open(arg)) if err != nil { panic(err.Error()) } db.AutoMigrate(&amp;model.User{}) db.AutoMigrate(&amp;model.Note{}) DB = db return db } func GetDB() *gorm.DB { return DB } 在gin的入口main....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-02 17:30:00 +0800 CST'>九月 2, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-gin连接gorm" href="http://www.hello-api.cn/study/go-gin-002/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>go-Mysql入门操作
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>选用扩展 gorm.io
+Install go get -u gorm.io/gorm go get -u gorm.io/driver/sqlite
+Test models.go package models import ( &#34;fmt&#34; &#34;gorm.io/driver/mysql&#34; &#34;gorm.io/gorm&#34; &#34;gorm.io/gorm/schema&#34; ) var ( dsn string = &#34;gin:gingin@tcp(127.0.0.1:3306)/gin?charset=utf8mb4&#34; // 数据库配置 root账号 0000密码 shop数据库 utf8mb4编码 ) //实现orm func DB() *gorm.DB { // 连接mysql数据库， gorm.Config有很多配置 例如前缀 后准 等等 db, err := gorm.Open(mysql.Open(dsn), &amp;gorm.Config{ NamingStrategy: schema.NamingStrategy{ TablePrefix: &#34;tp_&#34;, SingularTable: true, }, }) // 数据库连接出错 退出 if err != nil { fmt.Println(&#34;数据库连接失败&#34;, err) panic(1) } // 返回数据库实例 db....</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-02 17:21:00 +0800 CST'>九月 2, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
+  <a class="entry-link" aria-label="post link to go-Mysql入门操作" href="http://www.hello-api.cn/study/go-mysql/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>go-第一个Gin程序
     </h2>
   </header>
@@ -259,75 +313,6 @@ use Swagger\Client\Api\ZonesApi; use Swagger\Client\ApiException; use Swagger\Cl
   <footer class="entry-footer"><span title='2022-08-19 15:35:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
   <a class="entry-link" aria-label="post link to php-laravel自定义https端口访问异常" href="http://www.hello-api.cn/study/php-laravel-003/"></a>
 </article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>keycloak
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Keycloak
-1. create realm 用于对接不同网站的登录用户,隔离区域
-2. how to use php
-composer require stevenmaguire/oauth2-keycloak SsoKeycloakClient.php
-class SsoKeycloakClient implements SsoClientInterface { use ApiConfigTrait; use ApiLoggerTrait; const API_NAME = &#34;keycloak&#34;; private $server_access_token_path = &#34;/data/keycloak_server_access_token.log&#34;; /** * @var Keycloak */ protected $provider; /** * @var GuzzleHttp\Client */ private $client; public function __construct() { $this-&gt;initLogger(-3, 2); $this-&gt;loadApiConfig(self::API_NAME); try { $redirectUri = ShareSession::get(&#39;redirect_uri&#39;) ? ShareSession::get(&#39;redirect_uri&#39;) : $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; } catch (\Throwable $e) { $redirectUri = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; } $redirectUri = $this-&gt;apiConfig-&gt;ExtraConfig[&#39;redirect_uri&#39;]; $this-&gt;provider = new Keycloak([ &#39;authServerUrl&#39; =&gt; $this-&gt;apiConfig-&gt;Host, &#39;realm&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;realm&#39;], &#39;clientId&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;login_client_id&#39;], &#39;clientSecret&#39; =&gt; $this-&gt;apiConfig-&gt;ExtraConfig[&#39;login_client_secret&#39;], &#39;redirectUri&#39; =&gt; $redirectUri, ]); $this-&gt;client = new GuzzleHttp\Client([ &#39;timeout&#39; =&gt; 30....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:32:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;3 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to keycloak" href="http://www.hello-api.cn/study/keycloak/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Mongodb数据库-python有关的操作
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>flask
-flask-pymongo
-flask-mongoengine
-数据内容
-[{ &#34;_id&#34;: { &#34;$oid&#34;: &#34;62e3525f18909374eb4de53f&#34; }, &#34;plat&#34;: { &#34;wechat&#34;: &#34;bc61736d-7ed0-47bb-ba1b-33474fecde23&#34;, &#34;alipay&#34;: &#34;random&#34; }, &#34;created_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;updated_at&#34;: { &#34;$date&#34;: { &#34;$numberLong&#34;: &#34;1659093727910&#34; } }, &#34;nickname&#34;: &#34;su&#34; }] 根据 plat.wechat中来搜索用户
-pymongo语法:
-mongo.db.user.find_one(filter={&#34;plat.wechat&#34;:openid}) mongoengine语法:
-User.objects(plat__wechat=openid).first() </p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-19 15:30:00 +0800 CST'>八月 19, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to Mongodb数据库-python有关的操作" href="http://www.hello-api.cn/study/mongodb-004/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>powerdns-学习如何搭建个人专属DNS服务器
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>powerdns | powerdns_http_api | download link
-1、 环境 environment 系统 centos 7.9
-2、 安装 install powerdns yum install epel-release yum-plugin-priorities curl -o /etc/yum.repos.d/powerdns-auth-45.repo https://repo.powerdns.com/repo-files/centos-auth-45.repo
-yum install pdns
-3、 安装 install pdns-recursor yum -y install epel-release yum-plugin-priorities curl -o /etc/yum.repos.d/powerdns-rec-45.repo https://repo.powerdns.com/repo-files/centos-rec-45.repo yum -y install pdns-recursor
-4、 配置 configure 修改mysql配置文件
-[mysqld] /etc/my.cnf
-innodb_file_per_table = 1 innodb_flush_log_at_trx_commit = 0 character-set-server=utf8 collation-server=utf8_general_ci create database poweradmin; grant all on poweradmin.* to puser1@localhost identified by &#34;wisdom123@&#34;; flush privileges; mysql -u root poweradmin &lt; /usr/share/doc/pdns-backend-mysql-4....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-17 17:46:00 +0800 CST'>八月 17, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to powerdns-学习如何搭建个人专属DNS服务器" href="http://www.hello-api.cn/study/powerdns/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>wechaty-描述各方法的类型
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Message 简单来说就是消息,在微信中聊天的文字,转账,语音等等都是消息的一种,因此是最重要的一项 官网
-# 消息类型 class MessageType(betterproto.Enum): MESSAGE_TYPE_UNSPECIFIED = 0 MESSAGE_TYPE_ATTACHMENT = 1 MESSAGE_TYPE_AUDIO = 2 MESSAGE_TYPE_CONTACT = 3 MESSAGE_TYPE_EMOTICON = 4 MESSAGE_TYPE_IMAGE = 5 图像 MESSAGE_TYPE_TEXT = 6 文字 MESSAGE_TYPE_VIDEO = 7 MESSAGE_TYPE_CHAT_HISTORY = 8 MESSAGE_TYPE_LOCATION = 9 MESSAGE_TYPE_MINI_PROGRAM = 10 MESSAGE_TYPE_TRANSFER = 11 MESSAGE_TYPE_RED_ENVELOPE = 12 MESSAGE_TYPE_RECALLED = 13 MESSAGE_TYPE_URL = 14 常用说明:
-type 消息类型,具体类型参考上述 print(msg.type()) text 接受的文本信息 print(msg.text()) say 回复信息,不仅文本消息,图片等都可以发送 await msg.say(msg.text()) 发送图片
-from wechaty import (FileBox) file_box = FileBox....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-08-15 11:31:00 +0800 CST'>八月 15, 2022</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Ken</footer>
-  <a class="entry-link" aria-label="post link to wechaty-描述各方法的类型" href="http://www.hello-api.cn/study/wechaty-002/"></a>
-</article>
 <footer class="page-footer">
   <nav class="pagination">
     <a class="prev" href="http://www.hello-api.cn/study/">« 上一页</a>
@@ -337,7 +322,7 @@ from wechaty import (FileBox) file_box = FileBox....</p>
     </main>
     
 <footer class="footer">
-    <span>&copy; 2022 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
+    <span>&copy; 2023 <a href="http://www.hello-api.cn/">Ken Blog</a></span>
     <span>
        Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

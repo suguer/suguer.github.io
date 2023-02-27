@@ -9,7 +9,7 @@
       <link>http://www.hello-api.cn/papermod-cover.png</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 14 Dec 2022 09:51:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Feb 2023 15:03:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Installation | Update</title>
       <link>http://www.hello-api.cn/posts/papermod/papermod-installation/</link>
@@ -26,6 +26,70 @@
       
       <guid>http://www.hello-api.cn/posts/papermod/papermod-features/</guid>
       <description>Learn About All Features in PaperMod</description>
+    </item>
+    
+    <item>
+      <title>初始dnsdist的负载算法</title>
+      <link>http://www.hello-api.cn/tech/dnsdist-001/</link>
+      <pubDate>Mon, 27 Feb 2023 15:03:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/tech/dnsdist-001/</guid>
+      <description>DNSDist 支持多种负载均衡算法，包括以下常见算法：
+Round-robin（轮询）：DNSDist 按照一定的顺序依次将 DNS 查询请求发送给后端 DNS 服务器，直到所有服务器都被轮询一遍。
+Random（随机）：DNSDist 随机选择一个后端 DNS 服务器，并将 DNS 查询请求发送给它。
+LeastOutstanding（最小连接）：DNSDist 根据每个服务器的当前连接数，选择连接数最少的服务器，并将 DNS 查询请求发送给它。
+Source IP Hashing（源 IP 哈希）：DNSDist 使用查询请求的源 IP 地址计算哈希值，并将该请求发送到哈希值对应的后端服务器上。对于同一个源 IP 地址的查询请求，DNSDist 会将它们发送到同一个后端服务器上。
+要使用这些负载均衡算法，您需要在 DNSDist 的配置文件中为每个后端 DNS 服务器设置相应的负载均衡算法。例如，以下配置示例使用 Round-robin 算法将 DNS 查询请求分发给三个后端 DNS 服务器：</description>
+    </item>
+    
+    <item>
+      <title>rabbitmq-生产者</title>
+      <link>http://www.hello-api.cn/study/rabbitmq-002/</link>
+      <pubDate>Tue, 24 Jan 2023 12:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/rabbitmq-002/</guid>
+      <description>rabbitmq</description>
+    </item>
+    
+    <item>
+      <title>rabbitmq-初识</title>
+      <link>http://www.hello-api.cn/study/rabbitmq-001/</link>
+      <pubDate>Tue, 24 Jan 2023 11:30:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/rabbitmq-001/</guid>
+      <description>rabbitmq</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hello-api.cn/question/20230122/</link>
+      <pubDate>Sun, 22 Jan 2023 15:32:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/question/20230122/</guid>
+      <description>问题:
+go语言开启3个协程,分别按顺序打印出100次的cat,dog,mouse,如结果为
+dog cat mouse dog cat mouse package main import &amp;#34;fmt&amp;#34; var quit chan int func main() { var chDog chan int var chCat chan int var chMouse chan int quit = make(chan int) chDog = make(chan int) chCat = make(chan int) chMouse = make(chan int) go showDog(chDog, chCat) go showCat(chCat, chMouse) go showMouse(chMouse, chDog) chDog &amp;lt;- 1 &amp;lt;-quit } func showDog(now chan int, next chan int) { count := 0 for { if count &amp;gt;= 100 { quit &amp;lt;- 1 return } &amp;lt;-now fmt.</description>
+    </item>
+    
+    <item>
+      <title>go-初识chan</title>
+      <link>http://www.hello-api.cn/study/go-chan/</link>
+      <pubDate>Sat, 17 Dec 2022 11:22:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-chan/</guid>
+      <description>代码参考至 《Go语言精进之路》
+例子1
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;sync&amp;#34; &amp;#34;time&amp;#34; ) type signal struct{} func worker(i int) { fmt.Printf(&amp;#34;worker %d :is working... \n&amp;#34;, i) time.Sleep(time.Duration(i) * time.Second) fmt.Printf(&amp;#34;worker %d :is done... \n&amp;#34;, i) } func spawnGroup(f func(i int), num int, groupSignal &amp;lt;-chan signal) &amp;lt;-chan signal { c := make(chan signal) var wg sync.WaitGroup for i := 0; i &amp;lt; num; i++ { time.Sleep(1 * time.Second) wg.Add(1) go func(i int) { &amp;lt;-groupSignal fmt.</description>
+    </item>
+    
+    <item>
+      <title>go-素数筛</title>
+      <link>http://www.hello-api.cn/study/go-sushu/</link>
+      <pubDate>Sat, 17 Dec 2022 11:22:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/study/go-sushu/</guid>
+      <description>问题描述: 素数是一个自然数,它具有两个截然不同的自然数除数:1和它本身,
+package main func Generate(ch chan&amp;lt;- int) { for i := 2; ; i++ { ch &amp;lt;- i } } func Filter(in &amp;lt;-chan int, out chan&amp;lt;- int, prime int) { for { i := &amp;lt;-in if i%prime != 0 { out &amp;lt;- i } } } func main() { ch := make(chan int) go Generate(ch) for i := 0; i &amp;lt; 1; i++ { prime := &amp;lt;-ch print(prime, &amp;#34;\n&amp;#34;) ch1 := make(chan int) go Filter(ch, ch1, prime) ch = ch1 } } </description>
     </item>
     
     <item>

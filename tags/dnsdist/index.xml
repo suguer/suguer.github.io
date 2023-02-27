@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>dnsdist on Ken Blog</title>
+    <link>http://www.hello-api.cn/tags/dnsdist/</link>
+    <description>Recent content in dnsdist on Ken Blog</description>
+    <image>
+      <url>http://www.hello-api.cn/papermod-cover.png</url>
+      <link>http://www.hello-api.cn/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 27 Feb 2023 15:03:00 +0800</lastBuildDate><atom:link href="http://www.hello-api.cn/tags/dnsdist/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>初始dnsdist的负载算法</title>
+      <link>http://www.hello-api.cn/tech/dnsdist-001/</link>
+      <pubDate>Mon, 27 Feb 2023 15:03:00 +0800</pubDate>
+      
+      <guid>http://www.hello-api.cn/tech/dnsdist-001/</guid>
+      <description>DNSDist 支持多种负载均衡算法，包括以下常见算法：
+Round-robin（轮询）：DNSDist 按照一定的顺序依次将 DNS 查询请求发送给后端 DNS 服务器，直到所有服务器都被轮询一遍。
+Random（随机）：DNSDist 随机选择一个后端 DNS 服务器，并将 DNS 查询请求发送给它。
+LeastOutstanding（最小连接）：DNSDist 根据每个服务器的当前连接数，选择连接数最少的服务器，并将 DNS 查询请求发送给它。
+Source IP Hashing（源 IP 哈希）：DNSDist 使用查询请求的源 IP 地址计算哈希值，并将该请求发送到哈希值对应的后端服务器上。对于同一个源 IP 地址的查询请求，DNSDist 会将它们发送到同一个后端服务器上。
+要使用这些负载均衡算法，您需要在 DNSDist 的配置文件中为每个后端 DNS 服务器设置相应的负载均衡算法。例如，以下配置示例使用 Round-robin 算法将 DNS 查询请求分发给三个后端 DNS 服务器：</description>
+    </item>
+    
+  </channel>
+</rss>
